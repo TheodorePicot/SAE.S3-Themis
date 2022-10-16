@@ -1,5 +1,7 @@
 <?php
 
+namespace Themis\Config;
+
 class Conf {
 
     static private array $databases = array(
@@ -21,7 +23,6 @@ class Conf {
         // Sur votre machine personelle, vous avez creez ce mdp a l'installation
         'password' => 'Themis2022'
     );
-
 
 
     static public function getLogin() : string {
