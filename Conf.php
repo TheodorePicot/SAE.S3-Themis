@@ -13,7 +13,7 @@ class Conf {
         // Sur votre machine, vous devrez creer une BDD
         'port' => '5432',
 
-        'database' => 'themis',
+        'database' => 'postgres',
         // A l'IUT, c'est votre login
         // Sur votre machine, vous avez surement un compte 'root'
         'login' => 'themis',
