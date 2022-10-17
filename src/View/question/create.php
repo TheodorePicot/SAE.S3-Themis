@@ -1,31 +1,31 @@
-<form method="get" action="frontController.php">
+<form method="psot" action="frontController.php">
     <fieldset>
-        <legend>Mon formulaire :</legend>
-
-        <input type='hidden', name='action', value='created'>
+        <legend>Création de question</legend>
 
         <p>
-            <label for="immat_id">Titre</label> :
-            <input type="text" placeholder="test question?" name="immatriculation" id="immat_id" required/>
+            <label for="titreQuestion">Titre</label> :
+            <input type="text" placeholder="Triss ou Yennefer ?" name="titreQuestion" id="titreQuestion" required/>
         </p>
 
         <p>
-            <label for="marque_id">Date de début des propositions</label> :
-            <input type="text" placeholder="JJ/MM/YYYY" name="marque" id="marque_id" required/>
+            <label for="dateDebutProposition">Date de début des propositions</label> :
+            <input type="date" placeholder="JJ/MM/YYYY" name="dateDebutProposition" id="dateDebutProposition" required/>
         </p>
 
         <p>
-            <label for="couleur_id">Date de début des propositions</label> :
-            <input type="text" placeholder="JJ/MM/YYYY" name="couleur" id="couleur_id" required/>
+            <label for="dateFinProposition">Date de fin des propositions</label> :
+            <input type="date" placeholder="JJ/MM/YYYY" name="dateFinProposition" id="dateFinProposition" required/>
         </p>
         <p>
-            <label for="nbSieges_id">Date de début du vote</label> :
-            <input type="text" placeholder="JJ/MM/YYYY" name="siege" id="nbSieges_id" required/>
+            <label for="dateDebutVote">Date de début du vote</label> :
+            <input type="date" placeholder="JJ/MM/YYYY" name="dateDebutVote" id="dateDebutVote" required/>
         </p>
         <p>
-            <label for="nbSieges_id">Date de début du vote</label> :
-            <input type="text" placeholder="JJ/MM/YYYY" name="siege" id="nbSieges_id" required/>
+            <label for="dateFinVote">Date de fin du vote</label> :
+            <input type="date" placeholder="JJ/MM/YYYY" name="dateFinVote" id="dateFinVote" required/>
         </p>
+
+        <input type='hidden' name='action' value='saveQuestion'>
 
         <p>
             <input type="submit" value="Envoyer" />

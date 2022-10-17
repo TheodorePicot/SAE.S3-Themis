@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68637f8c-5a05-4f32-a1f7-6579b7988734" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Model/ModelUtilisateur.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/ModelOrganisateur.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modeleMCD/bd.loo" beforeDir="false" afterPath="$PROJECT_DIR$/modeleMCD/bd.loo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/mainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/mainController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/mainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Lib/Psr4AutoloaderClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lib/Psr4AutoloaderClass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/ModelQuestion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ModelQuestion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/ModelUtilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ModelUtilisateur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/question/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/question/create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/frontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,10 +39,15 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/MAMP/htdocs/TD-PHP/TD5",
+    "last_opened_file_path": "D:/Cloud/Université/Semestre 3/DevWeb/td-php",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "copyright",
+    "settings.editor.selected.configurable": "Errors",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -70,7 +81,11 @@
       <workItem from="1665912571030" duration="20000" />
       <workItem from="1665912606169" duration="2078000" />
       <workItem from="1665927347250" duration="97000" />
-      <workItem from="1666039214059" duration="359000" />
+      <workItem from="1666039214059" duration="3022000" />
+      <workItem from="1666042537640" duration="154000" />
+      <workItem from="1666042701403" duration="205000" />
+      <workItem from="1666042913494" duration="24000" />
+      <workItem from="1666043054459" duration="1645000" />
     </task>
     <servers />
   </component>
@@ -87,5 +102,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

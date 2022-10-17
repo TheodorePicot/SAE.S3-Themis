@@ -16,7 +16,7 @@
     </header>
     <main>
         <?php
-        require __DIR__ . "/{$cheminVueBody}";
+        require __DIR__ . "/{$pathBodyView}";
         ?>
     </main>
     <footer>

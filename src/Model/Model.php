@@ -1,6 +1,8 @@
 <?php
 
-require_once "Conf.php";
+namespace Themis\Model;
+use Themis\Config\Conf;
+use PDO;
 
 class Model {
     private PDO $pdo;
@@ -12,7 +14,7 @@ class Model {
     {
         $this->pdo = new PDO('pgsql:host='.Conf::getHostname().';port='.Conf::getPort().';dbname='.Conf::getDatabase().';user='.Conf::getLogin().';password='.Conf::getPassword());
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//        $this->pdo->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
+        $this->pdo->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
     }
 
     static function getPdo() : PDO {

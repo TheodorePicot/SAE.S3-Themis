@@ -1,5 +1,7 @@
 <?php
 
+namespace Themis\Model;
+
 class ModelUtilisateur
 {
     private string $adresseMail;
@@ -20,6 +22,5 @@ class ModelUtilisateur
         $this->prenomUtilisateur = $prenomUtilisateur;
         $this->dateDeNaissance = $dateDeNaissance;
     }
-
 
 }
