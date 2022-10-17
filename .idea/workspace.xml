@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68637f8c-5a05-4f32-a1f7-6579b7988734" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Conf.php" beforeDir="false" afterPath="$PROJECT_DIR$/Conf.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modelTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/modelTest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/ModelUtilisateur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeleMCD/bd.loo" beforeDir="false" afterPath="$PROJECT_DIR$/modeleMCD/bd.loo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/mainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/mainController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,10 +35,15 @@
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/MAMP/htdocs/TD-PHP/TD5",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
+    "settings.editor.selected.configurable": "copyright",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Cloud\Université\Semestre 3\SAE\sae.s3-themis\src\View\question" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="modelTest.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/modelTest.php">
       <CommandLine>
@@ -63,6 +70,7 @@
       <workItem from="1665912571030" duration="20000" />
       <workItem from="1665912606169" duration="2078000" />
       <workItem from="1665927347250" duration="97000" />
+      <workItem from="1666039214059" duration="359000" />
     </task>
     <servers />
   </component>

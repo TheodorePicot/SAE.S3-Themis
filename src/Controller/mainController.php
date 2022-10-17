@@ -1,6 +1,6 @@
 <?php
 
-namespace 
+namespace Themis\mainController;
 
 class mainController {
 
