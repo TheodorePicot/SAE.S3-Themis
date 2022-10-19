@@ -1,8 +1,8 @@
 <?php
 
-namespace Themis\Model;
+namespace Themis\Model\DataObject;
 
-class ModelUtilisateur
+class Utilisateur
 {
     private string $adresseMail;
     private string $nomUtilisateur;
@@ -22,5 +22,4 @@ class ModelUtilisateur
         $this->prenomUtilisateur = $prenomUtilisateur;
         $this->dateDeNaissance = $dateDeNaissance;
     }
-
 }

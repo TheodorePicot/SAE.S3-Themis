@@ -66,7 +66,7 @@ class Psr4AutoloaderClass
      *
      * @return void
      */
-    public function register() : void
+    public function register(): void
     {
         spl_autoload_register(array($this, 'loadClass'));
     }
@@ -82,7 +82,7 @@ class Psr4AutoloaderClass
      * than last.
      * @return void
      */
-    public function addNamespace(string $prefix, string $base_dir, bool $prepend = false) : void
+    public function addNamespace(string $prefix, string $base_dir, bool $prepend = false): void
     {
         // normalize namespace prefix
         $prefix = trim($prefix, '\\') . '\\';
@@ -183,7 +183,7 @@ class Psr4AutoloaderClass
      * @param string $file The file to require.
      * @return bool True if the file exists, false if not.
      */
-    protected function requireFile(string $file) : bool
+    protected function requireFile(string $file): bool
     {
         if (file_exists($file)) {
             require $file;

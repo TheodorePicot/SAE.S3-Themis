@@ -4,24 +4,22 @@
     <meta charset="UTF-8">
     <title><?php echo $pageTitle; ?></title>
 </head>
+    <body>
+        <header>
+            <nav>
+                <div id="nav-content">
+                    <a href="">HOME</a>
+                    <a href="">QUESTIONS</a>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <?php
+            require __DIR__ . "/{$pathBodyView}";
+            ?>
+        </main>
+        <footer>
 
-<body>
-    <header>
-        <nav>
-            <div id="nav-content">
-                <a href="">HOME</a>
-                <a href="">QUESTIONS</a>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <?php
-        require __DIR__ . "/{$pathBodyView}";
-        ?>
-    </main>
-    <footer>
-
-    </footer>
-</body>
-
+        </footer>
+    </body>
 </html>

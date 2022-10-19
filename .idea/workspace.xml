@@ -2,16 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68637f8c-5a05-4f32-a1f7-6579b7988734" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Model/ModelOrganisateur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/mainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modelTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/modelTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeleMCD/bd.lo1" beforeDir="false" afterPath="$PROJECT_DIR$/modeleMCD/bd.lo1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeleMCD/bd.loo" beforeDir="false" afterPath="$PROJECT_DIR$/modeleMCD/bd.loo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Config/Conf.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Config/Conf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Lib/Psr4AutoloaderClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lib/Psr4AutoloaderClass.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ModelQuestion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ModelQuestion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ModelUtilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ModelUtilisateur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Repository/DatabaseConnection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/ModelOrganisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DataObject/Organisateur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/ModelQuestion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DataObject/Question.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/ModelUtilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DataObject/Utilisateur.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/question/create.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/question/create.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/frontController.php" beforeDir="false" afterPath="$PROJECT_DIR$/web/frontController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,9 +43,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Cloud/Université/Semestre 3/DevWeb/td-php",
+    "last_opened_file_path": "D:/Cloud/Université/Semestre 3/SAE/sae.s3-themis/src/Model/Repository",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "Errors",
+    "settings.editor.selected.configurable": "SQL Resolution Scopes",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -52,6 +56,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Cloud\Université\Semestre 3\SAE\sae.s3-themis\src\Model\DataObject" />
+      <recent name="D:\Cloud\Université\Semestre 3\SAE\sae.s3-themis\src\Model\Repository" />
       <recent name="D:\Cloud\Université\Semestre 3\SAE\sae.s3-themis\src\View\question" />
     </key>
   </component>
@@ -85,7 +91,9 @@
       <workItem from="1666042537640" duration="154000" />
       <workItem from="1666042701403" duration="205000" />
       <workItem from="1666042913494" duration="24000" />
-      <workItem from="1666043054459" duration="1645000" />
+      <workItem from="1666043054459" duration="2144000" />
+      <workItem from="1666186587663" duration="733000" />
+      <workItem from="1666200585948" duration="4765000" />
     </task>
     <servers />
   </component>

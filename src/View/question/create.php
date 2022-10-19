@@ -28,7 +28,7 @@
         <input type='hidden' name='action' value='saveQuestion'>
 
         <p>
-            <input type="submit" value="Envoyer" />
+            <input type="submit" value="Envoyer"/>
         </p>
     </fieldset>
 </form>
