@@ -36,9 +36,9 @@ class Question
 
     public function saveIntoDatabase(): bool
     {
-        $query = 'INSERT INTO 
-                  "Questions" ("titreQuestion", "dateDebutProposition", "dateFinProposition", "dateDebutVote", "dateFinVote", "mailOrganisateur") 
+        $query = 'INSERT INTO "Questions" ("titreQuestion", "dateDebutProposition", "dateFinProposition", "dateDebutVote", "dateFinVote", "mailOrganisateur") 
                   VALUES (:titreQuestion,  :dateDebutPropostion, :dateFinProposition,:dateDebutVote, :dateFinVote, :mailOrganisateur)';
+
         $pdoStatement = DatabaseConnection::getPdo()->prepare($query);
 
         $values = [
