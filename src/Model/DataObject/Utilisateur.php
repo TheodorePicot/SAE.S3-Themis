@@ -2,7 +2,7 @@
 
 namespace Themis\Model\DataObject;
 
-class Utilisateur
+class Utilisateur extends AbstractDataObject
 {
     private string $adresseMail;
     private string $nomUtilisateur;

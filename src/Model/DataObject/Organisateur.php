@@ -2,7 +2,7 @@
 
 namespace Themis\Model\DataObject;
 
-class Organisateur
+class Organisateur extends AbstractDataObject
 {
 
 }

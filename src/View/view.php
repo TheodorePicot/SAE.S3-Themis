@@ -8,7 +8,6 @@
         <header>
             <nav>
                 <div id="nav-content">
-                    <a href="">HOME</a>
                     <a href="">QUESTIONS</a>
                 </div>
             </nav>

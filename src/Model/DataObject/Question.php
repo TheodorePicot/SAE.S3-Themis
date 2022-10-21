@@ -2,9 +2,7 @@
 
 namespace Themis\Model\DataObject;
 
-use Themis\Model\Repository\DatabaseConnection;
-
-class Question
+class Question extends AbstractDataObject
 {
     private int $idQuestion;
     private string $titreQuestion;
@@ -15,43 +13,81 @@ class Question
     private string $mailOrganisateur;
 
     /**
-     * @param int $idQuestion
      * @param string $titreQuestion
      * @param string $dateDebutPropostion
      * @param string $dateFinProposition
      * @param string $dateDebutVote
      * @param string $dateFinVote
-     * @param string $mailOrganisateur
      */
-    public function __construct(int $idQuestion, string $titreQuestion, string $dateDebutPropostion, string $dateFinProposition, string $dateDebutVote, string $dateFinVote, string $mailOrganisateur)
+    public function __construct(string $titreQuestion, string $dateDebutPropostion, string $dateFinProposition, string $dateDebutVote, string $dateFinVote)
     {
-        $this->idQuestion = $idQuestion;
         $this->titreQuestion = $titreQuestion;
         $this->dateDebutPropostion = $dateDebutPropostion;
         $this->dateFinProposition = $dateFinProposition;
         $this->dateDebutVote = $dateDebutVote;
         $this->dateFinVote = $dateFinVote;
-        $this->mailOrganisateur = $mailOrganisateur;
     }
 
-    public function saveIntoDatabase(): bool
+    public function tableFormat(): array
     {
-        $query = 'INSERT INTO "Questions" ("titreQuestion", "dateDebutProposition", "dateFinProposition", "dateDebutVote", "dateFinVote", "mailOrganisateur") 
-                  VALUES (:titreQuestion,  :dateDebutPropostion, :dateFinProposition,:dateDebutVote, :dateFinVote, :mailOrganisateur)';
+        return [
 
-        $pdoStatement = DatabaseConnection::getPdo()->prepare($query);
-
-        $values = [
-            "titreQuestion" => $this->titreQuestion,
-            "dateDebutProposition" => $this->dateDebutPropostion,
-            "dateFinProposistion" => $this->dateFinProposition,
-            "dateDebutVote" => $this->dateDebutVote,
-            "dateFinVote" => $this->dateFinVote,
-            "mailOrganisateur" => $this->mailOrganisateur
         ];
+    }
 
-        $pdoStatement->execute($values);
+    /**
+     * @return int
+     */
+    public function getIdQuestion(): int
+    {
+        return $this->idQuestion;
+    }
 
-        return true; //TODO Try catch PDO exception with SQL errors
+    /**
+     * @return string
+     */
+    public function getTitreQuestion(): string
+    {
+        return $this->titreQuestion;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateDebutPropostion(): string
+    {
+        return $this->dateDebutPropostion;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateFinProposition(): string
+    {
+        return $this->dateFinProposition;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateDebutVote(): string
+    {
+        return $this->dateDebutVote;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateFinVote(): string
+    {
+        return $this->dateFinVote;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMailOrganisateur(): string
+    {
+        return $this->mailOrganisateur;
     }
 }

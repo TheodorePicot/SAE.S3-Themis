@@ -14,7 +14,7 @@
 
         <p>
             <input type="submit" value="Envoyer" />
-            <a href="signUp..php"> S'incrire </a>
+            <a href="signUp.php"> S'incrire</a>
         </p>
 
     </fieldset>
