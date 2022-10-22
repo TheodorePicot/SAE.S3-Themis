@@ -64,8 +64,7 @@ abstract class AbstractRepository
     public function selectAll(): array
     {
         $databaseTable = $this->getTableName();
-        $sqlQuery = 'SELECT t.* FROM ' . $databaseTable;
-        $pdoStatement = DatabaseConnection::getPdo()->query($sqlQuery);
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT t.* FROM $databaseTable");
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
@@ -81,12 +80,9 @@ abstract class AbstractRepository
         $primaryKey = $this->getPrimaryKey();
         $sqlQuery = "SELECT t.* from $databaseTable WHERE $primaryKey=:primaryKey";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-        echo $sqlQuery;
-        echo $primaryKeyValue;
         $values = array(
             'primaryKey' => $primaryKeyValue
         );
-        var_dump($values);
         $pdoStatement->execute($values);
 
         $dataObject = $pdoStatement->fetch();

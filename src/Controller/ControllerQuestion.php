@@ -3,38 +3,28 @@
 namespace Themis\Controller;
 
 
+use Themis\Model\Repository\AbstractRepository;
 use Themis\Model\Repository\QuestionRepository;
 
 class ControllerQuestion extends AbstactController
 {
-    public static function read(): void {
-        $question = (new QuestionRepository())->select($_GET['idQuestion']);
-        echo $_GET['idQuestion'];
-        self::showView("view.php", [
-            "question" => $question,
-            "pageTitle" => "Info question",
-            "pathBodyView" => "question/read.php"
-        ]);
 
-
-    }
-
-    public static function readAll(): void {
-        $questions = (new QuestionRepository())->selectAll();
-        self::showView("view.php", [
-            "questions" => $questions,
-            "pageTitle" => "Info question",
-            "pathBodyView" => "question/list.php"
-        ]);
-    }
-
-    public static function create(): void
+    protected function getRepository(): ?AbstractRepository
     {
-        self::showView("view.php", [
-            "pageTitle" => "Création d'une question",
-            "pathBodyView" => "question/create.php"
-        ]);
+        return new QuestionRepository();
     }
+
+    protected function getPrimaryKey(): string
+    {
+        return 'idQuestion';
+    }
+
+    protected function getControllerName(): string
+    {
+        return 'question';
+    }
+
+
 
     public static function created(): void
     {
