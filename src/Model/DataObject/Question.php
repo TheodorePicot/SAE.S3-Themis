@@ -6,23 +6,24 @@ class Question extends AbstractDataObject
 {
     private int $idQuestion;
     private string $titreQuestion;
-    private string $dateDebutPropostion;
+    private string $dateDebutProposition;
     private string $dateFinProposition;
     private string $dateDebutVote;
     private string $dateFinVote;
-    private string $mailOrganisateur;
 
     /**
+     * @param int $idQuestion
      * @param string $titreQuestion
-     * @param string $dateDebutPropostion
+     * @param string $dateDebutProposition
      * @param string $dateFinProposition
      * @param string $dateDebutVote
      * @param string $dateFinVote
      */
-    public function __construct(string $titreQuestion, string $dateDebutPropostion, string $dateFinProposition, string $dateDebutVote, string $dateFinVote)
+    public function __construct(int $idQuestion, string $titreQuestion, string $dateDebutProposition, string $dateFinProposition, string $dateDebutVote, string $dateFinVote)
     {
+        $this->idQuestion = $idQuestion;
         $this->titreQuestion = $titreQuestion;
-        $this->dateDebutPropostion = $dateDebutPropostion;
+        $this->dateDebutProposition = $dateDebutProposition;
         $this->dateFinProposition = $dateFinProposition;
         $this->dateDebutVote = $dateDebutVote;
         $this->dateFinVote = $dateFinVote;
@@ -31,7 +32,12 @@ class Question extends AbstractDataObject
     public function tableFormat(): array
     {
         return [
-
+            "idQuestion" => $this->idQuestion,
+            "titreQuestion" => $this->titreQuestion,
+            "dateDebutProposition" => $this->dateDebutProposition,
+            "dateFinProposition" => $this->dateFinProposition,
+            "dateDebutVote" => $this->dateDebutVote,
+            "dateFinVote" =>$this->dateFinVote
         ];
     }
 
@@ -54,9 +60,9 @@ class Question extends AbstractDataObject
     /**
      * @return string
      */
-    public function getDateDebutPropostion(): string
+    public function getDateDebutProposition(): string
     {
-        return $this->dateDebutPropostion;
+        return $this->dateDebutProposition;
     }
 
     /**
@@ -81,13 +87,5 @@ class Question extends AbstractDataObject
     public function getDateFinVote(): string
     {
         return $this->dateFinVote;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMailOrganisateur(): string
-    {
-        return $this->mailOrganisateur;
     }
 }

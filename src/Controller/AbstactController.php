@@ -2,12 +2,15 @@
 
 namespace Themis\Controller;
 
-class AbstactController
+abstract class AbstactController
 {
-    private static function showView(string $pathView, array $parameters = []): void
+    protected static function showView(string $pathView, array $parameters = []): void
     {
         extract($parameters);
         require __DIR__ . "/../View/$pathView";
     }
 
+    public static function showError(string $errorMessage): void {
+        self::showView($errorMessage);
+    }
 }

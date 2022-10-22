@@ -8,7 +8,7 @@
         <header>
             <nav>
                 <div id="nav-content">
-                    <a href="">QUESTIONS</a>
+                    <a href="frontController.php?action=readAll">QUESTIONS</a>
                 </div>
             </nav>
         </header>

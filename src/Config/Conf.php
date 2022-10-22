@@ -7,7 +7,7 @@ class Conf
     static private array $databases = array(
         'hostname' => 'themis-db-instance.cnowxclkulrh.eu-west-3.rds.amazonaws.com',
         'port' => '5432',
-        'database' => 'postgres',
+        'database' => 'themis',
         'login' => 'themis',
         'password' => 'Themis2022'
     );
