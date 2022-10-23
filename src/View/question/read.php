@@ -1,8 +1,26 @@
 <?php
-echo "<p>
-        Question : " . htmlspecialchars($question->getIdQuestion()) .
-        " Date de début de proposition : " . htmlspecialchars($question->getDateDebutProposition()) .
-        " Date de fin de redaction de proposition : " . htmlspecialchars($question->getDateFinProposition()) .
-        " Date de début de vote : " . htmlspecialchars($question->getDateDebutVote()) .
-        " Date de fin de vote : " . htmlspecialchars($question->getDateFinVote()) .
-      "</p>";
+
+
+echo "
+        <div class='container-fluid' >
+        <p>
+        <ul class='list-group  list-group-flush'>
+        <li class=''>
+        Question : " . htmlspecialchars($question->getIdQuestion())
+    . "</li>"
+    . " <li class=''>
+        Date de début de proposition : " . htmlspecialchars($question->getDateDebutProposition())
+    . "</li>"
+    . " <li class=''>
+        Date de fin de redaction de proposition : " . htmlspecialchars($question->getDateFinProposition())
+    . "</li>"
+    . " <li class=''>
+        Date de début de vote : " . htmlspecialchars($question->getDateDebutVote())
+    . "</li>"
+    . "  <li class=''>
+        Date de fin de vote : " . htmlspecialchars($question->getDateFinVote())
+    . "</li>
+        </p>
+        </ul>
+       </div>";
+

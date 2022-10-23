@@ -8,7 +8,14 @@ foreach ($questions as $question) {
     $hrefUpdate = "frontController.php?action=update&idQuestion=" . $questionInURL;
 
 
-    echo '<p> Question d\'ID ' . " <a href='$hrefRead'>" . $questionInHTML . '</a>' . " <a href='$hrefDelete'>delete</a>" . " <a href='$hrefUpdate'>update</a>" . '</p>';
+    echo '
+    <div class="mx-2">
+    <p> Question d\'ID ' . " <a href='$hrefRead'>" . $questionInHTML . '</a>' . " <a href='$hrefDelete'>delete</a>" . " <a href='$hrefUpdate'>update</a>" . '</p>
+    </div>';
+
 }
-echo "<a href=frontController.php?action=create>Créer Question</a>";
+    echo "
+<div class='mx-2'>
+<a href=frontController.php?action=create>Créer Question</a>
+</div>";
 
