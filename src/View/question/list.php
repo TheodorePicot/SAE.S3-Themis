@@ -3,7 +3,6 @@
 foreach ($questions as $question) {
     $questionInHTML = htmlspecialchars($question->getIdQuestion());
     $questionInURL = rawurlencode($question->getIdQuestion());
-    echo $questionInURL;
     $hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;
     $hrefDelete = "frontController.php?action=delete&idQuestion=" . $questionInURL;
     $hrefUpdate = "frontController.php?action=update&idQuestion=" . $questionInURL;

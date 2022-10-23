@@ -19,7 +19,12 @@ class Question extends AbstractDataObject
      * @param string $dateDebutVote
      * @param string $dateFinVote
      */
-    public function __construct(int $idQuestion, string $titreQuestion, string $dateDebutProposition, string $dateFinProposition, string $dateDebutVote, string $dateFinVote)
+    public function __construct(int $idQuestion,
+                                string $titreQuestion,
+                                string $dateDebutProposition,
+                                string $dateFinProposition,
+                                string $dateDebutVote,
+                                string $dateFinVote)
     {
         $this->idQuestion = $idQuestion;
         $this->titreQuestion = $titreQuestion;

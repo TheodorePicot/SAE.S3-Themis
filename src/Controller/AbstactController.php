@@ -12,6 +12,8 @@ abstract class AbstactController
 
     protected abstract function getControllerName(): string;
 
+    protected abstract function getDataObject(): string;
+
     protected function showView(string $pathView, array $parameters = []): void
     {
         extract($parameters);
@@ -55,6 +57,11 @@ abstract class AbstactController
 
     public function created(): void
     {
-//        $object =
+        $objectAttributes = array();
+        foreach ($_GET as $column) {
+            $objectAttributes[] = $column;
+        }
+
+//        $object = $this->getDataObject()::
     }
 }
