@@ -49,19 +49,12 @@ abstract class AbstactController
 
     public function create(): void
     {
+        $controllerName = $this->getControllerName();
         self::showView("view.php", [
-            "pageTitle" => "Création d'une question",
-            "pathBodyView" => "question/create.php"
+            "pageTitle" => "Création ".$controllerName,
+            "pathBodyView" => $controllerName."/create.php"
         ]);
     }
 
-    public function created(): void
-    {
-        $objectAttributes = array();
-        foreach ($_GET as $column) {
-            $objectAttributes[] = $column;
-        }
-
-//        $object = $this->getDataObject()::
-    }
+    public abstract function created(): void;
 }
