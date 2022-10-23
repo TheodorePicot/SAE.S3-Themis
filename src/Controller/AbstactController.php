@@ -25,6 +25,15 @@ abstract class AbstactController
         self::showView($errorMessage);
     }
 
+    public function create(): void
+    {
+        $controllerName = $this->getControllerName();
+        self::showView("view.php", [
+            "pageTitle" => "Création ".$controllerName,
+            "pathBodyView" => $controllerName."/create.php"
+        ]);
+    }
+
     public function read(): void
     {
         $object = $this->getRepository()->select($_GET[$this->getPrimaryKey()]);
@@ -47,14 +56,20 @@ abstract class AbstactController
         ]);
     }
 
-    public function create(): void
-    {
-        $controllerName = $this->getControllerName();
-        self::showView("view.php", [
-            "pageTitle" => "Création ".$controllerName,
-            "pathBodyView" => $controllerName."/create.php"
-        ]);
-    }
+
 
     public abstract function created(): void;
+
+    public function delete(): void {
+        if ($this->getRepository()->delete($_GET[$this->getPrimaryKey()])) {
+            $objects = $this->getRepository()->selectAll();
+            $controllerNamePlural = $this->getControllerName() . 's';
+            $this->showView("view.php", [
+                $controllerNamePlural => $objects,
+                "pageTitle" => "Suppression",
+                "pathBodyView" => $this->getControllerName() . "/deleted.php"
+            ]);
+        }
+
+    }
 }

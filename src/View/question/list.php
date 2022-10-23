@@ -10,6 +10,4 @@ foreach ($questions as $question) {
             <p> Question d\'ID . $questionInHTML </p>
           </div>
           </a>";
-
-
 }
