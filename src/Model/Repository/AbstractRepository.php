@@ -45,7 +45,6 @@ abstract class AbstractRepository
             $count++;
         }
         $sqlQuery .= ") " . $columnValues . ")";
-        echo $sqlQuery;
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 

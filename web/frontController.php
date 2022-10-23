@@ -17,8 +17,6 @@ $controllerClassName = "Themis\Controller\Controller" . ucfirst($controller);
 
 $controllerClassObject = new $controllerClassName();
 
-echo get_class($controllerClassObject);
-
 if (class_exists($controllerClassName)) {
 
     $classMethods = get_class_methods($controllerClassName);

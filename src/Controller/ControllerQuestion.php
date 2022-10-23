@@ -23,11 +23,4 @@ class ControllerQuestion extends AbstactController
     {
         return 'question';
     }
-
-
-
-    public static function created(): void
-    {
-
-    }
 }

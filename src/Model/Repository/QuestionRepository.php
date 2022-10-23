@@ -29,12 +29,10 @@ class QuestionRepository extends AbstractRepository
 
     protected function build(array $questionArrayFormat): Question
     {
-
         if (isset($questionArrayFormat['idQuestion'])) {
             return new Question($questionArrayFormat['idQuestion'], $questionArrayFormat['titreQuestion'], $questionArrayFormat['dateDebutProposition'], $questionArrayFormat['dateFinProposition'], $questionArrayFormat['dateDebutVote'], $questionArrayFormat['dateFinVote']);
         } else {
             return new Question((int)null, $questionArrayFormat['titreQuestion'], $questionArrayFormat['dateDebutProposition'], $questionArrayFormat['dateFinProposition'], $questionArrayFormat['dateDebutVote'], $questionArrayFormat['dateFinVote']);
         }
-
     }
 }
