@@ -1,5 +1,7 @@
 <?php
-
+$questionInURL = rawurlencode($question->getIdQuestion());
+$hrefDelete = "frontController.php?action=delete&idQuestion=" . $questionInURL;
+$hrefUpdate = "frontController.php?action=update&idQuestion=" . $questionInURL;
 
 echo "
         <div class='container-fluid'>
@@ -20,6 +22,8 @@ echo "
     . "  <li class=''>
         Date de fin de vote : " . htmlspecialchars($question->getDateFinVote())
     . "</li>
+        <li> <a href='$hrefDelete'>delete</a> </li>
+        <li> <a href='$hrefUpdate'>update</a> </li>
         </p>
         </ul>
        </div>";
