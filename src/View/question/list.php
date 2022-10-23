@@ -9,13 +9,10 @@ foreach ($questions as $question) {
 
 
     echo '
-    <div class="mx-2">
+    <div id="test" class="mx-2 my-5 container-fluid" style="border:2px solid #cecece;">
+   
     <p> Question d\'ID ' . " <a href='$hrefRead'>" . $questionInHTML . '</a>' . " <a href='$hrefDelete'>delete</a>" . " <a href='$hrefUpdate'>update</a>" . '</p>
+    
     </div>';
 
 }
-    echo "
-<div class='mx-2'>
-<a href=frontController.php?action=create>Créer Question</a>
-</div>";
-

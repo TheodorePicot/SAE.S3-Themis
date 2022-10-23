@@ -20,7 +20,7 @@
                     <a class="nav-link" href="frontController.php?action=readAll">Questions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Test</a>
+                    <a class="nav-link" href="frontController.php?action=create">Creer Question</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Test</a>

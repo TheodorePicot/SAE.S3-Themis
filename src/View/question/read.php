@@ -2,9 +2,9 @@
 
 
 echo "
-        <div class='container-fluid' >
+        <div class='container-fluid'>
         <p>
-        <ul class='list-group  list-group-flush'>
+        <ul style='list-style: none'>
         <li class=''>
         Question : " . htmlspecialchars($question->getIdQuestion())
     . "</li>"

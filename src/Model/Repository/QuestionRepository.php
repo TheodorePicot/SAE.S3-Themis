@@ -27,11 +27,12 @@ class QuestionRepository extends AbstractRepository
         ];
     }
 
+
     protected function build(array $questionArrayFormat): Question
     {
-        if (isset($questionArrayFormat['idQuestion'])) {
+        if (isset($questionArrayFormat['idQuestion'])) { //la question existe déjà
             return new Question($questionArrayFormat['idQuestion'], $questionArrayFormat['titreQuestion'], $questionArrayFormat['dateDebutProposition'], $questionArrayFormat['dateFinProposition'], $questionArrayFormat['dateDebutVote'], $questionArrayFormat['dateFinVote']);
-        } else {
+        } else {  //la question n'existe pas (ex:formulaire)
             return new Question((int)null, $questionArrayFormat['titreQuestion'], $questionArrayFormat['dateDebutProposition'], $questionArrayFormat['dateFinProposition'], $questionArrayFormat['dateDebutVote'], $questionArrayFormat['dateFinVote']);
         }
     }
