@@ -1,7 +1,9 @@
+
+
 <form method="psot" action="frontController.php">
     <fieldset>
+        <div class="mx-3 my-3">
         <legend>Création de question</legend>
-
         <p>
             <label for="titreQuestion">Titre</label> :
             <input type="text" placeholder="Triss ou Yennefer ?" name="titreQuestion" id="titreQuestion" required/>
@@ -30,5 +32,6 @@
         <p>
             <input type="submit" value="Envoyer"/>
         </p>
+        </div>
     </fieldset>
 </form>
