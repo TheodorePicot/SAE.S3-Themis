@@ -25,7 +25,7 @@
             <input type="date" placeholder="JJ/MM/YYYY" name="dateFinVote" id="dateFinVote" required/>
         </p>
 
-        <input type='hidden' name='action' value='created'>
+        <input type='hidden' name='action' value='updated'>
 
         <p>
             <input type="submit" value="Envoyer"/>

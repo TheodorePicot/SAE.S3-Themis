@@ -32,7 +32,10 @@ abstract class AbstactController
             "pageTitle" => "Création ".$controllerName,
             "pathBodyView" => $controllerName."/create.php"
         ]);
+        echo "in create";
     }
+
+    public abstract function created(): void;
 
     public function read(): void
     {
@@ -56,9 +59,13 @@ abstract class AbstactController
         ]);
     }
 
+    public function update(): void {
 
+    }
 
-    public abstract function created(): void;
+    public function updated(): void {
+
+    }
 
     public function delete(): void {
         if ($this->getRepository()->delete($_GET[$this->getPrimaryKey()])) {

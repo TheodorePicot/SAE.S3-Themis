@@ -34,10 +34,20 @@ class Question extends AbstractDataObject
         $this->dateFinVote = $dateFinVote;
     }
 
-    public function tableFormat(): array
-    {
+    public function tableFormatWithPrimaryKey(): array {
         return [
             "idQuestion" => $this->idQuestion,
+            "titreQuestion" => $this->titreQuestion,
+            "dateDebutProposition" => $this->dateDebutProposition,
+            "dateFinProposition" => $this->dateFinProposition,
+            "dateDebutVote" => $this->dateDebutVote,
+            "dateFinVote" =>$this->dateFinVote
+        ];
+    }
+
+    public function tableFormatWithoutPrimaryKey(): array
+    {
+        return [
             "titreQuestion" => $this->titreQuestion,
             "dateDebutProposition" => $this->dateDebutProposition,
             "dateFinProposition" => $this->dateFinProposition,

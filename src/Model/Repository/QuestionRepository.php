@@ -13,17 +13,17 @@ class QuestionRepository extends AbstractRepository
 
     protected function getTableName(): string
     {
-        return 'themis."Questions" t';
+        return 'themis."Questions"';
     }
 
     protected function getColumnNames(): array
     {
         return [
-            "titreQuestion",
-            "dateDebutProposition",
-            "dateFinProposition",
-            "dateDebutVote",
-            "dateFinVote",
+            'titreQuestion',
+            'dateDebutProposition',
+            'dateFinProposition',
+            'dateDebutVote',
+            'dateFinVote',
         ];
     }
 

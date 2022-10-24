@@ -40,16 +40,14 @@ abstract class AbstractRepository
                 $sqlQuery .= ",";
                 $columnValues .= ",";
             }
-            $sqlQuery .= "$columnName";
+            $sqlQuery .= '"' . $columnName . '"';
             $columnValues .= ":$columnName";
             $count++;
         }
         $sqlQuery .= ") " . $columnValues . ")";
-
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
-        $values = $dataObject->tableFormat();
-
+        $values = $dataObject->tableFormatWithoutPrimaryKey();
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
@@ -63,7 +61,7 @@ abstract class AbstractRepository
     public function selectAll(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT t.* FROM $databaseTable");
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable");
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
@@ -77,7 +75,7 @@ abstract class AbstractRepository
     {
         $databaseTable = $this->getTableName();
         $primaryKey = $this->getPrimaryKey();
-        $sqlQuery = "SELECT t.* from $databaseTable WHERE $primaryKey=:primaryKey";
+        $sqlQuery = "SELECT * from $databaseTable WHERE $primaryKey=:primaryKey";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = array(
             'primaryKey' => $primaryKeyValue
@@ -108,7 +106,7 @@ abstract class AbstractRepository
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
-        $values = $dataObject->tableFormat();
+        $values = $dataObject->tableFormatWithPrimaryKey();
 
         $pdoStatement->execute($values);
     }

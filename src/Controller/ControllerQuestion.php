@@ -32,16 +32,19 @@ class ControllerQuestion extends AbstactController
 
     public function created(): void
     {
-        $question = new Question((int)null, $_GET['titreQuestion'], $_GET['dateDebutProposition'], $_GET['dateFinProposition'], $_GET['dateDebutVote'], $_GET['dateFinVote']);
+        echo "in created";
+            $question = new Question((int)null, $_GET['titreQuestion'], $_GET['dateDebutProposition'], $_GET['dateFinProposition'], $_GET['dateDebutVote'], $_GET['dateFinVote']);
+
         if ($this->getRepository()->create($question)) {
+            echo "successful";
             $questions = $this->getRepository()->selectAll();
             $this->showView("view.php", [
                 'questions' => $questions,
-                "pagetitle" => "Liste des questions",
-                "cheminVueBody" => "question/created.php"
+                "pageTitle" => "Question créée",
+                "pathBodyView" => "question/created.php"
             ]);
         } else {
-            $this->showError("Erreur de création de la voiture");
+            $this->showError("Erreur de création de la question");
         }
     }
 }
