@@ -75,7 +75,7 @@ abstract class AbstractRepository
     {
         $databaseTable = $this->getTableName();
         $primaryKey = $this->getPrimaryKey();
-        $sqlQuery = "SELECT * from $databaseTable WHERE $primaryKey=:primaryKey";
+        $sqlQuery = "SELECT * from $databaseTable WHERE" . '"' . $primaryKey . '"' . "=:primaryKey";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = array(
             'primaryKey' => $primaryKeyValue
@@ -99,15 +99,14 @@ abstract class AbstractRepository
             if ($count != 0) {
                 $sqlQuery .= ",";
             }
-            $sqlQuery .= "$columnName=:$columnName";
+            $sqlQuery .= '"' . $columnName . '"' . "=:$columnName";
             $count++;
         }
-        $sqlQuery .= " WHERE $primaryKey=:$primaryKey";
+        $sqlQuery .= " WHERE " . '"' . $primaryKey . '"' . "=:$primaryKey";
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = $dataObject->tableFormatWithPrimaryKey();
-
         $pdoStatement->execute($values);
     }
 
@@ -115,7 +114,7 @@ abstract class AbstractRepository
     {
         $databaseTable = $this->getTableName();
         $primaryKey = $this->getPrimaryKey();
-        $sqlQuery = "DELETE FROM $databaseTable WHERE $primaryKey = :primaryKey";
+        $sqlQuery = "DELETE FROM $databaseTable WHERE" . '"' . $primaryKey . '"' . "=:primaryKey";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = [

@@ -32,7 +32,6 @@ abstract class AbstactController
             "pageTitle" => "Création ".$controllerName,
             "pathBodyView" => $controllerName."/create.php"
         ]);
-        echo "in create";
     }
 
     public abstract function created(): void;
@@ -60,12 +59,16 @@ abstract class AbstactController
     }
 
     public function update(): void {
-
+        $object = $this->getRepository()->select($_GET[$this->getPrimaryKey()]);
+        $controllerName = $this->getControllerName();
+        $this->showView("view.php", [
+            $controllerName => $object,
+            "pageTitle" => "Mise à jour $controllerName",
+            "pathBodyView" => "$controllerName./update.php"
+        ]);
     }
 
-    public function updated(): void {
-
-    }
+    public abstract function updated(): void;
 
     public function delete(): void {
         if ($this->getRepository()->delete($_GET[$this->getPrimaryKey()])) {

@@ -32,11 +32,9 @@ class ControllerQuestion extends AbstactController
 
     public function created(): void
     {
-        echo "in created";
             $question = new Question((int)null, $_GET['titreQuestion'], $_GET['dateDebutProposition'], $_GET['dateFinProposition'], $_GET['dateDebutVote'], $_GET['dateFinVote']);
 
         if ($this->getRepository()->create($question)) {
-            echo "successful";
             $questions = $this->getRepository()->selectAll();
             $this->showView("view.php", [
                 'questions' => $questions,
@@ -46,5 +44,16 @@ class ControllerQuestion extends AbstactController
         } else {
             $this->showError("Erreur de création de la question");
         }
+    }
+
+    public function updated(): void
+    {
+        $question = new Question($_GET['idQuestion'], $_GET['titreQuestion'], $_GET['dateDebutProposition'], $_GET['dateFinProposition'], $_GET['dateDebutVote'], $_GET['dateFinVote']);
+        $this->getRepository()->update($question);
+        $this->showView("view.php", [
+            "questions" => $this->getRepository()->selectAll(),
+            "pageTitle" => "Question créée",
+            "pathBodyView" => "question/updated.php"
+        ]);
     }
 }

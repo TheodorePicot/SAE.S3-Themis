@@ -8,7 +8,7 @@ class QuestionRepository extends AbstractRepository
 {
     protected function getPrimaryKey(): string
     {
-        return '"idQuestion"';
+        return 'idQuestion';
     }
 
     protected function getTableName(): string
