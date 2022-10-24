@@ -1,4 +1,4 @@
-<form method="get" action="frontController.php">
+<form method="psot" action="frontController.php">
     <fieldset>
         <legend>Création de question</legend>
 
@@ -25,7 +25,7 @@
             <input type="date" placeholder="JJ/MM/YYYY" name="dateFinVote" id="dateFinVote" required/>
         </p>
 
-        <input type='hidden' name='action' value='created'>
+        <input type='hidden' name='action' value='saveQuestion'>
 
         <p>
             <input type="submit" value="Envoyer"/>
