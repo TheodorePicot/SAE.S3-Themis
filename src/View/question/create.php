@@ -1,11 +1,16 @@
 <form method="psot" action="frontController.php">
     <fieldset>
+        <div id='containerFormulaire' class='container text-center my-5' style="border: 2px solid">
         <legend>Création de question</legend>
+
+
 
         <p>
             <label for="titreQuestion">Titre</label> :
+
             <input type="text" placeholder="Triss ou Yennefer ?" name="titreQuestion" id="titreQuestion" required/>
         </p>
+
 
         <p>
             <label for="dateDebutProposition">Date de début des propositions</label> :
@@ -30,5 +35,6 @@
         <p>
             <input type="submit" value="Envoyer"/>
         </p>
+            </div>
     </fieldset>
 </form>
