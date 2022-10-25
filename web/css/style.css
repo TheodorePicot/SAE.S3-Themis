@@ -1,7 +1,4 @@
-#test {
-    margin: auto;
-    border: 3px solid #73AD21;
-}
+
 
 #containerQuestion{
     display: block;
@@ -9,7 +6,6 @@
 
 nav li{
     padding: 0px 20px;
-
 
 }
 
@@ -19,3 +15,6 @@ body {
 
 }
 
+#containerFormulaire{
+    width: 500px;
+}

@@ -14,7 +14,7 @@ echo "
         Date de début de proposition : " . htmlspecialchars($question->getDateDebutProposition())
     . "</li>"
     . " <li class=''>
-        Date de fin de redaction de proposition : " . htmlspecialchars($question->getDateFinProposition())
+        Date de fin de rédaction de proposition : " . htmlspecialchars($question->getDateFinProposition())
     . "</li>"
     . " <li class=''>
         Date de début de vote : " . htmlspecialchars($question->getDateDebutVote())
