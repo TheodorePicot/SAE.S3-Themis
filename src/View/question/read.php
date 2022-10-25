@@ -2,6 +2,7 @@
 $questionInURL = rawurlencode($question->getIdQuestion());
 $hrefDelete = "frontController.php?action=delete&idQuestion=" . $questionInURL;
 $hrefUpdate = "frontController.php?action=update&idQuestion=" . $questionInURL;
+$hrefCreateSection = "frontController.php?action=created&controller=section&idQuestion=$questionInURL";
 
 echo "
         <div class='container-fluid'>
@@ -24,7 +25,10 @@ echo "
     . "</li>
         <li> <a href='$hrefDelete'>delete</a> </li>
         <li> <a href='$hrefUpdate'>update</a> </li>
+        <li> <a href='$hrefCreateSection'>Add section</a></li>
         </p>
         </ul>
        </div>";
+
+require_once __DIR__ .  "/../section/listByQuestion.php";
 

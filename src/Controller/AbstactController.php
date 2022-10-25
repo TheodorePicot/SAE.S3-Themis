@@ -3,6 +3,7 @@
 namespace Themis\Controller;
 
 use Themis\Model\Repository\AbstractRepository;
+use Themis\Model\Repository\SectionRepository;
 
 abstract class AbstactController
 {

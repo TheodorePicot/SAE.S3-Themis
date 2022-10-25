@@ -6,6 +6,7 @@ namespace Themis\Controller;
 use Themis\Model\DataObject\Question;
 use Themis\Model\Repository\AbstractRepository;
 use Themis\Model\Repository\QuestionRepository;
+use Themis\Model\Repository\SectionRepository;
 
 class ControllerQuestion extends AbstactController
 {
@@ -17,12 +18,12 @@ class ControllerQuestion extends AbstactController
 
     protected function getPrimaryKey(): string
     {
-        return 'idQuestion';
+        return "idQuestion";
     }
 
     protected function getControllerName(): string
     {
-        return 'question';
+        return "question";
     }
 
     protected function getDataObject(): string
@@ -54,6 +55,19 @@ class ControllerQuestion extends AbstactController
             "questions" => $this->getRepository()->selectAll(),
             "pageTitle" => "Question créée",
             "pathBodyView" => "question/updated.php"
+        ]);
+    }
+
+    public function read(): void
+    {
+        $object = $this->getRepository()->select($_GET[$this->getPrimaryKey()]);
+        $sections = (new SectionRepository())->selectAllByQuestion($_GET[$this->getPrimaryKey()]);
+        $controllerName = $this->getControllerName();
+        $this->showView("view.php", [
+            "sections" => $sections,
+            $controllerName => $object,
+            "pageTitle" => "Info $controllerName",
+            "pathBodyView" => "$controllerName./read.php"
         ]);
     }
 }
