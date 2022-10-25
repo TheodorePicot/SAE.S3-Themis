@@ -2,13 +2,20 @@
 $questionInURL = rawurlencode($question->getIdQuestion());
 $hrefDelete = "frontController.php?action=delete&idQuestion=" . $questionInURL;
 $hrefUpdate = "frontController.php?action=update&idQuestion=" . $questionInURL;
+$hrefReadAll = "frontController.php?action=readAll";
+
+
+echo "<div class='container text-center my-5' >";
+
+
+$lienRetourQuestion = "<a href=".$hrefReadAll.">Questions : </a>";
 
 echo "
-        <div class='container-fluid'>
+       
         <p>
         <ul style='list-style: none'>
         <li class=''>
-        Question : " . htmlspecialchars($question->getIdQuestion())
+      ". $lienRetourQuestion .htmlspecialchars($question->getIdQuestion())
     . "</li>"
     . " <li class=''>
         Date de début de proposition : " . htmlspecialchars($question->getDateDebutProposition())
@@ -22,9 +29,13 @@ echo "
     . "  <li class=''>
         Date de fin de vote : " . htmlspecialchars($question->getDateFinVote())
     . "</li>
+        <div id='containerDeleteUpdate'>
         <li> <a href='$hrefDelete'>delete</a> </li>
         <li> <a href='$hrefUpdate'>update</a> </li>
+        </div>
         </p>
         </ul>
-       </div>";
+      ";
+
+echo "</div>";
 
