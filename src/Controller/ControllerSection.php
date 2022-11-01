@@ -33,9 +33,9 @@ class ControllerSection extends AbstactController
     {
         $section = new Section((int)null, $_GET['idQuestion'], "", "");
         $this->getRepository()->create($section);
-        $question = (new QuestionRepository())->select($_GET["idQuestion"]);
-
-        $this->showView();
+//        $question = (new QuestionRepository())->select($_GET["idQuestion"]);
+//
+//        $this->showView();
     }
 
     public function updated(): void

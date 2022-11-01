@@ -6,6 +6,7 @@ class Question extends AbstractDataObject
 {
     private int $idQuestion;
     private string $titreQuestion;
+    private string $descriptionQuestion;
     private string $dateDebutProposition;
     private string $dateFinProposition;
     private string $dateDebutVote;
@@ -21,6 +22,7 @@ class Question extends AbstractDataObject
      */
     public function __construct(int $idQuestion,
                                 string $titreQuestion,
+                                string $descriptionQuestion,
                                 string $dateDebutProposition,
                                 string $dateFinProposition,
                                 string $dateDebutVote,
@@ -28,6 +30,7 @@ class Question extends AbstractDataObject
     {
         $this->idQuestion = $idQuestion;
         $this->titreQuestion = $titreQuestion;
+        $this->descriptionQuestion = $descriptionQuestion;
         $this->dateDebutProposition = $dateDebutProposition;
         $this->dateFinProposition = $dateFinProposition;
         $this->dateDebutVote = $dateDebutVote;
@@ -38,6 +41,7 @@ class Question extends AbstractDataObject
         return [
             "idQuestion" => $this->idQuestion,
             "titreQuestion" => $this->titreQuestion,
+            "descriptionQuestion" => $this->descriptionQuestion,
             "dateDebutProposition" => $this->dateDebutProposition,
             "dateFinProposition" => $this->dateFinProposition,
             "dateDebutVote" => $this->dateDebutVote,
@@ -49,6 +53,7 @@ class Question extends AbstractDataObject
     {
         return [
             "titreQuestion" => $this->titreQuestion,
+            "descriptionQuestion" => $this->descriptionQuestion,
             "dateDebutProposition" => $this->dateDebutProposition,
             "dateFinProposition" => $this->dateFinProposition,
             "dateDebutVote" => $this->dateDebutVote,
@@ -103,4 +108,13 @@ class Question extends AbstractDataObject
     {
         return $this->dateFinVote;
     }
+
+    /**
+     * @return string
+     */
+    public function getDescriptionQuestion(): string
+    {
+        return $this->descriptionQuestion;
+    }
+
 }

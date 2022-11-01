@@ -7,7 +7,7 @@ $hrefCreateSection = "frontController.php?action=created&controller=section&idQu
 $hrefReadAll = "frontController.php?action=readAll";
 
 
-echo "<div class='container text-center my-5' >";
+echo "<div class='container text-center my-5'>";
 
 
 $lienRetourQuestion = "<a href=".$hrefReadAll.">Questions : </a>";
@@ -18,6 +18,9 @@ echo "
         <ul style='list-style: none'>
         <li class=''>
       ". $lienRetourQuestion .htmlspecialchars($question->getIdQuestion())
+    . "</li>"
+    . " <li class=''>
+        Description de la question : " . htmlspecialchars($question->getDescriptionQuestion())
     . "</li>"
     . " <li class=''>
         Date de début de proposition : " . htmlspecialchars($question->getDateDebutProposition())
@@ -41,5 +44,5 @@ echo "
 
 echo "</div>";
 
-require_once __DIR__ .  "/../section/listByQuestion.php";
+require_once __DIR__ . "/../section/listByQuestionForRead.php";
 
