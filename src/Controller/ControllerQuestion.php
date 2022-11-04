@@ -43,6 +43,12 @@ class ControllerQuestion extends AbstactController
         ]);
     }
 
+    public function addSection(): void
+    {
+        (new SectionRepository())->create(new Section((int)null, $_GET['idQuestion'], "", ""));
+        $this->update();
+    }
+
     public function read(): void
     {
         $question = (new QuestionRepository)->select($_GET['idQuestion']);
@@ -104,5 +110,11 @@ class ControllerQuestion extends AbstactController
                 "pathBodyView" => "question/deleted.php"
             ]);
         }
+    }
+
+    public function deleteLastSection(): void
+    {
+        (new SectionRepository())->delete($_GET["idSection"]);
+        $this->update();
     }
 }
