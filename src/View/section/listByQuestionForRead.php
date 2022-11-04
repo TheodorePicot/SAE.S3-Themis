@@ -1,5 +1,5 @@
 <?php
-$count = 0;
+$count = 1;
 foreach ($sections as $section) : ?>
     <h6> Section <?=$count?> </h6>
     <p> <?=$section->getTitreSection()?> </p>

@@ -1,2 +1,2 @@
-<?php
-echo "<p>$errorMessage</p>";
+<p><?=$errorMessage?></p>
+<!-- TODO Faire popup message -->

@@ -34,7 +34,7 @@
 
             <p>
                 <label for="nbDeSections">Nombre de sections</label> :
-                <input type="number" placeholder="3" name="nbSections" id="nbDeSections" required/>
+                <input type="number" min="1" placeholder="3" name="nbSections" id="nbDeSections" required/>
             </p>
 
             <input type='hidden' name='action' value='created'>

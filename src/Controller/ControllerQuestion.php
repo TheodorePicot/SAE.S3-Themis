@@ -65,21 +65,6 @@ class ControllerQuestion extends AbstactController
         ]);
     }
 
-    public function updated(): void
-    {
-        $question = (new QuestionRepository())->build($_GET);
-        (new QuestionRepository)->update($question);
-        foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
-            (new SectionRepository)->update($updatedSection);
-        }
-        $this->showView("view.php", [
-            "questions" => (new QuestionRepository)->selectAll(),
-            "pageTitle" => "Question mise à jour",
-            "pathBodyView" => "question/updated.php"
-        ]);
-    }
-
     public function update(): void
     {
         $sections = (new SectionRepository())->selectAllByQuestion($_GET["idQuestion"]);
@@ -89,6 +74,23 @@ class ControllerQuestion extends AbstactController
             "question" => $question,
             "pageTitle" => "Mise à jour question",
             "pathBodyView" => "question/update.php"
+        ]);
+    }
+
+    public function updated(): void
+    {
+        $question = (new QuestionRepository())->build($_GET);
+        (new QuestionRepository)->update($question);
+
+        foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
+            (new SectionRepository)->update($updatedSection);
+        }
+
+        $this->showView("view.php", [
+            "questions" => (new QuestionRepository)->selectAll(),
+            "pageTitle" => "Question mise à jour",
+            "pathBodyView" => "question/updated.php"
         ]);
     }
 
