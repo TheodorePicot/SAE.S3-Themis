@@ -2,7 +2,6 @@
 
 namespace Themis\Controller;
 
-use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\Section;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\QuestionRepository;
@@ -10,14 +9,6 @@ use Themis\Model\Repository\SectionRepository;
 
 class ControllerQuestion extends AbstactController
 {
-    public function create(): void
-    {
-        $this->showView("view.php", [
-            "pageTitle" => "Création d'une question",
-            "pathBodyView" => "question/create.php"
-        ]);
-    }
-
     public function created(): void
     {
         $question = (new QuestionRepository())->build($_GET);
@@ -44,6 +35,14 @@ class ControllerQuestion extends AbstactController
         }
     }
 
+    public function create(): void
+    {
+        $this->showView("view.php", [
+            "pageTitle" => "Création d'une question",
+            "pathBodyView" => "question/create.php"
+        ]);
+    }
+
     public function read(): void
     {
         $question = (new QuestionRepository)->select($_GET['idQuestion']);
@@ -66,18 +65,6 @@ class ControllerQuestion extends AbstactController
         ]);
     }
 
-    public function update(): void
-    {
-        $sections = (new SectionRepository())->selectAllByQuestion($_GET["idQuestion"]);
-        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
-        $this->showView("view.php", [
-            "sections" => $sections,
-            "question" => $question,
-            "pageTitle" => "Mise à jour question",
-            "pathBodyView" => "question/update.php"
-        ]);
-    }
-
     public function updated(): void
     {
         $question = (new QuestionRepository())->build($_GET);
@@ -90,6 +77,18 @@ class ControllerQuestion extends AbstactController
             "questions" => (new QuestionRepository)->selectAll(),
             "pageTitle" => "Question mise à jour",
             "pathBodyView" => "question/updated.php"
+        ]);
+    }
+
+    public function update(): void
+    {
+        $sections = (new SectionRepository())->selectAllByQuestion($_GET["idQuestion"]);
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $this->showView("view.php", [
+            "sections" => $sections,
+            "question" => $question,
+            "pageTitle" => "Mise à jour question",
+            "pathBodyView" => "question/update.php"
         ]);
     }
 

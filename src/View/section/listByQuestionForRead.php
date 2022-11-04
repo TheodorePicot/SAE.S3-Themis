@@ -1,8 +1,9 @@
 <?php
-foreach ($sections as $section) {
-
-    echo "section d'id : " . $section->getIdSection();
-    echo "<p> Titre : " . $section->getTitreSection()."</p>";
-    echo "<p> Description : " . $section->getDescriptionSection()."</p>";
-
-}
+$count = 0;
+foreach ($sections as $section) : ?>
+    <h6> Section <?=$count?> </h6>
+    <p> <?=$section->getTitreSection()?> </p>
+    <p> <?=$section->getDescriptionSection()?> </p>
+<?php
+$count++;
+endforeach; ?>
