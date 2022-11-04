@@ -74,7 +74,8 @@ class ControllerQuestion extends AbstactController
         $question = new Question($_GET['idQuestion'], $_GET['titreQuestion'], $_GET['descriptionQuestion'],$_GET['dateDebutProposition'], $_GET['dateFinProposition'], $_GET['dateDebutVote'], $_GET['dateFinVote']);
         $this->getRepository()->update($question);
         foreach ((new SectionRepository())->selectAllByQuestion($question->getIdQuestion()) as $section) {
-
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection'.$section->getIdSection()], $_GET['descriptionSection'.$section->getIdSection()]);
+            (new SectionRepository())->update($updatedSection);
         }
         $this->showView("view.php", [
 //            "sections" => $sections,
@@ -93,7 +94,7 @@ class ControllerQuestion extends AbstactController
             "sections" => $sections,
             $controllerName => $object,
             "pageTitle" => "Info $controllerName",
-            "pathBodyView" => "$controllerName./read.php"
+            "pathBodyView" => "$controllerName/read.php"
         ]);
     }
 }
