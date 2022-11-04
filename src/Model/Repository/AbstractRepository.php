@@ -123,5 +123,4 @@ abstract class AbstractRepository
 
         return $pdoStatement->execute($values);
     }
-
 }
