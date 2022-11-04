@@ -20,7 +20,7 @@ abstract class AbstractRepository
      * @param array $objectArrayFormat
      * @return AbstractDataObject
      */
-    protected abstract function build(array $objectArrayFormat): AbstractDataObject;
+    abstract public function build(array $objectArrayFormat): AbstractDataObject;
 
 
     /**

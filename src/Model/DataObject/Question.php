@@ -15,12 +15,13 @@ class Question extends AbstractDataObject
     /**
      * @param int $idQuestion
      * @param string $titreQuestion
+     * @param string $descriptionQuestion
      * @param string $dateDebutProposition
      * @param string $dateFinProposition
      * @param string $dateDebutVote
      * @param string $dateFinVote
      */
-    public function __construct(int $idQuestion,
+    public function __construct(int    $idQuestion,
                                 string $titreQuestion,
                                 string $descriptionQuestion,
                                 string $dateDebutProposition,
@@ -37,7 +38,8 @@ class Question extends AbstractDataObject
         $this->dateFinVote = $dateFinVote;
     }
 
-    public function tableFormatWithPrimaryKey(): array {
+    public function tableFormatWithPrimaryKey(): array
+    {
         return [
             "idQuestion" => $this->idQuestion,
             "titreQuestion" => $this->titreQuestion,
@@ -45,7 +47,7 @@ class Question extends AbstractDataObject
             "dateDebutProposition" => $this->dateDebutProposition,
             "dateFinProposition" => $this->dateFinProposition,
             "dateDebutVote" => $this->dateDebutVote,
-            "dateFinVote" =>$this->dateFinVote
+            "dateFinVote" => $this->dateFinVote
         ];
     }
 
@@ -57,7 +59,7 @@ class Question extends AbstractDataObject
             "dateDebutProposition" => $this->dateDebutProposition,
             "dateFinProposition" => $this->dateFinProposition,
             "dateDebutVote" => $this->dateDebutVote,
-            "dateFinVote" =>$this->dateFinVote
+            "dateFinVote" => $this->dateFinVote
         ];
     }
 
@@ -116,5 +118,4 @@ class Question extends AbstractDataObject
     {
         return $this->descriptionQuestion;
     }
-
 }

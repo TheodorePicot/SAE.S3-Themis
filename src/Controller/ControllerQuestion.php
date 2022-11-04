@@ -4,97 +4,104 @@ namespace Themis\Controller;
 
 use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\Section;
-use Themis\Model\Repository\AbstractRepository;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionRepository;
 
 class ControllerQuestion extends AbstactController
 {
-
-    protected function getRepository(): ?AbstractRepository
+    public function create(): void
     {
-        return new QuestionRepository();
-    }
-
-    protected function getPrimaryKey(): string
-    {
-        return "idQuestion";
-    }
-
-    protected function getControllerName(): string
-    {
-        return "question";
-    }
-
-    protected function getDataObject(): string
-    {
-        return "Themis\Model\DataObject\Question";
+        $this->showView("view.php", [
+            "pageTitle" => "Création d'une question",
+            "pathBodyView" => "question/create.php"
+        ]);
     }
 
     public function created(): void
     {
-        $question = new Question((int)null, $_GET['titreQuestion'], $_GET['descriptionQuestion'],$_GET['dateDebutProposition'], $_GET['dateFinProposition'], $_GET['dateDebutVote'], $_GET['dateFinVote']);
+        $question = (new QuestionRepository())->build($_GET);
 
-        if ($this->getRepository()->create($question)) {
-            $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
-            $section = new Section((int)null,$idQuestion, "", "");
+        if ((new QuestionRepository)->create($question)) {
+            $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
+            $section = new Section((int)null, $idQuestion, "", "");
 
-            for($i = 0; $i < $_GET['nbSections']; $i++) {
-                echo $i;
+            for ($i = 0; $i < $_GET["nbSections"]; $i++) {
                 (new SectionRepository())->create($section);
             }
 
-            $questions = $this->getRepository()->selectAll();
+            $sections = (new SectionRepository())->selectAllByQuestion($idQuestion);
+            $question = (new QuestionRepository)->select($idQuestion);
+
             $this->showView("view.php", [
-                'questions' => $questions,
-                "pageTitle" => "Question créée",
-                "pathBodyView" => "question/created.php"
+                "sections" => $sections,
+                "question" => $question,
+                "pageTitle" => "Création d'une question",
+                "pathBodyView" => "question/update.php"
             ]);
         } else {
             $this->showError("Erreur de création de la question");
         }
     }
 
-    public function update(): void
+    public function read(): void
     {
-        $sections = (new SectionRepository())->selectAllByQuestion($_GET[$this->getPrimaryKey()]);
-        $object = $this->getRepository()->select($_GET[$this->getPrimaryKey()]);
-        $controllerName = $this->getControllerName();
+        $question = (new QuestionRepository)->select($_GET['idQuestion']);
+        $sections = (new SectionRepository())->selectAllByQuestion($_GET['idQuestion']);
         $this->showView("view.php", [
             "sections" => $sections,
-            $controllerName => $object,
-            "pageTitle" => "Mise à jour $controllerName",
-            "pathBodyView" => "$controllerName./update.php"
+            "question" => $question,
+            "pageTitle" => "Info question",
+            "pathBodyView" => "question/read.php"
+        ]);
+    }
+
+    public function readAll(): void
+    {
+        $questions = (new QuestionRepository)->selectAll();
+        $this->showView("view.php", [
+            "questions" => $questions,
+            "pageTitle" => "Questions",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+    public function update(): void
+    {
+        $sections = (new SectionRepository())->selectAllByQuestion($_GET["idQuestion"]);
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $this->showView("view.php", [
+            "sections" => $sections,
+            "question" => $question,
+            "pageTitle" => "Mise à jour question",
+            "pathBodyView" => "question/update.php"
         ]);
     }
 
     public function updated(): void
     {
-        $question = new Question($_GET['idQuestion'], $_GET['titreQuestion'], $_GET['descriptionQuestion'],$_GET['dateDebutProposition'], $_GET['dateFinProposition'], $_GET['dateDebutVote'], $_GET['dateFinVote']);
-        $this->getRepository()->update($question);
-        foreach ((new SectionRepository())->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection'.$section->getIdSection()], $_GET['descriptionSection'.$section->getIdSection()]);
-            (new SectionRepository())->update($updatedSection);
+        $question = (new QuestionRepository())->build($_GET);
+        (new QuestionRepository)->update($question);
+        foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
+            (new SectionRepository)->update($updatedSection);
         }
         $this->showView("view.php", [
-//            "sections" => $sections,
-            "questions" => $this->getRepository()->selectAll(),
-            "pageTitle" => "Question créée",
+            "questions" => (new QuestionRepository)->selectAll(),
+            "pageTitle" => "Question mise à jour",
             "pathBodyView" => "question/updated.php"
         ]);
     }
 
-    public function read(): void
+    public function delete(): void
     {
-        $object = $this->getRepository()->select($_GET[$this->getPrimaryKey()]);
-        $sections = (new SectionRepository())->selectAllByQuestion($_GET[$this->getPrimaryKey()]);
-        $controllerName = $this->getControllerName();
-        $this->showView("view.php", [
-            "sections" => $sections,
-            $controllerName => $object,
-            "pageTitle" => "Info $controllerName",
-            "pathBodyView" => "$controllerName/read.php"
-        ]);
+        if ((new QuestionRepository)->delete($_GET['idQuestion'])) {
+            $questions = (new QuestionRepository)->selectAll();
+            $this->showView("view.php", [
+                "questions" => $questions,
+                "pageTitle" => "Suppression",
+                "pathBodyView" => "question/deleted.php"
+            ]);
+        }
     }
 }

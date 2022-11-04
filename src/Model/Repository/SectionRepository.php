@@ -46,25 +46,25 @@ class SectionRepository extends AbstractRepository
         return $dataObjects;
     }
 
-    protected function build(array $sectionArrayFormat): AbstractDataObject
+    public function build(array $objectArrayFormat): AbstractDataObject
     {
-        if ($sectionArrayFormat["titreSection"] == "" || $sectionArrayFormat["descriptionSection"] == "") {
-            return new Section($sectionArrayFormat["idSection"],
-                $sectionArrayFormat["idQuestion"],
+        if ($objectArrayFormat["titreSection"] == "" || $objectArrayFormat["descriptionSection"] == "") {
+            return new Section($objectArrayFormat["idSection"],
+                $objectArrayFormat["idQuestion"],
                 "",
                 "");
         }
 
-        if (isset($sectionArrayFormat["idSection"])) {
-            return new Section($sectionArrayFormat["idSection"],
-                $sectionArrayFormat["idQuestion"],
-                $sectionArrayFormat["titreSection"],
-                $sectionArrayFormat["descriptionSection"]);
+        if (isset($objectArrayFormat["idSection"])) {
+            return new Section($objectArrayFormat["idSection"],
+                $objectArrayFormat["idQuestion"],
+                $objectArrayFormat["titreSection"],
+                $objectArrayFormat["descriptionSection"]);
         } else {
             return new Section((int)null,
-                $sectionArrayFormat["idQuestion"],
-                $sectionArrayFormat["titreSection"],
-                $sectionArrayFormat["descriptionSection"]);
+                $objectArrayFormat["idQuestion"],
+                $objectArrayFormat["titreSection"],
+                $objectArrayFormat["descriptionSection"]);
         }
     }
 

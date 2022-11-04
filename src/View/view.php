@@ -26,9 +26,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="frontController.php?action=create"><h4>Créer une Question</h4></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><h4>Test</h4></a>
-                </li>
             </ul>
         </nav>
     </div>

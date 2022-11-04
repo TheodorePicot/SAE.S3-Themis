@@ -28,20 +28,12 @@ class QuestionRepository extends AbstractRepository
         ];
     }
 
-    public function getNbSections(string $idQuestion): int {
-        $sqlQuery = 'SELECT "nbSections" FROM "Questions" WHERE "idQuestion" = ' . $idQuestion;
-        $pdoStatement = DatabaseConnection::getPdo()->query($sqlQuery);
-        $nbSectionTab = $pdoStatement->fetch();
-        return (int) $nbSectionTab['nbSections'];
-    }
-
-
-    protected function build(array $questionArrayFormat): Question
+    public function build(array $objectArrayFormat): Question
     {
-        if (isset($questionArrayFormat['idQuestion'])) { //la question existe déjà
-            return new Question($questionArrayFormat['idQuestion'], $questionArrayFormat['titreQuestion'], $questionArrayFormat["descriptionQuestion"], $questionArrayFormat['dateDebutProposition'], $questionArrayFormat['dateFinProposition'], $questionArrayFormat['dateDebutVote'], $questionArrayFormat['dateFinVote']);
+        if (isset($objectArrayFormat['idQuestion'])) { //la question existe déjà
+            return new Question($objectArrayFormat['idQuestion'], $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
         } else {  //la question n'existe pas (ex : formulaire)
-            return new Question((int)null,$questionArrayFormat['titreQuestion'],$questionArrayFormat["descriptionQuestion"] , $questionArrayFormat['dateDebutProposition'], $questionArrayFormat['dateFinProposition'], $questionArrayFormat['dateDebutVote'], $questionArrayFormat['dateFinVote']);
+            return new Question((int)null,$objectArrayFormat['titreQuestion'],$objectArrayFormat["descriptionQuestion"] , $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
         }
     }
 }

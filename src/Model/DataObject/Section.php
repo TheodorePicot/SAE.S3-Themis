@@ -73,5 +73,4 @@ class Section extends AbstractDataObject
     {
         return $this->descriptionSection;
     }
-
 }
