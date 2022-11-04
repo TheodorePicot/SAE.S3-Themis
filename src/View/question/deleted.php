@@ -1,4 +1,4 @@
-<p>Suppression de la question effectué</p>
+<p>La question à été supprimé</p>
 <?php require_once "list.php"?>
 
 <!-- TODO Faire popup message -->

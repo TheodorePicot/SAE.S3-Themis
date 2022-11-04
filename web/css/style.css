@@ -7,9 +7,23 @@ nav li{
 
 }
 
+nav a:after {
+    content: '';
+    width: 0;
+    height: 1px;
+    background-color:black ;
+    margin:auto;
+    display: block;
+}
+
+nav a:hover::after{
+    width: 100%;
+    transition: width 0.2s linear;
+}
+
+
 body {
     background-color: #fdf7f2;
-    font-family: 'Inter', sans-serif;
 
 }
 
@@ -24,5 +38,8 @@ a{
 
 #containerListeQuestion{
     width: 800px;
+}
+
+#icon {
 }
 
