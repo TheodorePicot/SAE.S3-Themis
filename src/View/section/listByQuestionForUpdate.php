@@ -15,7 +15,7 @@ foreach ($sections as $section) : ?>
                   cols="40"><?= $section->getDescriptionSection() ?></textarea>
     </p>
 <?php endforeach; ?>
-<a href="frontController.php?action=addSection&idQuestion=<?= $_GET['idQuestion'] ?>">Ajouter section</a>
-
-<a href="frontController.php?action=deleteLastSection&idQuestion=<?= $_GET['idQuestion'] ?>&idSection=<?= $lastSection->getIdSection() ?>">Supprimer
-    section</a>
+<a href="frontController.php?action=addSection&idQuestion=<?= $question->getIdQuestion() ?>">Ajouter section</a>
+<?php if($lastSection != false)?>
+    <a href="frontController.php?action=deleteLastSection&idQuestion=<?= $question->getIdQuestion() ?>&idSection=<?=$lastSection->getIdSection() ?>">Supprimer
+        section</a>
