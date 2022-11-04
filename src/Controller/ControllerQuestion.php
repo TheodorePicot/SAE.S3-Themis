@@ -21,7 +21,7 @@ class ControllerQuestion extends AbstactController
                 (new SectionRepository())->create($section);
             }
 
-            $sections = (new SectionRepository())->selectAllByQuestion($idQuestion);
+            $sections = (new SectionRepository())->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
             $question = (new QuestionRepository)->select($idQuestion);
 
             $this->showView("view.php", [
