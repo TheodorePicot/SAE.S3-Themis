@@ -35,7 +35,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
 
         <div id="containerUpdateDelete">
-            <ul style='list-style: none'>
+
                 <a href='<?= $hrefDelete ?>'>
                 <div class="my-1" style='border:1px solid; border-radius: 10px'>
                     <li>delete</li>
@@ -46,7 +46,6 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                     <li>update</li>
                 </div>
                 </a>
-            </ul>
         </div>
     </ul>
 </div>

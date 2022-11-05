@@ -1,8 +1,3 @@
-#test{
-    display: block;
-    background-color:#C7B198;
-}
-
 nav li{
     padding: 0px 20px;
 
@@ -38,10 +33,36 @@ a{
     color: black;
 }
 
-#containerListeQuestion{
-    width: 800px;
-}
+
 
 #containerUpdateDelete{
     width: 85px;
+
 }
+
+#containerListeQuestion{
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+}
+
+
+.box{
+    background-color:#C7B198;
+    width: 200px;
+    height: 100px;
+    box-sizing: border-box;
+    margin: 20px;
+}
+
+.box:hover{
+    color: #ffffff;
+}
+
+#containerUpdateDelete{
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+}
+
