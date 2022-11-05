@@ -16,7 +16,8 @@ nav a:after {
     display: block;
 }
 
-nav a:hover::after{
+
+nav ul a:hover::after{
     width: 100%;
     transition: width 0.2s linear;
 }
