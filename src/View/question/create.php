@@ -24,7 +24,7 @@
                 <input type="date" placeholder="JJ/MM/YYYY" name="dateFinProposition" id="dateFinProposition" required/>
             </p>
             <p>
-                <label for="dateDebutVote">Date de début du vote</label> :
+                <label for="dateDebutVote">Date de d ébut du vote</label> :
                 <input type="date" placeholder="JJ/MM/YYYY" name="dateDebutVote" id="dateDebutVote" required/>
             </p>
             <p>
