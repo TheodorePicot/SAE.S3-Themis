@@ -7,10 +7,11 @@
     $lienRetourQuestion = "<a href=".$hrefReadAll.">Questions : </a>";
 ?>
 
-<div class='container text-center my-5'>
+<div class='container my-5'>
+    <p>
     <ul style='list-style: none'>
         <li>
-            <?= htmlspecialchars($question->getTitreQuestion()) ?>
+           <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
         </li>
         <li>
             Description de la question : <?=htmlspecialchars($question->getDescriptionQuestion())?>
@@ -27,7 +28,8 @@
         <li>
             Date de fin de vote : <?=htmlspecialchars($question->getDateFinVote())?>
         </li>
-    </ul>
+        </p>
+
 
     <?php require_once __DIR__ . "/../section/listByQuestionForRead.php" ?>
 
@@ -37,7 +39,7 @@
             <li> <a href='<?=$hrefUpdate?>'>update</a> </li>
         </ul>
     </div>
-
+    </ul>
 </div>
 
 

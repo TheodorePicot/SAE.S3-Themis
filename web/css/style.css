@@ -1,5 +1,6 @@
-#containerQuestion{
+#test{
     display: block;
+    background-color:#C7B198;
 }
 
 nav li{
@@ -39,8 +40,5 @@ a{
 
 #containerListeQuestion{
     width: 800px;
-}
-
-#icon {
 }
 
