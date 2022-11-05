@@ -16,7 +16,7 @@ class ControllerQuestion extends AbstactController
         if ((new QuestionRepository)->create($question)) {
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
 
-            $sections = (new SectionRepository())->selectAllByQuestion($idQuestion);
+            $sections = (new SectionRepository())->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
             $question = (new QuestionRepository)->select($idQuestion);
 
             $this->showView("view.php", [
