@@ -1,4 +1,4 @@
-<form method="get" action="login.php">
+<form method="get" action="frontController?controller=utilisateur&action=signUp.php">
     <fieldset>
         <legend>S'inscire</legend>
 
