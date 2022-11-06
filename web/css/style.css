@@ -1,8 +1,3 @@
-#test{
-    display: block;
-    background-color:#C7B198;
-}
-
 nav li{
     padding: 0px 20px;
 
@@ -38,7 +33,91 @@ a{
     color: black;
 }
 
+
+#containerUpdateDelete{
+    width: 85px;
+
+}
+
 #containerListeQuestion{
-    width: 800px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+}
+
+#containerQuestion p{
+    padding: 10px;
+}
+
+.box{
+    background-color:#C7B198;
+    width: 400px;
+    height: 150px;
+    box-sizing: border-box;
+    margin: 20px;
+}
+
+.box:hover{
+    color: #fafafa;
+}
+
+#containerUpdateDelete{
+    display: flex;
+    flex-direction: row;
+    width: 60px;
+}
+
+#containerUpdateDelete a{
+    margin: 1px;
+    padding: 1px;
+}
+
+
+.containerPageQuestion{
+   display: flex;
+    flex-direction: row;
+}
+
+/*CALENDRIER*/
+
+.containerTime{
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    padding: 3rem 0;
+    margin-right: 100px;
+    width: 400px;
+}
+
+.wrapper{
+    background: #c7b198;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.sessions{
+    margin-top: 2rem;
+    border-radius: 12px;
+    position: relative;
+}
+
+.containerTime li {
+    padding-bottom: 1.5rem;
+    border-left: 1px solid #897561;
+    position: relative;
+    padding-left: 5px;
+    margin-left: 10px;
+}
+
+.time {
+    color: #2a2839;
+    font-weight: 500;
+}
+
+.containerTime p {
+    color: #4f4f4f;
+    line-height: 1.5;
+    margin-top: 0.4rem;
 }
 
