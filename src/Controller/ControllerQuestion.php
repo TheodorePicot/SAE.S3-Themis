@@ -16,7 +16,7 @@ class ControllerQuestion extends AbstactController
         if ((new QuestionRepository)->create($question)) {
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
 
-            $sections = (new SectionRepository())->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
+            $sections = (new SectionRepository)->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
             $question = (new QuestionRepository)->select($idQuestion);
 
             $this->showView("view.php", [
@@ -40,14 +40,14 @@ class ControllerQuestion extends AbstactController
 
     public function addSection(): void
     {
-        (new SectionRepository())->create(new Section((int)null, $_GET['idQuestion'], "", ""));
+        (new SectionRepository)->create(new Section((int)null, $_GET['idQuestion'], "", ""));
         $this->update();
     }
 
     public function read(): void
     {
         $question = (new QuestionRepository)->select($_GET['idQuestion']);
-        $sections = (new SectionRepository())->selectAllByQuestion($_GET['idQuestion']);
+        $sections = (new SectionRepository)->selectAllByQuestion($_GET['idQuestion']);
         $this->showView("view.php", [
             "sections" => $sections,
             "question" => $question,
@@ -68,7 +68,7 @@ class ControllerQuestion extends AbstactController
 
     public function update(): void
     {
-        $sections = (new SectionRepository())->selectAllByQuestion($_GET["idQuestion"]);
+        $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
         $this->showView("view.php", [
             "sections" => $sections,
@@ -80,7 +80,7 @@ class ControllerQuestion extends AbstactController
 
     public function updated(): void
     {
-        $question = (new QuestionRepository())->build($_GET);
+        $question = (new QuestionRepository)->build($_GET);
         (new QuestionRepository)->update($question);
 
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
@@ -109,7 +109,7 @@ class ControllerQuestion extends AbstactController
 
     public function deleteLastSection(): void
     {
-        (new SectionRepository())->delete($_GET["idSection"]);
+        (new SectionRepository)->delete($_GET["idSection"]);
         $this->update();
     }
 }
