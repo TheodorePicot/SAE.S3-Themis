@@ -7,13 +7,15 @@
             <p>
                 <label for="titreQuestion">Titre</label> :
                 <input type="text" placeholder="Triss ou Yennefer ?" value="<?= $question->getTitreQuestion() ?>"
-                       name="titreQuestion" id="titreQuestion" required/>
+                       name="titreQuestion" id="titreQuestion" max="99" maxlength="99" required/>
             </p>
 
             <p>
                 <label for="descriptionQuestion">Description</label> :
-                <textarea placeholder="What is the hell in the frick" name="descriptionQuestion" id="descriptionQuestion"
-                          required rows="5" cols="40"><?= $question->getDescriptionQuestion() ?></textarea>
+                <textarea placeholder="What is the hell in the frick" name="descriptionQuestion"
+                          id="descriptionQuestion"
+                          required rows="5" cols="40"
+                          maxlength="700"><?= $question->getDescriptionQuestion() ?></textarea>
             </p>
 
             <p>
@@ -34,7 +36,8 @@
             </p>
             <p>
                 <label for="dateFinVote">Date de fin du vote</label> :
-                <input type="date" placeholder="JJ/MM/YYYY" value="<?= $question->getDateFinVote() ?>" name="dateFinVote"
+                <input type="date" placeholder="JJ/MM/YYYY" value="<?= $question->getDateFinVote() ?>"
+                       name="dateFinVote"
                        id="dateFinVote" required/>
             </p>
 

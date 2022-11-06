@@ -118,4 +118,11 @@ class Question extends AbstractDataObject
     {
         return $this->descriptionQuestion;
     }
+
+    public function getShortDescriptionQuestion(): string
+    {
+        $tmp = substr($this->descriptionQuestion, 0, 120);
+        $tmp .= "...";
+        return $tmp;
+    }
 }

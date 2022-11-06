@@ -28,12 +28,12 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             <div id="containerUpdateDelete">
 
                 <a href='<?= $hrefDelete ?>'>
-                    <div class="my-1" style='border:1px solid; border-radius: 10px'>
+                    <div id="deleteButton" class="my-1" style='border:1px solid; border-radius: 4px;'>
                         <li>delete</li>
                     </div>
                 </a>
                 <a href='<?= $hrefUpdate ?>'>
-                    <div class="my-1" style='border:1px solid; border-radius: 10px'>
+                    <div id="updateButton" class="my-1" style='border:1px solid; border-radius: 4px'>
                         <li>update</li>
                     </div>
                 </a>
@@ -47,19 +47,19 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             <h2> Calendrier</h2>
             <ul class="sessions">
                 <li>
-                    <div class="time"> <?= htmlspecialchars($question->getDateDebutProposition()) ?></div>
+                    <div class="time"><b><?= htmlspecialchars($question->getDateDebutProposition()) ?></b></div>
                     <p> Date de début de proposition</p>
                 </li>
                 <li>
-                    <div class="time"><?= htmlspecialchars($question->getDateFinProposition()) ?></div>
+                    <div class="time"><b><?= htmlspecialchars($question->getDateFinProposition()) ?></b></div>
                     <p> Date de fin de rédaction de proposition</p>
                 </li>
                 <li>
-                    <div class="time"><?= htmlspecialchars($question->getDateDebutVote()) ?></div>
+                    <div class="time"><b><?= htmlspecialchars($question->getDateDebutVote()) ?></b></div>
                     <p>Date de début de vote </p>
                 </li>
                 <li>
-                    <div class="time"><?= htmlspecialchars($question->getDateFinVote()) ?></div>
+                    <div class="time"><b><?= htmlspecialchars($question->getDateFinVote()) ?></b></div>
                     <p>Date de fin de vote</p>
                 </li>
             </ul>

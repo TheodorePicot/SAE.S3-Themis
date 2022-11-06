@@ -1,5 +1,5 @@
-nav li{
-    padding: 0px 20px;
+nav li {
+    padding: 0 20px;
 
 }
 
@@ -7,13 +7,13 @@ nav a:after {
     content: '';
     width: 0;
     height: 1px;
-    background-color:black ;
-    margin:auto;
+    background-color: black;
+    margin: auto;
     display: block;
 }
 
 
-nav ul a:hover::after{
+nav ul a:hover::after {
     width: 100%;
     transition: width 0.2s linear;
 }
@@ -21,67 +21,100 @@ nav ul a:hover::after{
 
 body {
     background-color: #fdf7f2;
-
 }
 
-#containerFormulaire{
+#containerFormulaire {
     width: 500px;
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
 }
 
 
-#containerUpdateDelete{
+#containerUpdateDelete {
     width: 85px;
-
 }
 
-#containerListeQuestion{
-    height: auto;
+body {
+    height: 100%;
+    width: 100%;
+}
+
+#containerListeQuestion {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+#listeQuestion {
+    height: auto;
+    width: 90%;
+    display: flex;
+    gap: 40px 4%;
     flex-flow: row wrap;
 }
 
-#containerQuestion p{
-    padding: 10px;
+#containerQuestion h3 {
+    padding: 10px 10px 10px 20px;
+    font-weight: bold;
 }
 
-.box{
-    background-color:#C7B198;
-    width: 400px;
-    height: 150px;
+#containerQuestion p {
+    padding: 0 10px 10px 20px;
+}
+
+#question {
+    overflow: hidden;
+}
+
+.box {
+    background-color: #C7B198;
+    width: 500px;
+    height: 195px;
     box-sizing: border-box;
-    margin: 20px;
+    box-shadow: 4px 3px 8px 1px #969696;
 }
 
-.box:hover{
+#containerQuestion:hover {
     color: #fafafa;
 }
 
-#containerUpdateDelete{
+#containerUpdateDelete {
     display: flex;
     flex-direction: row;
     width: 60px;
 }
 
-#containerUpdateDelete a{
-    margin: 1px;
+#containerUpdateDelete a:first-child {
+    margin: 10px 10px 10px 0;
     padding: 1px;
 }
 
+#containerUpdateDelete a {
+    margin: 10px;
+    padding: 1px;
+}
 
-.containerPageQuestion{
-   display: flex;
+#updateButton li {
+    margin: 3px 6px 4px 6px;
+}
+
+#deleteButton li {
+    margin: 3px 6px 4px 6px;
+}
+
+.containerPageQuestion {
+    display: flex;
     flex-direction: row;
 }
 
 /*CALENDRIER*/
 
-.containerTime{
+.containerTime {
     display: flex;
     align-items: center;
     padding: 0 1rem;
@@ -90,13 +123,13 @@ a{
     width: 400px;
 }
 
-.wrapper{
+.wrapper {
     background: #c7b198;
     padding: 2rem;
     border-radius: 15px;
 }
 
-.sessions{
+.sessions {
     margin-top: 2rem;
     border-radius: 12px;
     position: relative;
@@ -120,4 +153,3 @@ a{
     line-height: 1.5;
     margin-top: 0.4rem;
 }
-
