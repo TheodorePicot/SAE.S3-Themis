@@ -4,12 +4,12 @@
             <h2>Création de question</h2>
             <p>
                 <label for="titreQuestion">Titre</label> :
-                <input type="text" placeholder="Triss ou Yennefer ?" name="titreQuestion" id="titreQuestion" max="99" maxlength="99" required/>
+                <input type="text" placeholder="?" name="titreQuestion" id="titreQuestion" max="99" maxlength="99" required/>
             </p>
 
             <p>
                 <label for="descriptionQuestion">Description</label> :
-                <textarea placeholder="What is the hell in the frick" name="descriptionQuestion" id="descriptionQuestion"
+                <textarea placeholder="Votre question ici" name="descriptionQuestion" id="descriptionQuestion"
                           maxlength="700" required rows="5" cols="40"></textarea>
             </p>
 

@@ -6,13 +6,13 @@
 
             <p>
                 <label for="titreQuestion">Titre</label> :
-                <input type="text" placeholder="Triss ou Yennefer ?" value="<?= $question->getTitreQuestion() ?>"
+                <input type="text" placeholder="?" value="<?= $question->getTitreQuestion() ?>"
                        name="titreQuestion" id="titreQuestion" max="99" maxlength="99" required/>
             </p>
 
             <p>
                 <label for="descriptionQuestion">Description</label> :
-                <textarea placeholder="What is the hell in the frick" name="descriptionQuestion"
+                <textarea placeholder="Decrire la question" name="descriptionQuestion"
                           id="descriptionQuestion"
                           required rows="5" cols="40"
                           maxlength="700"><?= $question->getDescriptionQuestion() ?></textarea>
