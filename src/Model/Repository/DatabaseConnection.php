@@ -2,13 +2,13 @@
 
 namespace Themis\Model\Repository;
 
-use Themis\Config\Conf;
 use PDO;
+use Themis\Config\Conf;
 
 class DatabaseConnection
 {
-    private PDO $pdo;
     private static ?DatabaseConnection $instance = null;
+    private PDO $pdo;
 
     /**
      * @param $pdo

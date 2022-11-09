@@ -1,10 +1,15 @@
-<form method="get" action="frontController?controller=utilisateur&action=signUp.php">
+<form method="get" action="frontController?controller=utilisateur&action=created.php">
     <fieldset>
         <legend>S'inscire</legend>
 
         <p>
-            <label for="email">Email</label> :
-            <input type="text" placeholder="dupontpaul1610@gmail.com" name="email" id="email" required/>
+            <label for="login">Login</label> :
+            <input type="text" placeholder="Paul16" name="login" id="login" required/>
+        </p>
+
+        <p>
+            <label for="adresseMail">Email</label> :
+            <input type="text" placeholder="dupontpaul1610@gmail.com" name="adresseMail" id="adresseMail" required/>
         </p>
 
         <p>
@@ -13,13 +18,13 @@
         </p>
 
         <p>
-            <label for="prenom">Prenom</label> :
+            <label for="prenom">Prénom</label> :
             <input type="text" placeholder="Paul" name="prenom" id="prenom" required/>
         </p>
 
         <p>
-            <label for="pseudo">Pseudo</label> :
-            <input type="text" placeholder="Paul16" name="pseudo" id="pseudo" required/>
+            <label for="dateNaissance">Date de naissance</label> :
+            <input type="text" placeholder="Paul" name="dateNaissance" id="dateNaissance" required/>
         </p>
 
         <p>

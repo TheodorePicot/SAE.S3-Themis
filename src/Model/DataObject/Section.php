@@ -26,19 +26,19 @@ class Section extends AbstractDataObject
     public function tableFormatWithoutPrimaryKey(): array
     {
         return [
-            'idQuestion' => $this->idQuestion,
-            'titreSection' => $this->titreSection,
-            'descriptionSection' => $this->descriptionSection
+            "idQuestion" => $this->idQuestion,
+            "titreSection" => $this->titreSection,
+            "descriptionSection" => $this->descriptionSection
         ];
     }
 
     public function tableFormatWithPrimaryKey(): array
     {
         return [
-            'idSection' => $this->idSection,
-            'idQuestion' => $this->idQuestion,
-            'titreSection' => $this->titreSection,
-            'descriptionSection' => $this->descriptionSection
+            "idSection" => $this->idSection,
+            "idQuestion" => $this->idQuestion,
+            "titreSection" => $this->titreSection,
+            "descriptionSection" => $this->descriptionSection
         ];
     }
 

@@ -9,6 +9,16 @@ use Themis\Model\Repository\SectionRepository;
 
 class ControllerQuestion extends AbstactController
 {
+    protected function getCreationMessage(): string
+    {
+        return "Création Question";
+    }
+
+    protected function getViewFolderName(): string
+    {
+        return "question";
+    }
+
     public function created(): void
     {
         $question = (new QuestionRepository())->build($_GET);
@@ -30,13 +40,7 @@ class ControllerQuestion extends AbstactController
         }
     }
 
-    public function create(): void
-    {
-        $this->showView("view.php", [
-            "pageTitle" => "Création d'une question",
-            "pathBodyView" => "question/create.php"
-        ]);
-    }
+
 
     public function addSection(): void
     {
