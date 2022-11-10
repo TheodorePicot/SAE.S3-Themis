@@ -40,4 +40,54 @@ class Utilisateur extends AbstractDataObject
             "mdp" => $this->mdp,
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function getLogin(): string
+    {
+        return $this->login;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrenom(): string
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdresseMail(): string
+    {
+        return $this->adresseMail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateNaissance(): string
+    {
+        return $this->dateNaissance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMdp(): string
+    {
+        return $this->mdp;
+    }
+
+
 }

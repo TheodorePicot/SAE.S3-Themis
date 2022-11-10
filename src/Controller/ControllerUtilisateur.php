@@ -22,7 +22,7 @@ class ControllerUtilisateur extends AbstactController
 
         if ((new UtilisateurRepository())->create($utilisateur)) {
             $this->showView("view.php", [
-                "pageTitle" => "Création d'une question",
+                "pageTitle" => "Création d'une utilisateur",
                 "pathBodyView" => "utilisateur/created.php"
             ]);
         } else {
