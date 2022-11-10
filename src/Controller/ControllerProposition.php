@@ -5,6 +5,15 @@ namespace Themis\Controller;
 use Themis\Model\Repository\PropositionRepository;
 
 class ControllerProposition extends AbstactController {
+    protected function getCreationMessage(): string
+    {
+        return "Création d'une proposition";
+    }
+
+    protected function getViewFolderName(): string
+    {
+        return "proposition";
+    }
 
     //en cours
     /*
@@ -29,10 +38,4 @@ class ControllerProposition extends AbstactController {
         }
     }
     */
-
-    public function create(): void
-    {
-        $this->showView("view.php", ["pageTitle" => "Création d'une proposition", "pathBodyView" => "proposition/create.php"]);
-    }
-
 }

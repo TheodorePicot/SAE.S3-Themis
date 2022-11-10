@@ -28,13 +28,13 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             <div id="containerUpdateDelete">
 
                 <a href='<?= $hrefDelete ?>'>
-                    <div id="deleteButton" class="my-1" style='border:1px solid; border-radius: 4px;'>
-                        <li>delete</li>
+                    <div id="deleteButton" class="my-2" style='border:1px solid; border-radius: 4px;'>
+                        <li>Supprimer</li>
                     </div>
                 </a>
                 <a href='<?= $hrefUpdate ?>'>
-                    <div id="updateButton" class="my-1" style='border:1px solid; border-radius: 4px'>
-                        <li>update</li>
+                    <div id="updateButton" class="my-2" style='border:1px solid; border-radius: 4px'>
+                        <li>Mettre à jour</li>
                     </div>
                 </a>
             </div>

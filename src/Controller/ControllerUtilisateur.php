@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\UtilisateurRepository;
 
 class ControllerUtilisateur extends AbstactController
@@ -18,22 +19,15 @@ class ControllerUtilisateur extends AbstactController
 
     public function created()
     {
-        $question = (new UtilisateurRepository())->build($_GET);
+        $utilisateur = (new UtilisateurRepository())->build($_GET);
 
-        if ((new QuestionRepository)->create($question)) {
-            $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
-
-            $sections = (new SectionRepository)->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
-            $question = (new QuestionRepository)->select($idQuestion);
-
+        if ((new UtilisateurRepository())->create($utilisateur)) {
             $this->showView("view.php", [
-                "sections" => $sections,
-                "question" => $question,
                 "pageTitle" => "Création d'une question",
-                "pathBodyView" => "question/update.php"
+                "pathBodyView" => "utilisateur/created.php"
             ]);
         } else {
-            $this->showError("Erreur de création de la question");
+            $this->showError("Ce login existe déjà");
         }
     }
 }
