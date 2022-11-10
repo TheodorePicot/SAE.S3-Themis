@@ -2,7 +2,8 @@
 
 namespace Themis\Model\DataObject;
 
-class Proposition extends AbstractDataObject {
+class Proposition extends AbstractDataObject
+{
 
     private int $idProposition;
     private int $idQuestion;
@@ -15,6 +16,20 @@ class Proposition extends AbstractDataObject {
     {
         $this->idProposition = $idProposition;
         $this->idQuestion = $idQuestion;
+    }
+
+    public function tableFormat(): array
+    {
+        if ($this->idProposition == 0) {
+            return [
+                "idQuestion" => $this->idQuestion
+            ];
+        } else {
+            return [
+                "idProposition" => $this->idProposition,
+                "idQuestion" => $this->idQuestion
+            ];
+        }
     }
 
     /**
@@ -31,13 +46,5 @@ class Proposition extends AbstractDataObject {
     public function getIdQuestion(): int
     {
         return $this->idQuestion;
-    }
-
-    public function tableFormat(): array
-    {
-        return [
-            "idProposition" => $this->idProposition,
-            "idQuestion" => $this->idQuestion
-        ];
     }
 }
