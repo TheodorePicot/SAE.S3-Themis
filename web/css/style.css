@@ -42,6 +42,8 @@ body {
     width: 100%;
 }
 
+/*AFFICHAGE QUESTION*/
+
 #containerListeQuestion {
     display: flex;
     align-items: center;
@@ -52,7 +54,7 @@ body {
 
 #listeQuestion {
     height: auto;
-    width: 90%;
+    width: 100%;
     display: flex;
     gap: 40px 4%;
     flex-flow: row wrap;
