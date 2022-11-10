@@ -2,7 +2,6 @@
 
 namespace Themis\Controller;
 
-use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\UtilisateurRepository;
 
 class ControllerUtilisateur extends AbstactController
@@ -29,5 +28,15 @@ class ControllerUtilisateur extends AbstactController
         } else {
             $this->showError("Ce login existe déjà");
         }
+    }
+
+    public function read()
+    {
+        $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
+        $this->showView("view.php", [
+            "utilisateur" => $utilisateur,
+            "pageTitle" => "Info Utilisateur",
+            "pathBodyView" => "utilisateur/read.php"
+        ]);
     }
 }

@@ -40,7 +40,6 @@ class Question extends AbstractDataObject
 
     public function tableFormat(): array
     {
-
         if($this->idQuestion == 0) {
             return [
                 "titreQuestion" => $this->titreQuestion,
@@ -61,7 +60,6 @@ class Question extends AbstractDataObject
                 "dateFinVote" => $this->dateFinVote
             ];
         }
-
     }
 
     /**

@@ -30,9 +30,9 @@ class QuestionRepository extends AbstractRepository
 
     public function build(array $objectArrayFormat): Question
     {
-        if (isset($objectArrayFormat['idQuestion'])) { //la question existe déjà
+        if (isset($objectArrayFormat['idQuestion'])) { //la question existe déjà (update)
             return new Question($objectArrayFormat['idQuestion'], $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
-        } else {  //la question n'existe pas (ex : formulaire)
+        } else {  //la question n'existe pas (ex : formulaire) (create)
             return new Question((int)null,$objectArrayFormat['titreQuestion'],$objectArrayFormat["descriptionQuestion"] , $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
         }
     }

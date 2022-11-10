@@ -28,19 +28,18 @@ class ControllerQuestion extends AbstactController
 
             $sections = (new SectionRepository)->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
             $question = (new QuestionRepository)->select($idQuestion);
-
+            $message = "Création Question";
             $this->showView("view.php", [
                 "sections" => $sections,
                 "question" => $question,
-                "pageTitle" => "Création d'une question",
+                "message" => $message,
+                "pageTitle" => "Création question",
                 "pathBodyView" => "question/update.php"
             ]);
         } else {
             $this->showError("Erreur de création de la question");
         }
     }
-
-
 
     public function addSection(): void
     {
@@ -74,9 +73,12 @@ class ControllerQuestion extends AbstactController
     {
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $message = "Mise à jour question";
+
         $this->showView("view.php", [
             "sections" => $sections,
             "question" => $question,
+            "message" => $message,
             "pageTitle" => "Mise à jour question",
             "pathBodyView" => "question/update.php"
         ]);

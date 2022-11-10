@@ -16,7 +16,6 @@ class ControllerProposition extends AbstactController {
         return "proposition";
     }
 
-
     public function created(): void
     {
         $proposition = (new PropositionRepository())->build($_GET);

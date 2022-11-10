@@ -2,7 +2,7 @@
     <fieldset>
 
         <div id='containerFormulaire' class='container text-center my-5' style="border: 2px solid">
-            <h2>Mise à jour question</h2>
+            <h2><?= $message ?></h2>
 
             <p>
                 <label for="titreQuestion">Titre</label> :
