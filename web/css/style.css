@@ -1,6 +1,5 @@
 nav li {
     padding: 0 20px;
-
 }
 
 nav a:after {
@@ -44,8 +43,6 @@ body {
 
 #containerListeQuestion {
     display: flex;
-    align-items: center;
-    justify-content: center;
     height: 100%;
     width: 100%;
 }
