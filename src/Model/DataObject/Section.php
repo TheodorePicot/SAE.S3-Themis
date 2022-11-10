@@ -23,23 +23,23 @@ class Section extends AbstractDataObject
         $this->descriptionSection = $descriptionSection;
     }
 
-    public function tableFormatWithoutPrimaryKey(): array
+    public function tableFormat(): array
     {
-        return [
-            "idQuestion" => $this->idQuestion,
-            "titreSection" => $this->titreSection,
-            "descriptionSection" => $this->descriptionSection
-        ];
-    }
 
-    public function tableFormatWithPrimaryKey(): array
-    {
-        return [
-            "idSection" => $this->idSection,
-            "idQuestion" => $this->idQuestion,
-            "titreSection" => $this->titreSection,
-            "descriptionSection" => $this->descriptionSection
-        ];
+        if($this->idSection == 0) {
+            return [
+                "idQuestion" => $this->idQuestion,
+                "titreSection" => $this->titreSection,
+                "descriptionSection" => $this->descriptionSection
+            ];
+        } else {
+            return [
+                "idSection" => $this->idSection,
+                "idQuestion" => $this->idQuestion,
+                "titreSection" => $this->titreSection,
+                "descriptionSection" => $this->descriptionSection
+            ];
+        }
     }
 
     /**

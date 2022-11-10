@@ -46,11 +46,13 @@ abstract class AbstractRepository
         }
         $sqlQuery .= ") " . $columnValues . ")";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-
-        $values = $dataObject->tableFormatWithoutPrimaryKey();
+        echo $sqlQuery;
+        $values = $dataObject->tableFormat();
+        var_dump($values);
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
+            echo $exception->getCode();
             if ($exception->getCode() == "23000") {
                 return false;
             }
@@ -106,7 +108,7 @@ abstract class AbstractRepository
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
-        $values = $dataObject->tableFormatWithPrimaryKey();
+        $values = $dataObject->tableFormat();
         $pdoStatement->execute($values);
     }
 

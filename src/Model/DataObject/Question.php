@@ -38,29 +38,30 @@ class Question extends AbstractDataObject
         $this->dateFinVote = $dateFinVote;
     }
 
-    public function tableFormatWithPrimaryKey(): array
+    public function tableFormat(): array
     {
-        return [
-            "idQuestion" => $this->idQuestion,
-            "titreQuestion" => $this->titreQuestion,
-            "descriptionQuestion" => $this->descriptionQuestion,
-            "dateDebutProposition" => $this->dateDebutProposition,
-            "dateFinProposition" => $this->dateFinProposition,
-            "dateDebutVote" => $this->dateDebutVote,
-            "dateFinVote" => $this->dateFinVote
-        ];
-    }
 
-    public function tableFormatWithoutPrimaryKey(): array
-    {
-        return [
-            "titreQuestion" => $this->titreQuestion,
-            "descriptionQuestion" => $this->descriptionQuestion,
-            "dateDebutProposition" => $this->dateDebutProposition,
-            "dateFinProposition" => $this->dateFinProposition,
-            "dateDebutVote" => $this->dateDebutVote,
-            "dateFinVote" => $this->dateFinVote
-        ];
+        if($this->idQuestion == 0) {
+            return [
+                "titreQuestion" => $this->titreQuestion,
+                "descriptionQuestion" => $this->descriptionQuestion,
+                "dateDebutProposition" => $this->dateDebutProposition,
+                "dateFinProposition" => $this->dateFinProposition,
+                "dateDebutVote" => $this->dateDebutVote,
+                "dateFinVote" => $this->dateFinVote
+            ];
+        } else {
+            return [
+                "idQuestion" => $this->idQuestion,
+                "titreQuestion" => $this->titreQuestion,
+                "descriptionQuestion" => $this->descriptionQuestion,
+                "dateDebutProposition" => $this->dateDebutProposition,
+                "dateFinProposition" => $this->dateFinProposition,
+                "dateDebutVote" => $this->dateDebutVote,
+                "dateFinVote" => $this->dateFinVote
+            ];
+        }
+
     }
 
     /**

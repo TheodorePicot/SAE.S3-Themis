@@ -29,18 +29,7 @@ class Utilisateur extends AbstractDataObject
         $this->mdp = $mdp;
     }
 
-    public function tableFormatWithoutPrimaryKey(): array
-    {
-        return [
-            "nom" => $this->nom,
-            "prenom" => $this->prenom,
-            "adresseMail" => $this->adresseMail,
-            "dateNaissance" => $this->dateNaissance,
-            "mdp" => $this->mdp,
-        ];
-    }
-
-    public function tableFormatWithPrimaryKey(): array
+    public function tableFormat(): array
     {
         return [
             "login" => $this->login,

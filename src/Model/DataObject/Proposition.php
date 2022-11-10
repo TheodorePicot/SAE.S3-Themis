@@ -33,17 +33,8 @@ class Proposition extends AbstractDataObject {
         return $this->idQuestion;
     }
 
-    public function tableFormatWithoutPrimaryKey(): array
+    public function tableFormat(): array
     {
-        // TODO: Implement tableFormatWithoutPrimaryKey() method.
-        return [
-            "idQuestion" => $this->idQuestion
-        ];
-    }
-
-    public function tableFormatWithPrimaryKey(): array
-    {
-        // TODO: Implement tableFormatWithPrimaryKey() method.
         return [
             "idProposition" => $this->idProposition,
             "idQuestion" => $this->idQuestion

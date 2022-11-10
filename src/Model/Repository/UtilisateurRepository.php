@@ -10,7 +10,7 @@ class UtilisateurRepository extends AbstractRepository
 
     protected function getTableName(): string
     {
-        return 'themis."Utilisateur"';
+        return 'themis."Utilisateurs"';
     }
 
     protected function getPrimaryKey(): string
@@ -21,6 +21,7 @@ class UtilisateurRepository extends AbstractRepository
     protected function getColumnNames(): array
     {
         return [
+            "login",
             "nom",
             "prenom",
             "adresseMail",
