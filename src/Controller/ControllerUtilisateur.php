@@ -33,6 +33,7 @@ class ControllerUtilisateur extends AbstactController
     public function read()
     {
         $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
+
         $this->showView("view.php", [
             "utilisateur" => $utilisateur,
             "pageTitle" => "Info Utilisateur",
