@@ -42,8 +42,6 @@ body {
     width: 100%;
 }
 
-/*AFFICHAGE QUESTION*/
-
 #containerListeQuestion {
     display: flex;
     align-items: center;
@@ -54,7 +52,7 @@ body {
 
 #listeQuestion {
     height: auto;
-    width: 100%;
+    width: 90%;
     display: flex;
     gap: 40px 4%;
     flex-flow: row wrap;
@@ -103,7 +101,6 @@ body {
 
 #updateButton li {
     margin: 3px 6px 4px 6px;
-    width: 93px;
 }
 
 #deleteButton li {
