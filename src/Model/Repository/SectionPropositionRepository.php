@@ -37,9 +37,9 @@ class SectionPropositionRepository extends AbstractRepository {
     {
         // TODO: Implement build() method.
         if (isset($objectArrayFormat['idSectionProposition'])) { //la sectionProposition existe déjà
-            return new SectionProposition($objectArrayFormat['idSectionProposition'], $objectArrayFormat['textProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['odProposition']);
+            return new SectionProposition($objectArrayFormat['idSectionProposition'], $objectArrayFormat['textProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
         } else {  //la proposition n'existe pas (ex : formulaire)
-            return new SectionProposition((int)null, $objectArrayFormat['textProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['odProposition']);
+            return new SectionProposition((int)null, $objectArrayFormat['textProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
         }
     }
 }

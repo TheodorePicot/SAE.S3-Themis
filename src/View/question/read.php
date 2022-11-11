@@ -2,6 +2,7 @@
 $questionInURL = rawurlencode($question->getIdQuestion());
 $hrefDelete = "frontController.php?action=delete&idQuestion=" . $questionInURL;
 $hrefUpdate = "frontController.php?action=update&idQuestion=" . $questionInURL;
+$hrefProposition = "frontController.php?controller=proposition&action=create&idQuestion=" . $questionInURL;
 $hrefCreateSection = "frontController.php?action=created&controller=section&idQuestion=$questionInURL";
 $hrefReadAll = "frontController.php?action=readAll";
 $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
@@ -35,6 +36,11 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 <a href='<?= $hrefUpdate ?>'>
                     <div id="updateButton" class="my-2" style='border:1px solid; border-radius: 4px'>
                         <li>Mettre à jour</li>
+                    </div>
+                </a>
+                <a href='<?= $hrefProposition ?>'>
+                    <div id="propositionButton" class="my-2" style='border:1px solid; border-radius: 4px'>
+                        <li>Créer une Proposition</li>
                     </div>
                 </a>
             </div>
