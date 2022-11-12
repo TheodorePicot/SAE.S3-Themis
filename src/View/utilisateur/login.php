@@ -1,7 +1,7 @@
 <form method="get" action="frontController.php">
     <fieldset>
-        <legend>Se connecté</legend>
-
+<!--        <div id='containerFormLogin' class='container text-center my-5' style="border: 2px solid">-->
+        <legend>Se connecter</legend>
         <p>
             <label for="login">Login</label> :
             <input type="text" placeholder="dupontpaul1610" name="login" id="login" required/>

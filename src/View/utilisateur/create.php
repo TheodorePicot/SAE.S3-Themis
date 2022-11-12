@@ -1,5 +1,6 @@
 <form method="get" action="frontController.php">
     <fieldset>
+        <div id='containerFormLogin' class='container text-center my-5' style="border: 2px solid">
         <legend>S'inscire</legend>
 
         <input type="hidden" name="controller" value="utilisateur">
@@ -43,6 +44,6 @@
         <p>
             <input type="submit" value="Confirmer"/>
         </p>
-
+        </div>
     </fieldset>
 </form>

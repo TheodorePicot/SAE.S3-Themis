@@ -83,7 +83,8 @@
                         <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
                     </li>
                 </ul>
-                <form class="d-flex">
+                <form class="d-flex" id="signButtons">
+                    <a class="btn btn-outline-success" href="frontController.php?action=login&controller=utilisateur">Sign In</a>
                     <a class="btn btn-outline-success" href="frontController.php?controller=utilisateur&action=create">Sign Up</a>
                 </form>
             </div>

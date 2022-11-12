@@ -1,5 +1,6 @@
-<div id="containerListeQuestion">
-    <div id="listeQuestion" class="container-fluid my-5 mx-5">
+<!--<div id="containerListeQuestion">-->
+
+    <div id="listeQuestion" class="container-fluid my-5 mx-5 d-flex flex-row flex-wrap">
 
         <?php foreach ($questions as $question) :
             $titreQuestionHTML = htmlspecialchars($question->getTitreQuestion());
@@ -16,4 +17,4 @@
 
         <?php endforeach; ?>
     </div>
-</div>
+<!--</div>-->
