@@ -123,6 +123,19 @@ class ControllerQuestion extends AbstactController
             (new SectionRepository)->update($updatedSection);
         }
 
+        (new VotantRepository)->delete($question->getIdQuestion());
+        (new AuteurRepository)->delete($question->getIdQuestion());
+
+        foreach ($_GET["votants"] as $votant) {
+            $votantObject = new Participant($votant, $question->getIdQuestion());
+            (new VotantRepository)->create($votantObject);
+        }
+
+        foreach ($_GET["auteurs"] as $auteur) {
+            $auteurObject = new Participant($auteur, $question->getIdQuestion());
+            (new AuteurRepository)->create($auteurObject);
+        }
+
         $this->showView("view.php", [
             "questions" => (new QuestionRepository)->selectAll(),
             "pageTitle" => "Question mise à jour",

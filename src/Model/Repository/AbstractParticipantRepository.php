@@ -7,11 +7,11 @@ use Themis\Model\DataObject\Participant;
 
 abstract class AbstractParticipantRepository extends AbstractRepository
 {
-    abstract protected function getTableName(): string;
+    abstract public function isParticpantInQuestion(string $login, int $idQuestion): bool;
 
     protected function getPrimaryKey(): string
     {
-        return '("login", "idQuestion")';
+        return "idQuestion";
     }
 
     protected function getColumnNames(): array

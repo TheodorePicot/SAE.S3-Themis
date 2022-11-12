@@ -1,8 +1,9 @@
 -- Trigger quand on ajoute une section à une question
 
 CREATE OR REPLACE FUNCTION incrementNbSections()
-RETURNS TRIGGER
-AS $body$
+    RETURNS TRIGGER
+AS
+$body$
 BEGIN
     UPDATE "Questions"
     SET "nbSections" = "nbSections" + 1
@@ -12,15 +13,17 @@ END;
 $body$ LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_increment_nbSections_after_insert_on_Sections
-AFTER INSERT ON "Sections"
-FOR EACH ROW
+    AFTER INSERT
+    ON "Sections"
+    FOR EACH ROW
 EXECUTE PROCEDURE incrementNbSections();
 
 -- Trigger quand on supprime une section à une question
 
 CREATE OR REPLACE FUNCTION decrementNbSections()
-RETURNS TRIGGER
-AS $body$
+    RETURNS TRIGGER
+AS
+$body$
 BEGIN
     UPDATE "Questions"
     SET "nbSections" = "nbSections" - 1
@@ -30,30 +33,55 @@ END;
 $body$ LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_decrement_nbSections_after_delete_on_Sections
-AFTER DELETE ON "Sections"
-FOR EACH ROW
+    AFTER DELETE
+    ON "Sections"
+    FOR EACH ROW
 EXECUTE PROCEDURE decrementNbSections();
 
 -- Fonction si le participant appartient à la question
 
-CREATE OR REPLACE FUNCTION isInQuestion(p_login "Utilisateurs".login%TYPE,
-                                        p_idQuestion "Questions"."idQuestion"%TYPE,
-                                        tableName VARCHAR)
-   RETURNS BOOL
-   LANGUAGE plpgsql
-  AS
+CREATE OR REPLACE FUNCTION isVotantInQuestion(p_login "Utilisateurs".login%TYPE,
+                                        p_idQuestion "Questions"."idQuestion"%TYPE)
+    RETURNS BOOL
+    LANGUAGE plpgsql
+AS
 $$
 DECLARE
     nbUtilisateur INT;
 
 BEGIN
 
-    SELECT * INTO nbUtilisateur
-    FROM tableName
+    SELECT COUNT(*)
+    INTO nbUtilisateur
+    FROM "estVotant"
     WHERE login = p_login
-    AND idQuestion = ;
+      AND "idQuestion" = p_idQuestion;
 
-    IF nbUtilisateur > 0
+    RETURN nbUtilisateur > 0;
 
 END;
 $$
+
+CREATE OR REPLACE FUNCTION isAuteurInQuestion(p_login "Utilisateurs".login%TYPE,
+                                        p_idQuestion "Questions"."idQuestion"%TYPE)
+    RETURNS BOOL
+    LANGUAGE plpgsql
+AS
+$$
+DECLARE
+    nbUtilisateur INT;
+
+BEGIN
+
+    SELECT COUNT(*)
+    INTO nbUtilisateur
+    FROM "estAuteur"
+    WHERE login = p_login
+      AND "idQuestion" = p_idQuestion;
+
+    RETURN nbUtilisateur > 0;
+
+END;
+$$
+
+SELECT isVotantInQuestion('asdfasdf',88);
