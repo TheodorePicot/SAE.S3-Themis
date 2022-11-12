@@ -1,6 +1,6 @@
 <form method="get" action="frontController.php">
     <fieldset>
-        <div id='containerFormulaire' class='container text-center my-5' style="border: 2px solid">
+        <div id='containerFormQuestion' class='container text-center my-5' style="border: 2px solid">
             <h2>Création Question</h2>
             <p>
                 <label for="titreQuestion">Titre</label> :

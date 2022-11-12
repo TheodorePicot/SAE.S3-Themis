@@ -8,7 +8,7 @@ $hrefReadAll = "frontController.php?action=readAll";
 $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 ?>
 
-<div class="containerPageQuestion">
+<div class="containerQuestionRead d-flex">
 
     <!--    QUESTION + DELETE UPDATE-->
     <div class='container my-5'>
@@ -26,7 +26,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
             <?php require_once __DIR__ . "/../utilisateur/listVotantsForRead.php" ?>
 
-            <div id="containerUpdateDelete">
+            <div id="containerButtonReadQuestion" class="d-flex">
 
                 <a href='<?= $hrefDelete ?>'>
                     <div id="deleteButton" class="my-2" style='border:1px solid; border-radius: 4px;'>

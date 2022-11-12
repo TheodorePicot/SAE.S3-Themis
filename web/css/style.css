@@ -18,10 +18,8 @@ nav ul a:hover::after {
 
 body {
     background-color: #fdf7f2;
-}
-
-#containerFormulaire {
-    width: 500px;
+    height: 100%;
+    width: 100%;
 }
 
 a {
@@ -29,27 +27,18 @@ a {
     color: black;
 }
 
-#containerUpdateDelete {
-    width: 85px;
-}
+/*CSS QUESTIONS*/
 
-body {
-    height: 100%;
-    width: 100%;
-}
+/*FORMULAIRE CREER QUESTION*/
 
-#containerListeQuestion {
-    display: flex;
-    height: 100%;
-    width: 100%;
+#containerFormQuestion {
+    width: 500px;
 }
 
 #listeQuestion {
     height: auto;
-    width: 90%;
-    display: flex;
-    gap: 40px 4%;
-    flex-flow: row wrap;
+    width: 100%;
+    gap: 50px;
 }
 
 #containerQuestion h3 {
@@ -77,35 +66,32 @@ body {
     color: #fafafa;
 }
 
-#containerUpdateDelete {
-    display: flex;
-    flex-direction: row;
+#containerButtonReadQuestion {
     width: 60px;
+    white-space: nowrap;
+
 }
 
-#containerUpdateDelete a:first-child {
+#containerButtonReadQuestion a:first-child {
     margin: 10px 10px 10px 0;
     padding: 1px;
 }
 
-#containerUpdateDelete a {
+#containerButtonReadQuestion a {
     margin: 10px;
     padding: 1px;
 }
 
-#updateButton li {
+
+#containerButtonReadQuestion li {
     margin: 3px 6px 4px 6px;
+}
+
+#updateButton li {
     width: 93px;
 }
 
-#deleteButton li {
-    margin: 3px 6px 4px 6px;
-}
 
-.containerPageQuestion {
-    display: flex;
-    flex-direction: row;
-}
 
 /*CALENDRIER*/
 
@@ -165,4 +151,39 @@ body {
         /*gap: 40px 4%;*/
         flex-direction: column;
     }
+}
+
+/*CSS UTILISATEURS*/
+
+#containerFormLogin {
+    width: 500px;
+}
+
+#signButtons{
+    gap: 10px;
+}
+
+#containerUpdateDeleteUtilisateur{
+    width: 60px;
+    white-space: nowrap;
+
+}
+
+#containerUpdateDeleteUtilisateur a:first-child {
+    margin: 10px 10px 10px 0;
+    padding: 1px;
+}
+
+#containerUpdateDeleteUtilisateur a {
+    margin: 10px;
+    padding: 1px;
+}
+
+
+#containerUpdateDeleteUtilisateur li {
+    margin: 3px 6px 4px 6px;
+}
+
+#containerUtilisateur{
+
 }

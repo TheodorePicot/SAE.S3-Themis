@@ -5,9 +5,9 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
 ?>
 
 
-<div class="containerUtilisateur">
+<div class="containerUtilisateur d-flex">
 
-    <!--    QUESTION + DELETE UPDATE-->
+    <!--    UTIILISATEUR + DELETE UPDATE-->
     <div class='container my-5'>
         <p>
         <ul style='list-style: none'>
@@ -29,7 +29,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
             </p>
 
 
-            <div id="containerUpdateDeleteUtilisateur">
+            <div id="containerUpdateDeleteUtilisateur" class="d-flex">
 
                 <a href='<?= $hrefDelete ?>'>
                     <div id="deleteButton" class="my-2" style='border:1px solid; border-radius: 4px;'>
