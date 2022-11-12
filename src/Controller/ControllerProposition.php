@@ -3,6 +3,7 @@
 namespace Themis\Controller;
 
 use Themis\Model\DataObject\Proposition;
+use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionPropositionRepository;

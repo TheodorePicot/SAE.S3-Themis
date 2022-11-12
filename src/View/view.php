@@ -84,7 +84,7 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <button class="btn btn-outline-success" href="frontController.php?controller=utilisateur&action=create">Sign Up</button>
+                    <a class="btn btn-outline-success" href="frontController.php?controller=utilisateur&action=create">Sign Up</a>
                 </form>
             </div>
         </div>

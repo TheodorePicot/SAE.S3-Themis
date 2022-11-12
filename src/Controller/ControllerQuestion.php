@@ -2,10 +2,14 @@
 
 namespace Themis\Controller;
 
+use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Section;
+use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionRepository;
+use Themis\Model\Repository\UtilisateurRepository;
+use Themis\Model\Repository\VotantRepository;
 
 class ControllerQuestion extends AbstactController
 {
@@ -19,12 +23,32 @@ class ControllerQuestion extends AbstactController
         return "question";
     }
 
+    public function create()
+    {
+        $utilisateur = (new UtilisateurRepository)->selectAll();
+        $this->showView("view.php", [
+            "utilisateurs" => $utilisateur,
+            "pageTitle" => $this->getCreationMessage(),
+            "pathBodyView" => $this->getViewFolderName() . "/create.php"
+        ]);
+    }
+
     public function created(): void
     {
         $question = (new QuestionRepository())->build($_GET);
 
         if ((new QuestionRepository)->create($question)) {
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
+
+            foreach ($_GET["votants"] as $votant) {
+                $votantObject = new Participant($votant, $idQuestion);
+                (new VotantRepository)->create($votantObject);
+            }
+
+            foreach ($_GET["auteurs"] as $auteur) {
+                $auteurObject = new Participant($auteur, $idQuestion);
+                (new AuteurRepository)->create($auteurObject);
+            }
 
             $sections = (new SectionRepository)->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
             $question = (new QuestionRepository)->select($idQuestion);

@@ -15,7 +15,9 @@
 
             <h3>Auteurs et Votants</h3>
 
+            <?php require_once __DIR__ . "/../utilisateur/listForVotants.php"?>
 
+            <?php require_once __DIR__ . "/../utilisateur/listForAuteurs.php"?>
 
             <h3>Calendrier</h3>
 
@@ -40,7 +42,7 @@
             <input type='hidden' name='action' value='created'>
 
             <p>
-                <input type="submit" value="Envoyer"/>
+                <input type="submit" value="Continuer"/>
             </p>
         </div>
     </fieldset>

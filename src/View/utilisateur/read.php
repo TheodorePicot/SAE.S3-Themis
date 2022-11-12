@@ -44,8 +44,5 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
             </div>
         </ul>
     </div>
-
-
-
 </div>
 

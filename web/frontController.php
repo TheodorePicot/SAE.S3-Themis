@@ -21,7 +21,7 @@ if (class_exists($controllerClassName)) {
 
     $classMethods = get_class_methods($controllerClassName);
 //    echo $controllerClassObject;
-    echo $controllerClassName;
+//    echo $controllerClassName;
 
     if (!isset($_GET['action'])) $controllerClassObject->readAll();
 
