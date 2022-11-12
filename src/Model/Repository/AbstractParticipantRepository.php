@@ -24,7 +24,27 @@ abstract class AbstractParticipantRepository extends AbstractRepository
 
     public function build(array $objectArrayFormat): AbstractDataObject
     {
-        return new Participant($objectArrayFormat['Login'], $objectArrayFormat['idQuestion']);
+        return new Participant($objectArrayFormat['login'], $objectArrayFormat['idQuestion']);
+    }
+
+    public function selectAllByQuestion($idQuestion): array
+    {
+        $databaseTable = $this->getTableName();
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idQuestion"=:idQuestion';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = [
+            "idQuestion" => $idQuestion
+        ];
+
+        $pdoStatement->execute($values);
+
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
     }
 
 }

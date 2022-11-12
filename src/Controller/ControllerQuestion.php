@@ -78,9 +78,14 @@ class ControllerQuestion extends AbstactController
     {
         $question = (new QuestionRepository)->select($_GET['idQuestion']);
         $sections = (new SectionRepository)->selectAllByQuestion($_GET['idQuestion']);
+        $votants = (new VotantRepository())->selectAllByQuestion($_GET['idQuestion']);
+        $auteurs = (new AuteurRepository())->selectAllByQuestion($_GET['idQuestion']);
+
         $this->showView("view.php", [
             "sections" => $sections,
             "question" => $question,
+            "votants" => $votants,
+            "auteurs" => $auteurs,
             "pageTitle" => "Info question",
             "pathBodyView" => "question/read.php"
         ]);

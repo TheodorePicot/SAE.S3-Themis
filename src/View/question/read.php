@@ -12,7 +12,6 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
     <!--    QUESTION + DELETE UPDATE-->
     <div class='container my-5'>
-        <p>
         <ul style='list-style: none'>
             <li>
                 <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
@@ -20,11 +19,12 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             <li>
                 Description de la question : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
             </li>
-            </p>
-
 
             <?php require_once __DIR__ . "/../section/listByQuestionForRead.php" ?>
 
+            <?php require_once __DIR__ . "/../utilisateur/listAuteursForRead.php" ?>
+
+            <?php require_once __DIR__ . "/../utilisateur/listVotantsForRead.php" ?>
 
             <div id="containerUpdateDelete">
 

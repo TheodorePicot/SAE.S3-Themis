@@ -1,4 +1,4 @@
 <h4>Votants</h4>
 <?php foreach ($votants as $votant): ?>
-    <p><?= $votant->getLogin() ?></p>
+    <p><?= htmlspecialchars($votant->getLogin()) ?></p>
 <?php endforeach; ?>

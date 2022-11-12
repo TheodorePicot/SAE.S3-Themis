@@ -40,4 +40,27 @@ class ControllerUtilisateur extends AbstactController
             "pathBodyView" => "utilisateur/read.php"
         ]);
     }
+
+    public function update()
+    {
+        $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
+
+        $this->showView("view.php", [
+            "utilisateur" => $utilisateur,
+            "pageTitle" => "Info Utilisateur",
+            "pathBodyView" => "utilisateur/update.php"
+        ]);
+    }
+
+    public function updated()
+    {
+        $utilisateur = (new UtilisateurRepository)->build($_GET);
+        (new UtilisateurRepository)->update($utilisateur);
+
+        $this->showView("view.php", [
+            "utilisateur" => $utilisateur,
+            "pageTitle" => "Info Utilisateur",
+            "pathBodyView" => "utilisateur/read.php"
+        ]);
+    }
 }
