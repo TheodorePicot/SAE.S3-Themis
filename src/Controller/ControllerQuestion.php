@@ -25,9 +25,9 @@ class ControllerQuestion extends AbstactController
 
     public function create()
     {
-        $utilisateur = (new UtilisateurRepository)->selectAll();
+        $utilisateurs = (new UtilisateurRepository)->selectAll();
         $this->showView("view.php", [
-            "utilisateurs" => $utilisateur,
+            "utilisateurs" => $utilisateurs,
             "pageTitle" => $this->getCreationMessage(),
             "pathBodyView" => $this->getViewFolderName() . "/create.php"
         ]);
@@ -39,6 +39,8 @@ class ControllerQuestion extends AbstactController
 
         if ((new QuestionRepository)->create($question)) {
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
+
+            $utilisateurs = (new UtilisateurRepository)->selectAll();
 
             foreach ($_GET["votants"] as $votant) {
                 $votantObject = new Participant($votant, $idQuestion);
@@ -54,6 +56,7 @@ class ControllerQuestion extends AbstactController
             $question = (new QuestionRepository)->select($idQuestion);
             $message = "Création Question";
             $this->showView("view.php", [
+                "utilisateurs" => $utilisateurs,
                 "sections" => $sections,
                 "question" => $question,
                 "message" => $message,
@@ -97,9 +100,11 @@ class ControllerQuestion extends AbstactController
     {
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $utilisateurs = (new UtilisateurRepository)->selectAll();
         $message = "Mise à jour question";
 
         $this->showView("view.php", [
+            "utilisateurs" => $utilisateurs,
             "sections" => $sections,
             "question" => $question,
             "message" => $message,

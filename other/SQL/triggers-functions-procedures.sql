@@ -1,0 +1,59 @@
+-- Trigger quand on ajoute une section à une question
+
+CREATE OR REPLACE FUNCTION incrementNbSections()
+RETURNS TRIGGER
+AS $body$
+BEGIN
+    UPDATE "Questions"
+    SET "nbSections" = "nbSections" + 1
+    WHERE "idQuestion" = NEW."idQuestion";
+    RETURN NEW;
+END;
+$body$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_increment_nbSections_after_insert_on_Sections
+AFTER INSERT ON "Sections"
+FOR EACH ROW
+EXECUTE PROCEDURE incrementNbSections();
+
+-- Trigger quand on supprime une section à une question
+
+CREATE OR REPLACE FUNCTION decrementNbSections()
+RETURNS TRIGGER
+AS $body$
+BEGIN
+    UPDATE "Questions"
+    SET "nbSections" = "nbSections" - 1
+    WHERE "idQuestion" = OLD."idQuestion";
+    RETURN OLD;
+END;
+$body$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_decrement_nbSections_after_delete_on_Sections
+AFTER DELETE ON "Sections"
+FOR EACH ROW
+EXECUTE PROCEDURE decrementNbSections();
+
+-- Fonction si le participant appartient à la question
+
+CREATE OR REPLACE FUNCTION isInQuestion(p_login "Utilisateurs".login%TYPE,
+                                        p_idQuestion "Questions"."idQuestion"%TYPE,
+                                        tableName VARCHAR)
+   RETURNS BOOL
+   LANGUAGE plpgsql
+  AS
+$$
+DECLARE
+    nbUtilisateur INT;
+
+BEGIN
+
+    SELECT * INTO nbUtilisateur
+    FROM tableName
+    WHERE login = p_login
+    AND idQuestion = ;
+
+    IF nbUtilisateur > 0
+
+END;
+$$

@@ -18,6 +18,14 @@
                           maxlength="700"><?= $question->getDescriptionQuestion() ?></textarea>
             </p>
 
+            <h3>Auteurs et Votants</h3>
+
+            <?php require_once __DIR__ . "/../utilisateur/listForVotants.php" ?>
+
+            <?php require_once __DIR__ . "/../utilisateur/listForAuteurs.php" ?>
+
+            <h3>Calendrier</h3>
+
             <p>
                 <label for="dateDebutProposition">Date de début des propositions</label> :
                 <input type="date" placeholder="JJ/MM/YYYY" value="<?= $question->getDateDebutProposition() ?>"

@@ -1,5 +1,5 @@
 <?php
-$utilisateurInURL = rawurlencode($utilisateur->getLoginUtilisateur());
+$utilisateurInURL = rawurlencode($utilisateur->getLogin());
 $hrefDelete = "frontController.php?action=delete&controller=utilisateur&login=" . $utilisateurInURL;
 $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" . $utilisateurInURL;;
 ?>
