@@ -2,14 +2,14 @@
 
 namespace Themis\Controller;
 
-use Themis\Model\DataObject\Proposition;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionPropositionRepository;
 use Themis\Model\Repository\SectionRepository;
 
-class ControllerProposition extends AbstactController {
+class ControllerProposition extends AbstactController
+{
     protected function getCreationMessage(): string
     {
         return "Création d'une proposition";
@@ -18,6 +18,19 @@ class ControllerProposition extends AbstactController {
     protected function getViewFolderName(): string
     {
         return "proposition";
+    }
+
+    public function create()
+    {
+        $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $question = (new QuestionRepository)->select($_GET['idQuestion']);
+
+        $this->showView("view.php", [
+            "sections" => $sections,
+            "question" => $question,
+            "pageTitle" => $this->getCreationMessage(),
+            "pathBodyView" => $this->getViewFolderName() . "/create.php"
+        ]);
     }
 
     public function created(): void
@@ -32,9 +45,8 @@ class ControllerProposition extends AbstactController {
             $question = (new QuestionRepository)->select($proposition->getIdQuestion());
 
 
-
-            foreach ($sections as $section){
-                (new SectionPropositionRepository())->build(array('texteProposition'=>'', 'idSection'=>$section->getIdSection(), 'idProposition'=>$idProposition));
+            foreach ($sections as $section) {
+                (new SectionPropositionRepository())->build(array('texteProposition' => '', 'idSection' => $section->getIdSection(), 'idProposition' => $idProposition));
                 //$section = (new SectionRepository)->select($section->getIdSection());
             }
 

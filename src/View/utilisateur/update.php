@@ -31,8 +31,8 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
             <p>
             <p>
                 <label for="dateNaissance">Date de Naissance : </label>
-                <input type="text" name="dateNaissance" id="dateNaissance"
-                       value="<?= htmlspecialchars($utilisateur->getLogin()) ?>">
+                <input type="date" name="dateNaissance" id="dateNaissance"
+                       value="<?= htmlspecialchars($utilisateur->getDateNaissance()) ?>">
             </p>
             <p>
                 <label for="mdp">Mot de Passe : </label>
@@ -41,6 +41,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
             </p>
 
             <input type='hidden' name='action' value='updated'>
+            <input type='hidden' name='controller' value='utilisateur'>
 
             <p>
                 <input type="submit" value="Envoyer"/>

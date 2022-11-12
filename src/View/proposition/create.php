@@ -2,10 +2,22 @@
     <fieldset>
         <div id='containerFormulaire' class='container text-center my-5' style="border: 2px solid">
             <h2>Création Proposition</h2>
+
+            <div class="containerQuestionRead d-flex">
+
+                <!--    QUESTION + DELETE UPDATE-->
+                <div class='container my-5'>
+                    <ul style='list-style: none'>
+                        <li>
+                            <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
+                        </li>
+                        <li>
+                            Description de la question : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+                        </li>
             <p>
-                <label for="titreQuestion">Titre</label> :
+                <label for="titreSectionProposition">Titre</label> :
                 <input type="text" placeholder="?" value="<?= $question->getTitreQuestion() ?>"
-                       name="titreQuestion" id="titreQuestion" max="99" maxlength="99" required/>
+                       name="titreSectionProposition" id="titreSectionProposition" max="99" maxlength="99" required/>
             </p>
 
             <p>

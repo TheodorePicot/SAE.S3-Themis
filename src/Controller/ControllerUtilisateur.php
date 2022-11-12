@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 
 class ControllerUtilisateur extends AbstactController
@@ -41,6 +42,13 @@ class ControllerUtilisateur extends AbstactController
         ]);
     }
 
+    public function login() {
+        $this->showView("view.php", [
+            "pageTitle" => "Se Connecter",
+            "pathBodyView" => "utilisateur/login.php"
+        ]);
+    }
+
     public function update()
     {
         $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
@@ -62,5 +70,17 @@ class ControllerUtilisateur extends AbstactController
             "pageTitle" => "Info Utilisateur",
             "pathBodyView" => "utilisateur/read.php"
         ]);
+    }
+
+    public function delete(): void
+    {
+        if ((new UtilisateurRepository)->delete($_GET['login'])) {
+            $questions = (new QuestionRepository)->selectAll();
+            $this->showView("view.php", [
+                "questions" => $questions,
+                "pageTitle" => "Suppression",
+                "pathBodyView" => "utilisateur/deleted.php"
+            ]);
+        }
     }
 }
