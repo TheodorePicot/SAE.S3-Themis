@@ -25,7 +25,7 @@ $questionInURL = rawurlencode($question->getIdQuestion());
                     <?php
                     foreach ($sectionsProposition as $sectionProposition) : ?>
                         <p><?= htmlspecialchars($sectionProposition->getTexteProposition()) ?></p>
-
+                    <?php endforeach; ?>
                     <?php $count++;
                 endforeach; ?>
 
