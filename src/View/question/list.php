@@ -5,7 +5,7 @@
         <?php foreach ($questions as $question) :
             $titreQuestionHTML = htmlspecialchars($question->getTitreQuestion());
             $questionInURL = rawurlencode($question->getIdQuestion());
-            $hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;
+            $hrefRead = "frontController.php?action=read&idQuestion=$questionInURL";
             ?>
 
             <a id="containerQuestion" href="<?= $hrefRead ?>">

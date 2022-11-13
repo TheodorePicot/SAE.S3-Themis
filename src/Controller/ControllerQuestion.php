@@ -23,7 +23,7 @@ class ControllerQuestion extends AbstactController
         return "question";
     }
 
-    public function create()
+    public function create(): void
     {
         $utilisateurs = (new UtilisateurRepository)->selectAll();
         $this->showView("view.php", [

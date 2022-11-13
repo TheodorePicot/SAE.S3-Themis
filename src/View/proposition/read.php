@@ -1,48 +1,50 @@
 <?php
-$questionInURL = rawurlencode($question->getIdQuestion());
-
-
+$idPropositionInURL = rawurlencode($proposition->getIdProposition());
+$hrefDelete = "frontController.php?controller=proposition&action=delete&idProposition=" . $idPropositionInURL;
+$hrefUpdate = "frontController.php?controller=proposition&action=update&idProposition=" . $idPropositionInURL;
 ?>
 <div class="containerQuestionRead d-flex">
     <!--    QUESTION + PROSITION + DELETE UPDATE-->
-        <div class='container my-5'>
-            <ul style='list-style: none'>
-                <li>
-                    <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
-                </li>
-                <li>
-                    Description de la question : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
-                </li>
+    <div class='container my-5'>
+        <ul style='list-style: none'>
+            <li>
+                <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
+            </li>
+            <li>
+                Description de la question : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+            </li>
 
-                <h3>Sections</h3>
+            <p>
+            <h4>TitreProposition : </h4>
+            <p><?= $proposition->getTitreProposition() ?></p>
+            </p>
 
-                <?php
-                $count = 1;
-                foreach ($sections as $section) : ?>
-                    <h3><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h3>
-<!--                    <p>--><?//= htmlspecialchars($section->getDescriptionSection()) ?><!--</p>-->
+            <h3>Sections</h3>
 
-                    <?php
-                    foreach ($sectionsProposition as $sectionProposition) : ?>
-                        <p><?= htmlspecialchars($sectionProposition->getTexteProposition()) ?></p>
-                    <?php endforeach; ?>
-                    <?php $count++;
-                endforeach; ?>
+            <?php
+            $count = 1;
+            foreach ($sections as $section) : ?>
+                <h3><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h3>
+                <p><?= htmlspecialchars($section->getDescriptionSection()) ?></p>
+
+                <p><?= (new \Themis\Model\Repository\SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></p>
+                <?php $count++;
+            endforeach; ?>
 
 
-    <div id="containerButtonReadQuestion" class="d-flex">
+            <div id="containerButtonReadQuestion" class="d-flex">
 
-        <a href='<?= $hrefDelete ?>'>
-            <div id="deleteButton" class="my-2" style='border:1px solid; border-radius: 4px;'>
-                <li>Supprimer</li>
+                <a href='<?= $hrefDelete ?>'>
+                    <div id="deleteButton" class="my-2" style='border:1px solid; border-radius: 4px;'>
+                        <li>Supprimer</li>
+                    </div>
+                </a>
+                <a href='<?= $hrefUpdate ?>'>
+                    <div id="updateButton" class="my-2" style='border:1px solid; border-radius: 4px'>
+                        <li>Mettre à jour</li>
+                    </div>
+                </a>
             </div>
-        </a>
-        <a href='<?= $hrefUpdate ?>'>
-            <div id="updateButton" class="my-2" style='border:1px solid; border-radius: 4px'>
-                <li>Mettre à jour</li>
-            </div>
-        </a>
-    </div>
-    </ul>
+        </ul>
     </div>
 </div>

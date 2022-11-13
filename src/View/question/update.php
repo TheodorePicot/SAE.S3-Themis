@@ -19,9 +19,9 @@
 
             <h3>Auteurs et Votants</h3>
 
-            <?php require_once __DIR__ . "/../utilisateur/listForVotantsUpdate.php" ?>
+            <?php require_once __DIR__ . "/../utilisateur/listVotantsForUpdate.php" ?>
 
-            <?php require_once __DIR__ . "/../utilisateur/listForAuteursUpdate.php" ?>
+            <?php require_once __DIR__ . "/../utilisateur/listAuteursForUpdate.php" ?>
 
             <h3>Calendrier</h3>
 

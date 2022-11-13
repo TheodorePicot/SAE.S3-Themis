@@ -17,7 +17,7 @@ class ControllerUtilisateur extends AbstactController
         return "utilisateur";
     }
 
-    public function created()
+    public function created(): void
     {
         $utilisateur = (new UtilisateurRepository())->build($_GET);
 
@@ -31,7 +31,7 @@ class ControllerUtilisateur extends AbstactController
         }
     }
 
-    public function read()
+    public function read(): void
     {
         $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
 
@@ -42,14 +42,15 @@ class ControllerUtilisateur extends AbstactController
         ]);
     }
 
-    public function login() {
+    public function login(): void
+    {
         $this->showView("view.php", [
             "pageTitle" => "Se Connecter",
             "pathBodyView" => "utilisateur/login.php"
         ]);
     }
 
-    public function update()
+    public function update(): void
     {
         $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
 
@@ -60,7 +61,7 @@ class ControllerUtilisateur extends AbstactController
         ]);
     }
 
-    public function updated()
+    public function updated(): void
     {
         $utilisateur = (new UtilisateurRepository)->build($_GET);
         (new UtilisateurRepository)->update($utilisateur);

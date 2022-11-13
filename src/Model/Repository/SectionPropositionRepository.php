@@ -37,8 +37,8 @@ class SectionPropositionRepository extends AbstractRepository {
     {
         // TODO: Implement build() method.
         if (isset($objectArrayFormat['idSectionProposition'])) { //la sectionProposition existe déjà
-            return new SectionProposition($objectArrayFormat['idSectionProposition'], $objectArrayFormat['textProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
-        } else {  //la proposition n'existe pas (ex : formulaire)
+            return new SectionProposition($objectArrayFormat['idSectionProposition'], $objectArrayFormat['texteProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
+        } else {
             return new SectionProposition((int)null, $objectArrayFormat['texteProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
         }
     }
@@ -63,5 +63,20 @@ class SectionPropositionRepository extends AbstractRepository {
         return $dataObjects;
     }
 
+    public function selectByPropositionAndSection(int $idProposition, int $idSection): SectionProposition
+    {
+        $databaseTable = $this->getTableName();
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idProposition"=:idProposition AND "idSection" =:idSection';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = [
+            "idProposition" => $idProposition,
+            "idSection" => $idSection
+        ];
+
+        $pdoStatement->execute($values);
+
+        return $this->build($pdoStatement->fetch());
+    }
 }
 

@@ -20,7 +20,7 @@ class ControllerProposition extends AbstactController
         return "proposition";
     }
 
-    public function create()
+    public function create(): void
     {
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
         $question = (new QuestionRepository)->select($_GET['idQuestion']);
@@ -43,30 +43,70 @@ class ControllerProposition extends AbstactController
             $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion()); //retourne un tableau de toutes les sections d'une question
 
             foreach ($sections as $section) {
-                echo 'descriptionSectionProposition' . $section->getIdSection();
                 $sectionProposition = (new SectionPropositionRepository)->build(array('texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()], 'idSection' => $section->getIdSection(), 'idProposition' => $idProposition));
                 (new SectionPropositionRepository)->create($sectionProposition);
             }
-
-            (new ControllerQuestion)->readAll();
+            $_GET['idProposition'] = $idProposition;
+            $this->read();
         } else {
             $this->showError("Erreur de création de la question");
         }
     }
 
-    public function read()
+    public function read(): void
     {
         $proposition = (new PropositionRepository)->select($_GET['idProposition']);
-        $question = (new QuestionRepository)->select($_GET['idQuestion']);
-        $sectionsProposition =(new SectionPropositionRepository)->selectAllByProposition($_GET['idProposition']);//retourne un tableau de toutes les sections d'une proposition
+        $question = (new QuestionRepository)->select($proposition->getIdQuestion());
+        $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
 
         $this->showView("view.php", [
             "proposition" => $proposition,
-            "question"=> $question,
-            "sectionsProposition"=> $sectionsProposition,
+            "question" => $question,
+            "sections" => $sections,
             "pageTitle" => "Info Proposition",
             "pathBodyView" => "proposition/read.php"
         ]);
     }
 
+    public function readByQuestion(): void
+    {
+        $propositions = (new PropositionRepository)->selectByQuestion($_GET['idQuestion']);
+
+        $this->showView("view.php", [
+            "propositions" => $propositions,
+            "pageTitle" => "Info Proposition",
+            "pathBodyView" => "proposition/listByQuestion.php"
+        ]);
+    }
+
+    public function update(): void
+    {
+        $proposition = (new PropositionRepository)->select($_GET['idProposition']);
+        $question = (new QuestionRepository)->select($proposition->getIdQuestion());
+        $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
+
+        $this->showView("view.php", [
+            "proposition" => $proposition,
+            "question" => $question,
+            "sections" => $sections,
+            "pageTitle" => "Info Proposition",
+            "pathBodyView" => "proposition/update.php"
+        ]);
+    }
+
+    public function updated(): void
+    {
+        $proposition = (new PropositionRepository())->build($_GET);
+
+        (new PropositionRepository)->update($proposition);
+
+        $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion()); //retourne un tableau de toutes les sections d'une question
+
+        foreach ($sections as $section) {
+            $sectionProposition = (new SectionPropositionRepository)->build(array('texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()], 'idSection' => $section->getIdSection(), 'idProposition' => $idProposition));
+            (new SectionPropositionRepository)->update($sectionProposition);
+        }
+
+        $this->read();
+    }
 }
