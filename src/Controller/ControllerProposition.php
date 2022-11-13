@@ -40,23 +40,15 @@ class ControllerProposition extends AbstactController
         if ((new PropositionRepository)->create($proposition)) {
             $idProposition = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
 
-            $sections = (new SectionRepository)->selectAllByQuestion($idProposition); //retourne un tableau de toutes les sections d'une question
-            $proposition = (new PropositionRepository)->select($idProposition);
-            $question = (new QuestionRepository)->select($proposition->getIdQuestion());
-
+            $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion()); //retourne un tableau de toutes les sections d'une question
 
             foreach ($sections as $section) {
-                (new SectionPropositionRepository())->build(array('texteProposition' => '', 'idSection' => $section->getIdSection(), 'idProposition' => $idProposition));
-                //$section = (new SectionRepository)->select($section->getIdSection());
+                echo 'descriptionSectionProposition' . $section->getIdSection();
+                $sectionProposition = (new SectionPropositionRepository)->build(array('texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()], 'idSection' => $section->getIdSection(), 'idProposition' => $idProposition));
+                (new SectionPropositionRepository)->create($sectionProposition);
             }
 
-            $this->showView("view.php", [
-                "sections" => $sections,
-                "proposition" => $proposition,
-                "question" => $question,
-                "pageTitle" => "Création d'une proposition",
-                "pathBodyView" => "proposition/create.php"
-            ]);
+            (new ControllerQuestion)->readAll();
         } else {
             $this->showError("Erreur de création de la question");
         }

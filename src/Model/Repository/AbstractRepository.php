@@ -52,6 +52,7 @@ abstract class AbstractRepository
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
+//            echo $exception->getCode();
             if ($exception->getCode() == "23000") {
                 return false;
             }

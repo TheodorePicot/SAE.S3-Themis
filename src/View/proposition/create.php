@@ -4,8 +4,6 @@
             <h2>Création Proposition</h2>
 
             <div class="containerQuestionRead d-flex">
-
-                <!--    QUESTION + DELETE UPDATE-->
                 <div class='container my-5'>
                     <ul style='list-style: none'>
                         <li>
@@ -14,46 +12,36 @@
                         <li>
                             Description de la question : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
                         </li>
-            <p>
-                <label for="titreSectionProposition">Titre</label> :
-                <input type="text" placeholder="?" value="<?= $question->getTitreQuestion() ?>"
-                       name="titreSectionProposition" id="titreSectionProposition" max="99" maxlength="99" required/>
-            </p>
+                    </ul>
+                </div>
+            </div>
 
             <p>
-                <label for="descriptionQuestion">Description</label> :
-                <textarea placeholder="Decrire la question" name="descriptionQuestion"
-                          id="descriptionQuestion"
-                          required rows="5" cols="40"
-                          maxlength="700"><?= $question->getDescriptionQuestion() ?></textarea>
+                <label for="titreProposition">TitreProposition</label> :
+                <input placeholder="?" id="titreProposition" name="titreProposition" max="99" maxlength="99" required>
             </p>
-
 
             <h3>Sections</h3>
 
-            <?php foreach ($sections as $section) :
-                $titreSectionPropositionHTML = htmlspecialchars($sections->getTitreSection());
-                $questionInURL = rawurlencode($question->getIdQuestion());
-                $hrefRead = "frontController.php?action=create&idProposition=" . $questionInURL;
-                ?>
+            <?php
+            $count = 1;
+            foreach ($sections as $section) : ?>
+                <h3><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h3>
+                <p><?= htmlspecialchars($section->getDescriptionSection()) ?></p>
 
                 <p>
-                    <label for="titreSection">Titre</label> :
-                    <input type="text" placeholder="?" value="<?= $titreSectionPropositionHTML ?>"
-                           name="titreSection" id="titreSection" max="99" maxlength="99" required/>
+                    <label for="descriptionSectionProposition<?= $section->getIdSection() ?>"> Votre proposition </label> :
+                    <textarea placeholder="" name="descriptionSectionProposition<?= $section->getIdSection() ?>"
+                              id="descriptionSectionProposition<?= $section->getIdSection() ?>" required rows="5"
+                              cols="40"></textarea>
                 </p>
 
-                <p>
-                    <label for="descriptionSectionProposition">Description</label> :
-                    <textarea placeholder="Decrire la sectionProposition" name="descriptionSectionProposition"
-                              id="descriptionSectionProposition"
-                              required rows="5" cols="40"
-                              maxlength="700"></textarea>
-                </p>
-
-            <?php endforeach; ?>
+                <?php $count++;
+            endforeach; ?>
 
             <input type='hidden' name='action' value='created'>
+            <input type='hidden' name='controller' value='proposition'>
+            <input type='hidden' name='idQuestion' value='<?=$question->getIdQuestion()?>'>
 
             <p>
                 <input type="submit" value="Soumettre"/>

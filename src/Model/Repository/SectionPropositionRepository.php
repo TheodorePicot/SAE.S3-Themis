@@ -12,7 +12,7 @@ class SectionPropositionRepository extends AbstractRepository {
     protected function getTableName(): string
     {
         // TODO: Implement getTableName() method.
-        return 'themis."SectionPropositionRepository"';
+        return 'themis."SectionProposition"';
 
     }
 
@@ -27,7 +27,7 @@ class SectionPropositionRepository extends AbstractRepository {
     {
         // TODO: Implement getColumnNames() method.
         return [
-            'textProposition',
+            'texteProposition',
             'idSection',
             'idProposition'
         ];
@@ -39,7 +39,7 @@ class SectionPropositionRepository extends AbstractRepository {
         if (isset($objectArrayFormat['idSectionProposition'])) { //la sectionProposition existe déjà
             return new SectionProposition($objectArrayFormat['idSectionProposition'], $objectArrayFormat['textProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
         } else {  //la proposition n'existe pas (ex : formulaire)
-            return new SectionProposition((int)null, $objectArrayFormat['textProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
+            return new SectionProposition((int)null, $objectArrayFormat['texteProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
         }
     }
 }
