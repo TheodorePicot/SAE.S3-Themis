@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 
 class ControllerUtilisateur extends AbstactController
@@ -16,7 +17,7 @@ class ControllerUtilisateur extends AbstactController
         return "utilisateur";
     }
 
-    public function created()
+    public function created(): void
     {
         $utilisateur = (new UtilisateurRepository())->build($_GET);
 
@@ -30,7 +31,7 @@ class ControllerUtilisateur extends AbstactController
         }
     }
 
-    public function read()
+    public function read(): void
     {
         $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
 
@@ -39,5 +40,48 @@ class ControllerUtilisateur extends AbstactController
             "pageTitle" => "Info Utilisateur",
             "pathBodyView" => "utilisateur/read.php"
         ]);
+    }
+
+    public function login(): void
+    {
+        $this->showView("view.php", [
+            "pageTitle" => "Se Connecter",
+            "pathBodyView" => "utilisateur/login.php"
+        ]);
+    }
+
+    public function update(): void
+    {
+        $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
+
+        $this->showView("view.php", [
+            "utilisateur" => $utilisateur,
+            "pageTitle" => "Info Utilisateur",
+            "pathBodyView" => "utilisateur/update.php"
+        ]);
+    }
+
+    public function updated(): void
+    {
+        $utilisateur = (new UtilisateurRepository)->build($_GET);
+        (new UtilisateurRepository)->update($utilisateur);
+
+        $this->showView("view.php", [
+            "utilisateur" => $utilisateur,
+            "pageTitle" => "Info Utilisateur",
+            "pathBodyView" => "utilisateur/read.php"
+        ]);
+    }
+
+    public function delete(): void
+    {
+        if ((new UtilisateurRepository)->delete($_GET['login'])) {
+            $questions = (new QuestionRepository)->selectAll();
+            $this->showView("view.php", [
+                "questions" => $questions,
+                "pageTitle" => "Suppression",
+                "pathBodyView" => "utilisateur/deleted.php"
+            ]);
+        }
     }
 }

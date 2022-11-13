@@ -23,7 +23,7 @@ class ControllerQuestion extends AbstactController
         return "question";
     }
 
-    public function create()
+    public function create(): void
     {
         $utilisateurs = (new UtilisateurRepository)->selectAll();
         $this->showView("view.php", [
@@ -78,9 +78,14 @@ class ControllerQuestion extends AbstactController
     {
         $question = (new QuestionRepository)->select($_GET['idQuestion']);
         $sections = (new SectionRepository)->selectAllByQuestion($_GET['idQuestion']);
+        $votants = (new VotantRepository())->selectAllByQuestion($_GET['idQuestion']);
+        $auteurs = (new AuteurRepository())->selectAllByQuestion($_GET['idQuestion']);
+
         $this->showView("view.php", [
             "sections" => $sections,
             "question" => $question,
+            "votants" => $votants,
+            "auteurs" => $auteurs,
             "pageTitle" => "Info question",
             "pathBodyView" => "question/read.php"
         ]);
@@ -121,6 +126,19 @@ class ControllerQuestion extends AbstactController
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
             $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
             (new SectionRepository)->update($updatedSection);
+        }
+
+        (new VotantRepository)->delete($question->getIdQuestion());
+        (new AuteurRepository)->delete($question->getIdQuestion());
+
+        foreach ($_GET["votants"] as $votant) {
+            $votantObject = new Participant($votant, $question->getIdQuestion());
+            (new VotantRepository)->create($votantObject);
+        }
+
+        foreach ($_GET["auteurs"] as $auteur) {
+            $auteurObject = new Participant($auteur, $question->getIdQuestion());
+            (new AuteurRepository)->create($auteurObject);
         }
 
         $this->showView("view.php", [

@@ -24,4 +24,20 @@ class Participant extends AbstractDataObject
             "idQuestion" => $this->idQuestion
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function getLogin(): string
+    {
+        return $this->login;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdQuestion(): int
+    {
+        return $this->idQuestion;
+    }
 }

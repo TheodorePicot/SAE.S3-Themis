@@ -1,9 +1,11 @@
 <?php
 $questionInURL = rawurlencode($question->getIdQuestion());
-$hrefDelete = "frontController.php?action=delete&idQuestion=" . $questionInURL;
-$hrefUpdate = "frontController.php?action=update&idQuestion=" . $questionInURL;
-$hrefProposition = "frontController.php?controller=proposition&action=create&idQuestion=" . $questionInURL;
-$hrefCreateSection = "frontController.php?action=created&controller=section&idQuestion=$questionInURL";
+$hrefDelete = "frontController.php?action=delete&idQuestion=$questionInURL";
+$hrefUpdate = "frontController.php?action=update&idQuestion=$questionInURL";
+$hrefCreateProposition = "frontController.php?controller=proposition&action=create&idQuestion=$questionInURL";
+$hrefPropositions = "frontController.php?controller=proposition&action=readByQuestion&idQuestion=$questionInURL";
+
+//$hrefCreateSection = "frontController.php?action=created&controller=section&idQuestion=$questionInURL";
 $hrefReadAll = "frontController.php?action=readAll";
 $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 ?>
@@ -12,7 +14,6 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
     <!--    QUESTION + DELETE UPDATE-->
     <div class='container my-5'>
-        <p>
         <ul style='list-style: none'>
             <li>
                 <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
@@ -20,11 +21,12 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             <li>
                 Description de la question : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
             </li>
-            </p>
-
 
             <?php require_once __DIR__ . "/../section/listByQuestionForRead.php" ?>
 
+            <?php require_once __DIR__ . "/../utilisateur/listAuteursForRead.php" ?>
+
+            <?php require_once __DIR__ . "/../utilisateur/listVotantsForRead.php" ?>
 
             <div id="containerButtonReadQuestion" class="d-flex">
 
@@ -38,9 +40,14 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                         <li>Mettre à jour</li>
                     </div>
                 </a>
-                <a href='<?= $hrefProposition ?>'>
+                <a href='<?= $hrefCreateProposition ?>'>
                     <div id="propositionButton" class="my-2" style='border:1px solid; border-radius: 4px'>
                         <li>Créer une Proposition</li>
+                    </div>
+                </a>
+                <a href='<?= $hrefPropositions ?>'>
+                    <div id="propositionButton" class="my-2" style='border:1px solid; border-radius: 4px'>
+                        <li>Les soumissions</li>
                     </div>
                 </a>
             </div>

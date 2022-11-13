@@ -8,7 +8,7 @@ $questionInURL = rawurlencode($question->getIdQuestion());
 $hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;
 ?>
 
-            <div id="question" class="box overflow-hidden rounded-2 col-xs-12 col-sm-6 col-md-4"  >
+            <div id="question" class="box overflow-hidden rounded-2 col-md-6 col-lg-4"  >
                 <div class="nestedDivQuestion overflow-hidden">
                 <a id="lienQuestion" class="btn" href="<?= $hrefRead ?>">
                 <h3><?= $titreQuestionHTML ?></h3>

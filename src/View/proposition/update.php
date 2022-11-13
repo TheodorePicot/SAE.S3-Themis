@@ -18,7 +18,8 @@
 
             <p>
                 <label for="titreProposition">TitreProposition</label> :
-                <input placeholder="?" id="titreProposition" name="titreProposition" max="99" maxlength="99" required>
+                <input placeholder="?" value="<?= $proposition->getTitreProposition() ?>" id="titreProposition"
+                       name="titreProposition" max="99" maxlength="99" required>
             </p>
 
             <h3>Sections</h3>
@@ -30,18 +31,19 @@
                 <p><?= htmlspecialchars($section->getDescriptionSection()) ?></p>
 
                 <p>
-                    <label for="descriptionSectionProposition<?= $section->getIdSection() ?>"> Votre proposition </label> :
+                    <label for="descriptionSectionProposition<?= $section->getIdSection() ?>"> Votre
+                        proposition </label> :
                     <textarea placeholder="" name="descriptionSectionProposition<?= $section->getIdSection() ?>"
                               id="descriptionSectionProposition<?= $section->getIdSection() ?>" required rows="5"
-                              cols="40"></textarea>
+                              cols="40"><?=(new \Themis\Model\Repository\SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition()?></textarea>
                 </p>
 
                 <?php $count++;
             endforeach; ?>
 
-            <input type='hidden' name='action' value='created'>
+            <input type='hidden' name='action' value='updated'>
             <input type='hidden' name='controller' value='proposition'>
-            <input type='hidden' name='idQuestion' value='<?=$question->getIdQuestion()?>'>
+            <input type='hidden' name='idQuestion' value='<?= $question->getIdQuestion() ?>'>
 
             <p>
                 <input type="submit" value="Soumettre"/>

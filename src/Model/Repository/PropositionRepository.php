@@ -4,7 +4,8 @@ namespace Themis\Model\Repository;
 
 use Themis\Model\DataObject\Proposition;
 
-class PropositionRepository extends AbstractRepository {
+class PropositionRepository extends AbstractRepository
+{
 
 
     protected function getTableName(): string
@@ -23,7 +24,8 @@ class PropositionRepository extends AbstractRepository {
     {
         // TODO: Implement getColumnNames() method.
         return [
-            'idQuestion'
+            "idQuestion",
+            "titreProposition"
         ];
     }
 
@@ -31,9 +33,29 @@ class PropositionRepository extends AbstractRepository {
     {
         // TODO: Implement build() method.
         if (isset($objectArrayFormat['idProposition'])) { //la proposition existe déjà
-            return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion']);
+            return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition']);
         } else {  //la proposition n'existe pas (ex : formulaire)
-            return new Proposition((int)null,$objectArrayFormat['idQuestion']);
+            return new Proposition((int)null, $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition']);
         }
+    }
+
+    public function selectByQuestion(int $idQuestion): array
+    {
+        $sqlQuery = 'SELECT * FROM "Proposition" WHERE "idQuestion" =:idQuestion';
+
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = [
+            "idQuestion" => $idQuestion
+        ];
+
+        $pdoStatement->execute($values);
+
+        $propositions = array();
+        foreach ($pdoStatement as $proposition) {
+            $propositions[] = $this->build($proposition);
+        }
+
+        return $propositions;
     }
 }

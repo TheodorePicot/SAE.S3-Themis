@@ -87,11 +87,13 @@
                     <a class="btn btn-outline-success" href="frontController.php?action=login&controller=utilisateur">Sign In</a>
                     <a class="btn btn-outline-success" href="frontController.php?controller=utilisateur&action=create">Sign Up</a>
                 </form>
+                <div class="nav-item">
+                    <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=paulDupont">Mon compte</a>
+                    <!--login default pour l'instant-->
+                </div>
             </div>
         </div>
     </nav>
-
-
 </header>
 <main>
     <?php

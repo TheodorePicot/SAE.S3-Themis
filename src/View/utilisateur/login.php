@@ -14,7 +14,7 @@
 
         <p>
             <input type="submit" value="Envoyer" />
-            <a href="create.php"> S'incrire</a>
+            <a href="frontController.php?controller=utilisateur&action=create"> S'incrire</a>
         </p>
 
     </fieldset>

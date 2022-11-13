@@ -1,5 +1,4 @@
 <?php
-phpinfo();
 //$pdo = new PDO('pgsql:host=themis-db-instance.cnowxclkulrh.eu-west-3.rds.amazonaws.com;port=5432;dbname=themis;user=themis;password=Themis2022');
 //echo $pdo->getAttribute(PDO::ATTR_CONNECTION_STATUS);
 //
@@ -11,3 +10,8 @@ phpinfo();
 //} catch(PDOException $e) {
 //    echo $e->getCode();
 //}
+use Themis\Model\Repository\VotantRepository;
+
+require_once __DIR__ . "/src/Model/Repository/VotantRepository.php";
+
+echo (new VotantRepository())->isParticpantInQuestion("leamel", 88);
