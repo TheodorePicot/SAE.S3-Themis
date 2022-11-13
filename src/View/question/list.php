@@ -1,20 +1,23 @@
-<!--<div id="containerListeQuestion">-->
 
-    <div id="listeQuestion" class="container-fluid my-5 mx-5 d-flex flex-row flex-wrap">
+<div id="listeQuestion" class="container-fluid">
+    <div class="row mx-5 my-4 gy-4 gx-5">
 
-        <?php foreach ($questions as $question) :
-            $titreQuestionHTML = htmlspecialchars($question->getTitreQuestion());
-            $questionInURL = rawurlencode($question->getIdQuestion());
-            $hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;
-            ?>
+<?php foreach ($questions as $question) :
+$titreQuestionHTML = htmlspecialchars($question->getTitreQuestion());
+$questionInURL = rawurlencode($question->getIdQuestion());
+$hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;
+?>
 
-            <a id="containerQuestion" href="<?= $hrefRead ?>">
-                <div id="question" class="box my-2" style="border-radius: 10px">
-                    <h3><?= $titreQuestionHTML ?></h3>
-                    <p><?= $question->getShortDescriptionQuestion() ?></p>
-                </div>
-            </a>
+            <div id="question" class="box overflow-hidden rounded-2 col-xs-12 col-sm-6 col-md-4"  >
+                <div class="nestedDivQuestion overflow-hidden">
+                <a id="lienQuestion" class="btn" href="<?= $hrefRead ?>">
+                <h3><?= $titreQuestionHTML ?></h3>
+                <p><?= $question->getShortDescriptionQuestion() ?></p>
+                </a>
+                 </div>
 
-        <?php endforeach; ?>
+            </div>
+    <?php endforeach; ?>
+
     </div>
-<!--</div>-->
+</div>
