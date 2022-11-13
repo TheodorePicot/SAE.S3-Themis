@@ -53,4 +53,20 @@ class ControllerProposition extends AbstactController
             $this->showError("Erreur de création de la question");
         }
     }
+
+    public function read()
+    {
+        $proposition = (new PropositionRepository)->select($_GET['idProposition']);
+        $question = (new QuestionRepository)->select($_GET['idQuestion']);
+        $sectionsProposition =(new SectionPropositionRepository)->selectAllByProposition($_GET['idProposition']);//retourne un tableau de toutes les sections d'une proposition
+
+        $this->showView("view.php", [
+            "proposition" => $proposition,
+            "question"=> $question,
+            "sectionsProposition"=> $sectionsProposition,
+            "pageTitle" => "Info Proposition",
+            "pathBodyView" => "proposition/read.php"
+        ]);
+    }
+
 }

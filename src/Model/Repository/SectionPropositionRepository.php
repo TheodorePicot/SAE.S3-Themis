@@ -42,5 +42,26 @@ class SectionPropositionRepository extends AbstractRepository {
             return new SectionProposition((int)null, $objectArrayFormat['texteProposition'], $objectArrayFormat['idSection'], $objectArrayFormat['idProposition']);
         }
     }
+
+    public function selectAllByProposition($idProposition): array
+    {
+        $databaseTable = $this->getTableName();
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idProposition"=:idProposition';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = [
+            "idProposition" => $idProposition
+        ];
+
+        $pdoStatement->execute($values);
+
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
+    }
+
 }
 
