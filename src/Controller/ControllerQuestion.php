@@ -165,4 +165,17 @@ class ControllerQuestion extends AbstactController
         (new SectionRepository)->delete($_GET["idSection"]);
         $this->update();
     }
+
+    public function search(): void{
+        $questions = (new QuestionRepository())->search($_GET['element']);
+        $this->showView("view.php", [
+            "questions" => $questions,
+            "pageTitle" => "Questions recherchées",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+
+
+
 }
