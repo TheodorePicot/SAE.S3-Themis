@@ -35,7 +35,7 @@
                         proposition </label> :
                     <textarea placeholder="" name="descriptionSectionProposition<?= $section->getIdSection() ?>"
                               id="descriptionSectionProposition<?= $section->getIdSection() ?>" required rows="5"
-                              cols="40"><?=(new \Themis\Model\Repository\SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition()?></textarea>
+                              cols="40"><?= (new \Themis\Model\Repository\SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></textarea>
                 </p>
 
                 <?php $count++;
@@ -43,6 +43,7 @@
 
             <input type='hidden' name='action' value='updated'>
             <input type='hidden' name='controller' value='proposition'>
+            <input type='hidden' name='idProposition' value='<?= $proposition->getIdProposition() ?>'>
             <input type='hidden' name='idQuestion' value='<?= $question->getIdQuestion() ?>'>
 
             <p>

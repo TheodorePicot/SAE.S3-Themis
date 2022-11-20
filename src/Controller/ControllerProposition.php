@@ -100,13 +100,30 @@ class ControllerProposition extends AbstactController
 
         (new PropositionRepository)->update($proposition);
 
-        $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion()); //retourne un tableau de toutes les sections d'une question
-
+        $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
         foreach ($sections as $section) {
-            $sectionProposition = (new SectionPropositionRepository)->build(array('texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()], 'idSection' => $section->getIdSection(), 'idProposition' => $idProposition));
-            (new SectionPropositionRepository)->update($sectionProposition);
+            $sectionsPropositionOld = (new SectionPropositionRepository())->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection());
+            $sectionPropositionNew = (new SectionPropositionRepository)->build(
+                ['texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()],
+                    'idSection' => $section->getIdSection(),
+                    'idProposition' => $proposition->getIdProposition(),
+                    'idSectionProposition' => $sectionsPropositionOld->getIdSectionProposition()
+                ]);
+            (new SectionPropositionRepository)->update($sectionPropositionNew);
         }
 
         $this->read();
+    }
+
+    public function delete(): void {
+        if ((new PropositionRepository)->delete($_GET['idProposition'])) {
+            $propositions = (new PropositionRepository)->selectByQuestion($_GET['idQuestion']);
+
+            $this->showView("view.php", [
+                "propositions" => $propositions,
+                "pageTitle" => "Info Proposition",
+                "pathBodyView" => "proposition/deleted.php"
+            ]);
+        }
     }
 }
