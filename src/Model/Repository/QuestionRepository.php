@@ -28,7 +28,8 @@ class QuestionRepository extends AbstractRepository
         ];
     }
 
-    protected function getColumnTitle(): string{
+    protected function getColumnTitle(): string
+    {
         return 'titreQuestion';
     }
 
@@ -37,28 +38,23 @@ class QuestionRepository extends AbstractRepository
         if (isset($objectArrayFormat['idQuestion'])) { //la question existe déjà (update)
             return new Question($objectArrayFormat['idQuestion'], $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
         } else {  //la question n'existe pas (ex : formulaire) (create)
-            return new Question((int)null,$objectArrayFormat['titreQuestion'],$objectArrayFormat["descriptionQuestion"] , $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
+            return new Question((int)null, $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
         }
     }
 
-    public function search(string $element): array{
+    public function search(string $element): array
+    {
         $databaseTable = $this->getTableName();
-        $sqlQuery = "SELECT * FROM $databaseTable WHERE".  '"' .$this->getColumnTitle() . '"' . "LIKE" . ":elementTag" . "%";
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE" . ' "' . $this->getColumnTitle() . '" ' . " LIKE ?";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
-        $values = [
-            "elementTag" => $element
-        ];
-        var_dump($sqlQuery);
-        //var_dump($this->getColumnTitle());
-        var_dump($values);
+        $pdoStatement->execute(array("%" . $element . "%"));
 
+        $questions = array();
+        foreach ($pdoStatement as $question) {
+            $questions[] = $this->build($question);
+        }
 
-        return $pdoStatement->execute($values);
-
-
-
+        return $questions;
     }
-
-
 }
