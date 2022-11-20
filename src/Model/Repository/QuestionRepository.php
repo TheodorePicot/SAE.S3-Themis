@@ -45,10 +45,10 @@ class QuestionRepository extends AbstractRepository
     public function search(string $element): array
     {
         $databaseTable = $this->getTableName();
-        $sqlQuery = "SELECT * FROM $databaseTable WHERE" . ' "' . $this->getColumnTitle() . '" ' . " LIKE ?";
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"titreQuestion" LIKE ? OR "descriptionQuestion" LIKE ?';
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
-        $pdoStatement->execute(array("%" . $element . "%"));
+        $pdoStatement->execute(array("%" . $element . "%", "%" . $element . "%"));
 
         $questions = array();
         foreach ($pdoStatement as $question) {
