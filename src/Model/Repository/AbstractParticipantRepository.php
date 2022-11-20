@@ -46,5 +46,4 @@ abstract class AbstractParticipantRepository extends AbstractRepository
 
         return $dataObjects;
     }
-
 }

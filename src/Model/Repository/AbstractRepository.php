@@ -83,7 +83,7 @@ abstract class AbstractRepository
             'primaryKey' => $primaryKeyValue
         );
         $pdoStatement->execute($values);
-        var_dump($sqlQuery);
+//        var_dump($sqlQuery);
         $dataObject = $pdoStatement->fetch();
 
         if (!$dataObject) return null;
