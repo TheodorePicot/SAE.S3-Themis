@@ -28,6 +28,10 @@ class QuestionRepository extends AbstractRepository
         ];
     }
 
+    protected function getColumnTitle(): string{
+        return 'titreQuestion';
+    }
+
     public function build(array $objectArrayFormat): Question
     {
         if (isset($objectArrayFormat['idQuestion'])) { //la question existe déjà (update)
@@ -36,4 +40,25 @@ class QuestionRepository extends AbstractRepository
             return new Question((int)null,$objectArrayFormat['titreQuestion'],$objectArrayFormat["descriptionQuestion"] , $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
         }
     }
+
+    public function search(string $element): array{
+        $databaseTable = $this->getTableName();
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE".  '"' .$this->getColumnTitle() . '"' . "LIKE" . ":elementTag" . "%";
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = [
+            "elementTag" => $element
+        ];
+        var_dump($sqlQuery);
+        //var_dump($this->getColumnTitle());
+        var_dump($values);
+
+
+        return $pdoStatement->execute($values);
+
+
+
+    }
+
+
 }

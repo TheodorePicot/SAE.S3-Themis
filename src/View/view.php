@@ -83,6 +83,11 @@
                         <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
                     </li>
                 </ul>
+                <form method="get" >
+                    <input type="search" name="element" placeholder="Recherche..." >
+                    <input type='hidden' name='action' value='search'>
+                    <input type="submit" value="Valider">
+                </form>
                 <form class="d-flex" id="signButtons">
                     <a class="btn btn-outline-success" href="frontController.php?action=login&controller=utilisateur">Sign In</a>
                     <a class="btn btn-outline-success" href="frontController.php?controller=utilisateur&action=create">Sign Up</a>
