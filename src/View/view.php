@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title><?php echo $pageTitle; ?></title>
     <!-- css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,17 +83,23 @@
                         <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
                     </li>
                 </ul>
-                <form method="get" >
-                    <input type="search" name="element" placeholder="Recherche..." >
-                    <input type='hidden' name='action' value='search'>
-                    <input type="submit" value="Valider">
-                </form>
+                <div id="searchBox" class="mx-3">
+                    <form method="get">
+                        <input type="search" name="element" placeholder="Recherche...">
+                        <input type='hidden' name='action' value='search'>
+                        <input type="submit" value="Valider">
+                    </form>
+                </div>
                 <form class="d-flex" id="signButtons">
-                    <a class="btn btn-outline-success" href="frontController.php?action=login&controller=utilisateur">Sign In</a>
-                    <a class="btn btn-outline-success" href="frontController.php?controller=utilisateur&action=create">Sign Up</a>
+                    <a class="btn btn-outline-success" href="frontController.php?action=login&controller=utilisateur">Sign
+                        In</a>
+                    <a class="btn btn-outline-success" href="frontController.php?controller=utilisateur&action=create">Sign
+                        Up</a>
                 </form>
                 <div class="nav-item">
-                    <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=paulDupont">Mon compte</a>
+                    <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=paulDupont">
+                        <img id="accountImg" src="assets/img/account.png">
+                        </a>
                     <!--login default pour l'instant-->
                 </div>
             </div>
