@@ -13,29 +13,19 @@ use Themis\Model\Repository\VotantRepository;
 
 class ControllerQuestion extends AbstactController
 {
-    protected function getCreationMessage(): string
-    {
-        return "Création Question";
-    }
-
-    protected function getViewFolderName(): string
-    {
-        return "question";
-    }
-
     public function create(): void
     {
         $utilisateurs = (new UtilisateurRepository)->selectAll();
         $this->showView("view.php", [
             "utilisateurs" => $utilisateurs,
-            "pageTitle" => $this->getCreationMessage(),
-            "pathBodyView" => $this->getViewFolderName() . "/create.php"
+            "pageTitle" => "Création Question",
+            "pathBodyView" => "question/create.php"
         ]);
     }
 
     public function created(): void
     {
-        $question = (new QuestionRepository())->build($_GET);
+        $question = (new QuestionRepository)->build($_GET);
 
         if ((new QuestionRepository)->create($question)) {
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
@@ -78,8 +68,8 @@ class ControllerQuestion extends AbstactController
     {
         $question = (new QuestionRepository)->select($_GET['idQuestion']);
         $sections = (new SectionRepository)->selectAllByQuestion($_GET['idQuestion']);
-        $votants = (new VotantRepository())->selectAllByQuestion($_GET['idQuestion']);
-        $auteurs = (new AuteurRepository())->selectAllByQuestion($_GET['idQuestion']);
+        $votants = (new VotantRepository)->selectAllByQuestion($_GET['idQuestion']);
+        $auteurs = (new AuteurRepository)->selectAllByQuestion($_GET['idQuestion']);
 
         $this->showView("view.php", [
             "sections" => $sections,
@@ -166,7 +156,8 @@ class ControllerQuestion extends AbstactController
         $this->update();
     }
 
-    public function search(): void{
+    public function search(): void
+    {
         $questions = (new QuestionRepository())->search($_GET['element']);
         $this->showView("view.php", [
             "questions" => $questions,
@@ -174,8 +165,6 @@ class ControllerQuestion extends AbstactController
             "pathBodyView" => "question/list.php"
         ]);
     }
-
-
 
 
 }

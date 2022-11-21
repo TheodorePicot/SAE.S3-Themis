@@ -7,21 +7,19 @@ use Themis\Model\Repository\UtilisateurRepository;
 
 class ControllerUtilisateur extends AbstactController
 {
-    protected function getCreationMessage(): string
+    public function create()
     {
-        return "Inscription";
-    }
-
-    protected function getViewFolderName(): string
-    {
-        return "utilisateur";
+        $this->showView("view.php", [
+            "pageTitle" => "Inscription",
+            "pathBodyView" => "utilisateur/create.php"
+        ]);
     }
 
     public function created(): void
     {
-        $utilisateur = (new UtilisateurRepository())->build($_GET);
+        $utilisateur = (new UtilisateurRepository)->build($_GET);
 
-        if ((new UtilisateurRepository())->create($utilisateur)) {
+        if ((new UtilisateurRepository)->create($utilisateur)) {
             $this->showView("view.php", [
                 "pageTitle" => "Création d'une utilisateur",
                 "pathBodyView" => "utilisateur/created.php"

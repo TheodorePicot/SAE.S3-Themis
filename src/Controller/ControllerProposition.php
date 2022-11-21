@@ -10,16 +10,6 @@ use Themis\Model\Repository\SectionRepository;
 
 class ControllerProposition extends AbstactController
 {
-    protected function getCreationMessage(): string
-    {
-        return "Création d'une proposition";
-    }
-
-    protected function getViewFolderName(): string
-    {
-        return "proposition";
-    }
-
     public function create(): void
     {
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
@@ -28,29 +18,31 @@ class ControllerProposition extends AbstactController
         $this->showView("view.php", [
             "sections" => $sections,
             "question" => $question,
-            "pageTitle" => $this->getCreationMessage(),
-            "pathBodyView" => $this->getViewFolderName() . "/create.php"
+            "pageTitle" => "Création Proposition",
+            "pathBodyView" => "proposition/create.php"
         ]);
     }
 
     public function created(): void
     {
-        $proposition = (new PropositionRepository())->build($_GET);
+        $proposition = (new PropositionRepository)->build($_GET);
+        (new PropositionRepository)->create($proposition);
 
-        if ((new PropositionRepository)->create($proposition)) {
-            $idProposition = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
+        $idProposition = DatabaseConnection::getPdo()->lastInsertId();
 
-            $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion()); //retourne un tableau de toutes les sections d'une question
+        $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
+        foreach ($sections as $section) {
+            $sectionProposition = (new SectionPropositionRepository)->build([
+                'texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()],
+                'idSection' => $section->getIdSection(),
+                'idProposition' => $idProposition
+            ]);
 
-            foreach ($sections as $section) {
-                $sectionProposition = (new SectionPropositionRepository)->build(array('texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()], 'idSection' => $section->getIdSection(), 'idProposition' => $idProposition));
-                (new SectionPropositionRepository)->create($sectionProposition);
-            }
-            $_GET['idProposition'] = $idProposition;
-            $this->read();
-        } else {
-            $this->showError("Erreur de création de la question");
+            (new SectionPropositionRepository)->create($sectionProposition);
         }
+
+        $_GET['idProposition'] = $idProposition;
+        $this->read();
     }
 
     public function read(): void
@@ -96,8 +88,7 @@ class ControllerProposition extends AbstactController
 
     public function updated(): void
     {
-        $proposition = (new PropositionRepository())->build($_GET);
-
+        $proposition = (new PropositionRepository)->build($_GET);
         (new PropositionRepository)->update($proposition);
 
         $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
@@ -115,7 +106,8 @@ class ControllerProposition extends AbstactController
         $this->read();
     }
 
-    public function delete(): void {
+    public function delete(): void
+    {
         if ((new PropositionRepository)->delete($_GET['idProposition'])) {
             $propositions = (new PropositionRepository)->selectByQuestion($_GET['idQuestion']);
 

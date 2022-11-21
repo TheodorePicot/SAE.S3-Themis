@@ -1,17 +1,33 @@
-<?php
-//$pdo = new PDO('pgsql:host=themis-db-instance.cnowxclkulrh.eu-west-3.rds.amazonaws.com;port=5432;dbname=themis;user=themis;password=Themis2022');
-//echo $pdo->getAttribute(PDO::ATTR_CONNECTION_STATUS);
-//
-//phpinfo();
-//
-//try {
-//    echo "test";
-//    $pdo->query('INSERT INTO themis."Questions" t ("titreQuestion", "dateDebutProposition", "dateFinProposition", "dateDebutVote", "dateFinVote") VALUES' . "('FSDf', '2022-10-24', '2022-10-25', '2022-10-26', '2022-10-27')");
-//} catch(PDOException $e) {
-//    echo $e->getCode();
-//}
-use Themis\Model\Repository\VotantRepository;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-require_once __DIR__ . "/src/Model/Repository/VotantRepository.php";
+    <link rel="stylesheet" href="web/assets/css/style.css">
 
-echo (new VotantRepository())->isParticpantInQuestion("leamel", 88);
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<p>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Link with href
+    </a>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Button with data-target
+    </button>
+</p>
+<div id="collapseExample" class="collapse" role="tabpanel" aria-labelledby="heading1">
+    <div class="card card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+    </div>
+</div>
+
+</body>
+</html>

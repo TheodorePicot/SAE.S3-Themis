@@ -14,16 +14,4 @@ abstract class AbstactController
     {
         self::showView($errorMessage);
     }
-
-    abstract protected function getCreationMessage(): string;
-
-    abstract protected function getViewFolderName(): string;
-
-    public function create()
-    {
-        $this->showView("view.php", [
-            "pageTitle" => $this->getCreationMessage(),
-            "pathBodyView" => $this->getViewFolderName() . "/create.php"
-        ]);
-    }
 }
