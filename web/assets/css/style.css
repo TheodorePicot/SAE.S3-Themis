@@ -31,9 +31,6 @@ a {
 
 /*FORMULAIRE CREER QUESTION*/
 
-#containerFormQuestion {
-    width: 500px;
-}
 
 #containerButtonReadQuestion {
     width: 60px;
@@ -59,6 +56,16 @@ a {
     width: 93px;
 }
 
+.form-control {
+    box-shadow: 4px 3px 8px 1px #c7b198;
+    border: #C7B198 10px;
+}
+
+.form-select {
+    box-shadow: 4px 3px 8px 1px #c7b198;
+    border: #C7B198 4px;
+
+}
 
 /*CALENDRIER*/
 
@@ -134,7 +141,7 @@ a {
     box-shadow: 4px 3px 8px 1px #969696;
     /*background-image: linear-gradient(to bottom, rgba(30, 87, 153, 0.2) 0%, rgba(125, 185, 232, 0) 100%);*/
     /*background-repeat: repeat;*/
-    border-radius:10px;
+    border-radius: 10px;
     padding: 5px;
 }
 
@@ -173,7 +180,8 @@ a {
 
 }
 
-#accountImg{
+#accountImg {
     height: 50px;
     width: 50px;
 }
+

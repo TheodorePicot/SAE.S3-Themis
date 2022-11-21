@@ -54,7 +54,6 @@ class QuestionRepository extends AbstractRepository
         foreach ($pdoStatement as $question) {
             $questions[] = $this->build($question);
         }
-
         return $questions;
     }
 }
