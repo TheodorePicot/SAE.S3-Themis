@@ -56,4 +56,44 @@ class QuestionRepository extends AbstractRepository
         }
         return $questions;
     }
+
+
+    public function selectAllWrite(): array
+    {
+        $databaseTable = $this->getTableName();
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) >= ". '"dateDebutProposition" AND CAST(NOW() AS DATE) <= "dateFinProposition"');
+
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
+    }
+
+    public function selectAllVote(): array
+    {
+        $databaseTable = $this->getTableName();
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) >= ". '"dateDebutVote" AND CAST(NOW() AS DATE) <= "dateFinVote"');
+
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
+    }
+
+    public function selectAllFinish(): array
+    {
+        $databaseTable = $this->getTableName();
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) > ". '"dateFinVote"');
+
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
+    }
 }

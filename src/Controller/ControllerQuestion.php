@@ -91,6 +91,39 @@ class ControllerQuestion extends AbstactController
         ]);
     }
 
+    public function readAllWrite(): void
+    {
+        $questions = (new QuestionRepository)->selectAllWrite();
+        $this->showView("view.php", [
+            "questions" => $questions,
+            "pageTitle" => "Questions",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+    public function readAllVote(): void
+    {
+        $questions = (new QuestionRepository)->selectAllVote();
+        $this->showView("view.php", [
+            "questions" => $questions,
+            "pageTitle" => "Questions",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+    public function readAllFinish(): void
+    {
+        $questions = (new QuestionRepository)->selectAllFinish();
+        $this->showView("view.php", [
+            "questions" => $questions,
+            "pageTitle" => "Questions",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+
+
+
     public function update(): void
     {
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
