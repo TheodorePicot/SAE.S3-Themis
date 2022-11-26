@@ -2,21 +2,17 @@
 <div id="listeQuestion" class="container-fluid">
     <div class="row mx-5 my-4 gy-4 gx-5">
 
-
-        <select name="formal" onchange="javascript:handleSelect(this)">
-            <option style="font-weight: bold">Filtre</option>
-            <option value="readAll" <?php if(isset($_GET['action']) && $_GET['action'] == 'readAll') echo "selected"?>>Toutes les questions</option>
-            <option value="readAllWrite" <?php if(isset($_GET['action']) && $_GET['action'] == 'readAllWrite') echo "selected"?> >Questions en cours d'écriture</option>
-            <option value="readAllVote" <?php if(isset($_GET['action']) && $_GET['action'] == 'readAllVote') echo "selected"?> >Questions en cours de vote</option>
-            <option value="readAllFinish" <?php if(isset($_GET['action']) && $_GET['action'] == 'readAllFinish') echo "selected"?> >Questions terminées</option>
-        </select>
-<!-- TODO refactor les ifs-->
-        <script type="text/javascript">
-            function handleSelect(elm)
-            {
-                window.location = "frontController.php?action=" + elm.value;
-            }
-        </script>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Filtre
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="frontController.php?action=readAll">Toutes les questions</a></li>
+                <li><a class="dropdown-item" href="frontController.php?action=readAllWrite">Questions en cours d'écriture</a></li>
+                <li><a class="dropdown-item" href="frontController.php?action=readAllVote">Questions en cours de vote</a></li>
+                <li><a class="dropdown-item" href="frontController.php?action=readAllFinish">Questions en cours de vote</a></li>
+            </ul>
+        </div>
 
 <?php foreach ($questions as $question) :
 $titreQuestionHTML = htmlspecialchars($question->getTitreQuestion());
