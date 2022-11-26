@@ -5,12 +5,12 @@
 
         <select name="formal" onchange="javascript:handleSelect(this)">
             <option style="font-weight: bold">Filtre</option>
-            <option value="readAll">Toutes les questions</option>
-            <option value="readAllWrite">Questions en cours d'écriture</option>
-            <option value="readAllVote">Questions en cours de vote</option>
-            <option value="readAllFinish">Questions terminées</option>
+            <option value="readAll" <?php if(isset($_GET['action']) && $_GET['action'] == 'readAll') echo "selected"?>>Toutes les questions</option>
+            <option value="readAllWrite" <?php if(isset($_GET['action']) && $_GET['action'] == 'readAllWrite') echo "selected"?> >Questions en cours d'écriture</option>
+            <option value="readAllVote" <?php if(isset($_GET['action']) && $_GET['action'] == 'readAllVote') echo "selected"?> >Questions en cours de vote</option>
+            <option value="readAllFinish" <?php if(isset($_GET['action']) && $_GET['action'] == 'readAllFinish') echo "selected"?> >Questions terminées</option>
         </select>
-
+<!-- TODO refactor les ifs-->
         <script type="text/javascript">
             function handleSelect(elm)
             {

@@ -6,8 +6,6 @@ use Themis\Model\DataObject\Proposition;
 
 class PropositionRepository extends AbstractRepository
 {
-
-
     protected function getTableName(): string
     {
         // TODO: Implement getTableName() method.

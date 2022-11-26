@@ -61,6 +61,8 @@ class ControllerQuestion extends AbstactController
     public function addSection(): void
     {
         (new SectionRepository)->create(new Section((int)null, $_GET['idQuestion'], "", ""));
+//        $_GET['action'] = "update";
+        header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
         $this->update();
     }
 
@@ -120,8 +122,6 @@ class ControllerQuestion extends AbstactController
             "pathBodyView" => "question/list.php"
         ]);
     }
-
-
 
 
     public function update(): void

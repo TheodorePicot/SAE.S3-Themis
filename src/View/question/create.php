@@ -20,10 +20,9 @@
 
                 <div class="container-fluid col-md-6 col-lg-6">
                     <h3><label for="descriptionQuestion" class="form-label">Description</label></h3>
-                    <textarea class="form-control input-group-lg"  placeholder="description question"
-                           name="descriptionQuestion-" id="descriptionQuestion"
-                              maxlength="700" required rows="5" cols="40">
-                </textarea>
+                    <textarea class="form-control input-group-lg" placeholder="description question"
+                              name="descriptionQuestion" id="descriptionQuestion"
+                              maxlength="700" required rows="5" cols="40"></textarea>
                 </div>
 
                 <div class="container-fluid col-md-6 col-lg-6 my-3">

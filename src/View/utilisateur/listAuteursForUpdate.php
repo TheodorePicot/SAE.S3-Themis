@@ -1,6 +1,6 @@
-<p>
-    <label for="auteurs">Auteurs</label> :
-    <select name="auteurs[]" id="auteurs" multiple>
+<div class="col-auto">
+    <label class="visually-hidden" for="auteurs"></label>
+    <select class="form-select" name="auteurs[]" id="autoSizingSelect" multiple>
         <?php foreach ($utilisateurs as $utilisateur):
             $loginHTML = htmlspecialchars($utilisateur->getLogin()); ?>
             <?php if ((new \Themis\Model\Repository\AuteurRepository)->isParticpantInQuestion($utilisateur->getLogin(), $question->getIdQuestion())): ?>
@@ -10,4 +10,5 @@
             <?php endif; ?>
         <?php endforeach; ?>
     </select>
-</p>
+</div>
+
