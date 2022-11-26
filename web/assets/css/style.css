@@ -31,31 +31,6 @@ a {
 
 /*FORMULAIRE CREER QUESTION*/
 
-
-#containerButtonReadQuestion {
-    width: 60px;
-    white-space: nowrap;
-}
-
-#containerButtonReadQuestion a:first-child {
-    margin: 10px 10px 10px 0;
-    padding: 1px;
-}
-
-#containerButtonReadQuestion a {
-    margin: 10px;
-    padding: 1px;
-}
-
-
-#containerButtonReadQuestion li {
-    margin: 3px 6px 4px 6px;
-}
-
-#updateButton li {
-    width: 93px;
-}
-
 .form-control {
     box-shadow: 4px 3px 8px 1px #c7b198;
     border: #C7B198 10px;
@@ -67,15 +42,17 @@ a {
 
 }
 
+
+
 /*CALENDRIER*/
 
 .containerTime {
-    display: flex;
-    align-items: center;
+
+    /*align-items: center;*/
     padding: 0 1rem;
     padding: 3rem 0;
-    margin-right: 100px;
-    width: 400px;
+    /*margin-right: 100px;*/
+    /*width: 400px;*/
 }
 
 .wrapper {
@@ -112,14 +89,7 @@ a {
 /*LISTE QUESTIONS*/
 
 .box {
-    /*width: 500px;*/
     height: 205px;
-    /*box-sizing: border-box;*/
-    /*box-shadow: 4px 3px 8px 1px #969696;*/
-    /*box-sizing: border-box;*/
-    /*border: 5px solid transparent;*/
-    /*background-clip:padding-box;*/
-
 }
 
 #lienQuestion h3 {
@@ -174,10 +144,6 @@ a {
 
 #containerUpdateDeleteUtilisateur li {
     margin: 3px 6px 4px 6px;
-}
-
-#containerUtilisateur {
-
 }
 
 #accountImg {

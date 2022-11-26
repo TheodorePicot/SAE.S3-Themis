@@ -124,6 +124,8 @@ class ControllerQuestion extends AbstactController
     }
 
 
+
+
     public function update(): void
     {
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);

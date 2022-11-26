@@ -5,27 +5,27 @@
         </div>
 
         <div class='container-fluid'>
-            <div class="row mx-5 my-5 gy-4">
-                <div class="container-fluid col-md-6 col-lg-6">
+            <div class="row mx-5 my-4 gy-4">
+                <div class="container col-md-6 col-lg-6">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input type="text" class="form-control" placeholder="?" name="titreQuestion" id="titreQuestion"
                            max="99" maxlength="99"
                            required/>
                 </div>
 
-                <div class="container-fluid col-md-6 col-lg-6">
+                <div class="container col-md-6 col-lg-6">
                     <h3>Auteurs</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listAuteursForCreate.php" ?>
                 </div>
 
-                <div class="container-fluid col-md-6 col-lg-6">
+                <div class="container col-md-6 col-lg-6">
                     <h3><label for="descriptionQuestion" class="form-label">Description</label></h3>
                     <textarea class="form-control input-group-lg" placeholder="description question"
                               name="descriptionQuestion" id="descriptionQuestion"
                               maxlength="700" required rows="5" cols="40"></textarea>
                 </div>
 
-                <div class="container-fluid col-md-6 col-lg-6 my-3">
+                <div class="container col-md-6 col-lg-6 my-3">
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForCreate.php" ?>
                 </div>
@@ -39,7 +39,7 @@
         <div class="container-fluid">
             <div class="row mx-5 my-4 gy-2">
                 <h2>Calendrier</h2>
-                <div class="container-fluid col-md-6 col-lg-6 my-4">
+                <div class="container col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutProposition">Date de début des propositions</label></h5>
                     <input class=form-control type="date" placeholder="JJ/MM/YYYY" name="dateDebutProposition"
                            id="dateDebutProposition" required/>
