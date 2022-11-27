@@ -25,6 +25,7 @@
                               maxlength="700" required rows="5" cols="40"></textarea>
                 </div>
 
+
                 <div class="container col-md-6 col-lg-6 my-3">
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForCreate.php" ?>
@@ -65,10 +66,9 @@
                 </div>
             </div>
             <div class="btn mx-5" style="border-radius: 4px">
-                <input type="submit" value="Continuer"/>
+                <input class="btn btn-dark" type="submit" value="Continuer"/>
             </div>
         </div>
-
 
         <input type='hidden' name='action' value='created'>
 

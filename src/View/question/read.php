@@ -17,7 +17,8 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
     <div class="d-flex align-content-center justify-content-center">
         <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
     </div>
-    <div class="row my-5  my-4 gy-4 container-fluid">
+
+    <div class="row my-5 my-4 gy-4 container-fluid">
 
         <div class="container-fluid col-md-12 col-lg-8">
             <div class="card card-body border-0" style="background: #C7B198;">
@@ -57,6 +58,9 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             </div>
             <div class="my-4">
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefVoter ?>'> Voter</a>
+                <a class="btn btn-dark text-nowrap"
+                   href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
+                    Ajouter une proposition</a>
             </div>
         </div>
 
@@ -87,7 +91,16 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
         </div>
 
 
-        <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
+
+        <div class="container col-md-8 mx-5">
+
+
+            <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+
 
     </div>
 </div>

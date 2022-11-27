@@ -1,51 +1,66 @@
 <form method="get" action="frontController.php">
     <fieldset>
-        <div id='containerFormulaire' class='container text-center my-5' style="border: 2px solid">
-            <h2>Création Proposition</h2>
 
-            <div class="containerQuestionRead d-flex">
-                <div class='container my-5'>
-                    <ul style='list-style: none'>
-                        <li>
-                            <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
-                        </li>
-                        <li>
-                            Description de la question : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
-                        </li>
-                    </ul>
+        <div class="d-flex align-content-center justify-content-center">
+            <h1>Creer une proposition</h1>
+        </div>
+
+        <div class='container-fluid'>
+            <div class="row mx-5 my-5 gy-4">
+                <div class="container-fluid col-md-10 col-lg-10 ">
+
+                    <h2><label for="titreQuestion"
+                               class="form-label"><?= htmlspecialchars($question->getTitreQuestion()) ?></label></h2>
+
+
+                        <div class="col-md-10 card card-body border-0" style="background: #C7B198;">
+                            Description : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+                        </div>
+
+
+                    <div class="my-4">
+                        <h3><label for="titreQuestion" class="form-label">Titre de votre proposition</label></h3>
+                        <input type="text" class="form-control" placeholder="?" name="titreProposition"
+                               id="titreProposition"
+                               max="99" maxlength="99"
+                               required/>
+                    </div>
+                    <!--                . htmlspecialchars($section->getTitreSection()) ?>-->
+
+                    <div class="my-4">
+                        <?php
+                        $count = 1;
+                        foreach ($sections as $section) : ?>
+                            <h3><?= $count ?>. Section <?= $count ?></h3>
+                            <div class="col-md-10 card card-body border-0" style="background: #C7B198;">
+                                <?= htmlspecialchars($section->getDescriptionSection()) ?>
+                            </div>
+
+                            <div class="my-3">
+                                <label for="descriptionSectionProposition<?= $section->getIdSection() ?>">
+                                    <h4> Propostion Section <?= $count ?> </h4></label>
+
+                                <textarea class="form-control" placeholder=""
+                                          name="descriptionSectionProposition<?= $section->getIdSection() ?>"
+                                          id="descriptionSectionProposition<?= $section->getIdSection() ?>" required
+                                          rows="5"
+                                          cols="40"></textarea>
+                            </div>
+
+
+                            <?php $count++;
+                        endforeach; ?>
+                    </div>
+
+                    <input type='hidden' name='action' value='created'>
+                    <input type='hidden' name='controller' value='proposition'>
+                    <input type='hidden' name='idQuestion' value='<?= $question->getIdQuestion() ?>'>
+
+                    <input class="btn btn-dark" type="submit" value="Soumettre"/>
+
                 </div>
             </div>
-
-            <p>
-                <label for="titreProposition">TitreProposition</label> :
-                <input placeholder="?" id="titreProposition" name="titreProposition" max="99" maxlength="99" required>
-            </p>
-
-            <h3>Sections</h3>
-
-            <?php
-            $count = 1;
-            foreach ($sections as $section) : ?>
-                <h3><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h3>
-                <p><?= htmlspecialchars($section->getDescriptionSection()) ?></p>
-
-                <p>
-                    <label for="descriptionSectionProposition<?= $section->getIdSection() ?>"> Votre proposition </label> :
-                    <textarea placeholder="" name="descriptionSectionProposition<?= $section->getIdSection() ?>"
-                              id="descriptionSectionProposition<?= $section->getIdSection() ?>" required rows="5"
-                              cols="40"></textarea>
-                </p>
-
-                <?php $count++;
-            endforeach; ?>
-
-            <input type='hidden' name='action' value='created'>
-            <input type='hidden' name='controller' value='proposition'>
-            <input type='hidden' name='idQuestion' value='<?=$question->getIdQuestion()?>'>
-
-            <p>
-                <input type="submit" value="Soumettre"/>
-            </p>
         </div>
+
     </fieldset>
 </form>

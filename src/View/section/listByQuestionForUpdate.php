@@ -10,6 +10,7 @@ $lastSection = end($sections);
                 section</a>
             <?php if ($lastSection != false) ?>
         </div>
+
         <div class="col-md-12 col-lg-6">
             <a class="btn btn-lg btn-dark text-nowrap"
                href="frontController.php?action=deleteLastSection&idQuestion=<?= $question->getIdQuestion() ?>&idSection=<?= $lastSection->getIdSection() ?>">-
