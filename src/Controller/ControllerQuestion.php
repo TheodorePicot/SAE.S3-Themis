@@ -46,6 +46,9 @@ class ControllerQuestion extends AbstactController
             $sections = (new SectionRepository)->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
             $question = (new QuestionRepository)->select($idQuestion);
             $message = "Création Question";
+
+            header("Location: frontController.php?action=update&idQuestion=" . $question->getIdQuestion());
+
             $this->showView("view.php", [
                 "utilisateurs" => $utilisateurs,
                 "sections" => $sections,
@@ -54,6 +57,8 @@ class ControllerQuestion extends AbstactController
                 "pageTitle" => "Création question",
                 "pathBodyView" => "question/update.php"
             ]);
+
+//            $this->update();
         } else {
             $this->showError("Erreur de création de la question");
         }

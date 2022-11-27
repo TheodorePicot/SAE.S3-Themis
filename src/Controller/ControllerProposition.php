@@ -40,8 +40,8 @@ class ControllerProposition extends AbstactController
 
             (new SectionPropositionRepository)->create($sectionProposition);
         }
+        header("Location: frontController.php?action=read&controller=proposition&idProposition=$idProposition");
 
-        $_GET['idProposition'] = $idProposition;
         $this->read();
     }
 
