@@ -4,7 +4,7 @@ $hrefDelete = "frontController.php?action=delete&idQuestion=$questionInURL";
 $hrefUpdate = "frontController.php?action=update&idQuestion=$questionInURL";
 $hrefCreateProposition = "frontController.php?controller=proposition&action=create&idQuestion=$questionInURL";
 $hrefPropositions = "frontController.php?controller=proposition&action=readByQuestion&idQuestion=$questionInURL";
-$hrefVoter = "frontController.php?action=vote&idQuestion=$questionInURL";
+$hrefVoter = "frontController.php?controller=vote&action=showPropositionsVote&idQuestion=$questionInURL";
 //$hrefCreateSection = "frontController.php?action=created&controller=section&idQuestion=$questionInURL";
 $hrefReadAll = "frontController.php?action=readAll";
 $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
@@ -56,7 +56,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
             </div>
             <div class="my-4">
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'> Voter</a>
+                <a class="btn btn-dark text-nowrap" href='<?= $hrefVoter ?>'> Voter</a>
             </div>
         </div>
 
@@ -85,6 +85,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 </ul>
             </div>
         </div>
+
 
         <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
 

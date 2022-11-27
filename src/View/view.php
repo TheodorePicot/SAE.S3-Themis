@@ -17,7 +17,6 @@
 </head>
 <body>
 <header>
-
     <nav class="navbar navbar-expand-lg navbar-light fs-5">
         <div class="container-fluid">
             <a class="navbar-brand" id="icon" href="frontController.php">
