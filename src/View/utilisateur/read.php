@@ -5,44 +5,16 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
 ?>
 
 
-<div class="containerUtilisateur d-flex">
-
-    <!--    UTIILISATEUR + DELETE UPDATE-->
-    <div class='container my-5'>
-        <p>
-        <ul style='list-style: none'>
-            <li>
-                Login : <?= htmlspecialchars($utilisateur->getLogin()) ?>
-            </li>
-            <li>
-                Nom Utilisateur : <?= htmlspecialchars($utilisateur->getNom()) ?>
-            </li>
-            <li>
-                Prenom Utilisateur : <?= htmlspecialchars($utilisateur->getPrenom()) ?>
-            </li>
-            <li>
-                Adresse email : <?= htmlspecialchars($utilisateur->getAdresseMail()) ?>
-            </li>
-            <li>
-                Date de Naissance : <?= htmlspecialchars($utilisateur->getDateNaissance()) ?>
-            </li>
-            </p>
-
-
-            <div id="containerUpdateDeleteUtilisateur" class="d-flex">
-
-                <a href='<?= $hrefDelete ?>'>
-                    <div id="deleteButton" class="my-2" style='border:1px solid; border-radius: 4px;'>
-                        <li>Supprimer</li>
-                    </div>
-                </a>
-                <a href='<?= $hrefUpdate ?>'>
-                    <div id="updateButton" class="my-2" style='border:1px solid; border-radius: 4px'>
-                        <li>Mettre à jour</li>
-                    </div>
-                </a>
-            </div>
-        </ul>
+<div class="container-fluid">
+    <div class="row my-5 gy-4">
+        <div class="col">
+            Login : <?= htmlspecialchars($utilisateur->getLogin()) ?> <br>
+            Nom Utilisateur : <?= htmlspecialchars($utilisateur->getNom()) ?> <br>
+            Adresse email : <?= htmlspecialchars($utilisateur->getAdresseMail()) ?><br>
+            Date de Naissance : <?= htmlspecialchars($utilisateur->getDateNaissance()) ?><br>
+            <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'> Supprimer</a>
+            <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+        </div>
     </div>
 </div>
 

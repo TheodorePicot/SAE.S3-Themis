@@ -1,14 +1,26 @@
-<h1>Liste des propositions</h1>
+<div class="d-flex align-content-center justify-content-center">
+
+    <h1>Liste des propositions</h1>
+</div>
+
+<div class="d-flex align-content-center justify-content-center my-3">
+    <a class="btn btn-dark text-nowrap"
+       href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
+        Ajouter une proposition</a>
+</div>
+
 <?php foreach ($propositions as $proposition) :
     $titrePropositionHTML = htmlspecialchars($proposition->getTitreProposition());
     $propositionInURL = rawurlencode($proposition->getIdProposition());
     $questionInURL = rawurlencode($proposition->getIdQuestion());
     $hrefRead = "frontController.php?controller=proposition&action=read&idQuestion=$questionInURL&idProposition=$propositionInURL"; ?>
 
-    <div class="boxProposition overflow-hidden rounded-2  my-3">
+    <div class="boxProposition overflow-hidden rounded-5  my-3">
         <div class="nestedDivQuestion overflow-hidden text-start">
             <a id="containerQuestion" href="<?= $hrefRead ?>">
-                <h3><?= $titrePropositionHTML ?></h3>
+                <div class="mx-3">
+                    <h3><?= $titrePropositionHTML ?></h3>
+                </div>
             </a>
         </div>
     </div>
