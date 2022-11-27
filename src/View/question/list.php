@@ -29,7 +29,6 @@
                         <p><?= $question->getShortDescriptionQuestion() ?></p>
                     </a>
                 </div>
-
             </div>
         <?php endforeach; ?>
 

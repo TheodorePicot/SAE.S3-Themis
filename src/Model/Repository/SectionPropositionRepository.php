@@ -33,7 +33,7 @@ class SectionPropositionRepository extends AbstractRepository {
         ];
     }
 
-    public function build(array $objectArrayFormat): \Themis\Model\DataObject\SectionProposition
+    public function build(array $objectArrayFormat): SectionProposition
     {
         // TODO: Implement build() method.
         if (isset($objectArrayFormat['idSectionProposition'])) { //la sectionProposition existe déjà
@@ -63,7 +63,7 @@ class SectionPropositionRepository extends AbstractRepository {
         return $dataObjects;
     }
 
-    public function selectByPropositionAndSection(int $idProposition, int $idSection): SectionProposition
+    public function selectByPropositionAndSection(int $idProposition, int $idSection): ?SectionProposition
     {
         $databaseTable = $this->getTableName();
         $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idProposition"=:idProposition AND "idSection" =:idSection';
@@ -75,8 +75,8 @@ class SectionPropositionRepository extends AbstractRepository {
         ];
 
         $pdoStatement->execute($values);
-
-        return $this->build($pdoStatement->fetch());
+        if ($objetTableFormat = $pdoStatement->fetch()) return $this->build($objetTableFormat);
+        else return null;
     }
 }
 

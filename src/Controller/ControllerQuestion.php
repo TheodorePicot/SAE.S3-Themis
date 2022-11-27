@@ -6,6 +6,7 @@ use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Section;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
+use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
@@ -72,8 +73,10 @@ class ControllerQuestion extends AbstactController
         $sections = (new SectionRepository)->selectAllByQuestion($_GET['idQuestion']);
         $votants = (new VotantRepository)->selectAllByQuestion($_GET['idQuestion']);
         $auteurs = (new AuteurRepository)->selectAllByQuestion($_GET['idQuestion']);
+        $propositions = (new PropositionRepository)->selectByQuestion($_GET['idQuestion']);
 
         $this->showView("view.php", [
+            "propositions" => $propositions,
             "sections" => $sections,
             "question" => $question,
             "votants" => $votants,
@@ -122,8 +125,6 @@ class ControllerQuestion extends AbstactController
             "pathBodyView" => "question/list.php"
         ]);
     }
-
-
 
 
     public function update(): void
@@ -201,5 +202,9 @@ class ControllerQuestion extends AbstactController
         ]);
     }
 
+    public function vote(): void
+    {
+
+    }
 
 }
