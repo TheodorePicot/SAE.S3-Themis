@@ -45,7 +45,7 @@ create function incrementnbvotes() returns trigger
 as
 $$
 BEGIN
-    UPDATE Propositions
+    UPDATE "Propositions"
     SET "nbVotes" = "nbVotes" + 1
     WHERE "idProposition" = NEW."idProposition";
     RETURN NEW;
@@ -58,23 +58,25 @@ CREATE TRIGGER tr_increment_nbVotes_after_insert_on_Votes
     FOR EACH ROW
 EXECUTE PROCEDURE incrementNbVotes();
 
-create function incrementnbvotes() returns trigger
+create function decrementnbvotes() returns trigger
     language plpgsql
 as
 $$
 BEGIN
-    UPDATE Propositions
+    UPDATE "Propositions"
     SET "nbVotes" = "nbVotes" - 1
     WHERE "idProposition" = NEW."idProposition";
     RETURN NEW;
 END;
 $$;
 
-CREATE TRIGGER tr_increment_nbVotes_after_insert_on_Votes
+DROP TRIGGER tr_decrement_nbVotes_after_delete_on_Votes ON "Votes";
+
+CREATE TRIGGER tr_decrement_nbVotes_after_delete_on_Votes
     AFTER INSERT
     ON "Votes"
     FOR EACH ROW
-EXECUTE PROCEDURE incrementNbVotes();
+EXECUTE PROCEDURE decrementNbVotes();
 
 
 -- Fonction si le participant appartient à la question
