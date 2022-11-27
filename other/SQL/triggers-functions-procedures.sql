@@ -38,6 +38,45 @@ CREATE TRIGGER tr_decrement_nbSections_after_delete_on_Sections
     FOR EACH ROW
 EXECUTE PROCEDURE decrementNbSections();
 
+-- Triggers pour nbVotes
+
+create function incrementnbvotes() returns trigger
+    language plpgsql
+as
+$$
+BEGIN
+    UPDATE "Proposition"
+    SET "nbVotes" = "nbVotes" + 1
+    WHERE "idProposition" = NEW."idProposition";
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tr_increment_nbVotes_after_insert_on_Votes
+    AFTER INSERT
+    ON "Votes"
+    FOR EACH ROW
+EXECUTE PROCEDURE incrementNbVotes();
+
+create function incrementnbvotes() returns trigger
+    language plpgsql
+as
+$$
+BEGIN
+    UPDATE "Proposition"
+    SET "nbVotes" = "nbVotes" - 1
+    WHERE "idProposition" = NEW."idProposition";
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER tr_increment_nbVotes_after_insert_on_Votes
+    AFTER INSERT
+    ON "Votes"
+    FOR EACH ROW
+EXECUTE PROCEDURE incrementNbVotes();
+
+
 -- Fonction si le participant appartient à la question
 
 CREATE OR REPLACE FUNCTION isVotantInQuestion(p_login "Utilisateurs".login%TYPE,

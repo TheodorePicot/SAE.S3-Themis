@@ -22,9 +22,9 @@
             $hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;
             ?>
 
-            <div id="question" class="box overflow-hidden rounded-2 col-md-6 col-lg-4">
-                <div class="nestedDivQuestion overflow-hidden">
-                    <a id="lienQuestion" class="btn" href="<?= $hrefRead ?>">
+            <div class="box overflow-hidden rounded-2 col-md-6 col-lg-4">
+                <div class="nestedDivQuestion overflow-hidden text-center">
+                    <a class="lienQuestion btn m-3" href="<?= $hrefRead ?>">
                         <h3><?= $titreQuestionHTML ?></h3>
                         <p><?= $question->getShortDescriptionQuestion() ?></p>
                     </a>

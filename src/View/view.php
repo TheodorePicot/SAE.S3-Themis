@@ -100,7 +100,7 @@
                 </form>
                 <div class="nav-item">
                     <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=paulDupont">
-                        <img id="accountImg" src="assets/img/account.png">
+                        <img id="accountImg" alt="compte" src="assets/img/account.png">
                         </a>
                     <!--login default pour l'instant-->
                 </div>
