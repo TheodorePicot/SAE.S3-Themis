@@ -23,6 +23,7 @@ class ControllerVote extends AbstactController
         $vote = (new VoteRepository())->build($_GET);
 
         if ((new VoteRepository())->create($vote)) {
+            echo "save";
             $this->showView("view.php", [
                 "pageTitle" => "Création d'une utilisateur",
                 "pathBodyView" => "vote/created.php"

@@ -9,7 +9,7 @@ class PropositionRepository extends AbstractRepository
     protected function getTableName(): string
     {
         // TODO: Implement getTableName() method.
-        return 'themis."Proposition"';
+        return 'themis."Propositions"';
     }
 
     protected function getPrimaryKey(): string
@@ -39,7 +39,7 @@ class PropositionRepository extends AbstractRepository
 
     public function selectByQuestion(int $idQuestion): array
     {
-        $sqlQuery = 'SELECT * FROM "Proposition" WHERE "idQuestion" =:idQuestion';
+        $sqlQuery = 'SELECT * FROM "Propositions" WHERE "idQuestion" =:idQuestion';
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 

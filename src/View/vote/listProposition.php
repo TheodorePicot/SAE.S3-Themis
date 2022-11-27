@@ -2,7 +2,7 @@
 <form action="frontController.php">
     <input type="hidden" name="controller" value="vote">
     <input type="hidden" name="action" value="saveVote">
-    <!--    <input type="hidden" name="controller" value="vote">-->
+        <input type="hidden" name="login" value="jacques64">
 
     <?php foreach ($propositions as $proposition) :
         $titrePropositionHTML = htmlspecialchars($proposition->getTitreProposition());
