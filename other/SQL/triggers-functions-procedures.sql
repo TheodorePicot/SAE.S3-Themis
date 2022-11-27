@@ -45,7 +45,7 @@ create function incrementnbvotes() returns trigger
 as
 $$
 BEGIN
-    UPDATE "Proposition"
+    UPDATE Propositions
     SET "nbVotes" = "nbVotes" + 1
     WHERE "idProposition" = NEW."idProposition";
     RETURN NEW;
@@ -63,7 +63,7 @@ create function incrementnbvotes() returns trigger
 as
 $$
 BEGIN
-    UPDATE "Proposition"
+    UPDATE Propositions
     SET "nbVotes" = "nbVotes" - 1
     WHERE "idProposition" = NEW."idProposition";
     RETURN NEW;

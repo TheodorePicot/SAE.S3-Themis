@@ -10,7 +10,7 @@ class VoteRepository extends AbstractRepository
 
     protected function getTableName(): string
     {
-        return 'themis."Vote"';
+        return 'themis."Votes"';
     }
 
     protected function getPrimaryKey(): string

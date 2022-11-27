@@ -22,7 +22,7 @@ class Vote extends AbstractDataObject
     {
         return [
             "login" => $this->login,
-            "idPropositio" => $this->idProposition
+            "idProposition" => $this->idProposition
         ];
     }
 }

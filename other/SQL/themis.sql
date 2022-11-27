@@ -70,7 +70,7 @@ create table "SectionProposition"
             references "Sections",
     "idProposition"        integer not null
         constraint "SectionProposition_Proposition_null_fk"
-            references "Proposition"
+            references Propositions
 );
 
 create table "estAuteur"
