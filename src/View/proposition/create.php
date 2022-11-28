@@ -13,9 +13,9 @@
                                class="form-label"><?= htmlspecialchars($question->getTitreQuestion()) ?></label></h2>
 
 
-                        <div class="col-md-10 card card-body border-0" style="background: #C7B198;">
-                            Description : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
-                        </div>
+                    <div class="shadowBox  col-md-10 card card-body border-0" style="background: #C7B198;">
+                        Description : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+                    </div>
 
 
                     <div class="my-4">
@@ -25,14 +25,13 @@
                                max="99" maxlength="99"
                                required/>
                     </div>
-                    <!--                . htmlspecialchars($section->getTitreSection()) ?>-->
 
                     <div class="my-4">
                         <?php
                         $count = 1;
                         foreach ($sections as $section) : ?>
                             <h3><?= $count ?>. Section <?= $count ?></h3>
-                            <div class="col-md-10 card card-body border-0" style="background: #C7B198;">
+                            <div class="shadowBox col-md-10 card card-body border-0" style="background: #C7B198;">
                                 <?= htmlspecialchars($section->getDescriptionSection()) ?>
                             </div>
 

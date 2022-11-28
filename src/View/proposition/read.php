@@ -14,7 +14,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
     <div class="row my-5 gy-4">
         <div class="container-fluid col-md-11">
 
-            <div class="card card-body border-0 col-md-10" style="background: #C7B198;">
+            <div class="shadowBox card card-body border-0 col-md-10" style="background: #C7B198;">
                 Description de la question : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
             </div>
 
@@ -34,7 +34,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
                 <div class="my-4">
 
                     <h3><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h3>
-                    <div class="card card-body border-0 col-md-10" style="background: #C7B198;">
+                    <div class="shadowBox card card-body border-0 col-md-10" style="background: #C7B198;">
                         <?= htmlspecialchars($section->getDescriptionSection()) ?>
                     </div>
 

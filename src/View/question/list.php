@@ -11,8 +11,7 @@
                         d'écriture</a></li>
                 <li><a class="dropdown-item" href="frontController.php?action=readAllVote">Questions en cours de
                         vote</a></li>
-                <li><a class="dropdown-item" href="frontController.php?action=readAllFinish">Questions en cours de
-                        vote</a></li>
+                <li><a class="dropdown-item" href="frontController.php?action=readAllFinish">Questions terminées</a></li>
             </ul>
         </div>
 

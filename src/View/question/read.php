@@ -21,7 +21,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
     <div class="row my-5 my-4 gy-4 container-fluid">
 
         <div class="container-fluid col-md-12 col-lg-8">
-            <div class="card card-body border-0 rounded-4" style="background: #C7B198;">
+            <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
                 Description : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
 
             </div>
@@ -63,7 +63,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
         <!--    CALENDRIER -->
         <div class="container d-flex containerTime col-md-12 col-lg-3 mx-3">
-            <div class="wrapper">
+            <div class="shadowBox wrapper">
                 <h2> Calendrier</h2>
                 <ul class="sessions">
                     <li>

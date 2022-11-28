@@ -2,7 +2,7 @@
     <div class="row my-5">
 
         <div class="col-md-8 col-lg-4 container my-4 offset-lg-4">
-            <div class="card-body border-0 rounded-4" style="background: #C7B198;">
+            <div class="shadowBox card-body border-0 rounded-4" style="background: #C7B198;">
                 <form method="get" action="frontController.php">
                     <fieldset>
                         <div class="d-flex align-content-center justify-content-center my-1">

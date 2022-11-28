@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
     <div class="row my-5 mx-5">
-        <div class=" col-md-12 offset-lg-4 col-lg-4 my-4">
+        <div class="shadowBox col-md-12 offset-lg-3 col-lg-6 my-4">
             <div class="card-body border-0 rounded-4" style="background: #C7B198;">
                 <form method="get" action="frontController.php">
                     <fieldset>
@@ -15,7 +15,7 @@
                             <div class="mx-3">
                                 <h5><label for="login">Login</label></h5>
                                 <p>
-                                    <input class="fo    rm-control" type="text" placeholder="Paul16" name="login"
+                                    <input class="form-control" type="text" placeholder="Paul16" name="login"
                                            id="login"
                                            required/>
                                 </p>

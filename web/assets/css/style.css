@@ -110,6 +110,15 @@ a {
     padding: 5px;
 }
 
+.shadowBox {
+    background-color: #C7B198;
+    box-shadow: 4px 3px 8px 1px #969696;
+    /*background-image: linear-gradient(to bottom, rgba(30, 87, 153, 0.2) 0%, rgba(125, 185, 232, 0) 100%);*/
+    /*background-repeat: repeat;*/
+    border-radius: 10px;
+    padding: 5px;
+}
+
 /*LISTE PROPOSITIONS*/
 
 .boxProposition {
@@ -126,26 +135,6 @@ a {
     gap: 10px;
 }
 
-#containerUpdateDeleteUtilisateur {
-    width: 60px;
-    white-space: nowrap;
-
-}
-
-#containerUpdateDeleteUtilisateur a:first-child {
-    margin: 10px 10px 10px 0;
-    padding: 1px;
-}
-
-#containerUpdateDeleteUtilisateur a {
-    margin: 10px;
-    padding: 1px;
-}
-
-
-#containerUpdateDeleteUtilisateur li {
-    margin: 3px 6px 4px 6px;
-}
 
 #accountImg {
     height: 50px;
