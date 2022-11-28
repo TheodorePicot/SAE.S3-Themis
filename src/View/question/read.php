@@ -93,8 +93,6 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
 
         <div class="container col-md-8 mx-5">
-
-
             <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
         </div>
         <div class="col-md-3">

@@ -14,9 +14,4 @@ abstract class AbstactController
     {
         self::showView($errorMessage);
     }
-
-//    public function showMessage($url) {
-//        header("Location: $url");
-//        exit();
-//    }
 }
