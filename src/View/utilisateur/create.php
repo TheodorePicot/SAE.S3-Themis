@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
     <div class="row my-5 mx-5">
         <div class="shadowBox col-md-12 offset-lg-3 col-lg-6 my-4">
             <div class="card-body border-0 rounded-4" style="background: #C7B198;">
@@ -20,6 +19,7 @@
                                            required/>
                                 </p>
                             </div>
+
 
                             <div class="mx-3">
                                 <h5><label for="adresseMail">Email</label></h5>
@@ -71,6 +71,7 @@
                             </div>
 
                             <div class="d-flex align-content-center justify-content-center my-5">
+
                                 <input class="btn btn-dark" type="submit" value="S'enregistrer"/>
                             </div>
 
@@ -78,8 +79,10 @@
                     </fieldset>
                 </form>
             </div>
+            <div class="col-md-1 col-lg-4">
+
+            </div>
         </div>
     </div>
-</div>
 
 

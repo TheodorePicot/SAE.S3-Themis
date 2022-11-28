@@ -23,7 +23,6 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
         <div class="container-fluid col-md-12 col-lg-8">
             <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
                 Description : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
-
             </div>
 
             <div class="my-5">
@@ -56,12 +55,18 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             <div class="my-4">
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'> Supprimer</a>
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+            </div>
+            <div class="my-4">
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefVoter ?>'> Voter</a>
+                <a class="btn btn-dark text-nowrap"
+                   href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
+                    Ajouter une proposition</a>
             </div>
         </div>
 
 
         <!--    CALENDRIER -->
+
         <div class="container d-flex containerTime col-md-12 col-lg-3 mx-3">
             <div class="shadowBox wrapper">
                 <h2> Calendrier</h2>
@@ -85,11 +90,13 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 </ul>
             </div>
         </div>
-
         <div class="container-fluid col-md-12 col-lg-10 my-5">
 
             <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
         </div>
+
+
+
 
     </div>
 </div>

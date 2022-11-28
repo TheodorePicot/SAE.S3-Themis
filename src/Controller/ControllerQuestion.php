@@ -31,8 +31,6 @@ class ControllerQuestion extends AbstactController
         if ((new QuestionRepository)->create($question)) {
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
 
-            $utilisateurs = (new UtilisateurRepository)->selectAll();
-
             foreach ($_GET["votants"] as $votant) {
                 $votantObject = new Participant($votant, $idQuestion);
                 (new VotantRepository)->create($votantObject);
@@ -43,22 +41,9 @@ class ControllerQuestion extends AbstactController
                 (new AuteurRepository)->create($auteurObject);
             }
 
-            $sections = (new SectionRepository)->selectAllByQuestion($idQuestion); //retourne un tableau de toutes les sections d'une question
             $question = (new QuestionRepository)->select($idQuestion);
-            $message = "Création Question";
 
             header("Location: frontController.php?action=update&idQuestion=" . $question->getIdQuestion());
-
-            $this->showView("view.php", [
-                "utilisateurs" => $utilisateurs,
-                "sections" => $sections,
-                "question" => $question,
-                "message" => $message,
-                "pageTitle" => "Création question",
-                "pathBodyView" => "question/update.php"
-            ]);
-
-//            $this->update();
         } else {
             $this->showError("Erreur de création de la question");
         }
@@ -67,9 +52,7 @@ class ControllerQuestion extends AbstactController
     public function addSection(): void
     {
         (new SectionRepository)->create(new Section((int)null, $_GET['idQuestion'], "", ""));
-//        $_GET['action'] = "update";
         header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
-        $this->update();
     }
 
     public function read(): void
