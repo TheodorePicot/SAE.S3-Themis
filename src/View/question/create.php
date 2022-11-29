@@ -40,6 +40,8 @@
         <div class="container-fluid">
             <div class="row mx-5 my-4 gy-2">
                 <h2>Calendrier</h2>
+
+
                 <div class="container col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutProposition">Date de début des propositions</label></h5>
                     <input class=form-control type="date" placeholder="JJ/MM/YYYY" name="dateDebutProposition"
@@ -52,18 +54,19 @@
                            id="dateFinProposition" required/>
                 </div>
 
-                <div class="container-fluid col-md-6 col-lg-6">
+                <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutVote">Date de début du vote</label></h5>
                     <input class=form-control type="date" placeholder="JJ/MM/YYYY" name="dateDebutVote"
                            id="dateDebutVote"
                            required/>
                 </div>
-                <div class="container-fluid col-md-6 col-lg-6">
+                <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateFinVote">Date de fin du vote</label></h5>
                     <input class=form-control rol type="date" placeholder="JJ/MM/YYYY" name="dateFinVote"
                            id="dateFinVote"
                            required/>
                 </div>
+
             </div>
             <div class="btn mx-5" style="border-radius: 4px">
                 <input class="btn btn-dark" type="submit" value="Continuer"/>
