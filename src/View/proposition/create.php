@@ -30,7 +30,7 @@
                         <?php
                         $count = 1;
                         foreach ($sections as $section) : ?>
-                            <h3><?= $count ?>. Section <?= $count ?></h3>
+                            <h3><?= $count ?>. Section <?= $count ?> : <?=$section->getTitreSection()?></h3>
                             <div class="shadowBox col-md-10 card card-body border-0" style="background: #C7B198;">
                                 <?= htmlspecialchars($section->getDescriptionSection()) ?>
                             </div>
