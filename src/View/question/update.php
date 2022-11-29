@@ -1,4 +1,4 @@
-<form method="get" action="frontController.php" xmlns="http://www.w3.org/1999/html">
+<form method="get" action="frontController.php">
     <fieldset>
         <div class="d-flex align-content-center justify-content-center">
             <h1>Mise à jour de la question</h1>
