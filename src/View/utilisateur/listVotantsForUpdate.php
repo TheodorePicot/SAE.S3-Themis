@@ -1,6 +1,6 @@
 <div class="col-auto">
     <label  class="visually-hidden" for="votants"></label>
-    <select class="form-select" name="votants[]" id="autoSizingSelect" multiple>
+    <select class="form-select" name="votants[]" id="autoSizingSelect" required multiple>
         <?php use Themis\Model\Repository\VotantRepository;
 
         foreach ($utilisateurs as $utilisateur):
