@@ -56,12 +56,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'> Supprimer</a>
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
             </div>
-            <div class="my-4">
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefVoter ?>'> Voter</a>
-                <a class="btn btn-dark text-nowrap"
-                   href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
-                    Ajouter une proposition</a>
-            </div>
+
         </div>
 
 

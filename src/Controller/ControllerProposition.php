@@ -42,7 +42,6 @@ class ControllerProposition extends AbstactController
         }
 
         header("Location: frontController.php?action=read&controller=proposition&idProposition=$idProposition");
-//        $this->read();
     }
 
     public function read(): void
