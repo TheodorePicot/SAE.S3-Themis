@@ -26,6 +26,12 @@ class SectionRepository extends AbstractRepository
         ];
     }
 
+    protected function getOrderColumn(): string
+    {
+        return "idSection";
+    }
+
+
     public function selectAllByQuestion($idQuestion): array
     {
         $databaseTable = $this->getTableName();

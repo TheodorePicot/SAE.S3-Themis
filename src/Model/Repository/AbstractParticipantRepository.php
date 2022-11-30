@@ -14,6 +14,11 @@ abstract class AbstractParticipantRepository extends AbstractRepository
         return "idQuestion";
     }
 
+    protected function getOrderColumn(): string
+    {
+        return "nom";
+    }
+
     protected function getColumnNames(): array
     {
         return [

@@ -13,6 +13,9 @@ abstract class AbstractRepository
 
     protected abstract function getColumnNames(): array;
 
+    protected abstract function getOrderColumn(): string;
+
+
     /**
      * Cette fonction nous permet de prendre les attributs bruts, dans une liste, donnés par un utilisateur.
      * Nous transformons cette liste possédant les attributs en DataObject.
@@ -65,6 +68,19 @@ abstract class AbstractRepository
         $databaseTable = $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable");
 
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
+    }
+
+    public function selectAllOrderedByName(): array
+    {
+    $databaseTable = $this->getTableName();
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn());
+        echo "SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn();
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
             $dataObjects[] = $this->build($dataObject);

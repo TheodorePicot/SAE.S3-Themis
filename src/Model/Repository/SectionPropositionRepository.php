@@ -33,6 +33,11 @@ class SectionPropositionRepository extends AbstractRepository {
         ];
     }
 
+    protected function getOrderColumn(): string
+    {
+        return "";
+    }
+
     public function build(array $objectArrayFormat): SectionProposition
     {
         // TODO: Implement build() method.
@@ -78,5 +83,6 @@ class SectionPropositionRepository extends AbstractRepository {
         if ($objetTableFormat = $pdoStatement->fetch()) return $this->build($objetTableFormat);
         else return null;
     }
+
 }
 

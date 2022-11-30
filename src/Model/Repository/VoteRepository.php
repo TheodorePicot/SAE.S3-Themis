@@ -2,6 +2,7 @@
 
 namespace Themis\Model\Repository;
 
+use Exception;
 use Themis\Model\DataObject\AbstractDataObject;
 use Themis\Model\DataObject\Vote;
 
@@ -25,6 +26,16 @@ class VoteRepository extends AbstractRepository
             "idProposition"
         ];
     }
+
+    /**
+     * @throws Exception
+     */
+    protected function getOrderColumn(): string
+    {
+        // TODO: Implement getOrderColumn() method.
+        throw new Exception('Method not yet implemented', 100);
+    }
+
 
     /**
      * @inheritDoc

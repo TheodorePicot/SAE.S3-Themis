@@ -92,10 +92,8 @@
                     </form>
                 </div>
                 <form class="d-flex" id="signButtons">
-                    <a class="btn btn-dark text-nowrap" href="frontController.php?action=login&controller=utilisateur">Sign
-                        In</a>
-                    <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=create">Sign
-                        Up</a>
+                    <a class="btn btn-dark text-nowrap" href="frontController.php?action=login&controller=utilisateur">Se Connecter</a>
+                    <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
                 </form>
                 <div class="nav-item">
                     <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=paulDupont">

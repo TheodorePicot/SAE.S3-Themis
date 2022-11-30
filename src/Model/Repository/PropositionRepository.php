@@ -27,6 +27,12 @@ class PropositionRepository extends AbstractRepository
         ];
     }
 
+    protected function getOrderColumn(): string
+    {
+        return "titreProposition";
+    }
+
+
     public function build(array $objectArrayFormat): Proposition
     {
         // TODO: Implement build() method.

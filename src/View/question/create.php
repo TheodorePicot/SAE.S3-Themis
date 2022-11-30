@@ -1,30 +1,28 @@
 <form method="get" action="frontController.php" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <div class="d-flex align-content-center justify-content-center">
-            <h1>Creer une Question</h1>
+            <h1>Créer une Question</h1>
         </div>
-
         <div class='container-fluid'>
             <div class="row mx-5 my-4 gy-4">
-                <div class="container col-md-6 col-lg-6">
+                <div class="container col-12">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input type="text" class="form-control" placeholder="?" name="titreQuestion" id="titreQuestion"
                            max="99" maxlength="99"
                            required/>
                 </div>
 
-                <div class="container col-md-6 col-lg-6">
-                    <h3>Auteurs</h3>
-                    <?php require_once __DIR__ . "/../utilisateur/listAuteursForCreate.php" ?>
-                </div>
-
-                <div class="container col-md-6 col-lg-6">
+                <div class="container col-12">
                     <h3><label for="descriptionQuestion" class="form-label">Description</label></h3>
                     <textarea class="form-control input-group-lg" placeholder="description question"
                               name="descriptionQuestion" id="descriptionQuestion"
                               maxlength="700" required rows="5" cols="40"></textarea>
                 </div>
 
+                <div class="container col-md-6 col-lg-6 my-3" >
+                    <h3>Auteurs</h3>
+                    <?php require_once __DIR__ . "/../utilisateur/listAuteursForCreate.php" ?>
+                </div>
 
                 <div class="container col-md-6 col-lg-6 my-3">
                     <h3>Votants</h3>

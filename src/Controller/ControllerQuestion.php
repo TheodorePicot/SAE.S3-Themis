@@ -16,7 +16,7 @@ class ControllerQuestion extends AbstactController
 {
     public function create(): void
     {
-        $utilisateurs = (new UtilisateurRepository)->selectAll();
+        $utilisateurs = (new UtilisateurRepository)->selectAllOrderedByName();
         $this->showView("view.php", [
             "utilisateurs" => $utilisateurs,
             "pageTitle" => "Création Question",
@@ -77,6 +77,15 @@ class ControllerQuestion extends AbstactController
     public function readAll(): void
     {
         $questions = (new QuestionRepository)->selectAll();
+        $this->showView("view.php", [
+            "questions" => $questions,
+            "pageTitle" => "Questions",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+    public function readAllByAlphabeticalOrder() {
+        $questions = (new QuestionRepository)->selectAllOrderedByName();
         $this->showView("view.php", [
             "questions" => $questions,
             "pageTitle" => "Questions",

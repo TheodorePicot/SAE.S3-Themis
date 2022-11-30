@@ -8,12 +8,5 @@
       <jdbc-url>jdbc:postgresql://themis-db-instance.cnowxclkulrh.eu-west-3.rds.amazonaws.com:5432/themis</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="themis@themis-db-instance.cnowxclkulrh.eu-west-3.rds.amazonaws.com [2]" uuid="4f94b704-038e-46a8-a691-5e390c6f4021">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://themis-db-instance.cnowxclkulrh.eu-west-3.rds.amazonaws.com:5432/themis</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
   </component>
 </project>
