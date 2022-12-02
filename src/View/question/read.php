@@ -22,7 +22,9 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
         <div class="container-fluid col-md-12 col-lg-8">
             <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
-                Description : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+                <div class="mx-2">
+                    <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+                </div>
             </div>
 
             <div class="my-5">

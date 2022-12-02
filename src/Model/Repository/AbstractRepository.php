@@ -76,7 +76,7 @@ abstract class AbstractRepository
         return $dataObjects;
     }
 
-    public function selectAllOrderedByName(): array
+    public function selectAllOrdered(): array
     {
     $databaseTable = $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn());

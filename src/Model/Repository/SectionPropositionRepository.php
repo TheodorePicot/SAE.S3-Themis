@@ -48,7 +48,7 @@ class SectionPropositionRepository extends AbstractRepository {
         }
     }
 
-    public function selectAllByProposition($idProposition): array
+    public function selectAllByProposition($idProposition): array // TODO Faire trigger pour ajouter une section proposition quand ajoute section dans question
     {
         $databaseTable = $this->getTableName();
         $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idProposition"=:idProposition';
