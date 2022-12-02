@@ -7,7 +7,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
 
 <div class="container-fluid">
     <div class="row my-5 gy-4">
-        <div class="offset-4 col-4">
+        <div class="offset-md-4 offset-lg-4 col-md-6 col-lg-4">
             <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
                 <div class="d-flex align-content-center justify-content-center">
                     <h3>Mon compte</h3>
