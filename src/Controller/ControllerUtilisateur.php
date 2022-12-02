@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use Themis\Model\HTTP\Session;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 
@@ -82,4 +83,7 @@ class ControllerUtilisateur extends AbstactController
             ]);
         }
     }
+
+
+
 }

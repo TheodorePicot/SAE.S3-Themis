@@ -26,10 +26,16 @@ class SectionRepository extends AbstractRepository
         ];
     }
 
+    protected function getOrderColumn(): string
+    {
+        return "idSection";
+    }
+
+
     public function selectAllByQuestion($idQuestion): array
     {
         $databaseTable = $this->getTableName();
-        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idQuestion"=:idQuestion';
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idQuestion"=:idQuestion ORDER BY "idSection" ';
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = [

@@ -18,6 +18,11 @@ class UtilisateurRepository extends AbstractRepository
         return "login";
     }
 
+    protected function getOrderColumn(): string
+    {
+        return "login";
+    }
+
     protected function getColumnNames(): array
     {
         return [

@@ -16,7 +16,7 @@ class ControllerQuestion extends AbstactController
 {
     public function create(): void
     {
-        $utilisateurs = (new UtilisateurRepository)->selectAll();
+        $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
         $this->showView("view.php", [
             "utilisateurs" => $utilisateurs,
             "pageTitle" => "Création Question",
@@ -30,6 +30,10 @@ class ControllerQuestion extends AbstactController
 
         if ((new QuestionRepository)->create($question)) {
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
+
+            for ($i = 0; $i < $_GET['nbSections']; $i++) {
+                (new SectionRepository)->create(new Section((int)null, $idQuestion, "", ""));
+            }
 
             foreach ($_GET["votants"] as $votant) {
                 $votantObject = new Participant($votant, $idQuestion);
@@ -77,6 +81,15 @@ class ControllerQuestion extends AbstactController
     public function readAll(): void
     {
         $questions = (new QuestionRepository)->selectAll();
+        $this->showView("view.php", [
+            "questions" => $questions,
+            "pageTitle" => "Questions",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+    public function readAllByAlphabeticalOrder() {
+        $questions = (new QuestionRepository)->selectAllOrdered();
         $this->showView("view.php", [
             "questions" => $questions,
             "pageTitle" => "Questions",

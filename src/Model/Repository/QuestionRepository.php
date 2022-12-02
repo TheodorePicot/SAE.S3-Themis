@@ -33,6 +33,12 @@ class QuestionRepository extends AbstractRepository
         return 'titreQuestion';
     }
 
+    protected function getOrderColumn(): string
+    {
+        return '"Questions"."titreQuestion"';
+    }
+
+
     public function build(array $objectArrayFormat): Question
     {
         if (isset($objectArrayFormat['idQuestion'])) { //la question existe déjà (update)

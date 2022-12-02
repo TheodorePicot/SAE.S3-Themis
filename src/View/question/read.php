@@ -22,7 +22,9 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
         <div class="container-fluid col-md-12 col-lg-8">
             <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
-                Description : <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+                <div class="mx-2">
+                    <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+                </div>
             </div>
 
             <div class="my-5">
@@ -56,12 +58,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'> Supprimer</a>
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
             </div>
-            <div class="my-4">
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefVoter ?>'> Voter</a>
-                <a class="btn btn-dark text-nowrap"
-                   href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
-                    Ajouter une proposition</a>
-            </div>
+
         </div>
 
 
@@ -72,19 +69,19 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 <h2> Calendrier</h2>
                 <ul class="sessions">
                     <li>
-                        <div class="time"><b><?= htmlspecialchars($question->getDateDebutProposition()) ?></b></div>
+                        <div class="time"><b><?= htmlspecialchars(date("d-M-y", strtotime($question->getDateDebutProposition()))) ?></b></div>
                         <p> Date de début de proposition </p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars($question->getDateFinProposition()) ?></b></div>
+                        <div class="time"><b><?= htmlspecialchars(date("d-M-y", strtotime($question->getDateFinProposition()))) ?></b></div>
                         <p> Date de fin de rédaction de proposition </p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars($question->getDateDebutVote()) ?></b></div>
+                        <div class="time"><b><?= htmlspecialchars(date("d-M-y", strtotime($question->getDateDebutVote()))) ?></b></div>
                         <p>Date de début de vote</p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars($question->getDateFinVote()) ?></b></div>
+                        <div class="time"><b><?= htmlspecialchars(date("d-M-y", strtotime($question->getDateFinVote()))) ?></b></div>
                         <p>Date de fin de vote</p>
                     </li>
                 </ul>

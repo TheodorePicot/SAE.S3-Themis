@@ -14,6 +14,11 @@ abstract class AbstractParticipantRepository extends AbstractRepository
         return "idQuestion";
     }
 
+    protected function getOrderColumn(): string
+    {
+        return "login";
+    }
+
     protected function getColumnNames(): array
     {
         return [
@@ -30,7 +35,8 @@ abstract class AbstractParticipantRepository extends AbstractRepository
     public function selectAllByQuestion($idQuestion): array
     {
         $databaseTable = $this->getTableName();
-        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idQuestion"=:idQuestion';
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idQuestion"=:idQuestion' . " ORDER BY " . $this->getOrderColumn();
+        echo $sqlQuery;
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = [
@@ -46,4 +52,17 @@ abstract class AbstractParticipantRepository extends AbstractRepository
 
         return $dataObjects;
     }
+
+//    public function selectAllOrderedByNameByQuestion($idQuestion): array
+//    {
+//        $databaseTable = $this->getTableName();
+//        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE " . '"idQuestion"=:idQuestion ' . "ORDER BY " . $this->getOrderColumn());
+//        echo "SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn();
+//        $dataObjects = array();
+//        foreach ($pdoStatement as $dataObject) {
+//            $dataObjects[] = $this->build($dataObject);
+//        }
+//
+//        return $dataObjects;
+//    }
 }

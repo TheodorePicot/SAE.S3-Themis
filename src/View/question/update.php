@@ -6,7 +6,7 @@
 
         <div class='container-fluid'>
             <div class="row mx-5 my-5 gy-4">
-                <div class="container-fluid col-md-6 col-lg-6">
+                <div class="container-fluid col-12">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input class="form-control" type="text" placeholder="?"
                            value="<?= htmlspecialchars($question->getTitreQuestion()) ?>"
@@ -14,12 +14,9 @@
 
                 </div>
 
-                <div class="container-fluid col-md-6 col-lg-6">
-                    <h3>Auteurs</h3>
-                    <?php require_once __DIR__ . "/../utilisateur/listAuteursForUpdate.php" ?>
-                </div>
 
-                <div class="container-fluid col-md-6 col-lg-6">
+
+                <div class="container-fluid col-12">
                     <h3><label for="descriptionQuestion" class="form-label">Description</label></h3>
                     <textarea class="form-control" placeholder="Decrire la question" name="descriptionQuestion"
                               id="descriptionQuestion"
@@ -27,11 +24,27 @@
                               maxlength="700"><?= htmlspecialchars($question->getDescriptionQuestion()) ?></textarea>
                 </div>
 
-                <div class="container-fluid col-md-6 col-lg-6 my-3">
+                <div class="container col-md-6 col-lg-6 mt-3 mb-5">
+                    <h3>Auteurs</h3>
+                    <?php require_once __DIR__ . "/../utilisateur/listAuteursForUpdate.php" ?>
+                </div>
+
+                <div class="container col-md-6 col-lg-6 mt-3 mb-5">
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForUpdate.php" ?>
                 </div>
 
+                <div class="container col-12 my-3">
+                    <h3>Nombre de sections</h3>
+                    <select class="form-select" name="nbSections" aria-label="number of sections">
+                        <option selected value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
 
             </div>
         </div>

@@ -33,6 +33,11 @@ class SectionPropositionRepository extends AbstractRepository {
         ];
     }
 
+    protected function getOrderColumn(): string
+    {
+        return "";
+    }
+
     public function build(array $objectArrayFormat): SectionProposition
     {
         // TODO: Implement build() method.
@@ -43,7 +48,7 @@ class SectionPropositionRepository extends AbstractRepository {
         }
     }
 
-    public function selectAllByProposition($idProposition): array
+    public function selectAllByProposition($idProposition): array // TODO Faire trigger pour ajouter une section proposition quand ajoute section dans question
     {
         $databaseTable = $this->getTableName();
         $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idProposition"=:idProposition';
@@ -78,5 +83,6 @@ class SectionPropositionRepository extends AbstractRepository {
         if ($objetTableFormat = $pdoStatement->fetch()) return $this->build($objetTableFormat);
         else return null;
     }
+
 }
 
