@@ -84,6 +84,7 @@
                         <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
                     </li>
                 </ul>
+                <a href="frontController.php?action=formulairePreference"><img id="preferenceImg" src="assets/img/choix.png"></a>
                 <div id="searchBox" class="mx-3">
                     <form method="get">
                         <input type="search" name="element" placeholder="Recherche...">
@@ -96,6 +97,7 @@
                     <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
                 </form>
                 <div class="nav-item">
+
                     <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=paulDupont">
                         <img id="accountImg" alt="compte" src="assets/img/account.png">
                         </a>
