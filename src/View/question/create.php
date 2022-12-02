@@ -4,8 +4,8 @@
             <h1>Créer une Question</h1>
         </div>
         <div class='container-fluid'>
-            <div class="row mx-5 my-4 gy-4">
-                <div class="container col-12">
+            <div class="row mx-5 my-3 gy-4">
+                <div class="container col-12 my-3">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input type="text" class="form-control" placeholder="?" name="titreQuestion" id="titreQuestion"
                            max="99" maxlength="99"
@@ -19,16 +19,27 @@
                               maxlength="700" required rows="5" cols="40"></textarea>
                 </div>
 
-                <div class="container col-md-6 col-lg-6 my-3" >
+                <div class="container col-md-6 col-lg-6 mt-3 mb-5" >
                     <h3>Auteurs</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listAuteursForCreate.php" ?>
                 </div>
 
-                <div class="container col-md-6 col-lg-6 my-3">
+                <div class="container col-md-6 col-lg-6 mt-3 mb-5">
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForCreate.php" ?>
                 </div>
 
+                <div class="container col-12 my-3">
+                <h3>Nombre de sections</h3>
+                    <select class="form-select" name="nbSections" aria-label="number of sections">
+                        <option selected value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
 
             </div>
         </div>
