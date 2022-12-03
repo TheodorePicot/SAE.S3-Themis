@@ -28,19 +28,6 @@
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForCreate.php" ?>
                 </div>
-
-                <div class="container col-12 my-3">
-                <h3>Nombre de sections</h3>
-                    <select class="form-select" name="nbSections" aria-label="number of sections">
-                        <option selected value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                </div>
-
             </div>
         </div>
 

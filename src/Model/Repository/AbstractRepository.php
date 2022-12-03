@@ -49,7 +49,7 @@ abstract class AbstractRepository
         }
         $sqlQuery .= ") " . $columnValues . ")";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-        echo $sqlQuery . "\n";
+//        echo $sqlQuery . "\n";
         $values = $dataObject->tableFormat();
 //        var_dump($values);
         try {
@@ -80,7 +80,7 @@ abstract class AbstractRepository
     {
     $databaseTable = $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn());
-        echo "SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn();
+//        echo "SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn();
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
             $dataObjects[] = $this->build($dataObject);

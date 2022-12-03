@@ -5,8 +5,6 @@ $lastSection = end($sections);
 <div id="deleteUpdate" class="d-flex align-content-center justify-content-center">
     <div class="row">
         <div class="col-md-12 col-lg-6">
-
-
             <button class="btn btn-lg btn-dark text-nowrap" type="submit" name="action" value="addSection">+ Ajouter une section</button>
             <?php if ($lastSection != false) ?>
         </div>
