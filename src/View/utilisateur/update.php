@@ -14,23 +14,23 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 <input class="form-control" type="text" name="login" id="login"
                        value="<?= htmlspecialchars($utilisateur->getLogin()) ?>">
 
-                <h5><label class="my-2" for="nom">Nom Utilisateur  </label></h5>
+                <h5><label class="my-2" for="nom">Nom Utilisateur </label></h5>
                 <input class="form-control" type="text" name="nom" id="nom"
                        value="<?= htmlspecialchars($utilisateur->getNom()) ?>">
 
-                <h5><label class="my-2 for="prenom">Prénom Utilisateur  </label></h5>
+                <h5><label class="my-2 for=" prenom">Prénom Utilisateur  </label></h5>
                 <input class="form-control" type="text" name="prenom" id="prenom"
                        value="<?= htmlspecialchars($utilisateur->getPrenom()) ?>">
 
-                <h5><label class="my-2 for="adresseMail">Adresse Mail </label></h5>
+                <h5><label class="my-2 for=" adresseMail">Adresse Mail </label></h5>
                 <input class="form-control" type="text" name="adresseMail" id="adresseMail"
                        value="<?= htmlspecialchars($utilisateur->getAdresseMail()) ?>">
 
-                <h5><label class="my-2 for="dateNaissance">Date de Naissance </label></h5>
+                <h5><label class="my-2 for=" dateNaissance">Date de Naissance </label></h5>
                 <input class="form-control" type="date" name="dateNaissance" id="dateNaissance"
                        value="<?= htmlspecialchars($utilisateur->getDateNaissance()) ?>">
 
-                <h5><label class="my-2 for="mdp">Mot de Passe </label></h5>
+                <h5><label class="my-2 for=" mdp">Mot de Passe </label></h5>
                 <input class="form-control" type="text" name="mdp" id="mdp"
                        value="<?= htmlspecialchars($utilisateur->getMdp()) ?>">
 
