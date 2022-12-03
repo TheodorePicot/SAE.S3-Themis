@@ -82,13 +82,14 @@
 
 
                     <input type="hidden" name="idQuestion" value="<?= htmlspecialchars($question->getIdQuestion()) ?>">
-                    <input type='hidden' name='action' value='updated'>
+<!--                    <input type='hidden' name='action' value='updated'>-->
 
                     <?php require_once __DIR__ . "/../section/listByQuestionForUpdate.php" ?>
 
                 </div>
                 <div class="col-12 d-flex align-content-center justify-content-center">
-                    <input class="btn btn-lg btn-dark" type="submit" value="Envoyer"/>
+                    <button class="btn btn-lg btn-dark text-nowrap" type="submit" name="action" value="updated">Mettre à Jour</button>
+<!--                    <input class="btn btn-lg btn-dark" type="submit" value="Envoyer" formaction="frontController.php?action=updated"/>-->
                 </div>
 
             </div>
