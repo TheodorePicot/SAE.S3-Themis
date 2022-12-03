@@ -1,7 +1,7 @@
 <form method="get" action="frontController.php">
     <fieldset>
         <div class="d-flex align-content-center justify-content-center">
-            <h1>Mise à jour de la question</h1>
+            <h1><?= $message ?></h1>
         </div>
 
         <div class='container-fluid'>

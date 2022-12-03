@@ -27,68 +27,31 @@ class ControllerQuestion extends AbstactController
 
     public function created(): void
     {
-        $question = (new QuestionRepository)->build($_GET);
+        (new QuestionRepository)->create((new QuestionRepository)->build($_GET));
+        $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
-        if ((new QuestionRepository)->create($question)) {
-            $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
-
-            foreach ($_GET["votants"] as $votant) {
-                $votantObject = new Participant($votant, $idQuestion);
-                (new VotantRepository)->create($votantObject);
-            }
-
-            foreach ($_GET["auteurs"] as $auteur) {
-                $auteurObject = new Participant($auteur, $idQuestion);
-                (new AuteurRepository)->create($auteurObject);
-            }
-
-            $question = (new QuestionRepository)->select($idQuestion);
-
-            header("Location: frontController.php?isInCreation=yes&action=update&idQuestion=" . $question->getIdQuestion());
-        } else {
-            $this->showError("Erreur de création de la question");
-        }
+        (new ControllerUtilisateur)->createParticipants($idQuestion);
+        $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
     }
 
     public function addSection(): void
     {
-        $question = (new QuestionRepository)->build($_GET);
-        (new QuestionRepository)->update($question);
+        $this->updateInformationAuxiliary();
+        (new SectionRepository)->create(new Section((int)null, $_GET["idQuestion"], "", ""));
 
-        foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
-            (new SectionRepository)->update($updatedSection);
-        }
-
-        (new VotantRepository)->delete($question->getIdQuestion());
-        (new AuteurRepository)->delete($question->getIdQuestion());
-
-        foreach ($_GET["votants"] as $votant) {
-            $votantObject = new Participant($votant, $question->getIdQuestion());
-            (new VotantRepository)->create($votantObject);
-        }
-
-        foreach ($_GET["auteurs"] as $auteur) {
-            $auteurObject = new Participant($auteur, $question->getIdQuestion());
-            (new AuteurRepository)->create($auteurObject);
-        }
-
-        (new SectionRepository)->create(new Section((int)null, $_GET['idQuestion'], "", ""));
-
-        if (isset($_GET['isInCreation'])) {
-            header("Location: frontController.php?isInCreation=yes&action=update&idQuestion=" . $_GET['idQuestion']);
-        } else {
-            header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
-        }
+        if (isset($_GET["isInCreation"]))
+            $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_GET["idQuestion"]}");
+        else
+            $this->redirect("frontController.php?action=update&idQuestion={$_GET["idQuestion"]}");
     }
 
     public function read(): void
     {
-        $question = (new QuestionRepository)->select($_GET['idQuestion']);
-        $sections = (new SectionRepository)->selectAllByQuestion($_GET['idQuestion']);
-        $votants = (new VotantRepository)->selectAllByQuestion($_GET['idQuestion']);
-        $auteurs = (new AuteurRepository)->selectAllByQuestion($_GET['idQuestion']);
-        $propositions = (new PropositionRepository)->selectByQuestion($_GET['idQuestion']);
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $votants = (new VotantRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $auteurs = (new AuteurRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
 
         $this->showView("view.php", [
             "propositions" => $propositions,
@@ -101,75 +64,65 @@ class ControllerQuestion extends AbstactController
         ]);
     }
 
-    public function readAll(): void
+    public function showQuestions(array $questions)
     {
-        $questions = (new QuestionRepository)->selectAll();
         $this->showView("view.php", [
             "questions" => $questions,
             "pageTitle" => "Questions",
             "pathBodyView" => "question/list.php"
         ]);
+    }
+
+    public function readAll(): void
+    {
+        $this->showQuestions((new QuestionRepository)->selectAll());
     }
 
     public function readAllByAlphabeticalOrder()
     {
-        $questions = (new QuestionRepository)->selectAllOrdered();
-        $this->showView("view.php", [
-            "questions" => $questions,
-            "pageTitle" => "Questions",
-            "pathBodyView" => "question/list.php"
-        ]);
+        $this->showQuestions((new QuestionRepository)->selectAllOrdered());
     }
 
-    public function readAllWrite(): void
+    public function readAllCurrentlyInWriting(): void
     {
-        $questions = (new QuestionRepository)->selectAllWrite();
-        $this->showView("view.php", [
-            "questions" => $questions,
-            "pageTitle" => "Questions",
-            "pathBodyView" => "question/list.php"
-        ]);
+        $this->showQuestions((new QuestionRepository)->selectAllWrite());
     }
 
-    public function readAllVote(): void
+    public function readAllCurrentlyInVoting(): void
     {
-        $questions = (new QuestionRepository)->selectAllVote();
-        $this->showView("view.php", [
-            "questions" => $questions,
-            "pageTitle" => "Questions",
-            "pathBodyView" => "question/list.php"
-        ]);
+        $this->showQuestions((new QuestionRepository)->selectAllVote());
     }
 
-    public function readAllFinish(): void
+    public function readAllFinished(): void
     {
-        $questions = (new QuestionRepository)->selectAllFinish();
-        $this->showView("view.php", [
-            "questions" => $questions,
-            "pageTitle" => "Questions",
-            "pathBodyView" => "question/list.php"
-        ]);
+        $this->showQuestions((new QuestionRepository)->selectAllFinish());
     }
 
+    public function search(): void
+    {
+        $this->showQuestions((new QuestionRepository())->search($_GET['element']));
+    }
 
     public function update(): void
     {
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
         $utilisateurs = (new UtilisateurRepository)->selectAll();
-        $message = "Mise à jour question";
+
+        if (isset($_GET["isInCreation"])) $message = "Création de votre question";
+        else $message = "Mise à jour question";
 
         $this->showView("view.php", [
             "utilisateurs" => $utilisateurs,
             "sections" => $sections,
             "question" => $question,
             "message" => $message,
-            "pageTitle" => "Mise à jour question",
+            "pageTitle" => $message,
             "pathBodyView" => "question/update.php"
         ]);
     }
 
-    public function updated(): void
+    public function updateInformationAuxiliary()
     {
         $question = (new QuestionRepository)->build($_GET);
         (new QuestionRepository)->update($question);
@@ -179,77 +132,41 @@ class ControllerQuestion extends AbstactController
             (new SectionRepository)->update($updatedSection);
         }
 
-        (new VotantRepository)->delete($question->getIdQuestion());
-        (new AuteurRepository)->delete($question->getIdQuestion());
+        (new ControllerUtilisateur())->deleteParticipants($question->getIdQuestion());
+        (new ControllerUtilisateur())->createParticipants($question->getIdQuestion());
+    }
 
-        foreach ($_GET["votants"] as $votant) {
-            $votantObject = new Participant($votant, $question->getIdQuestion());
-            (new VotantRepository)->create($votantObject);
-        }
-
-        foreach ($_GET["auteurs"] as $auteur) {
-            $auteurObject = new Participant($auteur, $question->getIdQuestion());
-            (new AuteurRepository)->create($auteurObject);
-        }
+    public function updated(): void
+    {
+        $this->updateInformationAuxiliary();
 
         if (isset($_GET['isInCreation'])) {
             (new FlashMessage())->flash('created', 'Votre question a été créée', FlashMessage::FLASH_SUCCESS);
         } else {
-            (new FlashMessage())->flash('created', 'Votre question a été mise à jour', FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage())->flash('updated', 'Votre question a été mise à jour', FlashMessage::FLASH_SUCCESS);
         }
-        header("location: frontController.php?action=readAll");
+        $this->redirect("frontController.php?action=readAll");
     }
 
     public function delete(): void
     {
         if ((new QuestionRepository())->delete($_GET['idQuestion'])) {
             (new FlashMessage())->flash('deleted', 'Votre question a été supprimée', FlashMessage::FLASH_SUCCESS);
-            header("location: frontController.php?action=readAll");
+            $this->redirect("frontController.php?action=readAll");
+        } else {
+            (new FlashMessage())->flash('deleteFailed', 'Il y a eu une erreur lors de la suppréssion de la question', FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=readAll");
         }
     }
 
     public function deleteLastSection(): void
     {
-        $question = (new QuestionRepository)->build($_GET);
-        (new QuestionRepository)->update($question);
-
-        foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
-            (new SectionRepository)->update($updatedSection);
-        }
-
-        (new VotantRepository)->delete($question->getIdQuestion());
-        (new AuteurRepository)->delete($question->getIdQuestion());
-
-        foreach ($_GET["votants"] as $votant) {
-            $votantObject = new Participant($votant, $question->getIdQuestion());
-            (new VotantRepository)->create($votantObject);
-        }
-
-        foreach ($_GET["auteurs"] as $auteur) {
-            $auteurObject = new Participant($auteur, $question->getIdQuestion());
-            (new AuteurRepository)->create($auteurObject);
-        }
+        $this->updateInformationAuxiliary();
         (new SectionRepository)->delete($_GET["lastIdSection"]);
-        if (isset($_GET['isInCreation'])) {
-            header("Location: frontController.php?isInCreation=yes&action=update&idQuestion=" . $_GET['idQuestion']);
-        } else {
-            header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
-        }
-    }
 
-    public function search(): void
-    {
-        $questions = (new QuestionRepository())->search($_GET['element']);
-        $this->showView("view.php", [
-            "questions" => $questions,
-            "pageTitle" => "Questions recherchées",
-            "pathBodyView" => "question/list.php"
-        ]);
-    }
-
-    public function vote(): void
-    {
-
+        if (isset($_GET["isInCreation"]))
+            $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_GET["idQuestion"]}");
+        else
+            $this->redirect("frontController.php?action=update&idQuestion={$_GET["idQuestion"]}");
     }
 }

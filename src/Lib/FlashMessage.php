@@ -8,7 +8,7 @@ class FlashMessage
 {
     // Les messages sont enregistrés en session associée à la clé suivante
     const FLASH = 'FLASH_MESSAGES';
-    const FLASH_ERROR = 'error';
+    const FLASH_DANGER = 'danger';
     const FLASH_WARNING = 'warning';
     const FLASH_INFO = 'info';
     const FLASH_SUCCESS = 'success';

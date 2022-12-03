@@ -12,6 +12,11 @@ abstract class AbstactController
         require __DIR__ . "/../View/$pathView";
     }
 
+    protected function redirect(string $url) {
+        header("Location: $url");
+        exit();
+    }
+
     public function showError(string $errorMessage): void
     {
         self::showView($errorMessage);
