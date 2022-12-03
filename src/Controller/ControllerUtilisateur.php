@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\MotDePasse;
 use Themis\Model\DataObject\Utilisateur;
 use Themis\Model\HTTP\Session;
@@ -58,6 +59,28 @@ class ControllerUtilisateur extends AbstactController
         ]);
     }
 
+    public function connecter() : void {
+        if (!isset($_GET['login']) || !isset($_GET['mdp'])) self::login();
+        $utilisateurSelect = (new UtilisateurRepository())->select($_GET['login']);
+        if (!MotDePasse::check($_GET['mdp'], $utilisateurSelect->getMdp())){
+            self::login();
+        }
+        else{
+            ConnexionUtilisateur::connecter(($_GET['login']));
+            self::read();
+        }
+    }
+
+    public function deconnecter() : void {
+        ConnexionUtilisateur::deconnecter();
+        $this->showView("view.php", [
+            "pageTitle" => "Se déconnecter",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+
+
     public function update(): void
     {
         $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
@@ -102,6 +125,10 @@ class ControllerUtilisateur extends AbstactController
             ]);
         }
     }
+
+
+
+
 
 
 
