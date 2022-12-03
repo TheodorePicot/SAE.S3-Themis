@@ -36,7 +36,7 @@ abstract class AbstractParticipantRepository extends AbstractRepository
     {
         $databaseTable = $this->getTableName();
         $sqlQuery = "SELECT * FROM $databaseTable WHERE " . '"idQuestion"=:idQuestion' . " ORDER BY " . $this->getOrderColumn();
-        echo $sqlQuery;
+//        echo $sqlQuery;
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = [

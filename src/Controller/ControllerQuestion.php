@@ -246,5 +246,4 @@ class ControllerQuestion extends AbstactController
     {
 
     }
-
 }
