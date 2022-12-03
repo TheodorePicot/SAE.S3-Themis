@@ -25,32 +25,31 @@ class Session
         return static::$instance;
     }
 
-    public function contient($name): bool
+    public function contains($name): bool
     {
         return isset($_SESSION[$name]);
     }
 
-    public function enregistrer(string $name, mixed $value): void
+    public function save(string $name, mixed $value): void
     {
         $_SESSION[$name] = $value;
     }
 
-    public function lire(string $name): mixed
+    public function read(string $name): mixed
     {
         return $_SESSION[$name];
     }
 
-    public function supprimer($name): void
+    public function delete($name): void
     {
         unset($_COOKIE[$name]);
     }
 
-    public function detruire() : void
+    public function destroy() : void
     {
-        session_unset();     // unset $_SESSION variable for the run-time
-        session_destroy();   // destroy session data in storage
-        Cookie::supprimer(session_name()); // deletes the session cookie
-        // Il faudra reconstruire la session au prochain appel de getInstance()
+        session_unset();
+        session_destroy();
+        Cookie::delete(session_name());
         $instance = null;
     }
 }

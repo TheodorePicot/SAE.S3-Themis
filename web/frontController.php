@@ -14,9 +14,6 @@ $controller = 'question';
 if (isset($_GET['controller'])){
     $controller = $_GET['controller'];
 }
-else{
-    //$controller = PreferenceControleur::lire();
-}
 
 $controllerClassName = "Themis\Controller\Controller" . ucfirst($controller);
 

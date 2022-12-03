@@ -10,23 +10,23 @@ class PreferenceControleur {
 
     public static function enregistrer(string $preference) : void
     {
-        Cookie::enregistrer(static::$clePreference, $preference);
+        Cookie::save(static::$clePreference, $preference);
     }
 
     public static function lire() : string
     {
-        $v = Cookie::lire(self::$clePreference);
+        $v = Cookie::read(self::$clePreference);
         return $v;
     }
 
     public static function existe() : bool
     {
-        return Cookie::contient(self::$clePreference);
+        return Cookie::contains(self::$clePreference);
     }
 
     public static function supprimer() : void
     {
-        Cookie::supprimer(self::$clePreference);
+        Cookie::delete(self::$clePreference);
     }
 }
 

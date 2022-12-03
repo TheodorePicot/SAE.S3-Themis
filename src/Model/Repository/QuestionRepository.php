@@ -67,7 +67,7 @@ class QuestionRepository extends AbstractRepository
     public function selectAllWrite(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) >= " . '"dateDebutProposition" AND CAST(NOW() AS DATE) <= "dateFinProposition"');
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS TIMESTAMP) >= " . '"dateDebutProposition" AND CAST(NOW() AS TIMESTAMP) <= "dateFinProposition"');
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
@@ -80,7 +80,7 @@ class QuestionRepository extends AbstractRepository
     public function selectAllVote(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) >= " . '"dateDebutVote" AND CAST(NOW() AS DATE) <= "dateFinVote"');
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS TIMESTAMP) >= " . '"dateDebutVote" AND CAST(NOW() AS TIMESTAMP) <= "dateFinVote"');
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
@@ -93,7 +93,7 @@ class QuestionRepository extends AbstractRepository
     public function selectAllFinish(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) > " . '"dateFinVote"');
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS TIMESTAMP) > " . '"dateFinVote"');
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {

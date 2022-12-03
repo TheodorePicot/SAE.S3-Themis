@@ -40,25 +40,25 @@
 
                 <div class="container col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutProposition">Date de début des propositions</label></h5>
-                    <input class=form-control type="date" placeholder="JJ/MM/YYYY" name="dateDebutProposition"
+                    <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateDebutProposition"
                            id="dateDebutProposition" required/>
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
 
                     <h5><label for="dateFinProposition">Date de fin des propositions</label></h5>
-                    <input class=form-control type="date" placeholder="JJ/MM/YYYY" name="dateFinProposition"
+                    <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateFinProposition"
                            id="dateFinProposition" required/>
                 </div>
 
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutVote">Date de début du vote</label></h5>
-                    <input class=form-control type="date" placeholder="JJ/MM/YYYY" name="dateDebutVote"
+                    <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateDebutVote"
                            id="dateDebutVote"
                            required/>
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateFinVote">Date de fin du vote</label></h5>
-                    <input class=form-control rol type="date" placeholder="JJ/MM/YYYY" name="dateFinVote"
+                    <input class=form-control rol type="datetime-local" placeholder="JJ/MM/YYYY" name="dateFinVote"
                            id="dateFinVote"
                            required/>
                 </div>

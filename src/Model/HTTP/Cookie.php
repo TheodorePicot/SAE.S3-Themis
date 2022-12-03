@@ -5,30 +5,29 @@ namespace Themis\Model\HTTP;
 class Cookie
 {
 
-    public static function enregistrer(string $cle, mixed $valeur, ?int $dureeExpiration = null): void
+    public static function save(string $key, mixed $value, ?int $durationBeforeExpiration = null): void
     {
-        $valeurString = serialize($valeur);
-        if ($dureeExpiration == null) {
-            setcookie($cle, $valeurString, 0);
+        if ($durationBeforeExpiration == null) {
+            setcookie($key, serialize($value), 0);
         } else {
-            setcookie($cle, $valeurString, $dureeExpiration);
+            setcookie($key, serialize($value), $durationBeforeExpiration);
         }
     }
 
-    public static function lire(string $cle): mixed
+    public static function read(string $key): mixed
     {
-        return unserialize($_COOKIE[$cle]);
+        return unserialize($_COOKIE[$key]);
     }
 
-    public static function contient($cle): bool
+    public static function contains($key): bool
     {
-        return isset($_COOKIE[$cle]);
+        return isset($_COOKIE[$key]);
     }
 
-    public static function supprimer($cle): void
+    public static function delete($key): void
     {
-        unset($_COOKIE["$cle"]);
-        setcookie("$cle", "", 1);
+        unset($_COOKIE["$key"]);
+        setcookie("$key", "", 1);
     }
 
 }

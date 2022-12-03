@@ -42,7 +42,7 @@
                 <h2>Calendrier</h2>
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutProposition">Date de début des propositions</label></h5>
-                    <input class="form-control" type="date" placeholder="JJ/MM/YYYY"
+                    <input class="form-control" type="datetime-local" placeholder="JJ/MM/YYYY"
                            value="<?= htmlspecialchars($question->getDateDebutProposition()) ?>"
                            name="dateDebutProposition" id="dateDebutProposition" required/>
 
@@ -50,7 +50,7 @@
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
 
                     <h5><label for="dateFinProposition">Date de fin des propositions</label></h5>
-                    <input class="form-control" type="date" placeholder="JJ/MM/YYYY"
+                    <input class="form-control" type="datetime-local" placeholder="JJ/MM/YYYY"
                            value="<?= htmlspecialchars($question->getDateFinProposition()) ?>"
                            name="dateFinProposition" id="dateFinProposition" required/>
 
@@ -58,14 +58,14 @@
 
                 <div class="container-fluid col-md-6 col-lg-6">
                     <h5><label for="dateDebutVote">Date de début du vote</label></h5>
-                    <input class="form-control" type="date" placeholder="JJ/MM/YYYY"
+                    <input class="form-control" type="datetime-local" placeholder="JJ/MM/YYYY"
                            value="<?= htmlspecialchars($question->getDateDebutVote()) ?>"
                            name="dateDebutVote" id="dateDebutVote" required/>
 
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6">
                     <h5><label for="dateFinVote">Date de fin du vote</label></h5>
-                    <input class="form-control" type="date" placeholder="JJ/MM/YYYY"
+                    <input class="form-control" type="datetime-local" placeholder="JJ/MM/YYYY"
                            value="<?= htmlspecialchars($question->getDateFinVote()) ?>"
                            name="dateFinVote"
                            id="dateFinVote" required/>
