@@ -74,10 +74,7 @@ class ControllerUtilisateur extends AbstactController
     public function deconnecter(): void
     {
         ConnexionUtilisateur::deconnecter();
-        $this->showView("view.php", [
-            "pageTitle" => "Se déconnecter",
-            "pathBodyView" => "question/list.php"
-        ]);
+        header("location:frontController.php?action=readAll");
     }
 
 
