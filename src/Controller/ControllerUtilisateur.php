@@ -2,6 +2,8 @@
 
 namespace Themis\Controller;
 
+use Themis\Lib\MotDePasse;
+use Themis\Model\DataObject\Utilisateur;
 use Themis\Model\HTTP\Session;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
@@ -18,16 +20,23 @@ class ControllerUtilisateur extends AbstactController
 
     public function created(): void
     {
-        $utilisateur = (new UtilisateurRepository)->build($_GET);
+        if ($_GET['mdp'] == $_GET['mdp2']){
+            $utilisateur = Utilisateur::buildFromForm($_GET);
 
-        if ((new UtilisateurRepository)->create($utilisateur)) {
-            $this->showView("view.php", [
-                "pageTitle" => "Création d'une utilisateur",
-                "pathBodyView" => "utilisateur/created.php"
-            ]);
-        } else {
-            $this->showError("Ce login existe déjà");
+            if ((new UtilisateurRepository)->create($utilisateur)) {
+                $this->showView("view.php", [
+                    "pageTitle" => "Création d'une utilisateur",
+                    "pathBodyView" => "utilisateur/created.php"
+                ]);
+            } else {
+                $this->showError("Ce login existe déjà");
+            }
         }
+        else{
+            //flash Théodore
+            self::create();
+        }
+
     }
 
     public function read(): void
@@ -62,14 +71,24 @@ class ControllerUtilisateur extends AbstactController
 
     public function updated(): void
     {
-        $utilisateur = (new UtilisateurRepository)->build($_GET);
-        (new UtilisateurRepository)->update($utilisateur);
+        $utilisateurSelect = (new UtilisateurRepository)->select($_GET['login']);
 
-        $this->showView("view.php", [
-            "utilisateur" => $utilisateur,
-            "pageTitle" => "Info Utilisateur",
-            "pathBodyView" => "utilisateur/read.php"
-        ]);
+        if ($_GET['mdp'] == $_GET['mdp2'] && MotDePasse::check($_GET['mdpAncien'], $utilisateurSelect->getMdp())){
+            $utilisateur = Utilisateur::buildFromForm($_GET);
+            (new UtilisateurRepository)->update($utilisateur);
+
+            $this->showView("view.php", [
+                "utilisateur" => $utilisateur,
+                "pageTitle" => "Info Utilisateur",
+                "pathBodyView" => "utilisateur/read.php"
+            ]);
+        }
+        else{
+            //flash Théodore
+            self::update();
+        }
+
+
     }
 
     public function delete(): void

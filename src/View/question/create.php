@@ -4,7 +4,7 @@
             <h1>Créer une Question</h1>
         </div>
         <div class='container-fluid'>
-            <div class="row mx-5 my-3 gy-4">
+            <div class="row mx-5 gy-4">
                 <div class="container col-12 my-3">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input type="text" class="form-control" placeholder="?" name="titreQuestion" id="titreQuestion"
@@ -12,22 +12,22 @@
                            required/>
                 </div>
 
-                <div class="container col-12">
+                <div class="container col-12 my-3">
                     <h3><label for="descriptionQuestion" class="form-label">Description</label></h3>
                     <textarea class="form-control input-group-lg" placeholder="description question"
                               name="descriptionQuestion" id="descriptionQuestion"
                               maxlength="700" required rows="5" cols="40"></textarea>
                 </div>
 
-                <div class="container col-md-6 col-lg-6 mt-3 mb-5" >
+                <div class="container col-md-6 col-lg-6 my-3" >
                     <h3>Auteurs</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listAuteursForCreate.php" ?>
                 </div>
-
-                <div class="container col-md-6 col-lg-6 mt-3 mb-5">
+                <div class="container col-md-6 col-lg-6 my-3">
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForCreate.php" ?>
                 </div>
+
             </div>
         </div>
 

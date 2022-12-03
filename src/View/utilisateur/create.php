@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="mx-3 ">
-                                <h5><label for="mdp">Mot de passe</label></h5>
+                                <h5><label for="mdp">Mot de passe&#42;</label></h5>
                                 <p>
                                     <input class="form-control" type="password" name="mdp" id="mdp" minlength="8"
                                            required/>
@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="mx-3 ">
-                                <h5><label for="mdp2">Confirmation mot de passe</label></h5>
+                                <h5><label for="mdp2">Confirmation mot de passe&#42;</label></h5>
                                 <p>
                                     <input class="form-control" type="password" name="mdp2" id="mdp2" minlength="8"
                                            required/>
