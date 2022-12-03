@@ -2,7 +2,6 @@
 
 namespace Themis\Controller;
 
-use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Section;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
@@ -98,9 +97,9 @@ class ControllerQuestion extends AbstactController
         $this->showQuestions((new QuestionRepository)->selectAllFinish());
     }
 
-    public function search(): void
+    public function readAllBySearchValue(): void
     {
-        $this->showQuestions((new QuestionRepository())->search($_GET['element']));
+        $this->showQuestions((new QuestionRepository())->search($_GET['searchValue']));
     }
 
     public function update(): void
