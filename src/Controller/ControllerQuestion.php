@@ -11,6 +11,7 @@ use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 use Themis\Model\Repository\VotantRepository;
+use Themis\Lib\FlashMessage;
 
 class ControllerQuestion extends AbstactController
 {
@@ -42,6 +43,7 @@ class ControllerQuestion extends AbstactController
             }
 
             $question = (new QuestionRepository)->select($idQuestion);
+            (new FlashMessage())->flash('created','Votre question a été créée', FlashMessage::FLASH_SUCCESS);
 
             header("Location: frontController.php?action=update&idQuestion=" . $question->getIdQuestion());
         } else {
@@ -73,8 +75,8 @@ class ControllerQuestion extends AbstactController
         }
 
         (new SectionRepository)->create(new Section((int)null, $_GET['idQuestion'], "", ""));
-
-        header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
+        $this->update();
+//        header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
     }
 
     public function read(): void
@@ -186,7 +188,7 @@ class ControllerQuestion extends AbstactController
             $auteurObject = new Participant($auteur, $question->getIdQuestion());
             (new AuteurRepository)->create($auteurObject);
         }
-
+        (new FlashMessage())->flash('created','Votre question a été créée', FlashMessage::FLASH_SUCCESS);
         $this->showView("view.php", [
             "questions" => (new QuestionRepository)->selectAll(),
             "pageTitle" => "Question mise à jour",
@@ -196,14 +198,8 @@ class ControllerQuestion extends AbstactController
 
     public function delete(): void
     {
-        if ((new QuestionRepository)->delete($_GET['idQuestion'])) {
-            $questions = (new QuestionRepository)->selectAll();
-            $this->showView("view.php", [
-                "questions" => $questions,
-                "pageTitle" => "Suppression",
-                "pathBodyView" => "question/deleted.php"
-            ]);
-        }
+        (new FlashMessage())->flash('deleted','Votre question a été supprimée', FlashMessage::FLASH_SUCCESS);
+        header("location: frontController.php?action=readAll");
     }
 
     public function deleteLastSection(): void
@@ -229,7 +225,7 @@ class ControllerQuestion extends AbstactController
             (new AuteurRepository)->create($auteurObject);
         }
         (new SectionRepository)->delete($_GET["lastIdSection"]);
-        $this->update();
+        header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
     }
 
     public function search(): void

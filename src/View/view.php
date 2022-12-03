@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title><?php echo $pageTitle; ?></title>
     <!-- css -->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">-->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">-->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -84,7 +86,7 @@
                         <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
                     </li>
                 </ul>
-<!--                <a href="frontController.php?action=formulairePreference"><img id="preferenceImg" src="assets/img/choix.png"></a>-->
+                <!--                <a href="frontController.php?action=formulairePreference"><img id="preferenceImg" src="assets/img/choix.png"></a>-->
                 <div id="searchBox" class="mx-3">
                     <form method="get">
                         <input type="search" name="element" placeholder="Recherche...">
@@ -93,14 +95,15 @@
                     </form>
                 </div>
                 <form class="d-flex" id="signButtons">
-                    <a class="btn btn-dark text-nowrap" href="frontController.php?action=login&controller=utilisateur">Se Connecter</a>
+                    <a class="btn btn-dark text-nowrap" href="frontController.php?action=login&controller=utilisateur">Se
+                        Connecter</a>
                     <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
                 </form>
                 <div class="nav-item">
 
                     <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=paulDupont">
                         <img id="accountImg" alt="compte" src="assets/img/account.png">
-                        </a>
+                    </a>
                     <!--login default pour l'instant-->
                 </div>
             </div>
@@ -109,6 +112,10 @@
 </header>
 <main>
     <?php
+
+    use Themis\Lib\FlashMessage;
+    (new FlashMessage())->flash();
+
     require __DIR__ . "/{$pathBodyView}";
     ?>
 </main>

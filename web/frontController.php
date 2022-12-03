@@ -1,5 +1,6 @@
 <?php
-// Chargement du PSR4AutoLoader
+ini_set('session.save_path', 'C:\tmp');
+session_start();
 require_once __DIR__ . '/../src/Lib/Psr4AutoloaderClass.php';
 $loader = new Themis\Lib\Psr4AutoloaderClass();
 $loader->addNamespace('Themis', __DIR__ . '/../src');
