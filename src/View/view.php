@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $pageTitle; ?></title>
+    <title><?php use Themis\Lib\ConnexionUtilisateur;
+
+        echo $pageTitle; ?></title>
     <!-- css -->
     <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">-->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -98,15 +100,23 @@
                     </form>
                 </div>
                 <form class="d-flex" id="signButtons">
-                    <a class="btn btn-dark text-nowrap" href="frontController.php?action=login&controller=utilisateur">Se
-                        Connecter</a>
-                    <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
+                    <?php if (!ConnexionUtilisateur::estConnecte()){?>
+                        <a class="btn btn-dark text-nowrap" href="frontController.php?action=login&controller=utilisateur">Se
+                            Connecter</a>
+                        <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
+                    <?php }?>
                 </form>
                 <div class="nav-item">
 
-                    <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=paulDupont">
-                        <img id="accountImg" alt="compte" src="assets/img/account.png">
-                    </a>
+                    <?php if (ConnexionUtilisateur::estConnecte()){?>
+                        <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getLoginUtilisateurConnecte()?>">
+                            <img id="accountImg" alt="compte" src="assets/img/account.png">
+                        </a>
+                        <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=deconnecter">Se déconnecter</a>
+
+                    <?php }?>
+
+
                     <!--login default pour l'instant-->
                 </div>
             </div>

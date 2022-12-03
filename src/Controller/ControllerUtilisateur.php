@@ -2,7 +2,7 @@
 
 namespace Themis\Controller;
 
-use Themis\Lib\FlashMessage;
+use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\MotDePasse;
 use Themis\Model\DataObject\Utilisateur;
 use Themis\Model\HTTP\Session;
@@ -34,8 +34,8 @@ class ControllerUtilisateur extends AbstactController
             }
         }
         else{
-            (new FlashMessage)->flash("mauvaisMdp", "Les mots de passes sont différents !", FlashMessage::FLASH_ERROR);
-            header("location: frontController.php?action=create&controller=utilisateur");
+            //flash Théodore
+            self::create();
         }
 
     }
@@ -58,6 +58,28 @@ class ControllerUtilisateur extends AbstactController
             "pathBodyView" => "utilisateur/login.php"
         ]);
     }
+
+    public function connecter() : void {
+        if (!isset($_GET['login']) || !isset($_GET['mdp'])) self::login();
+        $utilisateurSelect = (new UtilisateurRepository())->select($_GET['login']);
+        if (!MotDePasse::check($_GET['mdp'], $utilisateurSelect->getMdp())){
+            self::login();
+        }
+        else{
+            ConnexionUtilisateur::connecter(($_GET['login']));
+            self::read();
+        }
+    }
+
+    public function deconnecter() : void {
+        ConnexionUtilisateur::deconnecter();
+        $this->showView("view.php", [
+            "pageTitle" => "Se déconnecter",
+            "pathBodyView" => "question/list.php"
+        ]);
+    }
+
+
 
     public function update(): void
     {
@@ -103,6 +125,10 @@ class ControllerUtilisateur extends AbstactController
             ]);
         }
     }
+
+
+
+
 
 
 

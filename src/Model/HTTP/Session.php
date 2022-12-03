@@ -42,7 +42,7 @@ class Session
 
     public function delete($name): void
     {
-        unset($_COOKIE[$name]);
+        unset($_SESSION[$name]);
     }
 
     public function destroy() : void
