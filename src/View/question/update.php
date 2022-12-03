@@ -14,7 +14,6 @@
 
                 </div>
 
-
                 <div class="container-fluid col-12">
                     <h3><label for="descriptionQuestion" class="form-label">Description</label></h3>
                     <textarea class="form-control" placeholder="Decrire la question" name="descriptionQuestion"
@@ -45,7 +44,6 @@
                     <input class="form-control" type="datetime-local" placeholder="JJ/MM/YYYY"
                            value="<?= htmlspecialchars($question->getDateDebutProposition()) ?>"
                            name="dateDebutProposition" id="dateDebutProposition" required/>
-
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
 
@@ -53,15 +51,12 @@
                     <input class="form-control" type="datetime-local" placeholder="JJ/MM/YYYY"
                            value="<?= htmlspecialchars($question->getDateFinProposition()) ?>"
                            name="dateFinProposition" id="dateFinProposition" required/>
-
                 </div>
-
                 <div class="container-fluid col-md-6 col-lg-6">
                     <h5><label for="dateDebutVote">Date de début du vote</label></h5>
                     <input class="form-control" type="datetime-local" placeholder="JJ/MM/YYYY"
                            value="<?= htmlspecialchars($question->getDateDebutVote()) ?>"
                            name="dateDebutVote" id="dateDebutVote" required/>
-
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6">
                     <h5><label for="dateFinVote">Date de fin du vote</label></h5>
@@ -69,34 +64,25 @@
                            value="<?= htmlspecialchars($question->getDateFinVote()) ?>"
                            name="dateFinVote"
                            id="dateFinVote" required/>
-
                 </div>
             </div>
         </div>
-
 
         <div class='container-fluid'>
             <div class="row mx-5 my-4 gy-2">
                 <div class="container-fluid col-md-6 col-lg-12">
-
-
                     <input type="hidden" name="idQuestion" value="<?= htmlspecialchars($question->getIdQuestion()) ?>">
-<!--                    <input type='hidden' name='action' value='updated'>-->
-
+                    <?php if(isset($_GET["isInCreation"])) : ?>
+                        <p>I AM IN CREATION</p>
+                        <input type="hidden" name="isInCreation" value="isInCreation">
+                    <?php endif ?>
                     <?php require_once __DIR__ . "/../section/listByQuestionForUpdate.php" ?>
-
                 </div>
                 <div class="col-12 d-flex align-content-center justify-content-center">
                     <button class="btn btn-lg btn-dark text-nowrap" type="submit" name="action" value="updated">Mettre à Jour</button>
-<!--                    <input class="btn btn-lg btn-dark" type="submit" value="Envoyer" formaction="frontController.php?action=updated"/>-->
                 </div>
-
             </div>
-
-
         </div>
-
-
     </fieldset>
 </form>
 

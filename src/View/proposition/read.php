@@ -1,7 +1,7 @@
 <?php
 $idPropositionInURL = rawurlencode($proposition->getIdProposition());
-$hrefDelete = "frontController.php?controller=proposition&action=delete&idProposition=" . $idPropositionInURL;
-$hrefUpdate = "frontController.php?controller=proposition&action=update&idProposition=" . $idPropositionInURL;
+$hrefDelete = "frontController.php?controller=proposition&action=delete&idProposition=$idPropositionInURL&idQuestion={$question->getIdQuestion()}";
+$hrefUpdate = "frontController.php?controller=proposition&action=update&idProposition=$idPropositionInURL";
 ?>
 
 
@@ -49,7 +49,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
 
             <div class="">
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'> Supprimer</a>
+                <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>' onclick="return confirm('Are you sure?');"> Supprimer</a>
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
             </div>
 

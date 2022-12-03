@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use Themis\Lib\FlashMessage;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
@@ -41,7 +42,9 @@ class ControllerProposition extends AbstactController
             (new SectionPropositionRepository)->create($sectionProposition);
         }
 
-        header("Location: frontController.php?action=read&controller=proposition&idProposition=$idProposition");
+        (new FlashMessage())->flash('created', 'Votre proposition a été créée', FlashMessage::FLASH_SUCCESS);
+
+        header("Location: frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
     }
 
     public function read(): void
@@ -102,19 +105,17 @@ class ControllerProposition extends AbstactController
             (new SectionPropositionRepository)->update($sectionPropositionNew);
         }
 
-        $this->read();
+        (new FlashMessage())->flash('created', 'Votre proposition a été mise à jour', FlashMessage::FLASH_SUCCESS);
+
+        header("Location: frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
     }
 
     public function delete(): void
     {
         if ((new PropositionRepository)->delete($_GET['idProposition'])) {
-            $propositions = (new PropositionRepository)->selectByQuestion($_GET['idQuestion']);
 
-            $this->showView("view.php", [
-                "propositions" => $propositions,
-                "pageTitle" => "Info Proposition",
-                "pathBodyView" => "proposition/deleted.php"
-            ]);
+            (new FlashMessage())->flash('created', 'Votre proposition a bien été supprimée', FlashMessage::FLASH_SUCCESS);
+            header("Location: frontController.php?action=read&idQuestion={$_GET['idQuestion']}");
         }
     }
 }

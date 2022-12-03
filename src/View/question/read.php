@@ -55,8 +55,8 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             </div>
 
             <div class="my-4">
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'> Supprimer</a>
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+                <a class="btn btn-dark text-nowrap" href="<?= $hrefDelete ?>" onclick="return confirm('Are you sure?');"> Supprimer</a>
+                <a class="btn btn-dark text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
             </div>
 
         </div>
@@ -69,19 +69,19 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 <h2> Calendrier</h2>
                 <ul class="sessions">
                     <li>
-                        <div class="time"><b><?= htmlspecialchars(date("d-M-y", strtotime($question->getDateDebutProposition()))) ?></b></div>
+                        <div class="time"><b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutProposition()))) ?></b></div>
                         <p> Date de début de proposition </p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars(date("d-M-y", strtotime($question->getDateFinProposition()))) ?></b></div>
+                        <div class="time"><b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinProposition()))) ?></b></div>
                         <p> Date de fin de rédaction de proposition </p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars(date("d-M-y", strtotime($question->getDateDebutVote()))) ?></b></div>
+                        <div class="time"><b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutVote()))) ?></b></div>
                         <p>Date de début de vote</p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars(date("d-M-y", strtotime($question->getDateFinVote()))) ?></b></div>
+                        <div class="time"><b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinVote()))) ?></b></div>
                         <p>Date de fin de vote</p>
                     </li>
                 </ul>

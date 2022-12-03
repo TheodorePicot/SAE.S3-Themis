@@ -1,4 +1,4 @@
-<form method="get" action="frontController.php">
+<form method="get" action="frontController.php" class="needs-validation" novalidate>
     <fieldset>
 
         <div class="d-flex align-content-center justify-content-center">

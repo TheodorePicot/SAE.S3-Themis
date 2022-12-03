@@ -30,7 +30,7 @@ class ControllerQuestion extends AbstactController
         $question = (new QuestionRepository)->build($_GET);
 
         if ((new QuestionRepository)->create($question)) {
-            $idQuestion = DatabaseConnection::getPdo()->lastInsertId(); // Cette fonction nous permet d'obtenir l'id du dernier objet inséré dans une table.
+            $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             foreach ($_GET["votants"] as $votant) {
                 $votantObject = new Participant($votant, $idQuestion);
@@ -43,9 +43,8 @@ class ControllerQuestion extends AbstactController
             }
 
             $question = (new QuestionRepository)->select($idQuestion);
-            (new FlashMessage())->flash('created','Votre question a été créée', FlashMessage::FLASH_SUCCESS);
 
-            header("Location: frontController.php?action=update&idQuestion=" . $question->getIdQuestion());
+            header("Location: frontController.php?isInCreation=yes&action=update&idQuestion=" . $question->getIdQuestion());
         } else {
             $this->showError("Erreur de création de la question");
         }
@@ -75,8 +74,12 @@ class ControllerQuestion extends AbstactController
         }
 
         (new SectionRepository)->create(new Section((int)null, $_GET['idQuestion'], "", ""));
-        $this->update();
-//        header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
+
+        if (isset($_GET['isInCreation'])) {
+            header("Location: frontController.php?isInCreation=yes&action=update&idQuestion=" . $_GET['idQuestion']);
+        } else {
+            header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
+        }
     }
 
     public function read(): void
@@ -188,18 +191,21 @@ class ControllerQuestion extends AbstactController
             $auteurObject = new Participant($auteur, $question->getIdQuestion());
             (new AuteurRepository)->create($auteurObject);
         }
-        (new FlashMessage())->flash('created','Votre question a été créée', FlashMessage::FLASH_SUCCESS);
-        $this->showView("view.php", [
-            "questions" => (new QuestionRepository)->selectAll(),
-            "pageTitle" => "Question mise à jour",
-            "pathBodyView" => "question/updated.php"
-        ]);
+
+        if (isset($_GET['isInCreation'])) {
+            (new FlashMessage())->flash('created', 'Votre question a été créée', FlashMessage::FLASH_SUCCESS);
+        } else {
+            (new FlashMessage())->flash('created', 'Votre question a été mise à jour', FlashMessage::FLASH_SUCCESS);
+        }
+        header("location: frontController.php?action=readAll");
     }
 
     public function delete(): void
     {
-        (new FlashMessage())->flash('deleted','Votre question a été supprimée', FlashMessage::FLASH_SUCCESS);
-        header("location: frontController.php?action=readAll");
+        if ((new QuestionRepository())->delete($_GET['idQuestion'])) {
+            (new FlashMessage())->flash('deleted', 'Votre question a été supprimée', FlashMessage::FLASH_SUCCESS);
+            header("location: frontController.php?action=readAll");
+        }
     }
 
     public function deleteLastSection(): void
@@ -225,7 +231,11 @@ class ControllerQuestion extends AbstactController
             (new AuteurRepository)->create($auteurObject);
         }
         (new SectionRepository)->delete($_GET["lastIdSection"]);
-        header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
+        if (isset($_GET['isInCreation'])) {
+            header("Location: frontController.php?isInCreation=yes&action=update&idQuestion=" . $_GET['idQuestion']);
+        } else {
+            header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
+        }
     }
 
     public function search(): void

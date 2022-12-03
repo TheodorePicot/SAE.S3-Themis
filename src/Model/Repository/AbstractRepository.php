@@ -80,7 +80,6 @@ abstract class AbstractRepository
     {
     $databaseTable = $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn());
-//        echo "SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn();
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
             $dataObjects[] = $this->build($dataObject);

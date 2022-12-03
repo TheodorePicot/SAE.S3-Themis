@@ -1,6 +1,6 @@
 <?php
-ini_set('session.save_path', 'C:\tmp');
-session_start();
+
+
 require_once __DIR__ . '/../src/Lib/Psr4AutoloaderClass.php';
 $loader = new Themis\Lib\Psr4AutoloaderClass();
 $loader->addNamespace('Themis', __DIR__ . '/../src');
@@ -8,8 +8,8 @@ $loader->register();
 
 // Verification du controller et méthodes.
 
-use Themis\Controller\AbstactController;
-use Themis\Lib\PreferenceControleur;
+use Themis\Model\HTTP\Session;
+Session::getInstance();
 
 $controller = 'question';
 if (isset($_GET['controller'])){
@@ -23,8 +23,6 @@ $controllerClassObject = new $controllerClassName();
 if (class_exists($controllerClassName)) {
 
     $classMethods = get_class_methods($controllerClassName);
-//    echo $controllerClassObject;
-//    echo $controllerClassName;
 
     if (!isset($_GET['action'])) $controllerClassObject->readAll();
 

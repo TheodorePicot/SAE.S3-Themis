@@ -1,7 +1,4 @@
-<?php
-$lastSection = end($sections);
-?>
-
+<?php $lastSection = end($sections); ?>
 <div id="deleteUpdate" class="d-flex align-content-center justify-content-center">
     <div class="row">
         <div class="col-md-12 col-lg-6">

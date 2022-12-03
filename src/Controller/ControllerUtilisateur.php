@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use Themis\Lib\FlashMessage;
 use Themis\Lib\MotDePasse;
 use Themis\Model\DataObject\Utilisateur;
 use Themis\Model\HTTP\Session;
@@ -33,8 +34,8 @@ class ControllerUtilisateur extends AbstactController
             }
         }
         else{
-            //flash Théodore
-            self::create();
+            (new FlashMessage)->flash("mauvaisMdp", "Les mots de passes sont différents !", FlashMessage::FLASH_ERROR);
+            header("location: frontController.php?action=create&controller=utilisateur");
         }
 
     }
