@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" xmlns="http://www.w3.org/1999/html">
     <div class="row my-5">
 
         <div class="col-lg-4">
@@ -22,19 +22,17 @@
                             </p>
                         </div>
                         <div class="mx-3">
-                            <h5><label for="password">Mot de passe&#42;</label></h5>
+                            <h5><label for="mdp">Mot de passe&#42;</label></h5>
 
-                            <input class="form-control" type="password" name="password" id="password" minlength="8"
+                            <input class="form-control" type="password" name="mdp" id="mdp" minlength="8"
                                    required/>
 
                         </div>
-                        <input hidden type="submit" value="Envoyer">
+
                         <input type='hidden' name='action' value='connecter'>
                         <input type='hidden' name='controller' value='utilisateur'>
                         <div class="d-flex align-content-center justify-content-center my-5">
-                            <a class="btn btn-dark" href="frontController.php?controller=utilisateur&action=create">
-                                S'incrire</a>
-
+                            <button class="btn btn-dark" type="submit">  Se connecter </button>
                         </div>
                     </div>
 

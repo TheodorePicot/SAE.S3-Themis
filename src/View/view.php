@@ -99,21 +99,17 @@
                         <input type="submit" value="Valider">
                     </form>
                 </div>
-                <form class="d-flex" id="signButtons">
+                <div class="d-flex" id="signButtons">
                     <?php if (!ConnexionUtilisateur::estConnecte()){?>
                         <a class="btn btn-dark text-nowrap" href="frontController.php?action=login&controller=utilisateur">Se
                             Connecter</a>
                         <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
                     <?php }?>
-                </form>
-                <div class="nav-item">
-
                     <?php if (ConnexionUtilisateur::estConnecte()){?>
+                        <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=deconnecter">Se déconnecter</a>
                         <a class="nav-link" href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getLoginUtilisateurConnecte()?>">
                             <img id="accountImg" alt="compte" src="assets/img/account.png">
                         </a>
-                        <a class="btn btn-dark text-nowrap" href="frontController.php?controller=utilisateur&action=deconnecter">Se déconnecter</a>
-
                     <?php }?>
 
 
