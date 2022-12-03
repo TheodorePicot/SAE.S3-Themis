@@ -3,6 +3,7 @@
 namespace Themis\Controller;
 
 use Themis\Lib\ConnexionUtilisateur;
+use Themis\Lib\FlashMessage;
 use Themis\Lib\MotDePasse;
 use Themis\Model\DataObject\Utilisateur;
 use Themis\Model\HTTP\Session;
@@ -21,7 +22,7 @@ class ControllerUtilisateur extends AbstactController
 
     public function created(): void
     {
-        if ($_GET['mdp'] == $_GET['mdp2']){
+        if ($_GET['mdp'] == $_GET['mdp2']) {
             $utilisateur = Utilisateur::buildFromForm($_GET);
 
             if ((new UtilisateurRepository)->create($utilisateur)) {
@@ -32,10 +33,9 @@ class ControllerUtilisateur extends AbstactController
             } else {
                 $this->showError("Ce login existe déjà");
             }
-        }
-        else{
-            //flash Théodore
-            self::create();
+        } else {
+            (new FlashMessage)->flash("mauvaisMdp", "Les mots de passes sont différents !", FlashMessage::FLASH_ERROR);
+            header("location: frontController.php?action=create&controller=utilisateur");
         }
 
     }
@@ -59,26 +59,26 @@ class ControllerUtilisateur extends AbstactController
         ]);
     }
 
-    public function connecter() : void {
+    public function connecter(): void
+    {
         if (!isset($_GET['login']) || !isset($_GET['mdp'])) self::login();
         $utilisateurSelect = (new UtilisateurRepository())->select($_GET['login']);
-        if (!MotDePasse::check($_GET['mdp'], $utilisateurSelect->getMdp())){
+        if (!MotDePasse::check($_GET['mdp'], $utilisateurSelect->getMdp())) {
             self::login();
-        }
-        else{
+        } else {
             ConnexionUtilisateur::connecter(($_GET['login']));
             self::read();
         }
     }
 
-    public function deconnecter() : void {
+    public function deconnecter(): void
+    {
         ConnexionUtilisateur::deconnecter();
         $this->showView("view.php", [
             "pageTitle" => "Se déconnecter",
             "pathBodyView" => "question/list.php"
         ]);
     }
-
 
 
     public function update(): void
@@ -96,7 +96,7 @@ class ControllerUtilisateur extends AbstactController
     {
         $utilisateurSelect = (new UtilisateurRepository)->select($_GET['login']);
 
-        if ($_GET['mdp'] == $_GET['mdp2'] && MotDePasse::check($_GET['mdpAncien'], $utilisateurSelect->getMdp())){
+        if ($_GET['mdp'] == $_GET['mdp2'] && MotDePasse::check($_GET['mdpAncien'], $utilisateurSelect->getMdp())) {
             $utilisateur = Utilisateur::buildFromForm($_GET);
             (new UtilisateurRepository)->update($utilisateur);
 
@@ -105,8 +105,7 @@ class ControllerUtilisateur extends AbstactController
                 "pageTitle" => "Info Utilisateur",
                 "pathBodyView" => "utilisateur/read.php"
             ]);
-        }
-        else{
+        } else {
             //flash Théodore
             self::update();
         }
@@ -125,11 +124,6 @@ class ControllerUtilisateur extends AbstactController
             ]);
         }
     }
-
-
-
-
-
 
 
 }
