@@ -25,6 +25,7 @@ class QuestionRepository extends AbstractRepository
             'dateFinProposition',
             'dateDebutVote',
             'dateFinVote',
+            'nbSections'
         ];
     }
 
@@ -42,11 +43,22 @@ class QuestionRepository extends AbstractRepository
     public function build(array $objectArrayFormat): Question
     {
         if (isset($objectArrayFormat['idQuestion'])) { //la question existe déjà (update)
-            return new Question($objectArrayFormat['idQuestion'], $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
+            return new Question($objectArrayFormat['idQuestion'], $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote'], $objectArrayFormat['nbSections']);
         } else {  //la question n'existe pas (ex : formulaire) (create)
-            return new Question((int)null, $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
+            return new Question((int)null, $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote'], $objectArrayFormat['nbSections']);
         }
     }
+
+//    public function getNbSections(int $idQuestion): int
+//    {
+//        $databaseTable = $this->getTableName();
+//        $sqlQuery = 'SELECT "nbSections" FROM ' . $databaseTable . ' WHERE "idQuestion" = ?';
+//        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+//        $pdoStatement->execute(array($idQuestion));
+//
+//        $nbSectionsTab = $pdoStatement->fetch();
+//        return (int) $nbSectionsTab['nbSections'];
+//    }
 
     public function search(string $element): array
     {
@@ -67,7 +79,7 @@ class QuestionRepository extends AbstractRepository
     public function selectAllWrite(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) >= ". '"dateDebutProposition" AND CAST(NOW() AS DATE) <= "dateFinProposition"');
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) >= " . '"dateDebutProposition" AND CAST(NOW() AS DATE) <= "dateFinProposition"');
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
@@ -80,7 +92,7 @@ class QuestionRepository extends AbstractRepository
     public function selectAllVote(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) >= ". '"dateDebutVote" AND CAST(NOW() AS DATE) <= "dateFinVote"');
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) >= " . '"dateDebutVote" AND CAST(NOW() AS DATE) <= "dateFinVote"');
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
@@ -93,7 +105,7 @@ class QuestionRepository extends AbstractRepository
     public function selectAllFinish(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) > ". '"dateFinVote"');
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CAST(NOW() AS DATE) > " . '"dateFinVote"');
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {

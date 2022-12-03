@@ -49,7 +49,7 @@ abstract class AbstractRepository
         }
         $sqlQuery .= ") " . $columnValues . ")";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-//        echo $sqlQuery;
+        echo $sqlQuery . "\n";
         $values = $dataObject->tableFormat();
 //        var_dump($values);
         try {

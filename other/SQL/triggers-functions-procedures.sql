@@ -12,6 +12,8 @@ BEGIN
 END;
 $body$ LANGUAGE plpgsql;
 
+DROP TRIGGER tr_increment_nbSections_after_insert_on_Sections ON "Sections";
+
 CREATE TRIGGER tr_increment_nbSections_after_insert_on_Sections
     AFTER INSERT
     ON "Sections"
@@ -31,6 +33,8 @@ BEGIN
     RETURN OLD;
 END;
 $body$ LANGUAGE plpgsql;
+
+DROP TRIGGER tr_decrement_nbSections_after_delete_on_Sections ON "Sections";
 
 CREATE TRIGGER tr_decrement_nbSections_after_delete_on_Sections
     AFTER DELETE

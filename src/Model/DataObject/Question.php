@@ -11,6 +11,7 @@ class Question extends AbstractDataObject
     private string $dateFinProposition;
     private string $dateDebutVote;
     private string $dateFinVote;
+    private int $nbSections;
 
     /**
      * @param int $idQuestion
@@ -27,7 +28,8 @@ class Question extends AbstractDataObject
                                 string $dateDebutProposition,
                                 string $dateFinProposition,
                                 string $dateDebutVote,
-                                string $dateFinVote)
+                                string $dateFinVote,
+                                int $nbSections)
     {
         $this->idQuestion = $idQuestion;
         $this->titreQuestion = $titreQuestion;
@@ -36,6 +38,7 @@ class Question extends AbstractDataObject
         $this->dateFinProposition = $dateFinProposition;
         $this->dateDebutVote = $dateDebutVote;
         $this->dateFinVote = $dateFinVote;
+        $this->nbSections = $nbSections;
     }
 
     public function tableFormat(): array
@@ -47,7 +50,8 @@ class Question extends AbstractDataObject
                 "dateDebutProposition" => $this->dateDebutProposition,
                 "dateFinProposition" => $this->dateFinProposition,
                 "dateDebutVote" => $this->dateDebutVote,
-                "dateFinVote" => $this->dateFinVote
+                "dateFinVote" => $this->dateFinVote,
+                "nbSections" => $this->nbSections
             ];
         } else {
             return [
@@ -57,7 +61,8 @@ class Question extends AbstractDataObject
                 "dateDebutProposition" => $this->dateDebutProposition,
                 "dateFinProposition" => $this->dateFinProposition,
                 "dateDebutVote" => $this->dateDebutVote,
-                "dateFinVote" => $this->dateFinVote
+                "dateFinVote" => $this->dateFinVote,
+                "nbSections" => $this->nbSections
             ];
         }
     }
@@ -116,6 +121,14 @@ class Question extends AbstractDataObject
     public function getDescriptionQuestion(): string
     {
         return $this->descriptionQuestion;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbSections(): int
+    {
+        return $this->nbSections;
     }
 
     public function getShortDescriptionQuestion(): string

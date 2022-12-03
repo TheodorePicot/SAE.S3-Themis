@@ -53,6 +53,10 @@ class ControllerQuestion extends AbstactController
         }
     }
 
+//    public function changeNbSections(): void {
+//        for ()
+//    }
+
     public function addSection(): void
     {
         (new SectionRepository)->create(new Section((int)null, $_GET['idQuestion'], "", ""));
@@ -88,7 +92,8 @@ class ControllerQuestion extends AbstactController
         ]);
     }
 
-    public function readAllByAlphabeticalOrder() {
+    public function readAllByAlphabeticalOrder()
+    {
         $questions = (new QuestionRepository)->selectAllOrdered();
         $this->showView("view.php", [
             "questions" => $questions,
@@ -147,24 +152,60 @@ class ControllerQuestion extends AbstactController
 
     public function updated(): void
     {
-        $question = (new QuestionRepository)->build($_GET);
-        (new QuestionRepository)->update($question);
+        $questionOld = (new QuestionRepository)->select($_GET['idQuestion']);
+        $oldNumberOfSections = $questionOld->getNbSections();
+        $questionNew = (new QuestionRepository)->build($_GET);
+        (new QuestionRepository)->update($questionNew);
 
-        foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
-            (new SectionRepository)->update($updatedSection);
+        echo "old nb Section : " . $questionOld->getNbSections() . "\n";
+        echo "new nb section : " . $_GET['nbSections'] . "\n";
+
+        if ($_GET['nbSections'] > $questionOld->getNbSections()) {
+            echo " in more \n";
+            for ($i = $questionOld->getNbSections(); $i < $_GET['nbSections']; $i++) {
+                echo "create nb $i \n";
+                (new SectionRepository)->create(new Section((int)null, $questionNew->getIdQuestion(), "", ""));
+            }
+
+            $count = 0;
+            foreach ((new SectionRepository)->selectAllByQuestion($questionNew->getIdQuestion()) as $section) {
+                echo "update nb $count";
+                if ($count == $oldNumberOfSections) break;
+                $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
+                (new SectionRepository)->update($updatedSection);
+                $count++;
+            }
+
+
+        } else {
+            echo "in less ";
+            echo $questionOld->getNbSections() - $_GET['nbSections'];
+            for ($i = 0; $i < $questionOld->getNbSections() - $_GET['nbSections']; $i++) {
+                $array = (new SectionRepository)->selectAllByQuestion($questionNew->getIdQuestion());
+                $section = end($array);
+                echo $section->getIdSection();
+                echo "create nb $i \n";
+                (new SectionRepository)->delete($section->getIdSection());
+            }
+            $count = 0;
+            foreach ((new SectionRepository)->selectAllByQuestion($questionNew->getIdQuestion()) as $section) {
+                echo "update nb" . ++$count;
+                $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
+                (new SectionRepository)->update($updatedSection);
+            }
         }
 
-        (new VotantRepository)->delete($question->getIdQuestion());
-        (new AuteurRepository)->delete($question->getIdQuestion());
+
+        (new VotantRepository)->delete($questionNew->getIdQuestion());
+        (new AuteurRepository)->delete($questionNew->getIdQuestion());
 
         foreach ($_GET["votants"] as $votant) {
-            $votantObject = new Participant($votant, $question->getIdQuestion());
+            $votantObject = new Participant($votant, $questionNew->getIdQuestion());
             (new VotantRepository)->create($votantObject);
         }
 
         foreach ($_GET["auteurs"] as $auteur) {
-            $auteurObject = new Participant($auteur, $question->getIdQuestion());
+            $auteurObject = new Participant($auteur, $questionNew->getIdQuestion());
             (new AuteurRepository)->create($auteurObject);
         }
 
