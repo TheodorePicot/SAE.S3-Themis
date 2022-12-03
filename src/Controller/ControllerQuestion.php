@@ -59,7 +59,29 @@ class ControllerQuestion extends AbstactController
 
     public function addSection(): void
     {
+        $question = (new QuestionRepository)->build($_GET);
+        (new QuestionRepository)->update($question);
+
+        foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
+            (new SectionRepository)->update($updatedSection);
+        }
+
+        (new VotantRepository)->delete($question->getIdQuestion());
+        (new AuteurRepository)->delete($question->getIdQuestion());
+
+        foreach ($_GET["votants"] as $votant) {
+            $votantObject = new Participant($votant, $question->getIdQuestion());
+            (new VotantRepository)->create($votantObject);
+        }
+
+        foreach ($_GET["auteurs"] as $auteur) {
+            $auteurObject = new Participant($auteur, $question->getIdQuestion());
+            (new AuteurRepository)->create($auteurObject);
+        }
+
         (new SectionRepository)->create(new Section((int)null, $_GET['idQuestion'], "", ""));
+
         header("Location: frontController.php?action=update&idQuestion=" . $_GET['idQuestion']);
     }
 
@@ -230,7 +252,27 @@ class ControllerQuestion extends AbstactController
 
     public function deleteLastSection(): void
     {
-        (new SectionRepository)->delete($_GET["idSection"]);
+        $question = (new QuestionRepository)->build($_GET);
+        (new QuestionRepository)->update($question);
+
+        foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
+            (new SectionRepository)->update($updatedSection);
+        }
+
+        (new VotantRepository)->delete($question->getIdQuestion());
+        (new AuteurRepository)->delete($question->getIdQuestion());
+
+        foreach ($_GET["votants"] as $votant) {
+            $votantObject = new Participant($votant, $question->getIdQuestion());
+            (new VotantRepository)->create($votantObject);
+        }
+
+        foreach ($_GET["auteurs"] as $auteur) {
+            $auteurObject = new Participant($auteur, $question->getIdQuestion());
+            (new AuteurRepository)->create($auteurObject);
+        }
+        (new SectionRepository)->delete($_GET["lastIdSection"]);
         $this->update();
     }
 
