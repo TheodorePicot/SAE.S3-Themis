@@ -16,11 +16,15 @@ class ControllerQuestion extends AbstactController
 {
     public function created(): void
     {
-        (new QuestionRepository)->create((new QuestionRepository)->build($_GET));
-        $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
+        if ((new QuestionRepository)->create((new QuestionRepository)->build($_GET)) == "23503") {
+            (new FlashMessage())->flash('created', 'Il faut être connecté pour créer une question', FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        } else {
+            $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
-        (new ControllerUtilisateur)->createParticipants($idQuestion);
-        $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
+            (new ControllerUtilisateur)->createParticipants($idQuestion);
+            $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
+        }
     }
 
     public function create(): void

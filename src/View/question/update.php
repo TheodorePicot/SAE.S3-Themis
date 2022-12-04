@@ -2,6 +2,7 @@
 
 use Themis\Lib\ConnexionUtilisateur;
 
+echo  htmlspecialchars($question->getTitreQuestion());
 ?>
 <form method="get" action="frontController.php">
     <fieldset>

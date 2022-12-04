@@ -30,12 +30,13 @@ abstract class AbstractRepository
         }
         $sqlQuery .= ") " . $columnValues . ")";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-//        echo $sqlQuery . "\n";
+        echo $sqlQuery . "\n";
         $values = $dataObject->tableFormat();
-//        var_dump($values);
+        var_dump($values);
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
+            echo $exception->getCode();
             return $exception->getCode();
         }
         return "";
