@@ -35,6 +35,10 @@ class ConnexionUtilisateur
         $session = Session::getInstance();
         return $session->contains(self::$connectionKey);
     }
+
+    public static function isUser($login): bool{
+        return (self::isConnected() && self::getConnectedUserLogin()==$login);
+    }
 }
 
 

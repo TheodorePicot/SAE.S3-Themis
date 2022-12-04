@@ -12,7 +12,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
             <div class="offset-lg-3 offset-md-3 col-md-6 col-lg-6">
                 <h5><label class="my-2" for="login">Login </label></h5>
                 <input class="form-control" type="text" name="login" id="login"
-                       value="<?= htmlspecialchars($utilisateur->getLogin()) ?>">
+                       value="<?= htmlspecialchars($utilisateur->getLogin()) ?>"readonly>
 
                 <h5><label class="my-2" for="nom">Nom Utilisateur </label></h5>
                 <input class="form-control" type="text" name="nom" id="nom"

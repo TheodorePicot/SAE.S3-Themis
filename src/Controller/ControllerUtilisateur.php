@@ -54,12 +54,17 @@ class ControllerUtilisateur extends AbstactController
 
     public function read(): void
     {
-        $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
-        $this->showView("view.php", [
-            "utilisateur" => $utilisateur,
-            "pageTitle" => "Info Utilisateur",
-            "pathBodyView" => "utilisateur/read.php"
-        ]);
+        if (ConnexionUtilisateur::isUser($_GET["login"])) {
+            $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
+            $this->showView("view.php", [
+                "utilisateur" => $utilisateur,
+                "pageTitle" => "Info Utilisateur",
+                "pathBodyView" => "utilisateur/read.php"
+            ]);
+        }
+        else $this->redirect("frontController.php?action=readAll");
+        //todo garder la redirection vers readAll mais avec un message flash type danger
+
     }
 
     public function login(): void
@@ -98,8 +103,11 @@ class ControllerUtilisateur extends AbstactController
         if (!PassWord::check($_GET["mdpAncien"], $utilisateurSelect->getMdp())) {
             (new FlashMessage)->flash("incorrectPswd", "Le mot de passe ancien ne correspond pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
-        } else if ($_GET["mdp"] == $_GET["mdpConfirmation"]) {
+        } else if ($_GET["mdp"] != $_GET["mdpConfirmation"]) {
             (new FlashMessage)->flash("incorrectPswd", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
+        } else if (!ConnexionUtilisateur::isUser($_GET["login"])) {
+            // todo message flash
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
         } else {
             $utilisateur = Utilisateur::buildFromForm($_GET);
@@ -116,11 +124,14 @@ class ControllerUtilisateur extends AbstactController
     public function update(): void
     {
         $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
-        $this->showView("view.php", [
-            "utilisateur" => $utilisateur,
-            "pageTitle" => "Info Utilisateur",
-            "pathBodyView" => "utilisateur/update.php"
-        ]);
+        if (ConnexionUtilisateur::isUser($_GET["login"]))
+            $this->showView("view.php", [
+                "utilisateur" => $utilisateur,
+                "pageTitle" => "Info Utilisateur",
+                "pathBodyView" => "utilisateur/update.php"
+            ]);
+        else $this->redirect("frontController.php?action=readAll");
+        //todo garder la redirection vers readAll mais avec un message flash type danger
     }
 
     public function deleteParticipants(int $idQuestion)
@@ -131,12 +142,17 @@ class ControllerUtilisateur extends AbstactController
 
     public function delete(): void
     {
-        if ((new UtilisateurRepository)->delete($_GET['login'])) {
-            (new FlashMessage())->flash("deleted", "Votre compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
-            $this->redirect("frontController.php?action=readAll");
-        } else {
-            (new FlashMessage())->flash("deleted", "erreur de suppréssion de votre compte", FlashMessage::FLASH_DANGER);
-            $this->redirect("frontController.php?action=readAll");
+        if (ConnexionUtilisateur::isUser($_GET["login"])){
+            if ((new UtilisateurRepository)->delete($_GET['login'])) {
+                (new FlashMessage())->flash("deleted", "Votre compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
+                $this->redirect("frontController.php?action=readAll");
+            } else {
+                (new FlashMessage())->flash("deleted", "erreur de suppréssion de votre compte", FlashMessage::FLASH_DANGER);
+                $this->redirect("frontController.php?action=readAll");
+            }
         }
+        else $this->redirect("frontController.php?action=readAll");
+        //todo garder la redirection vers readAll mais avec un message flash type danger
+
     }
 }
