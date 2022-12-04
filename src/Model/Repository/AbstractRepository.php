@@ -32,7 +32,7 @@ abstract class AbstractRepository
      * @param AbstractDataObject $dataObject
      * @return bool
      */
-    public function create(AbstractDataObject $dataObject): bool
+    public function create(AbstractDataObject $dataObject): string
     {
         $databaseTable = $this->getTableName();
         $sqlQuery = "INSERT INTO $databaseTable (";
@@ -55,12 +55,9 @@ abstract class AbstractRepository
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
-//            echo $exception->getCode();
-            if ($exception->getCode() == "23000") {
-                return false;
-            }
+            return $exception->getCode();
         }
-        return true;
+        return "";
     }
 
     public function selectAll(): array

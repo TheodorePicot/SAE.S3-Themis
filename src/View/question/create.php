@@ -1,3 +1,9 @@
+<?php
+
+use Themis\Lib\ConnexionUtilisateur;
+
+?>
+
 <form method="get" action="frontController.php" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <div class="d-flex align-content-center justify-content-center">
@@ -19,7 +25,7 @@
                               maxlength="700" required rows="5" cols="40"></textarea>
                 </div>
 
-                <div class="container col-md-6 col-lg-6 my-3" >
+                <div class="container col-md-6 col-lg-6 my-3">
                     <h3>Auteurs</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listAuteursForCreate.php" ?>
                 </div>
@@ -70,6 +76,7 @@
         </div>
 
         <input type='hidden' name='action' value='created'>
+        <input type="hidden" name="loginOrganisateur" value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
 
 
     </fieldset>

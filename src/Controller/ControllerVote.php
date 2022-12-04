@@ -20,16 +20,6 @@ class ControllerVote extends AbstactController
     }
 
     public function saveVote() {
-        $vote = (new VoteRepository())->build($_GET);
 
-        if ((new VoteRepository())->create($vote)) {
-            echo "save";
-            $this->showView("view.php", [
-                "pageTitle" => "Création d'une utilisateur",
-                "pathBodyView" => "vote/created.php"
-            ]);
-        } else {
-            $this->showError("Ce login existe déjà");
-        }
     }
 }

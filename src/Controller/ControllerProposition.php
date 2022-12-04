@@ -27,24 +27,26 @@ class ControllerProposition extends AbstactController
     public function created(): void
     {
         $proposition = (new PropositionRepository)->build($_GET);
-        (new PropositionRepository)->create($proposition);
+        $creationCode = (new PropositionRepository)->create($proposition);
+        if ($creationCode == "") {
+            $idProposition = DatabaseConnection::getPdo()->lastInsertId();
 
-        $idProposition = DatabaseConnection::getPdo()->lastInsertId();
+            $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
+            foreach ($sections as $section) {
+                $sectionProposition = (new SectionPropositionRepository)->build([
+                    'texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()],
+                    'idSection' => $section->getIdSection(),
+                    'idProposition' => $idProposition
+                ]);
+                (new SectionPropositionRepository)->create($sectionProposition);
+            }
 
-        $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
-        foreach ($sections as $section) {
-            $sectionProposition = (new SectionPropositionRepository)->build([
-                'texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()],
-                'idSection' => $section->getIdSection(),
-                'idProposition' => $idProposition
-            ]);
-
-            (new SectionPropositionRepository)->create($sectionProposition);
+            (new FlashMessage())->flash('created', 'Votre proposition a été créée', FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
+        } else if ($creationCode == "23503") {
+            (new FlashMessage())->flash('created', 'Vous n\'êtes pas auteur pour cette question', FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         }
-
-        (new FlashMessage())->flash('created', 'Votre proposition a été créée', FlashMessage::FLASH_SUCCESS);
-
-        header("Location: frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
     }
 
     public function read(): void

@@ -1,11 +1,14 @@
 <?php
+
+use Themis\Model\Repository\SectionPropositionRepository;
+
 $idPropositionInURL = rawurlencode($proposition->getIdProposition());
 $hrefDelete = "frontController.php?controller=proposition&action=delete&idProposition=$idPropositionInURL&idQuestion={$question->getIdQuestion()}";
 $hrefUpdate = "frontController.php?controller=proposition&action=update&idProposition=$idPropositionInURL";
 ?>
 
 
-<!--    QUESTION + PROSITION + DELETE UPDATE-->
+<!--    QUESTION + PROPOSITION + DELETE UPDATE-->
 <div class="d-flex align-content-center justify-content-center">
     <h1> Proposition pour : <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
 </div>
@@ -20,7 +23,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
             <div class="my-4">
                 <h2>Titre de la proposition</h2>
-                <?= $proposition->getTitreProposition() ?></p>
+                <p><?= $proposition->getTitreProposition() ?> - <?= $proposition->getLoginAuteur() ?></p>
             </div>
 
             <h2>Sections</h2>
@@ -40,7 +43,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
                     <div class="my-4">
                         <h4>Proposition pour la section <?= $count ?> : </h4>
-                        <p><?= (new \Themis\Model\Repository\SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></p>
+                        <p><?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></p>
                         <?php $count++;
                         endforeach; ?>
                     </div>
@@ -49,7 +52,8 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
 
             <div class="">
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>' onclick="return confirm('Are you sure?');"> Supprimer</a>
+                <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'
+                   onclick="return confirm('Are you sure?');"> Supprimer</a>
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
             </div>
 

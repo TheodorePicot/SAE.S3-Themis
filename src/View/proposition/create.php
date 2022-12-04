@@ -1,3 +1,8 @@
+<?php
+
+use Themis\Lib\ConnexionUtilisateur;
+
+?>
 <form method="get" action="frontController.php" class="needs-validation" novalidate>
     <fieldset>
 
@@ -30,7 +35,7 @@
                         <?php
                         $count = 1;
                         foreach ($sections as $section) : ?>
-                            <h3><?= $count ?>. Section <?= $count ?> : <?=$section->getTitreSection()?></h3>
+                            <h3><?= $count ?>. Section <?= $count ?> : <?= $section->getTitreSection() ?></h3>
                             <div class="shadowBox col-md-10 card card-body border-0" style="background: #C7B198;">
                                 <?= htmlspecialchars($section->getDescriptionSection()) ?>
                             </div>
@@ -53,6 +58,8 @@
 
                     <input type='hidden' name='action' value='created'>
                     <input type='hidden' name='controller' value='proposition'>
+                    <input type='hidden' name='loginAuteur'
+                           value='<?= ConnexionUtilisateur::getConnectedUserLogin() ?>'>
                     <input type='hidden' name='idQuestion' value='<?= $question->getIdQuestion() ?>'>
 
                     <input class="btn btn-dark" type="submit" value="Soumettre"/>

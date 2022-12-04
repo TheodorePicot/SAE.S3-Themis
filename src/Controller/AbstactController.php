@@ -16,9 +16,4 @@ abstract class AbstactController
         header("Location: $url");
         exit();
     }
-
-    public function showError(string $errorMessage): void
-    {
-        self::showView($errorMessage);
-    }
 }

@@ -6,6 +6,7 @@ use Themis\Lib\FlashMessage;
 
 ?>
 
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,7 +104,7 @@ use Themis\Lib\FlashMessage;
                     </form>
                 </div>
                 <div class="d-flex" id="signButtons">
-                    <?php if (!ConnexionUtilisateur::estConnecte()) : ?>
+                    <?php if (!ConnexionUtilisateur::isConnected()) : ?>
                         <a class="btn btn-dark text-nowrap"
                            href="frontController.php?action=login&controller=utilisateur">Se Connecter</a>
                         <a class="btn btn-dark text-nowrap"
@@ -112,7 +113,7 @@ use Themis\Lib\FlashMessage;
                         <a class="btn btn-dark text-nowrap align-self-center"
                            href="frontController.php?controller=utilisateur&action=deconnecter">Se déconnecter</a>
                         <a class="nav-link"
-                           href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getLoginUtilisateurConnecte() ?>">
+                           href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
                             <img id="accountImg" alt="compte" src="assets/img/account.png">
                         </a>
                     <?php endif ?>

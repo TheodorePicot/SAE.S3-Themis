@@ -2,7 +2,7 @@
 
 namespace Themis\Model\DataObject;
 
-use Themis\Lib\MotDePasse;
+use Themis\Lib\PassWord;
 
 class Utilisateur extends AbstractDataObject
 {
@@ -96,17 +96,13 @@ class Utilisateur extends AbstractDataObject
      */
     public function setMdp(string $mdp): void
     {
-        $mdpHache = MotDePasse::hacher($mdp);
+        $mdpHache = PassWord::hash($mdp);
         $this->mdp = $mdpHache;
     }
 
-    public static function buildFromForm (array $tableauFormulaire) : Utilisateur{
-        $mdpHache = MotDePasse::hacher($tableauFormulaire['mdp']);
+    public static function buildFromForm (array $tableauFormulaire) : Utilisateur {
+        $mdpHache = PassWord::hash($tableauFormulaire['mdp']);
         $user = new Utilisateur($tableauFormulaire['login'], $tableauFormulaire['nom'], $tableauFormulaire['prenom'], $tableauFormulaire['adresseMail'], $tableauFormulaire['dateNaissance'], $mdpHache);
         return $user;
     }
-
-
-
-
 }

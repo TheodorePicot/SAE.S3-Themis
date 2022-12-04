@@ -4,20 +4,23 @@ namespace Themis\Model\DataObject;
 
 class Proposition extends AbstractDataObject
 {
-
     private int $idProposition;
     private int $idQuestion;
     private string $titreProposition;
+    private string $loginAuteur;
 
     /**
      * @param int $idProposition
      * @param int $idQuestion
+     * @param string $titreProposition
+     * @param string $loginAuteur
      */
-    public function __construct(int $idProposition, int $idQuestion, string $titreProposition)
+    public function __construct(int $idProposition, int $idQuestion, string $titreProposition, string $loginAuteur)
     {
         $this->idProposition = $idProposition;
         $this->idQuestion = $idQuestion;
         $this->titreProposition = $titreProposition;
+        $this->loginAuteur = $loginAuteur;
     }
 
     public function tableFormat(): array
@@ -25,13 +28,15 @@ class Proposition extends AbstractDataObject
         if ($this->idProposition == 0) {
             return [
                 "idQuestion" => $this->idQuestion,
-                "titreProposition" => $this->titreProposition
+                "titreProposition" => $this->titreProposition,
+                "loginAuteur" => $this->loginAuteur
             ];
         } else {
             return [
                 "idProposition" => $this->idProposition,
                 "idQuestion" => $this->idQuestion,
-                "titreProposition" => $this->titreProposition
+                "titreProposition" => $this->titreProposition,
+                "loginAuteur" => $this->loginAuteur
             ];
         }
     }
@@ -58,5 +63,13 @@ class Proposition extends AbstractDataObject
     public function getTitreProposition(): string
     {
         return $this->titreProposition;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginAuteur(): string
+    {
+        return $this->loginAuteur;
     }
 }

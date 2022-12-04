@@ -15,7 +15,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
     <!--    QUESTION + DELETE UPDATE-->
 
     <div class="d-flex align-content-center justify-content-center">
-        <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
+        <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?> - <?= $question->getLoginOrganisateur() ?></h1>
     </div>
 
     <div class="row my-5 my-4 gy-4 container-fluid">

@@ -8,7 +8,7 @@ class QuestionRepository extends AbstractRepository
 {
     protected function getPrimaryKey(): string
     {
-        return 'idQuestion';
+        return "idQuestion";
     }
 
     protected function getTableName(): string
@@ -19,18 +19,19 @@ class QuestionRepository extends AbstractRepository
     protected function getColumnNames(): array
     {
         return [
-            'titreQuestion',
-            'descriptionQuestion',
-            'dateDebutProposition',
-            'dateFinProposition',
-            'dateDebutVote',
-            'dateFinVote',
+            "titreQuestion",
+            "descriptionQuestion",
+            "dateDebutProposition",
+            "dateFinProposition",
+            "dateDebutVote",
+            "dateFinVote",
+            "loginOrganisateur"
         ];
     }
 
     protected function getColumnTitle(): string
     {
-        return 'titreQuestion';
+        return "titreQuestion";
     }
 
     protected function getOrderColumn(): string
@@ -41,10 +42,24 @@ class QuestionRepository extends AbstractRepository
 
     public function build(array $objectArrayFormat): Question
     {
-        if (isset($objectArrayFormat['idQuestion'])) { //la question existe déjà (update)
-            return new Question($objectArrayFormat['idQuestion'], $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
-        } else {  //la question n'existe pas (ex : formulaire) (create)
-            return new Question((int)null, $objectArrayFormat['titreQuestion'], $objectArrayFormat["descriptionQuestion"], $objectArrayFormat['dateDebutProposition'], $objectArrayFormat['dateFinProposition'], $objectArrayFormat['dateDebutVote'], $objectArrayFormat['dateFinVote']);
+        if (isset($objectArrayFormat["idQuestion"])) {
+            return new Question($objectArrayFormat["idQuestion"],
+                $objectArrayFormat["titreQuestion"],
+                $objectArrayFormat["descriptionQuestion"],
+                $objectArrayFormat["dateDebutProposition"],
+                $objectArrayFormat["dateFinProposition"],
+                $objectArrayFormat["dateDebutVote"],
+                $objectArrayFormat["dateFinVote"],
+                $objectArrayFormat["loginOrganisateur"]);
+        } else {
+            return new Question((int)null,
+                $objectArrayFormat["titreQuestion"],
+                $objectArrayFormat["descriptionQuestion"],
+                $objectArrayFormat["dateDebutProposition"],
+                $objectArrayFormat["dateFinProposition"],
+                $objectArrayFormat["dateDebutVote"],
+                $objectArrayFormat["dateFinVote"],
+                $objectArrayFormat["loginOrganisateur"]);
         }
     }
 
@@ -67,7 +82,7 @@ class QuestionRepository extends AbstractRepository
     public function selectAllWrite(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CURRENT_TIMESTAMP + interval '1 hour' >= " . '"dateDebutProposition" AND CURRENT_TIMESTAMP + interval '. "'1 hour'" . '<= "dateFinProposition"');
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CURRENT_TIMESTAMP + interval '1 hour' >= " . '"dateDebutProposition" AND CURRENT_TIMESTAMP + interval ' . "'1 hour'" . '<= "dateFinProposition"');
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
@@ -80,7 +95,7 @@ class QuestionRepository extends AbstractRepository
     public function selectAllVote(): array
     {
         $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CURRENT_TIMESTAMP + interval '1 hour' >= " . '"dateDebutVote" AND CURRENT_TIMESTAMP + interval '. "'1 hour'" . '<= "dateFinVote"');
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CURRENT_TIMESTAMP + interval '1 hour' >= " . '"dateDebutVote" AND CURRENT_TIMESTAMP + interval ' . "'1 hour'" . '<= "dateFinVote"');
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {

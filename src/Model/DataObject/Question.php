@@ -11,6 +11,7 @@ class Question extends AbstractDataObject
     private string $dateFinProposition;
     private string $dateDebutVote;
     private string $dateFinVote;
+    private string $loginOrganisateur;
 
     /**
      * @param int $idQuestion
@@ -27,7 +28,8 @@ class Question extends AbstractDataObject
                                 string $dateDebutProposition,
                                 string $dateFinProposition,
                                 string $dateDebutVote,
-                                string $dateFinVote)
+                                string $dateFinVote,
+                                string $loginOrganisateur)
     {
         $this->idQuestion = $idQuestion;
         $this->titreQuestion = $titreQuestion;
@@ -36,6 +38,7 @@ class Question extends AbstractDataObject
         $this->dateFinProposition = $dateFinProposition;
         $this->dateDebutVote = $dateDebutVote;
         $this->dateFinVote = $dateFinVote;
+        $this->loginOrganisateur = $loginOrganisateur;
     }
 
     public function tableFormat(): array
@@ -48,6 +51,7 @@ class Question extends AbstractDataObject
                 "dateFinProposition" => $this->dateFinProposition,
                 "dateDebutVote" => $this->dateDebutVote,
                 "dateFinVote" => $this->dateFinVote,
+                "loginOrganisateur" => $this->loginOrganisateur
             ];
         } else {
             return [
@@ -58,6 +62,7 @@ class Question extends AbstractDataObject
                 "dateFinProposition" => $this->dateFinProposition,
                 "dateDebutVote" => $this->dateDebutVote,
                 "dateFinVote" => $this->dateFinVote,
+                "loginOrganisateur" => $this->loginOrganisateur
             ];
         }
     }
@@ -116,6 +121,14 @@ class Question extends AbstractDataObject
     public function getDescriptionQuestion(): string
     {
         return $this->descriptionQuestion;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginOrganisateur(): string
+    {
+        return $this->loginOrganisateur;
     }
 
     public function getShortDescriptionQuestion(): string

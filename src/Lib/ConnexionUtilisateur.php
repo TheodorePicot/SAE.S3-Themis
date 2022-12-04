@@ -6,35 +6,33 @@ use Themis\Model\HTTP\Session;
 
 class ConnexionUtilisateur
 {
-    // L'utilisateur connecté sera enregistré en session associé à la clé suivante
-    private static string $cleConnexion = "_utilisateurConnecte";
+    private static string $connectionKey = "connectedUser";
 
-    public static function connecter(string $loginUtilisateur): void
+    public static function connect(string $loginUtilisateur): void
     {
-        $s = Session::getInstance();
-        $s->save(self::$cleConnexion, $loginUtilisateur);
+        $session = Session::getInstance();
+        $session->save(self::$connectionKey, $loginUtilisateur);
     }
 
-    public static function estConnecte(): bool
+    public static function isConnected(): bool
     {
-        $s = Session::getInstance();
-        return $s->contains(self::$cleConnexion);
+        $session = Session::getInstance();
+        return $session->contains(self::$connectionKey);
     }
 
-    public static function deconnecter(): void
+    public static function disconnect(): void
     {
-        $s = Session::getInstance();
-        $s->delete(self::$cleConnexion);
+        $session = Session::getInstance();
+        $session->delete(self::$connectionKey);
     }
 
-    public static function getLoginUtilisateurConnecte(): ?string
+    public static function getConnectedUserLogin(): ?string
     {
-        $s = Session::getInstance();
-        if (!self::estConnecte()){
+        $session = Session::getInstance();
+        if (!self::isConnected()) {
             return null;
-        }
-        else{
-        return $s->read(self::$cleConnexion);
+        } else {
+            return $session->read(self::$connectionKey);
         }
     }
 }

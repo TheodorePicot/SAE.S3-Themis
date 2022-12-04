@@ -4,7 +4,7 @@ namespace Themis\Controller;
 
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
-use Themis\Lib\MotDePasse;
+use Themis\Lib\PassWord;
 use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Utilisateur;
 use Themis\Model\Repository\AuteurRepository;
@@ -26,23 +26,22 @@ class ControllerUtilisateur extends AbstactController
     {
         if ($_GET['mdp'] == $_GET['mdp2']) {
             $utilisateur = Utilisateur::buildFromForm($_GET);
-
-            if ((new UtilisateurRepository)->create($utilisateur)) {
-                $this->showView("view.php", [
-                    "pageTitle" => "Création d'une utilisateur",
-                    "pathBodyView" => "utilisateur/created.php"
-                ]);
-            } else {
-                $this->showError("Ce login existe déjà");
+            $creationCode = (new UtilisateurRepository)->create($utilisateur);
+            if ($creationCode == "") {
+                (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
+                $this->redirect("frontController.php?action=create&controller=utilisateur");
+            } elseif ($creationCode == "23000") {
+                (new FlashMessage)->flash("loginExiste", "Ce login existe déjà", FlashMessage::FLASH_DANGER);
+                $this->redirect("frontController.php?action=create&controller=utilisateur");
             }
         } else {
             (new FlashMessage)->flash("mauvaisMdp", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
-            header("location: frontController.php?action=create&controller=utilisateur");
+            $this->redirect("frontController.php?action=create&controller=utilisateur");
         }
-
     }
 
-    public function createParticipants(int $idQuestion) {
+    public function createParticipants(int $idQuestion)
+    {
         foreach ($_GET["votants"] as $votant) {
             $votantObject = new Participant($votant, $idQuestion);
             (new VotantRepository)->create($votantObject);
@@ -77,17 +76,17 @@ class ControllerUtilisateur extends AbstactController
     {
         if (!isset($_GET['login']) || !isset($_GET['mdp'])) self::login();
         $utilisateurSelect = (new UtilisateurRepository())->select($_GET['login']);
-        if (!MotDePasse::check($_GET['mdp'], $utilisateurSelect->getMdp())) {
+        if (!PassWord::check($_GET['mdp'], $utilisateurSelect->getMdp())) {
             self::login();
         } else {
-            ConnexionUtilisateur::connecter(($_GET['login']));
+            ConnexionUtilisateur::connect(($_GET['login']));
             self::read();
         }
     }
 
     public function deconnecter(): void
     {
-        ConnexionUtilisateur::deconnecter();
+        ConnexionUtilisateur::disconnect();
         header("location:frontController.php?action=readAll");
     }
 
@@ -106,7 +105,7 @@ class ControllerUtilisateur extends AbstactController
     {
         $utilisateurSelect = (new UtilisateurRepository)->select($_GET['login']);
 
-        if ($_GET['mdp'] == $_GET['mdp2'] && MotDePasse::check($_GET['mdpAncien'], $utilisateurSelect->getMdp())) {
+        if ($_GET['mdp'] == $_GET['mdp2'] && PassWord::check($_GET['mdpAncien'], $utilisateurSelect->getMdp())) {
             $utilisateur = Utilisateur::buildFromForm($_GET);
             (new UtilisateurRepository)->update($utilisateur);
 
@@ -121,7 +120,8 @@ class ControllerUtilisateur extends AbstactController
         }
     }
 
-    public function deleteParticipants(int $idQuestion) {
+    public function deleteParticipants(int $idQuestion)
+    {
         (new VotantRepository)->delete($idQuestion);
         (new AuteurRepository)->delete($idQuestion);
     }

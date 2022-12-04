@@ -1,6 +1,4 @@
 <?php
-
-
 require_once __DIR__ . '/../src/Lib/Psr4AutoloaderClass.php';
 $loader = new Themis\Lib\Psr4AutoloaderClass();
 $loader->addNamespace('Themis', __DIR__ . '/../src');
@@ -8,6 +6,7 @@ $loader->register();
 
 // Verification du controller et méthodes.
 
+use Themis\Lib\FlashMessage;
 use Themis\Model\HTTP\Session;
 Session::getInstance();
 
@@ -30,7 +29,12 @@ if (class_exists($controllerClassName)) {
         $action = $_GET['action'];
         $controllerClassObject->$action();
     } else {
-        $controllerClassObject->showError("La méthode que vous essayez d'appeler n'existe pas");
+        (new FlashMessage())->flash("methodeExistePas", "La méthode que vous essayez d'appeler n'existe pas", FlashMessage::FLASH_DANGER);
+        header("location: frontController.php?action=readAll");
     }
-} else $controllerClassObject->showError("La classe que vous essayez de charger n'existe pas");
+} else {
+    (new FlashMessage())->flash("classeExistePas", "La classe que vous essayez de charger n'existe pas", FlashMessage::FLASH_DANGER);
+    header("location: frontController.php?action=readAll");
+}
+
 

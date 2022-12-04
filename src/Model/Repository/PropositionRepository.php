@@ -23,7 +23,8 @@ class PropositionRepository extends AbstractRepository
         // TODO: Implement getColumnNames() method.
         return [
             "idQuestion",
-            "titreProposition"
+            "titreProposition",
+            "loginAuteur"
         ];
     }
 
@@ -37,9 +38,9 @@ class PropositionRepository extends AbstractRepository
     {
         // TODO: Implement build() method.
         if (isset($objectArrayFormat['idProposition'])) { //la proposition existe déjà
-            return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition']);
+            return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur']);
         } else {  //la proposition n'existe pas (ex : formulaire)
-            return new Proposition((int)null, $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition']);
+            return new Proposition((int)null, $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur']);
         }
     }
 
