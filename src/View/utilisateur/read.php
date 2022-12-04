@@ -1,4 +1,7 @@
 <?php
+
+use Themis\Lib\ConnexionUtilisateur;
+
 $utilisateurInURL = rawurlencode($utilisateur->getLogin());
 $hrefDelete = "frontController.php?action=delete&controller=utilisateur&login=" . $utilisateurInURL;
 $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" . $utilisateurInURL;;
@@ -19,8 +22,10 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 Adresse email : <?= htmlspecialchars($utilisateur->getAdresseMail()) ?><br>
                 Date de Naissance : <?= htmlspecialchars($utilisateur->getDateNaissance()) ?><br>
                 <div class="d-flex align-content-center justify-content-center my-3">
+                    <?php if (ConnexionUtilisateur::isUser($utilisateurInURL)) : ?>
                     <a class="btn btn-dark text-nowrap mx-1" href='<?= $hrefDelete ?>'> Supprimer</a>
                     <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+                    <?php endif ?>
                 </div>
 
             </div>
