@@ -28,7 +28,6 @@ class PropositionRepository extends AbstractRepository
 
     public function build(array $objectArrayFormat): Proposition
     {
-        // TODO: Implement build() method.
         if (isset($objectArrayFormat['idProposition'])) { //la proposition existe déjà
             return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur']);
         } else {  //la proposition n'existe pas (ex : formulaire)
