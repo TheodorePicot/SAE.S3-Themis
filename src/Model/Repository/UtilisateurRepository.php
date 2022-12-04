@@ -7,6 +7,19 @@ use Themis\Model\DataObject\Utilisateur;
 
 class UtilisateurRepository extends AbstractRepository
 {
+    /**
+     * @inheritDoc
+     */
+    public function build(array $objectArrayFormat): AbstractDataObject
+    {
+        return new Utilisateur($objectArrayFormat["login"],
+            $objectArrayFormat["nom"],
+            $objectArrayFormat["prenom"],
+            $objectArrayFormat["adresseMail"],
+            $objectArrayFormat["dateNaissance"],
+            $objectArrayFormat["mdp"]
+        );
+    }
 
     protected function getTableName(): string
     {
@@ -33,19 +46,5 @@ class UtilisateurRepository extends AbstractRepository
             "dateNaissance",
             "mdp"
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function build(array $objectArrayFormat): AbstractDataObject
-    {
-        return new Utilisateur($objectArrayFormat["login"],
-            $objectArrayFormat["nom"],
-            $objectArrayFormat["prenom"],
-            $objectArrayFormat["adresseMail"],
-            $objectArrayFormat["dateNaissance"],
-            $objectArrayFormat["mdp"]
-        );
     }
 }

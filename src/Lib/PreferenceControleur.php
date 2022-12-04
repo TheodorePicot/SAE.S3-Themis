@@ -4,27 +4,26 @@ namespace Themis\Lib;
 
 use Themis\Model\HTTP\Cookie;
 
-class PreferenceControleur {
-
+class PreferenceControleur
+{
     private static string $clePreference = "preferenceControleur";
 
-    public static function enregistrer(string $preference) : void
+    public static function enregistrer(string $preference): void
     {
         Cookie::save(static::$clePreference, $preference);
     }
 
-    public static function lire() : string
+    public static function lire(): string
     {
-        $v = Cookie::read(self::$clePreference);
-        return $v;
+        return Cookie::read(self::$clePreference);
     }
 
-    public static function existe() : bool
+    public static function existe(): bool
     {
         return Cookie::contains(self::$clePreference);
     }
 
-    public static function supprimer() : void
+    public static function supprimer(): void
     {
         Cookie::delete(self::$clePreference);
     }

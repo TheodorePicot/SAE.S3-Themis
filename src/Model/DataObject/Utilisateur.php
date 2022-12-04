@@ -91,18 +91,15 @@ class Utilisateur extends AbstractDataObject
         return $this->mdp;
     }
 
-    /**
-     * @param string $mdp
-     */
-    public function setMdp(string $mdp): void
+    public static function buildFromForm(array $tableauFormulaire): Utilisateur
     {
-        $mdpHache = PassWord::hash($mdp);
-        $this->mdp = $mdpHache;
-    }
-
-    public static function buildFromForm (array $tableauFormulaire) : Utilisateur {
-        $mdpHache = PassWord::hash($tableauFormulaire['mdp']);
-        $user = new Utilisateur($tableauFormulaire['login'], $tableauFormulaire['nom'], $tableauFormulaire['prenom'], $tableauFormulaire['adresseMail'], $tableauFormulaire['dateNaissance'], $mdpHache);
-        return $user;
+        return new Utilisateur (
+            $tableauFormulaire['login'],
+            $tableauFormulaire['nom'],
+            $tableauFormulaire['prenom'],
+            $tableauFormulaire['adresseMail'],
+            $tableauFormulaire['dateNaissance'],
+            PassWord::hash($tableauFormulaire['mdp'])
+        );
     }
 }

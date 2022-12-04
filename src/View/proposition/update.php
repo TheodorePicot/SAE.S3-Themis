@@ -1,3 +1,8 @@
+<?php
+
+use Themis\Lib\ConnexionUtilisateur;
+
+?>
 <form method="get" action="frontController.php">
     <fieldset>
 
@@ -55,8 +60,9 @@
                     <input type='hidden' name='controller' value='proposition'>
                     <input type='hidden' name='idProposition' value='<?= $proposition->getIdProposition() ?>'>
                     <input type='hidden' name='idQuestion' value='<?= $question->getIdQuestion() ?>'>
-
-                    <input class="btn btn-dark" type="submit" value="Soumettre"/>
+                    <input type="hidden" name="loginAuteur"
+                           value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+                    <input class="btn btn-dark" type="submit" value="Mettre à jour"/>
 
                 </div>
             </div>

@@ -4,11 +4,6 @@ namespace Themis\Model\Repository;
 
 class AuteurRepository extends AbstractParticipantRepository
 {
-    protected function getTableName(): string
-    {
-        return 'themis."estAuteur"';
-    }
-
     public function isParticpantInQuestion(string $login, int $idQuestion): bool
     {
         $sqlQuery = "SELECT isAuteurInQuestion(:login, :idQuestion)";
@@ -24,7 +19,11 @@ class AuteurRepository extends AbstractParticipantRepository
 
         $dataObject = $pdoStatement->fetch();
 
-        if ($dataObject['isauteurinquestion'] == "true") return true;
-        else return false;
+        return $dataObject['isauteurinquestion'] == "true";
+    }
+
+    protected function getTableName(): string
+    {
+        return 'themis."estAuteur"';
     }
 }

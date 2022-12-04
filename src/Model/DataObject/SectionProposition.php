@@ -4,7 +4,6 @@ namespace Themis\Model\DataObject;
 
 class SectionProposition extends AbstractDataObject
 {
-
     private int $idSectionProposition;
     private string $texteProposition;
     private int $idSection;

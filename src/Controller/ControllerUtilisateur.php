@@ -8,25 +8,16 @@ use Themis\Lib\PassWord;
 use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Utilisateur;
 use Themis\Model\Repository\AuteurRepository;
-use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 use Themis\Model\Repository\VotantRepository;
 
 class ControllerUtilisateur extends AbstactController
 {
-    public function create()
-    {
-        $this->showView("view.php", [
-            "pageTitle" => "Inscription",
-            "pathBodyView" => "utilisateur/create.php"
-        ]);
-    }
-
     public function created(): void
     {
-        if ($_GET['mdp'] == $_GET['mdp2']) {
-            $utilisateur = Utilisateur::buildFromForm($_GET);
-            $creationCode = (new UtilisateurRepository)->create($utilisateur);
+        if ($_GET["mdp"] == $_GET["mdpConfirmation"]) {
+            $creationCode = (new UtilisateurRepository)->create(Utilisateur::buildFromForm($_GET));
+
             if ($creationCode == "") {
                 (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
                 $this->redirect("frontController.php?action=create&controller=utilisateur");
@@ -38,6 +29,14 @@ class ControllerUtilisateur extends AbstactController
             (new FlashMessage)->flash("mauvaisMdp", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=create&controller=utilisateur");
         }
+    }
+
+    public function create()
+    {
+        $this->showView("view.php", [
+            "pageTitle" => "Inscription",
+            "pathBodyView" => "utilisateur/create.php"
+        ]);
     }
 
     public function createParticipants(int $idQuestion)
@@ -55,8 +54,7 @@ class ControllerUtilisateur extends AbstactController
 
     public function read(): void
     {
-        $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
-
+        $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
         $this->showView("view.php", [
             "utilisateur" => $utilisateur,
             "pageTitle" => "Info Utilisateur",
@@ -72,40 +70,38 @@ class ControllerUtilisateur extends AbstactController
         ]);
     }
 
-    public function connecter(): void
+    public function connect(): void
     {
-        if (!isset($_GET['login']) || !isset($_GET['mdp'])) self::login();
-        $utilisateurSelect = (new UtilisateurRepository())->select($_GET['login']);
-        if (!PassWord::check($_GET['mdp'], $utilisateurSelect->getMdp())) {
-            self::login();
+        if (!isset($_GET["login"]) || !isset($_GET["mdp"])) {
+            (new FlashMessage)->flash("notAllInfo", "Vous n'avez pas renseigné les informations nécessaires", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=login&controller=utilisateur");
+        } else if (!PassWord::check($_GET["mdp"], (new UtilisateurRepository())->select($_GET["login"])->getMdp())) {
+            (new FlashMessage)->flash("badPassword", "Mot de passe incorrect", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=login&controller=utilisateur");
         } else {
-            ConnexionUtilisateur::connect(($_GET['login']));
-            self::read();
+            ConnexionUtilisateur::connect(($_GET["login"]));
+            (new FlashMessage)->flash("badPassword", "Connection effectué", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=read&controller=utilisateur&login={$_GET["login"]}");
         }
     }
 
-    public function deconnecter(): void
+    public function disconnect(): void
     {
         ConnexionUtilisateur::disconnect();
-        header("location:frontController.php?action=readAll");
-    }
-
-    public function update(): void
-    {
-        $utilisateur = (new UtilisateurRepository)->select($_GET['login']);
-
-        $this->showView("view.php", [
-            "utilisateur" => $utilisateur,
-            "pageTitle" => "Info Utilisateur",
-            "pathBodyView" => "utilisateur/update.php"
-        ]);
+        $this->redirect("frontController.php?action=readAll");
     }
 
     public function updated(): void
     {
-        $utilisateurSelect = (new UtilisateurRepository)->select($_GET['login']);
+        $utilisateurSelect = (new UtilisateurRepository)->select($_GET["login"]);
 
-        if ($_GET['mdp'] == $_GET['mdp2'] && PassWord::check($_GET['mdpAncien'], $utilisateurSelect->getMdp())) {
+        if (!PassWord::check($_GET["mdpAncien"], $utilisateurSelect->getMdp())) {
+            (new FlashMessage)->flash("incorrectPswd", "Le mot de passe ancien ne correspond pas", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
+        } else if ($_GET["mdp"] == $_GET["mdpConfirmation"]) {
+            (new FlashMessage)->flash("incorrectPswd", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
+        } else {
             $utilisateur = Utilisateur::buildFromForm($_GET);
             (new UtilisateurRepository)->update($utilisateur);
 
@@ -114,10 +110,17 @@ class ControllerUtilisateur extends AbstactController
                 "pageTitle" => "Info Utilisateur",
                 "pathBodyView" => "utilisateur/read.php"
             ]);
-        } else {
-            //flash Théodore
-            self::update();
         }
+    }
+
+    public function update(): void
+    {
+        $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
+        $this->showView("view.php", [
+            "utilisateur" => $utilisateur,
+            "pageTitle" => "Info Utilisateur",
+            "pathBodyView" => "utilisateur/update.php"
+        ]);
     }
 
     public function deleteParticipants(int $idQuestion)
@@ -129,12 +132,11 @@ class ControllerUtilisateur extends AbstactController
     public function delete(): void
     {
         if ((new UtilisateurRepository)->delete($_GET['login'])) {
-            $questions = (new QuestionRepository)->selectAll();
-            $this->showView("view.php", [
-                "questions" => $questions,
-                "pageTitle" => "Suppression",
-                "pathBodyView" => "utilisateur/deleted.php"
-            ]);
+            (new FlashMessage())->flash("deleted", "Votre compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=readAll");
+        } else {
+            (new FlashMessage())->flash("deleted", "erreur de suppréssion de votre compte", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
         }
     }
 }

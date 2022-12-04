@@ -7,32 +7,13 @@ use Themis\Model\DataObject\AbstractDataObject;
 
 abstract class AbstractRepository
 {
-    protected abstract function getTableName(): string;
-
-    protected abstract function getPrimaryKey(): string;
-
-    protected abstract function getColumnNames(): array;
-
-    protected abstract function getOrderColumn(): string;
-
-
-    /**
-     * Cette fonction nous permet de prendre les attributs bruts, dans une liste, donnés par un utilisateur.
-     * Nous transformons cette liste possédant les attributs en DataObject.
-     * Cela nous permet de manipuler les données.
-     * @param array $objectArrayFormat
-     * @return AbstractDataObject
-     */
-    abstract public function build(array $objectArrayFormat): AbstractDataObject;
-
-
     /**
      * Le @param AbstractDataObject $dataObject est un objet qui vient d'etre créer par la méthode {@link build()}
      * Cette méthode prend donc un objet PHP et insère les données de cet objet dans notre base de données et la table correspondante.
      * @param AbstractDataObject $dataObject
      * @return bool
      */
-    public function create(AbstractDataObject $dataObject): string
+    public function create(AbstractDataObject $dataObject): string // TODO Refactor this
     {
         $databaseTable = $this->getTableName();
         $sqlQuery = "INSERT INTO $databaseTable (";
@@ -60,10 +41,13 @@ abstract class AbstractRepository
         return "";
     }
 
+    protected abstract function getTableName(): string;
+
+    protected abstract function getColumnNames(): array;
+
     public function selectAll(): array
     {
-        $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable");
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()}");
 
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
@@ -72,11 +56,19 @@ abstract class AbstractRepository
 
         return $dataObjects;
     }
+
+    /**
+     * Cette fonction nous permet de prendre les attributs bruts, dans une liste, donnés par un utilisateur.
+     * Nous transformons cette liste possédant les attributs en DataObject.
+     * Cela nous permet de manipuler les données.
+     * @param array $objectArrayFormat
+     * @return AbstractDataObject
+     */
+    abstract public function build(array $objectArrayFormat): AbstractDataObject;
 
     public function selectAllOrdered(): array
     {
-    $databaseTable = $this->getTableName();
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable ORDER BY " . $this->getOrderColumn());
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} ORDER BY {$this->getOrderColumn()}");
         $dataObjects = array();
         foreach ($pdoStatement as $dataObject) {
             $dataObjects[] = $this->build($dataObject);
@@ -84,6 +76,8 @@ abstract class AbstractRepository
 
         return $dataObjects;
     }
+
+    protected abstract function getOrderColumn(): string;
 
     public function select(string $primaryKeyValue): ?AbstractDataObject
     {
@@ -95,13 +89,14 @@ abstract class AbstractRepository
             'primaryKey' => $primaryKeyValue
         );
         $pdoStatement->execute($values);
-//        var_dump($sqlQuery);
         $dataObject = $pdoStatement->fetch();
 
         if (!$dataObject) return null;
 
         return $this->build($dataObject);
     }
+
+    protected abstract function getPrimaryKey(): string;
 
     public function update(AbstractDataObject $dataObject): void
     {
@@ -121,8 +116,6 @@ abstract class AbstractRepository
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = $dataObject->tableFormat();
-//        echo $sqlQuery;
-//        var_dump($values);
         $pdoStatement->execute($values);
     }
 
@@ -139,11 +132,4 @@ abstract class AbstractRepository
 
         return $pdoStatement->execute($values);
     }
-
-
-
-
-
-
-
 }

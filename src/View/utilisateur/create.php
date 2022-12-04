@@ -63,9 +63,9 @@
                             </div>
 
                             <div class="mx-3 ">
-                                <h5><label for="mdp2">Confirmation mot de passe&#42;</label></h5>
+                                <h5><label for="mdpConfirmation">Confirmation mot de passe&#42;</label></h5>
                                 <p>
-                                    <input class="form-control" type="password" name="mdp2" id="mdp2" minlength="8"
+                                    <input class="form-control" type="password" name="mdpConfirmation" id="mdpConfirmation" minlength="8"
                                            required/>
                                 </p>
                             </div>

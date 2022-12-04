@@ -42,46 +42,33 @@ CREATE TRIGGER tr_decrement_nbSections_after_delete_on_Sections
     FOR EACH ROW
 EXECUTE PROCEDURE decrementNbSections();
 
--- Triggers pour nbVotes
+-- Trigger de contrainte unique pour les propositions
 
-create function incrementnbvotes() returns trigger
-    language plpgsql
-as
-$$
+CREATE OR REPLACE FUNCTION checkIfAlreadyInsertedProposition()
+    RETURNS TRIGGER
+AS
+$body$
+DECLARE
+    v_count INT;
 BEGIN
-    UPDATE "Propositions"
-    SET "nbVotes" = "nbVotes" + 1
-    WHERE "idProposition" = NEW."idProposition";
+    SELECT COUNT(*) INTO v_count
+    FROM "Propositions"
+    WHERE "loginAuteur" = NEW."loginAuteur"
+    AND "idQuestion" = NEW."idQuestion";
+
+    IF v_count >= 1 THEN
+        RAISE EXCEPTION using message = 'Vous avez déjà créer une proposition' , ERRCODE = '23000';
+    END IF;
     RETURN NEW;
+
 END;
-$$;
+$body$ LANGUAGE plpgsql;
 
-CREATE TRIGGER tr_increment_nbVotes_after_insert_on_Votes
-    AFTER INSERT
-    ON "Votes"
+CREATE TRIGGER tr_decrement_nbSections_after_delete_on_Sections
+    BEFORE INSERT
+    ON "Propositions"
     FOR EACH ROW
-EXECUTE PROCEDURE incrementNbVotes();
-
-create function decrementnbvotes() returns trigger
-    language plpgsql
-as
-$$
-BEGIN
-    UPDATE "Propositions"
-    SET "nbVotes" = "nbVotes" - 1
-    WHERE "idProposition" = NEW."idProposition";
-    RETURN NEW;
-END;
-$$;
-
-DROP TRIGGER tr_decrement_nbVotes_after_delete_on_Votes ON "Votes";
-
-CREATE TRIGGER tr_decrement_nbVotes_after_delete_on_Votes
-    AFTER INSERT
-    ON "Votes"
-    FOR EACH ROW
-EXECUTE PROCEDURE decrementNbVotes();
-
+EXECUTE PROCEDURE checkIfAlreadyInsertedProposition();
 
 -- Fonction si le participant appartient à la question
 

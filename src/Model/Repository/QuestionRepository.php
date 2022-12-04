@@ -6,39 +6,25 @@ use Themis\Model\DataObject\Question;
 
 class QuestionRepository extends AbstractRepository
 {
-    protected function getPrimaryKey(): string
+    public function selectAllBySearchValue(string $element): array
     {
-        return "idQuestion";
+        $databaseTable = $this->getTableName();
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . 'LOWER("titreQuestion") LIKE ? OR LOWER("descriptionQuestion") LIKE ?';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $pdoStatement->execute(array("%" . strtolower($element) . "%", "%" . strtolower($element) . "%"));
+
+        $questions = array();
+        foreach ($pdoStatement as $question) {
+            $questions[] = $this->build($question);
+        }
+        return $questions;
     }
 
     protected function getTableName(): string
     {
         return 'themis."Questions"';
     }
-
-    protected function getColumnNames(): array
-    {
-        return [
-            "titreQuestion",
-            "descriptionQuestion",
-            "dateDebutProposition",
-            "dateFinProposition",
-            "dateDebutVote",
-            "dateFinVote",
-            "loginOrganisateur"
-        ];
-    }
-
-    protected function getColumnTitle(): string
-    {
-        return "titreQuestion";
-    }
-
-    protected function getOrderColumn(): string
-    {
-        return '"Questions"."titreQuestion"';
-    }
-
 
     public function build(array $objectArrayFormat): Question
     {
@@ -63,23 +49,7 @@ class QuestionRepository extends AbstractRepository
         }
     }
 
-    public function search(string $element): array
-    {
-        $databaseTable = $this->getTableName();
-        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . 'LOWER("titreQuestion") LIKE ? OR LOWER("descriptionQuestion") LIKE ?';
-        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-
-        $pdoStatement->execute(array("%" . strtolower($element) . "%", "%" . strtolower($element) . "%"));
-
-        $questions = array();
-        foreach ($pdoStatement as $question) {
-            $questions[] = $this->build($question);
-        }
-        return $questions;
-    }
-
-
-    public function selectAllWrite(): array
+    public function selectAllCurrentlyInWriting(): array
     {
         $databaseTable = $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CURRENT_TIMESTAMP + interval '1 hour' >= " . '"dateDebutProposition" AND CURRENT_TIMESTAMP + interval ' . "'1 hour'" . '<= "dateFinProposition"');
@@ -92,7 +62,7 @@ class QuestionRepository extends AbstractRepository
         return $dataObjects;
     }
 
-    public function selectAllVote(): array
+    public function selectAllCurrentlyInVoting(): array
     {
         $databaseTable = $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CURRENT_TIMESTAMP + interval '1 hour' >= " . '"dateDebutVote" AND CURRENT_TIMESTAMP + interval ' . "'1 hour'" . '<= "dateFinVote"');
@@ -105,7 +75,7 @@ class QuestionRepository extends AbstractRepository
         return $dataObjects;
     }
 
-    public function selectAllFinish(): array
+    public function selectAllFinished(): array
     {
         $databaseTable = $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM $databaseTable WHERE CURRENT_TIMESTAMP + interval '1 hour' > " . '"dateFinVote"');
@@ -116,5 +86,33 @@ class QuestionRepository extends AbstractRepository
         }
 
         return $dataObjects;
+    }
+
+    protected function getPrimaryKey(): string
+    {
+        return "idQuestion";
+    }
+
+    protected function getColumnNames(): array
+    {
+        return [
+            "titreQuestion",
+            "descriptionQuestion",
+            "dateDebutProposition",
+            "dateFinProposition",
+            "dateDebutVote",
+            "dateFinVote",
+            "loginOrganisateur"
+        ];
+    }
+
+    protected function getColumnTitle(): string
+    {
+        return "titreQuestion";
+    }
+
+    protected function getOrderColumn(): string
+    {
+        return '"Questions"."titreQuestion"';
     }
 }

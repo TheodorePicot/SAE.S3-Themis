@@ -2,8 +2,6 @@
 
 namespace Themis\Controller;
 
-use Themis\Lib\PreferenceControleur;
-
 abstract class AbstactController
 {
     protected function showView(string $pathView, array $parameters = []): void
@@ -12,7 +10,8 @@ abstract class AbstactController
         require __DIR__ . "/../View/$pathView";
     }
 
-    protected function redirect(string $url) {
+    protected function redirect(string $url): void
+    {
         header("Location: $url");
         exit();
     }

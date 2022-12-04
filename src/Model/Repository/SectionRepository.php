@@ -7,31 +7,6 @@ use Themis\Model\DataObject\Section;
 
 class SectionRepository extends AbstractRepository
 {
-    protected function getTableName(): string
-    {
-        return 'themis."Sections"';
-    }
-
-    protected function getPrimaryKey(): string
-    {
-        return "idSection";
-    }
-
-    protected function getColumnNames(): array
-    {
-        return [
-            "idQuestion",
-            "titreSection",
-            "descriptionSection"
-        ];
-    }
-
-    protected function getOrderColumn(): string
-    {
-        return "idSection";
-    }
-
-
     public function selectAllByQuestion($idQuestion): array
     {
         $databaseTable = $this->getTableName();
@@ -50,6 +25,11 @@ class SectionRepository extends AbstractRepository
         }
 
         return $dataObjects;
+    }
+
+    protected function getTableName(): string
+    {
+        return 'themis."Sections"';
     }
 
     public function build(array $objectArrayFormat): AbstractDataObject
@@ -72,6 +52,25 @@ class SectionRepository extends AbstractRepository
                 $objectArrayFormat["titreSection"],
                 $objectArrayFormat["descriptionSection"]);
         }
+    }
+
+    protected function getPrimaryKey(): string
+    {
+        return "idSection";
+    }
+
+    protected function getColumnNames(): array
+    {
+        return [
+            "idQuestion",
+            "titreSection",
+            "descriptionSection"
+        ];
+    }
+
+    protected function getOrderColumn(): string
+    {
+        return "idSection";
     }
 
 }

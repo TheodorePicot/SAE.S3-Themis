@@ -11,19 +11,6 @@ use Themis\Model\Repository\SectionRepository;
 
 class ControllerProposition extends AbstactController
 {
-    public function create(): void
-    {
-        $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
-        $question = (new QuestionRepository)->select($_GET['idQuestion']);
-
-        $this->showView("view.php", [
-            "sections" => $sections,
-            "question" => $question,
-            "pageTitle" => "Création Proposition",
-            "pathBodyView" => "proposition/create.php"
-        ]);
-    }
-
     public function created(): void
     {
         $proposition = (new PropositionRepository)->build($_GET);
@@ -41,17 +28,35 @@ class ControllerProposition extends AbstactController
                 (new SectionPropositionRepository)->create($sectionProposition);
             }
 
-            (new FlashMessage())->flash('created', 'Votre proposition a été créée', FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage())->flash("created", "Votre proposition a été créée", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         } else if ($creationCode == "23503") {
-            (new FlashMessage())->flash('created', 'Vous n\'êtes pas auteur pour cette question', FlashMessage::FLASH_DANGER);
+            (new FlashMessage())->flash("notAuthor", "Vous n 'êtes pas auteur pour cette question", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
+        } else if ($creationCode == "23000") {
+            (new FlashMessage())->flash("alreadyProposition", "Vous avez déjà créer une proposition", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
+        } else {
+            (new FlashMessage())->flash("created", "Erreur (CODE : $creationCode)", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         }
     }
 
+    public function create(): void
+    {
+        $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $question = (new QuestionRepository)->select($_GET['idQuestion']);
+        $this->showView("view.php", [
+            "sections" => $sections,
+            "question" => $question,
+            "pageTitle" => "Création Proposition",
+            "pathBodyView" => "proposition/create.php"
+        ]);
+    }
+
     public function read(): void
     {
-        $proposition = (new PropositionRepository)->select($_GET['idProposition']);
+        $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
 
@@ -66,7 +71,7 @@ class ControllerProposition extends AbstactController
 
     public function readByQuestion(): void
     {
-        $propositions = (new PropositionRepository)->selectByQuestion($_GET['idQuestion']);
+        $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
 
         $this->showView("view.php", [
             "propositions" => $propositions,
@@ -75,9 +80,30 @@ class ControllerProposition extends AbstactController
         ]);
     }
 
+    public function updated(): void
+    {
+        $proposition = (new PropositionRepository)->build($_GET);
+        (new PropositionRepository)->update($proposition);
+
+        $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
+        foreach ($sections as $section) {
+            $sectionsPropositionOld = (new SectionPropositionRepository())->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection());
+            $sectionPropositionNew = (new SectionPropositionRepository)->build([
+                "texteProposition" => $_GET["descriptionSectionProposition{$section->getIdSection()}"],
+                "idSection" => $section->getIdSection(),
+                "idProposition" => $proposition->getIdProposition(),
+                "idSectionProposition" => $sectionsPropositionOld->getIdSectionProposition()
+            ]);
+            (new SectionPropositionRepository)->update($sectionPropositionNew);
+        }
+
+        (new FlashMessage())->flash("created", "Votre proposition a été mise à jour", FlashMessage::FLASH_SUCCESS);
+        $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
+    }
+
     public function update(): void
     {
-        $proposition = (new PropositionRepository)->select($_GET['idProposition']);
+        $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
 
@@ -90,34 +116,14 @@ class ControllerProposition extends AbstactController
         ]);
     }
 
-    public function updated(): void
-    {
-        $proposition = (new PropositionRepository)->build($_GET);
-        (new PropositionRepository)->update($proposition);
-
-        $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
-        foreach ($sections as $section) {
-            $sectionsPropositionOld = (new SectionPropositionRepository())->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection());
-            $sectionPropositionNew = (new SectionPropositionRepository)->build(
-                ['texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()],
-                    'idSection' => $section->getIdSection(),
-                    'idProposition' => $proposition->getIdProposition(),
-                    'idSectionProposition' => $sectionsPropositionOld->getIdSectionProposition()
-                ]);
-            (new SectionPropositionRepository)->update($sectionPropositionNew);
-        }
-
-        (new FlashMessage())->flash('created', 'Votre proposition a été mise à jour', FlashMessage::FLASH_SUCCESS);
-
-        header("Location: frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
-    }
-
     public function delete(): void
     {
-        if ((new PropositionRepository)->delete($_GET['idProposition'])) {
-
-            (new FlashMessage())->flash('created', 'Votre proposition a bien été supprimée', FlashMessage::FLASH_SUCCESS);
-            header("Location: frontController.php?action=read&idQuestion={$_GET['idQuestion']}");
+        if ((new PropositionRepository)->delete($_GET["idProposition"])) {
+            (new FlashMessage())->flash("deleted", "Votre proposition a bien été supprimée", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+        } else {
+            (new FlashMessage())->flash("deleteFailed", "Il y a eu une erreur lors de la suppréssion de la proposition", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
         }
     }
 }

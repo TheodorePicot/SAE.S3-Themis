@@ -38,8 +38,8 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 <input class="form-control" type="password" name="mdp" id="mdp"
                        value="">
 
-                <h5><label class="my-2" for="mdp2">Confirmation Nouveau Mot de Passe&#42; </label></h5>
-                <input class="form-control" type="password" name="mdp2" id="mdp2"
+                <h5><label class="my-2" for="mdpConfirmation">Confirmation Nouveau Mot de Passe&#42; </label></h5>
+                <input class="form-control" type="password" name="mdpConfirmation" id="mdpConfirmation"
                        value="">
 
 

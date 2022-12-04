@@ -4,7 +4,6 @@ namespace Themis\Model\HTTP;
 
 class Cookie
 {
-
     public static function save(string $key, mixed $value, ?int $durationBeforeExpiration = null): void
     {
         if ($durationBeforeExpiration == null) {
@@ -29,5 +28,4 @@ class Cookie
         unset($_COOKIE["$key"]);
         setcookie("$key", "", 1);
     }
-
 }

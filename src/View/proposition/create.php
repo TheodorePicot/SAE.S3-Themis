@@ -10,7 +10,7 @@ use Themis\Lib\ConnexionUtilisateur;
             <h1>Creer une proposition</h1>
         </div>
 
-        <div class='container-fluid'>
+        <div class="container-fluid">
             <div class="row mx-5 my-5 gy-4">
                 <div class="container-fluid col-md-10 col-lg-10 ">
 
@@ -56,11 +56,11 @@ use Themis\Lib\ConnexionUtilisateur;
                         endforeach; ?>
                     </div>
 
-                    <input type='hidden' name='action' value='created'>
-                    <input type='hidden' name='controller' value='proposition'>
-                    <input type='hidden' name='loginAuteur'
-                           value='<?= ConnexionUtilisateur::getConnectedUserLogin() ?>'>
-                    <input type='hidden' name='idQuestion' value='<?= $question->getIdQuestion() ?>'>
+                    <input type="hidden" name="action" value="created">
+                    <input type="hidden" name="controller" value="proposition">
+                    <input type="hidden" name="loginAuteur"
+                           value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+                    <input type="hidden" name="idQuestion" value="<?= $question->getIdQuestion() ?>">
 
                     <input class="btn btn-dark" type="submit" value="Soumettre"/>
 

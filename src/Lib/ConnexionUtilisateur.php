@@ -14,12 +14,6 @@ class ConnexionUtilisateur
         $session->save(self::$connectionKey, $loginUtilisateur);
     }
 
-    public static function isConnected(): bool
-    {
-        $session = Session::getInstance();
-        return $session->contains(self::$connectionKey);
-    }
-
     public static function disconnect(): void
     {
         $session = Session::getInstance();
@@ -34,6 +28,12 @@ class ConnexionUtilisateur
         } else {
             return $session->read(self::$connectionKey);
         }
+    }
+
+    public static function isConnected(): bool
+    {
+        $session = Session::getInstance();
+        return $session->contains(self::$connectionKey);
     }
 }
 

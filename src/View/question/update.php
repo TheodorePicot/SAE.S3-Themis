@@ -1,3 +1,8 @@
+<?php
+
+use Themis\Lib\ConnexionUtilisateur;
+
+?>
 <form method="get" action="frontController.php">
     <fieldset>
         <div class="d-flex align-content-center justify-content-center">
@@ -72,15 +77,23 @@
             <div class="row mx-5 my-4 gy-2">
                 <div class="container-fluid col-md-6 col-lg-12">
                     <input type="hidden" name="idQuestion" value="<?= htmlspecialchars($question->getIdQuestion()) ?>">
+                    <input type="hidden" name="loginOrganisateur"
+                           value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
                     <?php if(isset($_GET["isInCreation"])) : ?>
-                        <p>I AM IN CREATION</p>
                         <input type="hidden" name="isInCreation" value="isInCreation">
                     <?php endif ?>
                     <?php require_once __DIR__ . "/../section/listByQuestionForUpdate.php" ?>
                 </div>
+                <?php if(isset($_GET["isInCreation"])) : ?>
+                    <input type="hidden" name="isInCreation" value="isInCreation">
+                    <div class="col-12 d-flex align-content-center justify-content-center">
+                        <button class="btn btn-lg btn-dark text-nowrap" type="submit" name="action" value="updated">Créer</button>
+                    </div>
+                <?php else : ?>
                 <div class="col-12 d-flex align-content-center justify-content-center">
                     <button class="btn btn-lg btn-dark text-nowrap" type="submit" name="action" value="updated">Mettre à Jour</button>
                 </div>
+                <?php endif ?>
             </div>
         </div>
     </fieldset>

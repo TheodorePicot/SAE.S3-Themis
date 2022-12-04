@@ -26,7 +26,7 @@ class Section extends AbstractDataObject
     public function tableFormat(): array
     {
 
-        if($this->idSection == 0) {
+        if ($this->idSection == 0) {
             return [
                 "idQuestion" => $this->idQuestion,
                 "titreSection" => $this->titreSection,
