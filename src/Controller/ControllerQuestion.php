@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
 use Themis\Model\DataObject\Section;
 use Themis\Model\Repository\AuteurRepository;
@@ -17,7 +18,7 @@ class ControllerQuestion extends AbstactController
     public function created(): void
     {
         if ((new QuestionRepository)->create((new QuestionRepository)->build($_GET)) == "23503") {
-            (new FlashMessage())->flash('created', 'Il faut être connecté pour créer une question', FlashMessage::FLASH_WARNING);
+            (new FlashMessage())->flash("created", "Il faut être connecté pour créer une question", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         } else {
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
@@ -54,7 +55,7 @@ class ControllerQuestion extends AbstactController
         (new QuestionRepository)->update($question);
 
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET['titreSection' . $section->getIdSection()], $_GET['descriptionSection' . $section->getIdSection()]);
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_GET["titreSection" . $section->getIdSection()], $_GET["descriptionSection" . $section->getIdSection()]);
             (new SectionRepository)->update($updatedSection);
         }
 
@@ -136,17 +137,17 @@ class ControllerQuestion extends AbstactController
 
     public function readAllBySearchValue(): void
     {
-        $this->showQuestions((new QuestionRepository())->selectAllBySearchValue($_GET['searchValue']));
+        $this->showQuestions((new QuestionRepository())->selectAllBySearchValue($_GET["searchValue"]));
     }
 
     public function updated(): void
     {
         $this->updateInformationAuxiliary();
 
-        if (isset($_GET['isInCreation'])) {
-            (new FlashMessage())->flash('created', 'Votre question a été créée', FlashMessage::FLASH_SUCCESS);
+        if (isset($_GET["isInCreation"])) {
+            (new FlashMessage())->flash("created", "Votre question a été créée", FlashMessage::FLASH_SUCCESS);
         } else {
-            (new FlashMessage())->flash('updated', 'Votre question a été mise à jour', FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage())->flash("updated", "Votre question a été mise à jour", FlashMessage::FLASH_SUCCESS);
         }
         $this->redirect("frontController.php?action=readAll");
     }
@@ -164,11 +165,15 @@ class ControllerQuestion extends AbstactController
 
     public function delete(): void
     {
-        if ((new QuestionRepository())->delete($_GET['idQuestion'])) {
-            (new FlashMessage())->flash('deleted', 'Votre question a été supprimée', FlashMessage::FLASH_SUCCESS);
+        if (ConnexionUtilisateur::getConnectedUserLogin() != (new QuestionRepository())->select($_GET["idQuestion"])->getLoginOrganisateur()) {
+            (new FlashMessage())->flash("deleteFailed", "Vous n'êtes pas le créateur de cette question", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
+        else if ((new QuestionRepository())->delete($_GET["idQuestion"])) {
+            (new FlashMessage())->flash("deleted", "Votre question a été supprimée", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=readAll");
         } else {
-            (new FlashMessage())->flash('deleteFailed', 'Il y a eu une erreur lors de la suppréssion de la question', FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage())->flash("deleteFailed", "Il y a eu une erreur lors de la suppréssion de la question", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=readAll");
         }
     }
