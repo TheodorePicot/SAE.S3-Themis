@@ -116,10 +116,14 @@ use Themis\Lib\FlashMessage;
                            href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
                         <a class="btn btn-dark text-nowrap align-self-center"
                            href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
-                        <a class="nav-link"
+                        <a class="nav-link align-self-center"
                            href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
                             <img id="accountImg" alt="compte" src="assets/img/account.png">
                         </a>
+                        <a class="align-self-center"
+                           href="frontController.php?controller=utilisateur&action=disconnect">
+                            <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>
+
                     <?php else : ?>
                         <a class="btn btn-dark text-nowrap align-self-center"
                            href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
