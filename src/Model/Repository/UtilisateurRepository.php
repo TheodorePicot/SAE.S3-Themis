@@ -17,7 +17,8 @@ class UtilisateurRepository extends AbstractRepository
             $objectArrayFormat["prenom"],
             $objectArrayFormat["adresseMail"],
             $objectArrayFormat["dateNaissance"],
-            $objectArrayFormat["mdp"]
+            $objectArrayFormat["mdp"],
+            $objectArrayFormat["estAdmin"]
         );
     }
 
@@ -44,7 +45,8 @@ class UtilisateurRepository extends AbstractRepository
             "prenom",
             "adresseMail",
             "dateNaissance",
-            "mdp"
+            "mdp",
+            "estAdmin"
         ];
     }
 }

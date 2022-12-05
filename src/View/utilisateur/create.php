@@ -69,7 +69,16 @@
                                            required/>
                                 </p>
                             </div>
+                            <?php use Themis\Lib\ConnexionUtilisateur;
 
+                            if (ConnexionUtilisateur::isAdministrator()) :?>
+                            <div class="mx-3 ">
+                                <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
+                                <p>
+                                    <input class="InputAddOn-field" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id">
+                                </p>
+                            </div>
+                            <?php endif ?>
                             <div class="d-flex align-content-center justify-content-center my-5">
 
                                 <input class="btn btn-dark" type="submit" value="S'enregistrer"/>

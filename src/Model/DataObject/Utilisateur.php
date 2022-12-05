@@ -12,6 +12,7 @@ class Utilisateur extends AbstractDataObject
     private string $adresseMail;
     private string $dateNaissance;
     private string $mdp;
+    private bool $estAdmin;
 
     /**
      * @param string $login
@@ -21,7 +22,7 @@ class Utilisateur extends AbstractDataObject
      * @param string $dateNaissance
      * @param string $mdp
      */
-    public function __construct(string $login, string $nom, string $prenom, string $adresseMail, string $dateNaissance, string $mdp)
+    public function __construct(string $login, string $nom, string $prenom, string $adresseMail, string $dateNaissance, string $mdp, bool $estAdmin)
     {
         $this->login = $login;
         $this->nom = $nom;
@@ -29,18 +30,34 @@ class Utilisateur extends AbstractDataObject
         $this->adresseMail = $adresseMail;
         $this->dateNaissance = $dateNaissance;
         $this->mdp = $mdp;
+        $this->estAdmin = $estAdmin;
     }
 
     public function tableFormat(): array
     {
-        return [
-            "login" => $this->login,
-            "nom" => $this->nom,
-            "prenom" => $this->prenom,
-            "adresseMail" => $this->adresseMail,
-            "dateNaissance" => $this->dateNaissance,
-            "mdp" => $this->mdp,
-        ];
+        if($this->estAdmin==true){
+            return [
+                "login" => $this->login,
+                "nom" => $this->nom,
+                "prenom" => $this->prenom,
+                "adresseMail" => $this->adresseMail,
+                "dateNaissance" => $this->dateNaissance,
+                "mdp" => $this->mdp,
+                "estAdmin" => 1
+            ];
+        }
+        else {
+            return [
+                "login" => $this->login,
+                "nom" => $this->nom,
+                "prenom" => $this->prenom,
+                "adresseMail" => $this->adresseMail,
+                "dateNaissance" => $this->dateNaissance,
+                "mdp" => $this->mdp,
+                "estAdmin" => 0
+            ];
+        }
+
     }
 
     /**
@@ -91,15 +108,50 @@ class Utilisateur extends AbstractDataObject
         return $this->mdp;
     }
 
+    /**
+     * @return bool
+     */
+    public function isEstAdmin(): bool
+    {
+        return $this->estAdmin;
+    }
+
+    /**
+     * @param bool $estAdmin
+     */
+    public function setEstAdmin(bool $estAdmin): void
+    {
+        $this->estAdmin = $estAdmin;
+    }
+
+
+
     public static function buildFromForm(array $tableauFormulaire): Utilisateur
     {
-        return new Utilisateur (
-            $tableauFormulaire['login'],
-            $tableauFormulaire['nom'],
-            $tableauFormulaire['prenom'],
-            $tableauFormulaire['adresseMail'],
-            $tableauFormulaire['dateNaissance'],
-            PassWord::hash($tableauFormulaire['mdp'])
-        );
+        if (isset($_GET["estAdmin"])){
+            $tableauFormulaire['estAdmin'] = 'on';
+            return new Utilisateur (
+                $tableauFormulaire['login'],
+                $tableauFormulaire['nom'],
+                $tableauFormulaire['prenom'],
+                $tableauFormulaire['adresseMail'],
+                $tableauFormulaire['dateNaissance'],
+                PassWord::hash($tableauFormulaire['mdp']),
+                $tableauFormulaire['estAdmin']
+            );
+        }
+        else {
+            $null = '';
+            return new Utilisateur (
+                $tableauFormulaire['login'],
+                $tableauFormulaire['nom'],
+                $tableauFormulaire['prenom'],
+                $tableauFormulaire['adresseMail'],
+                $tableauFormulaire['dateNaissance'],
+                PassWord::hash($tableauFormulaire['mdp']),
+                $null
+            );
+        }
+
     }
 }

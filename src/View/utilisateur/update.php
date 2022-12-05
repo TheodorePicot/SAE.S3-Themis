@@ -42,6 +42,13 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 <input class="form-control" type="password" name="mdpConfirmation" id="mdpConfirmation"
                        value="">
 
+                <?php use Themis\Lib\ConnexionUtilisateur;
+
+                if (ConnexionUtilisateur::isAdministrator()) :?>
+                <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
+                <input class="InputAddOn-field" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
+                    <?= ($utilisateur->isEstAdmin()==true)?"checked":""?>>
+                <?php endif ?>
 
                 <input type='hidden' name='action' value='updated'>
                 <input type='hidden' name='controller' value='utilisateur'>

@@ -3,6 +3,7 @@
 namespace Themis\Lib;
 
 use Themis\Model\HTTP\Session;
+use Themis\Model\Repository\UtilisateurRepository;
 
 class ConnexionUtilisateur
 {
@@ -38,6 +39,15 @@ class ConnexionUtilisateur
 
     public static function isUser($login): bool{
         return (self::isConnected() && self::getConnectedUserLogin()==$login);
+    }
+
+    public static function isAdministrator() : bool {
+        $user = self::getConnectedUserLogin();
+        if ($user==null) return false;
+        $adminOuPas = (new UtilisateurRepository())->select($user);
+        $tab = $adminOuPas->tableFormat();
+        if ($tab['estAdmin']==1)return true;
+        else return false;
     }
 }
 

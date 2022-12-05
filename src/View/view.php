@@ -111,6 +111,15 @@ use Themis\Lib\FlashMessage;
                            href="frontController.php?action=login&controller=utilisateur">Se Connecter</a>
                         <a class="btn btn-dark text-nowrap"
                            href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
+                    <?php elseif (ConnexionUtilisateur::isAdministrator()) : ?>
+                        <a class="btn btn-dark text-nowrap align-self-center"
+                           href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
+                        <a class="btn btn-dark text-nowrap align-self-center"
+                           href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
+                        <a class="nav-link"
+                           href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+                            <img id="accountImg" alt="compte" src="assets/img/account.png">
+                        </a>
                     <?php else : ?>
                         <a class="btn btn-dark text-nowrap align-self-center"
                            href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>

@@ -15,8 +15,14 @@ class ControllerUtilisateur extends AbstractController
 {
     public function created(): void
     {
+        $user = Utilisateur::buildFromForm($_GET);
         if ($_GET["mdp"] == $_GET["mdpConfirmation"]) {
-            $creationCode = (new UtilisateurRepository)->create(Utilisateur::buildFromForm($_GET));
+            if($user->isEstAdmin() && ConnexionUtilisateur::isAdministrator()){
+                $creationCode = (new UtilisateurRepository)->create($user);
+            }
+            elseif (!$user->isEstAdmin()){
+                $creationCode = (new UtilisateurRepository)->create($user);
+            }
 
             if ($creationCode == "") {
                 (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
@@ -111,14 +117,30 @@ class ControllerUtilisateur extends AbstractController
             // todo message flash
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
         } else {
-            $utilisateur = Utilisateur::buildFromForm($_GET);
-            (new UtilisateurRepository)->update($utilisateur);
+            if (ConnexionUtilisateur::isAdministrator()){
+                if(isset($_GET['estAdmin'])){
+                    $utilisateurSelect->setEstAdmin('on');
+                }
+                else $utilisateurSelect->setEstAdmin('off');
+                $utilisateur = Utilisateur::buildFromForm($_GET);
+                (new UtilisateurRepository)->update($utilisateur);
 
-            $this->showView("view.php", [
-                "utilisateur" => $utilisateur,
-                "pageTitle" => "Info Utilisateur",
-                "pathBodyView" => "utilisateur/read.php"
-            ]);
+                $this->showView("view.php", [
+                    "utilisateur" => $utilisateur,
+                    "pageTitle" => "Info Utilisateur",
+                    "pathBodyView" => "utilisateur/read.php"
+                ]);
+            }
+            elseif (ConnexionUtilisateur::isUser($_GET['login'])){
+                $utilisateur = Utilisateur::buildFromForm($_GET);
+                (new UtilisateurRepository)->update($utilisateur);
+
+                $this->showView("view.php", [
+                    "utilisateur" => $utilisateur,
+                    "pageTitle" => "Info Utilisateur",
+                    "pathBodyView" => "utilisateur/read.php"
+                ]);
+            }
         }
     }
 

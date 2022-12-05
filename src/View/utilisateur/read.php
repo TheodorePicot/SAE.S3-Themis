@@ -22,7 +22,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 Adresse email : <?= htmlspecialchars($utilisateur->getAdresseMail()) ?><br>
                 Date de Naissance : <?= htmlspecialchars($utilisateur->getDateNaissance()) ?><br>
                 <div class="d-flex align-content-center justify-content-center my-3">
-                    <?php if (ConnexionUtilisateur::isUser($utilisateurInURL)) : ?>
+                    <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
                     <a class="btn btn-dark text-nowrap mx-1" href='<?= $hrefDelete ?>'> Supprimer</a>
                     <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
                     <?php endif ?>
