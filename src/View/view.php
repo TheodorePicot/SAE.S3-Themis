@@ -121,7 +121,7 @@ use Themis\Lib\FlashMessage;
                             <img id="accountImg" alt="compte" src="assets/img/account.png">
                         </a>
                         <a class="align-self-center"
-                           href="frontController.php?controller=utilisateur&action=disconnect">
+                           href="frontController.php?action=readAll&controller=utilisateur">
                             <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>
 
                     <?php else : ?>

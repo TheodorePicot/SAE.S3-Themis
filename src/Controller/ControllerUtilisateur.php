@@ -13,6 +13,19 @@ use Themis\Model\Repository\VotantRepository;
 
 class ControllerUtilisateur extends AbstractController
 {
+
+    public function readAll(): void {
+        $utilisateurs = (new UtilisateurRepository())->selectAll();
+        if (ConnexionUtilisateur::isAdministrator()){
+            $this->showView("view.php", [
+                "utilisateurs" => $utilisateurs,
+                "pageTitle" => "Liste des utilisateurs",
+                "pathBodyView" => "utilisateur/list.php"
+            ]);
+        }
+    }
+
+
     public function created(): void
     {
         $user = Utilisateur::buildFromForm($_GET);
@@ -60,7 +73,7 @@ class ControllerUtilisateur extends AbstractController
 
     public function read(): void
     {
-        if (ConnexionUtilisateur::isUser($_GET["login"])) {
+        if (ConnexionUtilisateur::isUser($_GET["login"]) || ConnexionUtilisateur::isAdministrator()) {
             $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
             $this->showView("view.php", [
                 "utilisateur" => $utilisateur,
@@ -113,15 +126,15 @@ class ControllerUtilisateur extends AbstractController
         } else if ($_GET["mdp"] != $_GET["mdpConfirmation"]) {
             (new FlashMessage)->flash("incorrectPasswd", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
-        } else if (!ConnexionUtilisateur::isUser($_GET["login"])) {
+        } else if (!ConnexionUtilisateur::isUser($_GET["login"]) && !ConnexionUtilisateur::isAdministrator()) {
             // todo message flash
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
         } else {
             if (ConnexionUtilisateur::isAdministrator()){
                 if(isset($_GET['estAdmin'])){
-                    $utilisateurSelect->setEstAdmin('on');
+                    $utilisateurSelect->setEstAdmin(true);
                 }
-                else $utilisateurSelect->setEstAdmin('off');
+                else $utilisateurSelect->setEstAdmin(false);
                 $utilisateur = Utilisateur::buildFromForm($_GET);
                 (new UtilisateurRepository)->update($utilisateur);
 
@@ -147,7 +160,7 @@ class ControllerUtilisateur extends AbstractController
     public function update(): void
     {
         $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
-        if (ConnexionUtilisateur::isUser($_GET["login"]))
+        if (ConnexionUtilisateur::isUser($_GET["login"]) || ConnexionUtilisateur::isAdministrator())
             $this->showView("view.php", [
                 "utilisateur" => $utilisateur,
                 "pageTitle" => "Info Utilisateur",
