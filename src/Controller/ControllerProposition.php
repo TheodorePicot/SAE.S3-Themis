@@ -2,14 +2,16 @@
 
 namespace Themis\Controller;
 
+use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
+use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionPropositionRepository;
 use Themis\Model\Repository\SectionRepository;
 
-class ControllerProposition extends AbstactController
+class ControllerProposition extends AbstractController
 {
     public function created(): void
     {
@@ -31,7 +33,7 @@ class ControllerProposition extends AbstactController
             (new FlashMessage())->flash("created", "Votre proposition a été créée", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         } else if ($creationCode == "23503") {
-            (new FlashMessage())->flash("notAuthor", "Vous n 'êtes pas auteur pour cette question", FlashMessage::FLASH_DANGER);
+            (new FlashMessage())->flash("notAuthor", "Vous n'êtes pas auteur de cette question", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         } else if ($creationCode == "23000") {
             (new FlashMessage())->flash("alreadyProposition", "Vous avez déjà créer une proposition", FlashMessage::FLASH_WARNING);
@@ -44,29 +46,39 @@ class ControllerProposition extends AbstactController
 
     public function create(): void
     {
-        $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
-        $question = (new QuestionRepository)->select($_GET['idQuestion']);
-        $this->showView("view.php", [
-            "sections" => $sections,
-            "question" => $question,
-            "pageTitle" => "Création Proposition",
-            "pathBodyView" => "proposition/create.php"
-        ]);
+        if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) {
+            $question = (new QuestionRepository)->select($_GET['idQuestion']);
+            $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
+            $this->showView("view.php", [
+                "sections" => $sections,
+                "question" => $question,
+                "pageTitle" => "Création Proposition",
+                "pathBodyView" => "proposition/create.php"
+            ]);
+        } else {
+            (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès cette action", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
     }
 
     public function read(): void
     {
-        $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
-        $question = (new QuestionRepository)->select($proposition->getIdQuestion());
-        $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
+        if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) { // TODO faire co-ateurs
+            $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
+            $question = (new QuestionRepository)->select($proposition->getIdQuestion());
+            $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
 
-        $this->showView("view.php", [
-            "proposition" => $proposition,
-            "question" => $question,
-            "sections" => $sections,
-            "pageTitle" => "Info Proposition",
-            "pathBodyView" => "proposition/read.php"
-        ]);
+            $this->showView("view.php", [
+                "proposition" => $proposition,
+                "question" => $question,
+                "sections" => $sections,
+                "pageTitle" => "Info Proposition",
+                "pathBodyView" => "proposition/read.php"
+            ]);
+        } else {
+            (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès cette action", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
     }
 
     public function readByQuestion(): void
@@ -82,48 +94,63 @@ class ControllerProposition extends AbstactController
 
     public function updated(): void
     {
-        $proposition = (new PropositionRepository)->build($_GET);
-        (new PropositionRepository)->update($proposition);
+        if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) { // TODO Faire co-ateurs
+            $proposition = (new PropositionRepository)->build($_GET);
+            (new PropositionRepository)->update($proposition);
+            $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
 
-        $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
-        foreach ($sections as $section) {
-            $sectionsPropositionOld = (new SectionPropositionRepository())->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection());
-            $sectionPropositionNew = (new SectionPropositionRepository)->build([
-                "texteProposition" => $_GET["descriptionSectionProposition{$section->getIdSection()}"],
-                "idSection" => $section->getIdSection(),
-                "idProposition" => $proposition->getIdProposition(),
-                "idSectionProposition" => $sectionsPropositionOld->getIdSectionProposition()
-            ]);
-            (new SectionPropositionRepository)->update($sectionPropositionNew);
+            foreach ($sections as $section) {
+                $sectionsPropositionOld = (new SectionPropositionRepository())->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection());
+                $sectionPropositionNew = (new SectionPropositionRepository)->build([
+                    "texteProposition" => $_GET["descriptionSectionProposition{$section->getIdSection()}"],
+                    "idSection" => $section->getIdSection(),
+                    "idProposition" => $proposition->getIdProposition(),
+                    "idSectionProposition" => $sectionsPropositionOld->getIdSectionProposition()
+                ]);
+                (new SectionPropositionRepository)->update($sectionPropositionNew);
+            }
+
+            (new FlashMessage())->flash("created", "Votre proposition a été mise à jour", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
+        } else {
+            (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès cette action", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
         }
-
-        (new FlashMessage())->flash("created", "Votre proposition a été mise à jour", FlashMessage::FLASH_SUCCESS);
-        $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
     }
 
     public function update(): void
     {
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
-        $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
+        if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion())) { // TODO Faire co-ateurs
+            $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
 
-        $this->showView("view.php", [
-            "proposition" => $proposition,
-            "question" => $question,
-            "sections" => $sections,
-            "pageTitle" => "Info Proposition",
-            "pathBodyView" => "proposition/update.php"
-        ]);
+            $this->showView("view.php", [
+                "proposition" => $proposition,
+                "question" => $question,
+                "sections" => $sections,
+                "pageTitle" => "Info Proposition",
+                "pathBodyView" => "proposition/update.php"
+            ]);
+        } else {
+            (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès cette action", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
     }
 
     public function delete(): void
     {
-        if ((new PropositionRepository)->delete($_GET["idProposition"])) {
-            (new FlashMessage())->flash("deleted", "Votre proposition a bien été supprimée", FlashMessage::FLASH_SUCCESS);
-            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+        if (!(new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) {
+            (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès cette action", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
         } else {
-            (new FlashMessage())->flash("deleteFailed", "Il y a eu une erreur lors de la suppréssion de la proposition", FlashMessage::FLASH_DANGER);
-            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+            if ((new PropositionRepository)->delete($_GET["idProposition"])) {
+                (new FlashMessage())->flash("deleted", "Votre proposition a bien été supprimée", FlashMessage::FLASH_SUCCESS);
+                $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+            } else {
+                (new FlashMessage())->flash("deleteFailed", "Il y a eu une erreur lors de la suppression de la proposition", FlashMessage::FLASH_DANGER);
+                $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+            }
         }
     }
 }

@@ -1,14 +1,22 @@
-<div class="d-flex align-content-center justify-content-center">
+<?php
 
-    <h1>Liste des propositions</h1>
-</div>
+use Themis\Lib\ConnexionUtilisateur;
+use Themis\Model\Repository\AuteurRepository;
 
-<div class="d-flex align-content-center justify-content-center my-3">
-    <a class="btn btn-dark text-nowrap"
-       href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
-        Ajouter une proposition</a>
-</div>
+?>
 
+    <div class="d-flex align-content-center justify-content-center">
+
+        <h1>Liste des propositions</h1>
+    </div>
+
+<?php  if((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) : ?>
+    <div class="d-flex align-content-center justify-content-center my-3">
+        <a class="btn btn-dark text-nowrap"
+           href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
+            Ajouter une proposition</a>
+    </div>
+<?php endif ?>
 <?php foreach ($propositions as $proposition) :
     $titrePropositionHTML = htmlspecialchars($proposition->getTitreProposition());
     $propositionInURL = rawurlencode($proposition->getIdProposition());

@@ -11,7 +11,7 @@ use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 use Themis\Model\Repository\VotantRepository;
 
-class ControllerUtilisateur extends AbstactController
+class ControllerUtilisateur extends AbstractController
 {
     public function created(): void
     {
@@ -94,6 +94,7 @@ class ControllerUtilisateur extends AbstactController
     {
         ConnexionUtilisateur::disconnect();
         $this->redirect("frontController.php?action=readAll");
+        // TODO popup
     }
 
     public function updated(): void
@@ -101,10 +102,10 @@ class ControllerUtilisateur extends AbstactController
         $utilisateurSelect = (new UtilisateurRepository)->select($_GET["login"]);
 
         if (!PassWord::check($_GET["mdpAncien"], $utilisateurSelect->getMdp())) {
-            (new FlashMessage)->flash("incorrectPswd", "Le mot de passe ancien ne correspond pas", FlashMessage::FLASH_DANGER);
+            (new FlashMessage)->flash("incorrectPasswd", "Le mot de passe ancien ne correspond pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
         } else if ($_GET["mdp"] != $_GET["mdpConfirmation"]) {
-            (new FlashMessage)->flash("incorrectPswd", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
+            (new FlashMessage)->flash("incorrectPasswd", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
         } else if (!ConnexionUtilisateur::isUser($_GET["login"])) {
             // todo message flash
@@ -145,13 +146,14 @@ class ControllerUtilisateur extends AbstactController
         if (ConnexionUtilisateur::isUser($_GET["login"])){
             if ((new UtilisateurRepository)->delete($_GET['login'])) {
                 (new FlashMessage())->flash("deleted", "Votre compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
-                $this->redirect("frontController.php?action=readAll");
             } else {
-                (new FlashMessage())->flash("deleted", "erreur de suppréssion de votre compte", FlashMessage::FLASH_DANGER);
-                $this->redirect("frontController.php?action=readAll");
+                (new FlashMessage())->flash("deleteFailed", "erreur de suppréssion de votre compte", FlashMessage::FLASH_DANGER);
             }
         }
-        else $this->redirect("frontController.php?action=readAll");
+        else {
+            (new FlashMessage())->flash("notUser", "Vous n'avez pas les droits pour effectuer cette action", FlashMessage::FLASH_DANGER);
+        }
+        $this->redirect("frontController.php?action=readAll");
         //todo garder la redirection vers readAll mais avec un message flash type danger
 
     }

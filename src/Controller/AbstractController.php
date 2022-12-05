@@ -2,7 +2,7 @@
 
 namespace Themis\Controller;
 
-abstract class AbstactController
+abstract class AbstractController
 {
     protected function showView(string $pathView, array $parameters = []): void
     {

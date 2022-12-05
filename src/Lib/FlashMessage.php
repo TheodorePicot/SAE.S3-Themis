@@ -35,11 +35,11 @@ class FlashMessage
             return;
         }
 
-        $flash_message = $_SESSION[self::FLASH][$name];
+        $flashMessage = $_SESSION[self::FLASH][$name];
 
         unset($_SESSION[self::FLASH][$name]);
 
-        echo($flash_message);
+        echo($flashMessage);
     }
 
     function returnAllFlashMessages(): void
@@ -48,20 +48,20 @@ class FlashMessage
             return;
         }
 
-        $flash_messages = $_SESSION[self::FLASH];
+        $flashMessages = $_SESSION[self::FLASH];
 
         unset($_SESSION[self::FLASH]);
 
-        foreach ($flash_messages as $flash_message) {
-            echo $this->formatFlashMessage($flash_message);
+        foreach ($flashMessages as $flashMessage) {
+            echo $this->formatFlashMessage($flashMessage);
         }
     }
 
-    function formatFlashMessage(array $flash_message): string
+    function formatFlashMessage(array $flashMessage): string
     {
         return sprintf('<div class="alert alert-%s">%s</div>',
-            $flash_message['type'],
-            $flash_message['message']
+            $flashMessage['type'],
+            $flashMessage['message']
         );
     }
 }

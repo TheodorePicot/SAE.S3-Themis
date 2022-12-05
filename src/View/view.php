@@ -90,9 +90,11 @@ use Themis\Lib\FlashMessage;
                     <li class="nav-item">
                         <a class="nav-link" href="frontController.php">Questions</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
-                    </li>
+                    <?php if (ConnexionUtilisateur::isConnected()) : ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
+                        </li>
+                    <?php endif ?>
                 </ul>
                 <div id="searchBox" class="mx-3">
                     <form class="d-flex" role="search">

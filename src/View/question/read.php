@@ -1,4 +1,7 @@
 <?php
+
+use Themis\Lib\ConnexionUtilisateur;
+
 $questionInURL = rawurlencode($question->getIdQuestion());
 $hrefDelete = "frontController.php?action=delete&idQuestion=$questionInURL";
 $hrefUpdate = "frontController.php?action=update&idQuestion=$questionInURL";
@@ -39,7 +42,6 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             </button>
             <!--                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>-->
 
-
             <div class="row my-4">
                 <div class="collapse multi-collapse col-6" id="multiCollapseExample1">
                     <div class="card card-body">
@@ -54,11 +56,13 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 </div>
             </div>
 
-            <div class="my-4">
-                <a class="btn btn-dark text-nowrap" href="<?= $hrefDelete ?>" onclick="return confirm('Are you sure?');"> Supprimer</a>
-                <a class="btn btn-dark text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
-            </div>
-
+            <?php if (ConnexionUtilisateur::isUser($question->getLoginOrganisateur())) : ?>
+                <div class="my-4">
+                    <a class="btn btn-dark text-nowrap" href="<?= $hrefDelete ?>"
+                       onclick="return confirm('Are you sure?');"> Supprimer</a>
+                    <a class="btn btn-dark text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
+                </div>
+            <?php endif; ?>
         </div>
 
 
@@ -69,19 +73,27 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 <h2> Calendrier</h2>
                 <ul class="sessions">
                     <li>
-                        <div class="time"><b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutProposition()))) ?></b></div>
+                        <div class="time">
+                            <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutProposition()))) ?></b>
+                        </div>
                         <p> Date de début de proposition </p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinProposition()))) ?></b></div>
+                        <div class="time">
+                            <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinProposition()))) ?></b>
+                        </div>
                         <p> Date de fin de rédaction de proposition </p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutVote()))) ?></b></div>
+                        <div class="time">
+                            <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutVote()))) ?></b>
+                        </div>
                         <p>Date de début de vote</p>
                     </li>
                     <li>
-                        <div class="time"><b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinVote()))) ?></b></div>
+                        <div class="time">
+                            <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinVote()))) ?></b>
+                        </div>
                         <p>Date de fin de vote</p>
                     </li>
                 </ul>
@@ -91,8 +103,6 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
             <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
         </div>
-
-
 
 
     </div>

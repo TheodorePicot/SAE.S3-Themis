@@ -116,4 +116,26 @@ BEGIN
 END;
 $$
 
-SELECT isVotantInQuestion('asdfasdf',88);
+-- Trigger si coAuteur Appartient a la proposition
+
+CREATE OR REPLACE FUNCTION isCoAuteurInQuestion(p_login "Utilisateurs".login%TYPE,
+                                        p_idProposition "Propositions"."idProposition"%TYPE)
+    RETURNS BOOL
+    LANGUAGE plpgsql
+AS
+$$
+DECLARE
+    nbUtilisateur INT;
+
+BEGIN
+
+    SELECT COUNT(*)
+    INTO nbUtilisateur
+    FROM "estCoAuteur"
+    WHERE login = p_login
+      AND "idProposition" = p_idProposition;
+
+    RETURN nbUtilisateur > 0;
+
+END;
+$$
