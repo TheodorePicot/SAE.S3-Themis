@@ -87,7 +87,7 @@ BEGIN
     INTO nbUtilisateur
     FROM "estVotant"
     WHERE login = p_login
-      AND "idQuestion" = p_idQuestion;
+    AND "idQuestion" = p_idQuestion;
 
     RETURN nbUtilisateur > 0;
 
@@ -109,7 +109,7 @@ BEGIN
     INTO nbUtilisateur
     FROM "estAuteur"
     WHERE login = p_login
-      AND "idQuestion" = p_idQuestion;
+    AND "idQuestion" = p_idQuestion;
 
     RETURN nbUtilisateur > 0;
 
@@ -118,7 +118,7 @@ $$
 
 -- Trigger si coAuteur Appartient a la proposition
 
-CREATE OR REPLACE FUNCTION isCoAuteurInQuestion(p_login "Utilisateurs".login%TYPE,
+CREATE OR REPLACE FUNCTION isCoAuteurInProposition(p_login "Utilisateurs".login%TYPE,
                                         p_idProposition "Propositions"."idProposition"%TYPE)
     RETURNS BOOL
     LANGUAGE plpgsql
@@ -126,16 +126,13 @@ AS
 $$
 DECLARE
     nbUtilisateur INT;
-
 BEGIN
-
     SELECT COUNT(*)
     INTO nbUtilisateur
     FROM "estCoAuteur"
     WHERE login = p_login
-      AND "idProposition" = p_idProposition;
+    AND "idProposition" = p_idProposition;
 
     RETURN nbUtilisateur > 0;
-
 END;
 $$

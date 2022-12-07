@@ -15,6 +15,11 @@ use Themis\Lib\ConnexionUtilisateur;
             <div class="row mx-5 my-5 gy-4">
                 <div class="container-fluid col-md-10 col-lg-10 ">
 
+                    <div class="container col-md-6 col-lg-6 mt-3 mb-5">
+                        <h3>Auteurs</h3>
+                        <?php require_once __DIR__ . "/../utilisateur/listCoAuteursForUpdate.php" ?>
+                    </div>
+
                     <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
 
 

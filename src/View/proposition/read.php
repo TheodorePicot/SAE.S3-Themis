@@ -51,6 +51,16 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
             </div>
 
 
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#coAuteurs" aria-expanded="false"
+                    aria-controls="coAuteurs">Co-Auteurs
+            </button>
+            <div class="collapse multi-collapse col-6" id="coAuteurs">
+                <div class="card card-body">
+                    <?php require_once __DIR__ . "/../utilisateur/listCoAuteursForRead.php" ?>
+                </div>
+            </div>
+
             <div class="">
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'
                    onclick="return confirm('Are you sure?');"> Supprimer</a>

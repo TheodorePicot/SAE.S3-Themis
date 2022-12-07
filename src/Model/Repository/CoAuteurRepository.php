@@ -41,7 +41,7 @@ class CoAuteurRepository extends AbstractRepository
 
     public function isCoAuteurInProposition(string $login, int $idProposition): bool
     {
-        $sqlQuery = "SELECT isAuteurInQuestion(:login, :idProposition)";
+        $sqlQuery = "SELECT isCoAuteurInProposition(:login, :idProposition)";
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
@@ -54,6 +54,47 @@ class CoAuteurRepository extends AbstractRepository
 
         $dataObject = $pdoStatement->fetch();
 
-        return $dataObject['isauteurinquestion'] == "true";
+        return $dataObject['iscoauteurinproposition'] == "true";
+    }
+
+    public function coAuteurIsInQuestion(string $login, int $idQuestion): bool
+    {
+        $sqlQuery = "SELECT login FROM {$this->getTableName()} co
+                     JOIN " . '"Propositions"' . ' p ON co."idProposition" = p."idProposition" ' .
+                    'JOIN "Questions" q ON p."idQuestion" = q."idQuestion" 
+                    WHERE q."idQuestion" = :idQuestion';
+        echo $sqlQuery;
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = array(
+            'idQuestion' => $idQuestion
+        );
+
+        $pdoStatement->execute($values);
+
+        $dataObject = $pdoStatement->fetch();
+        if ($dataObject != false) {
+            return $dataObject == $login;
+        }
+        return false;
+    }
+
+    public function selectAllByProposition($idProposition): array
+    {
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"idProposition"=:idProposition ORDER BY ' . $this->getOrderColumn();
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = [
+            "idProposition" => $idProposition
+        ];
+
+        $pdoStatement->execute($values);
+
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
     }
 }

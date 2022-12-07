@@ -2,6 +2,9 @@
 
 namespace Themis\Controller;
 
+use Themis\Lib\ConnexionUtilisateur;
+use Themis\Lib\FlashMessage;
+
 abstract class AbstractController
 {
     protected function showView(string $pathView, array $parameters = []): void
@@ -14,5 +17,12 @@ abstract class AbstractController
     {
         header("Location: $url");
         exit();
+    }
+
+    protected function connectionCheck() {
+        if (!ConnexionUtilisateur::isConnected()) {
+            (new FlashMessage())->flash("notConnected", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
     }
 }

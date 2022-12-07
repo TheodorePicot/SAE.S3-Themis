@@ -6,6 +6,7 @@ use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
 use Themis\Model\DataObject\Section;
 use Themis\Model\Repository\AuteurRepository;
+use Themis\Model\Repository\CoAuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
@@ -17,6 +18,7 @@ class ControllerQuestion extends AbstractController
 {
     public function created(): void
     {
+        $this->connectionCheck();
         if ((new QuestionRepository)->create((new QuestionRepository)->build($_GET)) == "23503") {
             (new FlashMessage())->flash("created", "Il faut être connecté pour créer une question", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
@@ -30,6 +32,7 @@ class ControllerQuestion extends AbstractController
 
     public function create(): void
     {
+        $this->connectionCheck();
         $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
         $this->showView("view.php", [
             "utilisateurs" => $utilisateurs,
@@ -40,6 +43,7 @@ class ControllerQuestion extends AbstractController
 
     public function addSection(): void
     {
+        $this->connectionCheck();
         $this->updateInformationAuxiliary();
         (new SectionRepository)->create(new Section((int)null, $_GET["idQuestion"], "", ""));
 
@@ -51,6 +55,7 @@ class ControllerQuestion extends AbstractController
 
     public function updateInformationAuxiliary(): void
     {
+        $this->connectionCheck();
         $question = (new QuestionRepository)->build($_GET);
         (new QuestionRepository)->update($question);
 
@@ -65,6 +70,7 @@ class ControllerQuestion extends AbstractController
 
     public function update(): void
     {
+        $this->connectionCheck();
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
         if (!ConnexionUtilisateur::isUser($question->getLoginOrganisateur())) {
             (new FlashMessage())->flash("updateFailed", "Vous n'avez pas accès à la mise à jour de cette question", FlashMessage::FLASH_DANGER);
@@ -87,32 +93,54 @@ class ControllerQuestion extends AbstractController
         }
     }
 
+    /**
+     * @return void
+     */
+    public function readAuxiliary(): void
+    {
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $votants = (new VotantRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $auteurs = (new AuteurRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
+
+        $this->showView("view.php", [
+            "propositions" => $propositions,
+            "sections" => $sections,
+            "question" => $question,
+            "votants" => $votants,
+            "auteurs" => $auteurs,
+            "pageTitle" => "Info question",
+            "pathBodyView" => "question/read.php"
+        ]);
+    }
+
     public function read(): void
     {
-        $question = (new QuestionRepository())->select($_GET["idQuestion"]);
-        if (ConnexionUtilisateur::isUser($question->getLoginOrganisateur())
-            || (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]) // TODO Ajouter condition pour co-auteur
-            || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
-                && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))
-            ) {
-            $question = (new QuestionRepository)->select($_GET["idQuestion"]);
-            $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
-            $votants = (new VotantRepository)->selectAllByQuestion($_GET["idQuestion"]);
-            $auteurs = (new AuteurRepository)->selectAllByQuestion($_GET["idQuestion"]);
-            $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
+//        echo (new CoAuteurRepository)->coAuteurIsInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]);
 
-            $this->showView("view.php", [
-                "propositions" => $propositions,
-                "sections" => $sections,
-                "question" => $question,
-                "votants" => $votants,
-                "auteurs" => $auteurs,
-                "pageTitle" => "Info question",
-                "pathBodyView" => "question/read.php"
-            ]);
+        $question = (new QuestionRepository())->select($_GET["idQuestion"]);
+        if (ConnexionUtilisateur::isConnected()) {
+            if ((in_array($question, (new QuestionRepository())->selectAllFinished()))
+                || ConnexionUtilisateur::isUser($question->getLoginOrganisateur())
+                || (new AuteurRepository)->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]) // TODO Ajouter condition pour co-auteur
+//                || (new CoAuteurRepository)->coAuteurIsInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])
+                || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
+                    && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))
+            ) {
+                $this->readAuxiliary();
+            } else {
+                (new FlashMessage())->flash("readFailed", "Vous n'avez pas accès à cette question", FlashMessage::FLASH_DANGER);
+                $this->redirect("frontController.php?action=readAll");
+            }
         } else {
-            (new FlashMessage())->flash("readFailed", "Vous n'avez pas accès à cette question", FlashMessage::FLASH_DANGER);
-            $this->redirect("frontController.php?action=readAll");
+            if ((in_array($question, (new QuestionRepository())->selectAllFinished()))) {
+                $this->readAuxiliary();
+            }
+            else {
+                (new FlashMessage())->flash("readFailed", "Vous n'avez pas accès à cette question", FlashMessage::FLASH_DANGER);
+                $this->redirect("frontController.php?action=readAll");
+            }
         }
     }
 

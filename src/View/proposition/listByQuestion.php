@@ -10,7 +10,9 @@ use Themis\Model\Repository\AuteurRepository;
         <h1>Liste des propositions</h1>
     </div>
 
-<?php  if((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) : ?>
+<?php
+
+if(ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) : ?>
     <div class="d-flex align-content-center justify-content-center my-3">
         <a class="btn btn-dark text-nowrap"
            href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+

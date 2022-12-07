@@ -4,12 +4,16 @@ namespace Themis\Controller;
 
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
+use Themis\Model\DataObject\CoAuteur;
 use Themis\Model\Repository\AuteurRepository;
+use Themis\Model\Repository\CoAuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionPropositionRepository;
 use Themis\Model\Repository\SectionRepository;
+use Themis\Model\Repository\UtilisateurRepository;
+use Themis\Model\Repository\VotantRepository;
 
 class ControllerProposition extends AbstractController
 {
@@ -28,6 +32,11 @@ class ControllerProposition extends AbstractController
                     'idProposition' => $idProposition
                 ]);
                 (new SectionPropositionRepository)->create($sectionProposition);
+            }
+
+            foreach ($_GET["coAuteurs"] as $coAuteur) {
+                $coAuteurObject = new CoAuteur($idProposition, $coAuteur);
+                (new CoAuteurRepository)->create($coAuteurObject);
             }
 
             (new FlashMessage())->flash("created", "Votre proposition a été créée", FlashMessage::FLASH_SUCCESS);
@@ -49,7 +58,9 @@ class ControllerProposition extends AbstractController
         if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) {
             $question = (new QuestionRepository)->select($_GET['idQuestion']);
             $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
+            $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
             $this->showView("view.php", [
+                "utilisateurs" => $utilisateurs,
                 "sections" => $sections,
                 "question" => $question,
                 "pageTitle" => "Création Proposition",
@@ -63,12 +74,15 @@ class ControllerProposition extends AbstractController
 
     public function read(): void
     {
+        $this->connectionCheck();
         if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])) { // TODO faire co-ateurs
             $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
             $question = (new QuestionRepository)->select($proposition->getIdQuestion());
             $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
+            $coAuteurs = (new CoAuteurRepository())->selectAllByProposition($proposition->getIdProposition());
 
             $this->showView("view.php", [
+                "coAuteurs" => $coAuteurs,
                 "proposition" => $proposition,
                 "question" => $question,
                 "sections" => $sections,
@@ -110,6 +124,13 @@ class ControllerProposition extends AbstractController
                 (new SectionPropositionRepository)->update($sectionPropositionNew);
             }
 
+            (new CoAuteurRepository())->delete($proposition->getIdProposition());
+
+            foreach ($_GET["coAuteurs"] as $coAuteur) {
+                $coAuteurObject = new CoAuteur($proposition->getIdProposition(), $coAuteur);
+                (new CoAuteurRepository())->create($coAuteurObject);
+            }
+
             (new FlashMessage())->flash("created", "Votre proposition a été mise à jour", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         } else {
@@ -122,10 +143,13 @@ class ControllerProposition extends AbstractController
     {
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
+
         if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion())) { // TODO Faire co-ateurs
             $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
+            $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
 
             $this->showView("view.php", [
+                "utilisateurs" => $utilisateurs,
                 "proposition" => $proposition,
                 "question" => $question,
                 "sections" => $sections,
