@@ -69,6 +69,7 @@
                                            required/>
                                 </p>
                             </div>
+
                             <?php use Themis\Lib\ConnexionUtilisateur;
 
                             if (ConnexionUtilisateur::isAdministrator()) :?>
@@ -76,6 +77,12 @@
                                 <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
                                 <p>
                                     <input class="InputAddOn-field" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id">
+                                </p>
+                            </div>
+                            <div class="mx-3 ">
+                                <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
+                                <p>
+                                    <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur" id="estOrganisateur">
                                 </p>
                             </div>
                             <?php endif ?>

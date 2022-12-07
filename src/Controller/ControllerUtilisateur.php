@@ -29,6 +29,10 @@ class ControllerUtilisateur extends AbstractController
     public function created(): void
     {
         $user = Utilisateur::buildFromForm($_GET);
+        if ((new UtilisateurRepository())->select($_GET['login']) != null) {
+            (new FlashMessage)->flash("mauvaisMdp", "Ce login existe déjà", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=create&controller=utilisateur");
+        }
         if ($_GET["mdp"] == $_GET["mdpConfirmation"]) {
             if($user->isEstAdmin() && ConnexionUtilisateur::isAdministrator()){
                 $creationCode = (new UtilisateurRepository)->create($user);
@@ -39,6 +43,7 @@ class ControllerUtilisateur extends AbstractController
 
             if ($creationCode == "") {
                 (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
+
                 $this->redirect("frontController.php?action=create&controller=utilisateur");
             } elseif ($creationCode == "23000") {
                 (new FlashMessage)->flash("loginExiste", "Ce login existe déjà", FlashMessage::FLASH_DANGER);

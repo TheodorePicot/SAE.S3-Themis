@@ -37,16 +37,28 @@ class ConnexionUtilisateur
         return $session->contains(self::$connectionKey);
     }
 
-    public static function isUser($login): bool{
-        return (self::isConnected() && self::getConnectedUserLogin()==$login);
+    public static function isUser($login): bool
+    {
+        return (self::isConnected() && self::getConnectedUserLogin() == $login);
     }
 
-    public static function isAdministrator() : bool {
+    public static function isAdministrator(): bool
+    {
         $user = self::getConnectedUserLogin();
-        if ($user==null) return false;
+        if ($user == null) return false;
         $adminOuPas = (new UtilisateurRepository())->select($user);
         $tab = $adminOuPas->tableFormat();
-        if ($tab['estAdmin']==1)return true;
+        if ($tab['estAdmin'] == 1) return true;
+        else return false;
+    }
+
+    public static function isOrganisateur(): bool
+    {
+        $user = self::getConnectedUserLogin();
+        if ($user == null) return false;
+        $organisateurOuPas = (new UtilisateurRepository())->select($user);
+        $tab = $organisateurOuPas->tableFormat();
+        if ($tab['estOrganisateur'] == 1) return true;
         else return false;
     }
 }

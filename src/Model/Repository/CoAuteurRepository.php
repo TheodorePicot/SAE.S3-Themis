@@ -73,8 +73,9 @@ class CoAuteurRepository extends AbstractRepository
         $pdoStatement->execute($values);
 
         $dataObject = $pdoStatement->fetch();
+//        echo $dataObject[0];
         if ($dataObject != false) {
-            return $dataObject == $login;
+            return $dataObject[0] == $login;
         }
         return false;
     }
