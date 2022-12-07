@@ -78,6 +78,7 @@ class ControllerUtilisateur extends AbstractController
 
     public function read(): void
     {
+        $this->connectionCheck();
         if (ConnexionUtilisateur::isUser($_GET["login"]) || ConnexionUtilisateur::isAdministrator()) {
             $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
             $this->showView("view.php", [

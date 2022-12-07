@@ -4,6 +4,7 @@ namespace Themis\Controller;
 
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
+use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\Section;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\CoAuteurRepository;
@@ -19,14 +20,15 @@ class ControllerQuestion extends AbstractController
     public function created(): void
     {
         $this->connectionCheck();
-        if (ConnexionUtilisateur::isUser($_GET["loginOrganisateur"])
+        if (ConnexionUtilisateur::isUser($_GET["loginOrganisateur"] || ConnexionUtilisateur::isAdministrator())
             || ConnexionUtilisateur::isOrganisateur()) {
+            (new QuestionRepository())->create(Question::buildFromForm($_GET));
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             (new ControllerUtilisateur)->createParticipants($idQuestion);
             $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
         } else {
-            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas les droits pour effectuer cette méthode", FlashMessage::FLASH_WARNING);
+            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
     }
@@ -34,7 +36,7 @@ class ControllerQuestion extends AbstractController
     public function create(): void
     {
         $this->connectionCheck();
-        if (ConnexionUtilisateur::isOrganisateur()) {
+        if (ConnexionUtilisateur::isOrganisateur() || ConnexionUtilisateur::isAdministrator()) {
             $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
             $this->showView("view.php", [
                 "utilisateurs" => $utilisateurs,
@@ -42,7 +44,7 @@ class ControllerQuestion extends AbstractController
                 "pathBodyView" => "question/create.php"
             ]);
         } else {
-            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas les droits pour effectuer cette méthode", FlashMessage::FLASH_WARNING);
+            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
     }
@@ -51,7 +53,7 @@ class ControllerQuestion extends AbstractController
     {
         $this->connectionCheck();
         if (ConnexionUtilisateur::isUser($_GET["loginOrganisateur"])
-            || ConnexionUtilisateur::isOrganisateur()) {
+            || ConnexionUtilisateur::isOrganisateur() || ConnexionUtilisateur::isAdministrator()) {
             $this->updateInformationAuxiliary();
             (new SectionRepository)->create(new Section((int)null, $_GET["idQuestion"], "", ""));
 
@@ -60,7 +62,7 @@ class ControllerQuestion extends AbstractController
             else
                 $this->redirect("frontController.php?action=update&idQuestion={$_GET["idQuestion"]}");
         } else {
-            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas les droits pour effectuer cette méthode", FlashMessage::FLASH_WARNING);
+            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
 
@@ -86,7 +88,7 @@ class ControllerQuestion extends AbstractController
         $this->connectionCheck();
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
         if (ConnexionUtilisateur::isUser($question->getLoginOrganisateur())
-            || ConnexionUtilisateur::isOrganisateur()) {
+            || ConnexionUtilisateur::isOrganisateur() || ConnexionUtilisateur::isAdministrator()) {
             $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
             $utilisateurs = (new UtilisateurRepository)->selectAll();
 
@@ -102,7 +104,7 @@ class ControllerQuestion extends AbstractController
                 "pathBodyView" => "question/update.php"
             ]);
         } else {
-            (new FlashMessage())->flash("updateFailed", "Vous n'avez pas accès à la mise à jour de cette question", FlashMessage::FLASH_DANGER);
+            (new FlashMessage())->flash("updateFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
     }
@@ -131,12 +133,10 @@ class ControllerQuestion extends AbstractController
 
     public function read(): void
     {
-
         $question = (new QuestionRepository())->select($_GET["idQuestion"]);
-        echo (new CoAuteurRepository)->coAuteurIsInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]);
-
         if (ConnexionUtilisateur::isConnected()) {
             if ((in_array($question, (new QuestionRepository())->selectAllFinished()))
+                || ConnexionUtilisateur::isAdministrator()
                 || ConnexionUtilisateur::isUser($question->getLoginOrganisateur())
                 || (new AuteurRepository)->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]) // TODO Ajouter condition pour co-auteur
                 || (new CoAuteurRepository)->coAuteurIsInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])
@@ -151,8 +151,7 @@ class ControllerQuestion extends AbstractController
         } else {
             if ((in_array($question, (new QuestionRepository())->selectAllFinished()))) {
                 $this->readAuxiliary();
-            }
-            else {
+            } else {
                 (new FlashMessage())->flash("readFailed", "Vous n'avez pas accès à cette question", FlashMessage::FLASH_DANGER);
                 $this->redirect("frontController.php?action=readAll");
             }
@@ -200,9 +199,8 @@ class ControllerQuestion extends AbstractController
 
     public function updated(): void
     {
-        if (!ConnexionUtilisateur::isUser($_GET['loginOrganisateur'])) {
-            (new FlashMessage())->flash("updatedFailed", "Vous n'êtes pas le créateur de cette question", FlashMessage::FLASH_DANGER);
-        } else {
+        $this->connectionCheck();
+        if (ConnexionUtilisateur::isUser($_GET['loginOrganisateur']) && ConnexionUtilisateur::isOrganisateur() || ConnexionUtilisateur::isAdministrator()) {
             $this->updateInformationAuxiliary();
 
             if (isset($_GET["isInCreation"])) {
@@ -211,30 +209,40 @@ class ControllerQuestion extends AbstractController
                 (new FlashMessage())->flash("updated", "Votre question a été mise à jour", FlashMessage::FLASH_SUCCESS);
             }
         }
+        if (ConnexionUtilisateur::isUser($_GET['loginOrganisateur'])) {
+            (new FlashMessage())->flash("updatedFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+        }
         $this->redirect("frontController.php?action=readAll");
     }
 
     public function deleteLastSection(): void
     {
-        $this->updateInformationAuxiliary();
-        (new SectionRepository)->delete($_GET["lastIdSection"]);
+        $this->connectionCheck();
+        if (ConnexionUtilisateur::isUser($_GET["loginOrganisateur"])
+            || ConnexionUtilisateur::isOrganisateur()
+            || ConnexionUtilisateur::isAdministrator()) {
+            $this->updateInformationAuxiliary();
+            (new SectionRepository)->delete($_GET["lastIdSection"]);
 
-        if (isset($_GET["isInCreation"]))
-            $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_GET["idQuestion"]}");
-        else
-            $this->redirect("frontController.php?action=update&idQuestion={$_GET["idQuestion"]}");
+            if (isset($_GET["isInCreation"]))
+                $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_GET["idQuestion"]}");
+            else
+                $this->redirect("frontController.php?action=update&idQuestion={$_GET["idQuestion"]}");
+        } else {
+            (new FlashMessage())->flash("updatedFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
     }
 
     public function delete(): void
     {
-        if (ConnexionUtilisateur::getConnectedUserLogin() != (new QuestionRepository())->select($_GET["idQuestion"])->getLoginOrganisateur()) {
-            (new FlashMessage())->flash("deleteFailed", "Vous n'êtes pas le créateur de cette question", FlashMessage::FLASH_DANGER);
-            $this->redirect("frontController.php?action=readAll");
-        } else if ((new QuestionRepository())->delete($_GET["idQuestion"])) {
+        $this->connectionCheck();
+        if (ConnexionUtilisateur::isUser((new QuestionRepository())->select($_GET["idQuestion"])->getLoginOrganisateur()) || ConnexionUtilisateur::isAdministrator()) {
+            (new QuestionRepository())->delete($_GET["idQuestion"]);
             (new FlashMessage())->flash("deleted", "Votre question a été supprimée", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=readAll");
         } else {
-            (new FlashMessage())->flash("deleteFailed", "Il y a eu une erreur lors de la suppression de la question", FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage())->flash("deleteFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
     }

@@ -137,4 +137,15 @@ class Question extends AbstractDataObject
         $tmp .= "...";
         return $tmp;
     }
+
+    public static function buildFromForm(array $objectArrayFormat) {
+        return new Question((int)null,
+            $objectArrayFormat["titreQuestion"],
+            $objectArrayFormat["descriptionQuestion"],
+            $objectArrayFormat["dateDebutProposition"],
+            $objectArrayFormat["dateFinProposition"],
+            $objectArrayFormat["dateDebutVote"],
+            $objectArrayFormat["dateFinVote"],
+            $objectArrayFormat["loginOrganisateur"]);
+    }
 }

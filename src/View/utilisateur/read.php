@@ -21,15 +21,17 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 Nom Utilisateur : <?= htmlspecialchars($utilisateur->getNom()) ?> <br>
                 Adresse email : <?= htmlspecialchars($utilisateur->getAdresseMail()) ?><br>
                 Date de Naissance : <?= htmlspecialchars($utilisateur->getDateNaissance()) ?><br>
-                <?php if ($utilisateur->isEstAdmin()) : ?>
+                <?php if ($utilisateur->isAdmin()) : ?>
                     Droits : Administrateur
-                <?php else: ?>
-                    Droits : Utilisateurs
+                <?php elseif ($utilisateur->isOrganisateur()): ?>
+                    Droits : Organisateur
+                <?php else : ?>
+                    Droits : Utilisateur
                 <?php endif ?>
                 <div class="d-flex align-content-center justify-content-center my-3">
                     <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
-                    <a class="btn btn-dark text-nowrap mx-1" href='<?= $hrefDelete ?>'> Supprimer</a>
-                    <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+                        <a class="btn btn-dark text-nowrap mx-1" href='<?= $hrefDelete ?>'> Supprimer</a>
+                        <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
                     <?php endif ?>
                 </div>
 

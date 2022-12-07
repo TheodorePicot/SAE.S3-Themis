@@ -90,7 +90,7 @@ use Themis\Lib\FlashMessage;
                     <li class="nav-item">
                         <a class="nav-link" href="frontController.php">Questions</a>
                     </li>
-                    <?php if (ConnexionUtilisateur::isConnected()) : ?>
+                    <?php if (ConnexionUtilisateur::isConnected() && (ConnexionUtilisateur::isOrganisateur() || ConnexionUtilisateur::isAdministrator())) : ?>
                         <li class="nav-item">
                             <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
                         </li>

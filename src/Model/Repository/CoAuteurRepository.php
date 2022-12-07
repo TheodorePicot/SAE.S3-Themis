@@ -63,7 +63,7 @@ class CoAuteurRepository extends AbstractRepository
                      JOIN " . '"Propositions"' . ' p ON co."idProposition" = p."idProposition" ' .
                     'JOIN "Questions" q ON p."idQuestion" = q."idQuestion" 
                     WHERE q."idQuestion" = :idQuestion';
-        echo $sqlQuery;
+//        echo $sqlQuery;
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = array(

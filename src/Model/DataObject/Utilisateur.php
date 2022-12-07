@@ -112,9 +112,14 @@ class Utilisateur extends AbstractDataObject
     /**
      * @return bool
      */
-    public function isEstAdmin(): bool
+    public function isAdmin(): bool
     {
         return $this->estAdmin;
+    }
+
+    public function isOrganisateur(): bool
+    {
+        return $this->estOrganisateur;
     }
 
     /**
@@ -140,20 +145,20 @@ class Utilisateur extends AbstractDataObject
 
     public static function buildFromForm(array $tableauFormulaire): Utilisateur
     {
-        $utilisateur =  new Utilisateur (
+        $utilisateur = new Utilisateur (
             $tableauFormulaire['login'],
             $tableauFormulaire['nom'],
             $tableauFormulaire['prenom'],
             $tableauFormulaire['adresseMail'],
             $tableauFormulaire['dateNaissance'],
             PassWord::hash($tableauFormulaire['mdp']),
-             0,
+            0,
             0);
 
-        if (isset($_GET["estAdmin"]) && $_GET["estAdmin"] == "on"){
+        if (isset($_GET["estAdmin"]) && $_GET["estAdmin"] == "on") {
             $utilisateur->setEstAdmin(1);
         }
-        if (isset($_GET["estOrganisateur"])  && $_GET["estOrganisateur"] == "on") {
+        if (isset($_GET["estOrganisateur"]) && $_GET["estOrganisateur"] == "on") {
             $utilisateur->setEstOrganisateur(1);
         }
         return $utilisateur;
