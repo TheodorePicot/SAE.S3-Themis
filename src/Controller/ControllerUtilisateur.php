@@ -5,24 +5,24 @@ namespace Themis\Controller;
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
 use Themis\Lib\PassWord;
-use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Utilisateur;
-use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\UtilisateurRepository;
-use Themis\Model\Repository\VotantRepository;
 
 class ControllerUtilisateur extends AbstractController
 {
 
-    public function readAll(): void {
-        $utilisateurs = (new UtilisateurRepository())->selectAll();
-        if (ConnexionUtilisateur::isAdministrator()){
-            $this->showView("view.php", [
-                "utilisateurs" => $utilisateurs,
-                "pageTitle" => "Liste des utilisateurs",
-                "pathBodyView" => "utilisateur/list.php"
-            ]);
+    public function readAll(): void
+    {
+        if (!$this->isAdmin()) {
+            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
         }
+        $utilisateurs = (new UtilisateurRepository())->selectAll();
+        $this->showView("view.php", [
+            "utilisateurs" => $utilisateurs,
+            "pageTitle" => "Liste des utilisateurs",
+            "pathBodyView" => "utilisateur/list.php"
+        ]);
     }
 
 
@@ -34,10 +34,9 @@ class ControllerUtilisateur extends AbstractController
             $this->redirect("frontController.php?action=create&controller=utilisateur");
         }
         if ($_GET["mdp"] == $_GET["mdpConfirmation"]) {
-            if($user->isAdmin() && ConnexionUtilisateur::isAdministrator()){
+            if ($user->isAdmin() && ConnexionUtilisateur::isAdministrator()) {
                 $creationCode = (new UtilisateurRepository)->create($user);
-            }
-            elseif (!$user->isAdmin()){
+            } elseif (!$user->isAdmin()) {
                 $creationCode = (new UtilisateurRepository)->create($user);
             }
 
@@ -63,19 +62,6 @@ class ControllerUtilisateur extends AbstractController
         ]);
     }
 
-    public function createParticipants(int $idQuestion)
-    {
-        foreach ($_GET["votants"] as $votant) {
-            $votantObject = new Participant($votant, $idQuestion);
-            (new VotantRepository)->create($votantObject);
-        }
-
-        foreach ($_GET["auteurs"] as $auteur) {
-            $auteurObject = new Participant($auteur, $idQuestion);
-            (new AuteurRepository)->create($auteurObject);
-        }
-    }
-
     public function read(): void
     {
         $this->connectionCheck();
@@ -86,8 +72,7 @@ class ControllerUtilisateur extends AbstractController
                 "pageTitle" => "Info Utilisateur",
                 "pathBodyView" => "utilisateur/read.php"
             ]);
-        }
-        else $this->redirect("frontController.php?action=readAll");
+        } else $this->redirect("frontController.php?action=readAll");
         //todo garder la redirection vers readAll mais avec un message flash type danger
 
     }
@@ -117,14 +102,28 @@ class ControllerUtilisateur extends AbstractController
 
     public function disconnect(): void
     {
+        $this->connectionCheck();
         ConnexionUtilisateur::disconnect();
         $this->redirect("frontController.php?action=readAll");
-        // TODO popup
+    }
+
+    private function updatedAuxiliary()
+    {
+        $utilisateur = Utilisateur::buildFromForm($_GET);
+        (new UtilisateurRepository)->update($utilisateur);
+
+        $this->showView("view.php", [
+            "utilisateur" => $utilisateur,
+            "pageTitle" => "Info Utilisateur",
+            "pathBodyView" => "utilisateur/read.php"
+        ]);
     }
 
     public function updated(): void
     {
         $utilisateurSelect = (new UtilisateurRepository)->select($_GET["login"]);
+
+        $this->connectionCheck();
 
         if (!PassWord::check($_GET["mdpAncien"], $utilisateurSelect->getMdp())) {
             (new FlashMessage)->flash("incorrectPasswd", "Le mot de passe ancien ne correspond pas", FlashMessage::FLASH_DANGER);
@@ -132,66 +131,46 @@ class ControllerUtilisateur extends AbstractController
         } else if ($_GET["mdp"] != $_GET["mdpConfirmation"]) {
             (new FlashMessage)->flash("incorrectPasswd", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
-        } else if (!ConnexionUtilisateur::isUser($_GET["login"]) && !ConnexionUtilisateur::isAdministrator()) {
-            // todo message flash
+        } else if (!ConnexionUtilisateur::isUser($_GET["login"]) || !$this->isAdmin()) {
+            (new FlashMessage)->flash("noAccess", "Les n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
         } else {
-            if (ConnexionUtilisateur::isAdministrator()){
-                if(isset($_GET['estAdmin'])){
+            if ($this->isAdmin()) {
+                if (isset($_GET['estAdmin'])) {
                     $utilisateurSelect->setEstAdmin(true);
-                }
-                else $utilisateurSelect->setEstAdmin(false);
-                $utilisateur = Utilisateur::buildFromForm($_GET);
-                (new UtilisateurRepository)->update($utilisateur);
-
-                $this->showView("view.php", [
-                    "utilisateur" => $utilisateur,
-                    "pageTitle" => "Info Utilisateur",
-                    "pathBodyView" => "utilisateur/read.php"
-                ]);
-            }
-            elseif (ConnexionUtilisateur::isUser($_GET['login'])){
-                $utilisateur = Utilisateur::buildFromForm($_GET);
-                (new UtilisateurRepository)->update($utilisateur);
-
-                $this->showView("view.php", [
-                    "utilisateur" => $utilisateur,
-                    "pageTitle" => "Info Utilisateur",
-                    "pathBodyView" => "utilisateur/read.php"
-                ]);
+                } else $utilisateurSelect->setEstAdmin(false);
+                $this->updatedAuxiliary();
+            } elseif (ConnexionUtilisateur::isUser($_GET['login'])) {
+                $this->updatedAuxiliary();
             }
         }
     }
 
     public function update(): void
     {
-        $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
-        if (ConnexionUtilisateur::isUser($_GET["login"]) || ConnexionUtilisateur::isAdministrator())
+        $this->connectionCheck();
+        if (ConnexionUtilisateur::isUser($_GET["login"]) || $this->isAdmin()) {
+            $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
             $this->showView("view.php", [
                 "utilisateur" => $utilisateur,
                 "pageTitle" => "Info Utilisateur",
                 "pathBodyView" => "utilisateur/update.php"
             ]);
-        else $this->redirect("frontController.php?action=readAll");
-        //todo garder la redirection vers readAll mais avec un message flash type danger
-    }
-
-    public function deleteParticipants(int $idQuestion)
-    {
-        (new VotantRepository)->delete($idQuestion);
-        (new AuteurRepository)->delete($idQuestion);
+        } else {
+            (new FlashMessage)->flash("noAccess", "Les n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
     }
 
     public function delete(): void
     {
-        if (ConnexionUtilisateur::isUser($_GET["login"])){
+        if (ConnexionUtilisateur::isUser($_GET["login"])) {
             if ((new UtilisateurRepository)->delete($_GET['login'])) {
                 (new FlashMessage())->flash("deleted", "Votre compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
             } else {
                 (new FlashMessage())->flash("deleteFailed", "erreur de suppréssion de votre compte", FlashMessage::FLASH_DANGER);
             }
-        }
-        else {
+        } else {
             (new FlashMessage())->flash("notUser", "Vous n'avez pas les droits pour effectuer cette action", FlashMessage::FLASH_DANGER);
         }
         $this->redirect("frontController.php?action=readAll");
