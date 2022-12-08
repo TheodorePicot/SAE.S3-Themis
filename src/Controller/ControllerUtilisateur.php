@@ -34,10 +34,10 @@ class ControllerUtilisateur extends AbstractController
             $this->redirect("frontController.php?action=create&controller=utilisateur");
         }
         if ($_GET["mdp"] == $_GET["mdpConfirmation"]) {
-            if($user->isEstAdmin() && ConnexionUtilisateur::isAdministrator()){
+            if($user->isAdmin() && ConnexionUtilisateur::isAdministrator()){
                 $creationCode = (new UtilisateurRepository)->create($user);
             }
-            elseif (!$user->isEstAdmin()){
+            elseif (!$user->isAdmin()){
                 $creationCode = (new UtilisateurRepository)->create($user);
             }
 

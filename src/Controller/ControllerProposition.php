@@ -26,30 +26,27 @@ class ControllerProposition extends AbstractController
             $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
             foreach ($sections as $section) {
                 $sectionProposition = (new SectionPropositionRepository)->build([
-                    'texteProposition' => $_GET['descriptionSectionProposition' . $section->getIdSection()],
-                    'idSection' => $section->getIdSection(),
-                    'idProposition' => $idProposition
+                    "texteProposition" => $_GET["descriptionSectionProposition{$section->getIdSection()}"],
+                    "idSection" => $section->getIdSection(),
+                    "idProposition" => $idProposition
                 ]);
                 (new SectionPropositionRepository)->create($sectionProposition);
             }
-
-            foreach ($_GET["coAuteurs"] as $coAuteur) {
-                $coAuteurObject = new CoAuteur($idProposition, $coAuteur);
-                (new CoAuteurRepository)->create($coAuteurObject);
+            if (isset($_GET["coAuteurs"])) {
+                foreach ($_GET["coAuteurs"] as $coAuteur) {
+                    $coAuteurObject = new CoAuteur($idProposition, $coAuteur);
+                    (new CoAuteurRepository)->create($coAuteurObject);
+                }
             }
-
             (new FlashMessage())->flash("created", "Votre proposition a été créée", FlashMessage::FLASH_SUCCESS);
-            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         } else if ($creationCode == "23503") {
             (new FlashMessage())->flash("notAuthor", "Vous n'êtes pas auteur de cette question", FlashMessage::FLASH_DANGER);
-            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         } else if ($creationCode == "23000") {
             (new FlashMessage())->flash("alreadyProposition", "Vous avez déjà créer une proposition", FlashMessage::FLASH_WARNING);
-            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         } else {
             (new FlashMessage())->flash("created", "Erreur (CODE : $creationCode)", FlashMessage::FLASH_DANGER);
-            $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
         }
+        $this->redirect("frontController.php?action=read&idQuestion={$proposition->getIdQuestion()}");
     }
 
     public function create(): void
@@ -169,11 +166,10 @@ class ControllerProposition extends AbstractController
         } else {
             if ((new PropositionRepository)->delete($_GET["idProposition"])) {
                 (new FlashMessage())->flash("deleted", "Votre proposition a bien été supprimée", FlashMessage::FLASH_SUCCESS);
-                $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
             } else {
                 (new FlashMessage())->flash("deleteFailed", "Il y a eu une erreur lors de la suppression de la proposition", FlashMessage::FLASH_DANGER);
-                $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
             }
+            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
         }
     }
 }

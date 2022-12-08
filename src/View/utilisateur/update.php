@@ -47,7 +47,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 if (ConnexionUtilisateur::isAdministrator()) :?>
                 <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
                 <input class="InputAddOn-field" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
-                    <?= ($utilisateur->isEstAdmin()==true)?"checked":""?>>
+                    <?= ($utilisateur->isAdmin()==true)?"checked":""?>>
                 <?php endif ?>
 
                 <input type='hidden' name='action' value='updated'>
