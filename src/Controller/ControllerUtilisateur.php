@@ -66,7 +66,7 @@ class ControllerUtilisateur extends AbstractController
     public function read(): void
     {
         $this->connectionCheck();
-        if (ConnexionUtilisateur::isUser($_GET["login"]) || ConnexionUtilisateur::isAdministrator()) {
+        if (ConnexionUtilisateur::isUser($_GET["login"]) || $this->isAdmin()) {
             $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
             $this->showView("view.php", [
                 "utilisateur" => $utilisateur,
@@ -74,8 +74,6 @@ class ControllerUtilisateur extends AbstractController
                 "pathBodyView" => "utilisateur/read.php"
             ]);
         } else $this->redirect("frontController.php?action=readAll");
-        //todo garder la redirection vers readAll mais avec un message flash type danger
-
     }
 
     public function login(): void
@@ -175,8 +173,6 @@ class ControllerUtilisateur extends AbstractController
             (new FlashMessage())->flash("notUser", "Vous n'avez pas les droits pour effectuer cette action", FlashMessage::FLASH_DANGER);
         }
         $this->redirect("frontController.php?action=readAll");
-        //todo garder la redirection vers readAll mais avec un message flash type danger
-
     }
 
     public function validerEmail() : void {

@@ -32,7 +32,7 @@ class SectionRepository extends AbstractRepository
         return 'themis."Sections"';
     }
 
-    public function build(array $objectArrayFormat): AbstractDataObject
+    public function build(array $objectArrayFormat): Section
     {
         if ($objectArrayFormat["titreSection"] == "" || $objectArrayFormat["descriptionSection"] == "") {
             return new Section($objectArrayFormat["idSection"],

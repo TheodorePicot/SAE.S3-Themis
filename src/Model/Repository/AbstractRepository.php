@@ -8,7 +8,7 @@ use Themis\Model\DataObject\AbstractDataObject;
 abstract class AbstractRepository
 {
     /**
-     * Le @param AbstractDataObject $dataObject est un objet qui vient d'etre créer par la méthode {@link build()}
+     * Le AbstractDataObject $dataObject est un objet qui vient d'etre créer par la méthode {@link build()}
      * Cette méthode prend donc un objet PHP et insère les données de cet objet dans notre base de données et la table correspondante.
      * @param AbstractDataObject $dataObject
      * @return bool
@@ -30,13 +30,10 @@ abstract class AbstractRepository
         }
         $sqlQuery .= ") " . $columnValues . ")";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-//        echo $sqlQuery . "\n";
         $values = $dataObject->tableFormat();
-//        var_dump($values);
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
-//            echo $exception->getCode();
             return $exception->getCode();
         }
         return "";

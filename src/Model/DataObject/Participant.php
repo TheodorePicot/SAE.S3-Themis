@@ -40,4 +40,9 @@ class Participant extends AbstractDataObject
     {
         return $this->idQuestion;
     }
+
+    public static function buildFromForm(array $formArray): AbstractDataObject
+    {
+        // TODO: Implement buildFromForm() method.
+    }
 }

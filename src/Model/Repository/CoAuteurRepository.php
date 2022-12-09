@@ -2,7 +2,6 @@
 
 namespace Themis\Model\Repository;
 
-use Themis\Model\DataObject\AbstractDataObject;
 use Themis\Model\DataObject\CoAuteur;
 
 class CoAuteurRepository extends AbstractRepository
@@ -24,7 +23,7 @@ class CoAuteurRepository extends AbstractRepository
     /**
      * @inheritDoc
      */
-    public function build(array $objectArrayFormat): AbstractDataObject
+    public function build(array $objectArrayFormat): CoAuteur
     {
         return new CoAuteur($objectArrayFormat["idProposition"], $objectArrayFormat["login"]);
     }
@@ -61,7 +60,7 @@ class CoAuteurRepository extends AbstractRepository
     {
         $sqlQuery = "SELECT login FROM {$this->getTableName()} co
                      JOIN " . '"Propositions"' . ' p ON co."idProposition" = p."idProposition" ' .
-                    'JOIN "Questions" q ON p."idQuestion" = q."idQuestion" 
+            'JOIN "Questions" q ON p."idQuestion" = q."idQuestion" 
                     WHERE q."idQuestion" = :idQuestion';
 //        echo $sqlQuery;
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);

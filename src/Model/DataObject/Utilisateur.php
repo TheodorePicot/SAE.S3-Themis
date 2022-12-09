@@ -9,25 +9,13 @@ class Utilisateur extends AbstractDataObject
     private string $login;
     private string $nom;
     private string $prenom;
-    private string $adresseMail;
+    private ?string $adresseMail;
     private string $dateNaissance;
     private string $mdp;
     private int $estAdmin;
     private int $estOrganisateur;
-    private string $emailAValider;
-    private string $nonce;
 
-    /**
-     * @param string $login
-     * @param string $nom
-     * @param string $prenom
-     * @param string $adresseMail
-     * @param string $dateNaissance
-     * @param string $mdp
-     * @param bool $estAdmin
-     * @param bool $estOrganisateur
-     */
-    public function __construct(string $login, string $nom, string $prenom, string $adresseMail, string $dateNaissance, string $mdp, bool $estAdmin, bool $estOrganisateur, string $emailAValider, string $nonce)
+    public function __construct(string $login, string $nom, string $prenom, ?string $adresseMail, ?string $dateNaissance, string $mdp, bool $estAdmin, bool $estOrganisateur)
     {
         $this->login = $login;
         $this->nom = $nom;
@@ -37,8 +25,6 @@ class Utilisateur extends AbstractDataObject
         $this->mdp = $mdp;
         $this->estAdmin = $estAdmin;
         $this->estOrganisateur = $estOrganisateur;
-        $this->emailAValider = $emailAValider;
-        $this->nonce = $nonce;
     }
 
     public function tableFormat(): array
@@ -51,9 +37,7 @@ class Utilisateur extends AbstractDataObject
             "dateNaissance" => $this->dateNaissance,
             "mdp" => $this->mdp,
             "estAdmin" => $this->estAdmin,
-            "estOrganisateur" => $this->estOrganisateur,
-            "emailAValider"=> $this->emailAValider,
-            "nonce" => $this->nonce
+            "estOrganisateur" => $this->estOrganisateur
         ];
 
     }
@@ -129,48 +113,6 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * @return string
-     */
-    public function getEmailAValider(): string
-    {
-        return $this->emailAValider;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getNonce(): string
-    {
-        return $this->nonce;
-    }
-
-    /**
-     * @param string $adresseMail
-     */
-    public function setAdresseMail(string $adresseMail): void
-    {
-        $this->adresseMail = $adresseMail;
-    }
-
-
-    /**
-     * @param string $emailAValider
-     */
-    public function setEmailAValider(string $emailAValider): void
-    {
-        $this->emailAValider = $emailAValider;
-    }
-    /**
-     * @param string $nonce
-     */
-    public function setNonce(string $nonce): void
-    {
-        $this->nonce = $nonce;
-    }
-
-
-    /**
      * @param bool $estAdmin
      */
     public function setEstAdmin(bool $estAdmin): void
@@ -191,19 +133,17 @@ class Utilisateur extends AbstractDataObject
         $this->mdp = PassWord::hash($mdpHache);
     }
 
-    public static function buildFromForm(array $tableauFormulaire): Utilisateur
+    public static function buildFromForm(array $formArray): Utilisateur
     {
         $utilisateur = new Utilisateur (
-            $tableauFormulaire['login'],
-            $tableauFormulaire['nom'],
-            $tableauFormulaire['prenom'],
-            "enAttente",
-            $tableauFormulaire['dateNaissance'],
-            PassWord::hash($tableauFormulaire['mdp']),
+            $formArray['login'],
+            $formArray['nom'],
+            $formArray['prenom'],
+            $formArray['adresseMail'],
+            $formArray['dateNaissance'],
+            PassWord::hash($formArray['mdp']),
             0,
-            0,
-            $_GET['adresseMail'],
-            PassWord::generateRandomString());
+            0);
 
         if (isset($_GET["estAdmin"]) && $_GET["estAdmin"] == "on") {
             $utilisateur->setEstAdmin(1);
