@@ -73,4 +73,9 @@ class Section extends AbstractDataObject
     {
         return $this->descriptionSection;
     }
+
+    public static function buildFromForm(array $formArray): AbstractDataObject
+    {
+        // TODO: Implement buildFromForm() method.
+    }
 }

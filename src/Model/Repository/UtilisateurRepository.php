@@ -10,7 +10,7 @@ class UtilisateurRepository extends AbstractRepository
     /**
      * @inheritDoc
      */
-    public function build(array $objectArrayFormat): AbstractDataObject
+    public function build(array $objectArrayFormat): Utilisateur
     {
         return new Utilisateur($objectArrayFormat["login"],
             $objectArrayFormat["nom"],

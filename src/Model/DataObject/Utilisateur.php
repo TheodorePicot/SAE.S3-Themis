@@ -9,23 +9,13 @@ class Utilisateur extends AbstractDataObject
     private string $login;
     private string $nom;
     private string $prenom;
-    private string $adresseMail;
+    private ?string $adresseMail;
     private string $dateNaissance;
     private string $mdp;
     private int $estAdmin;
     private int $estOrganisateur;
 
-    /**
-     * @param string $login
-     * @param string $nom
-     * @param string $prenom
-     * @param string $adresseMail
-     * @param string $dateNaissance
-     * @param string $mdp
-     * @param bool $estAdmin
-     * @param bool $estOrganisateur
-     */
-    public function __construct(string $login, string $nom, string $prenom, string $adresseMail, string $dateNaissance, string $mdp, bool $estAdmin, bool $estOrganisateur)
+    public function __construct(string $login, string $nom, string $prenom, ?string $adresseMail, ?string $dateNaissance, string $mdp, bool $estAdmin, bool $estOrganisateur)
     {
         $this->login = $login;
         $this->nom = $nom;
@@ -143,15 +133,15 @@ class Utilisateur extends AbstractDataObject
         $this->mdp = PassWord::hash($mdpHache);
     }
 
-    public static function buildFromForm(array $tableauFormulaire): Utilisateur
+    public static function buildFromForm(array $formArray): Utilisateur
     {
         $utilisateur = new Utilisateur (
-            $tableauFormulaire['login'],
-            $tableauFormulaire['nom'],
-            $tableauFormulaire['prenom'],
-            $tableauFormulaire['adresseMail'],
-            $tableauFormulaire['dateNaissance'],
-            PassWord::hash($tableauFormulaire['mdp']),
+            $formArray['login'],
+            $formArray['nom'],
+            $formArray['prenom'],
+            $formArray['adresseMail'],
+            $formArray['dateNaissance'],
+            PassWord::hash($formArray['mdp']),
             0,
             0);
 

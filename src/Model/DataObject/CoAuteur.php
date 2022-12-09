@@ -40,4 +40,9 @@ class CoAuteur extends AbstractDataObject
     {
         return $this->login;
     }
+
+    public static function buildFromForm($formArray): CoAuteur
+    {
+        return new CoAuteur($formArray["idProposition"], $formArray["login"]);
+    }
 }

@@ -34,7 +34,7 @@ abstract class AbstractParticipantRepository extends AbstractRepository
         return "login";
     }
 
-    public function build(array $objectArrayFormat): AbstractDataObject
+    public function build(array $objectArrayFormat): Participant
     {
         return new Participant($objectArrayFormat['login'], $objectArrayFormat['idQuestion']);
     }

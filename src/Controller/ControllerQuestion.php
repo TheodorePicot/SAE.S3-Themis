@@ -155,7 +155,7 @@ class ControllerQuestion extends AbstractController
             if ((in_array($question, (new QuestionRepository())->selectAllFinished()))
                 || $this->isAdmin()
                 || $this->isOrganisateurOfQuestion($question->getLoginOrganisateur()) && $this->isOrganisateur()
-                || (new AuteurRepository)->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]) // TODO Ajouter condition pour co-auteur
+                || (new AuteurRepository)->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])
                 || (new CoAuteurRepository)->coAuteurIsInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"])
                 || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
                     && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))

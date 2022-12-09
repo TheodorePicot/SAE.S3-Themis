@@ -130,7 +130,7 @@ class ControllerProposition extends AbstractController
     {
         if ($this->isAuteurInQuestion($_GET["idQuestion"])
             || $this->isCoAuteurInQuestion($_GET["idQuestion"])
-            || $this->isAdmin()) { // TODO Faire co-ateurs
+            || $this->isAdmin()) {
             $proposition = (new PropositionRepository)->build($_GET);
             (new PropositionRepository)->update($proposition);
             $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
@@ -169,7 +169,7 @@ class ControllerProposition extends AbstractController
 
         if ($this->isAuteurInQuestion($question->getIdQuestion())
             || $this->isCoAuteurInQuestion($question->getIdQuestion())
-            || $this->isAdmin()) { // TODO Faire co-ateurs
+            || $this->isAdmin()) {
             $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
             $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
 
