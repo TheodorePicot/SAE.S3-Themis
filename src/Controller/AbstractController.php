@@ -21,8 +21,16 @@ abstract class AbstractController
 
     protected function connectionCheck() {
         if (!ConnexionUtilisateur::isConnected()) {
-            (new FlashMessage())->flash("notConnected", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            (new FlashMessage())->flash("notConnected", "Vous n'êtes pas connecté", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
+    }
+
+    protected function isAdmin() {
+        return ConnexionUtilisateur::isAdministrator();
+    }
+
+    protected function isOrganisateur() {
+        return ConnexionUtilisateur::isOrganisateur();
     }
 }

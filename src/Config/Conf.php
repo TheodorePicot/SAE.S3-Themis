@@ -9,7 +9,8 @@ class Conf
         'port' => '5432',
         'database' => 'themis',
         'login' => 'themis',
-        'password' => 'Themis2022'
+        'password' => 'Themis2022',
+        'url'=> 'https://webinfo.iutmontp.univ-montp2.fr/~picott/sae.s3-themis/web/frontController.php'
     );
 
     static public function getLogin(): string
@@ -35,6 +36,11 @@ class Conf
     static public function getPassword(): string
     {
         return static::$databases['password'];
+    }
+
+    static public function getAbsoluteURL(): string
+    {
+        return static::$databases['url'];
     }
 }
 

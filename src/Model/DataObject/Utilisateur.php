@@ -14,6 +14,8 @@ class Utilisateur extends AbstractDataObject
     private string $mdp;
     private int $estAdmin;
     private int $estOrganisateur;
+    private string $emailAValider;
+    private string $nonce;
 
     /**
      * @param string $login
@@ -25,7 +27,7 @@ class Utilisateur extends AbstractDataObject
      * @param bool $estAdmin
      * @param bool $estOrganisateur
      */
-    public function __construct(string $login, string $nom, string $prenom, string $adresseMail, string $dateNaissance, string $mdp, bool $estAdmin, bool $estOrganisateur)
+    public function __construct(string $login, string $nom, string $prenom, string $adresseMail, string $dateNaissance, string $mdp, bool $estAdmin, bool $estOrganisateur, string $emailAValider, string $nonce)
     {
         $this->login = $login;
         $this->nom = $nom;
@@ -35,6 +37,8 @@ class Utilisateur extends AbstractDataObject
         $this->mdp = $mdp;
         $this->estAdmin = $estAdmin;
         $this->estOrganisateur = $estOrganisateur;
+        $this->emailAValider = $emailAValider;
+        $this->nonce = $nonce;
     }
 
     public function tableFormat(): array
@@ -47,7 +51,9 @@ class Utilisateur extends AbstractDataObject
             "dateNaissance" => $this->dateNaissance,
             "mdp" => $this->mdp,
             "estAdmin" => $this->estAdmin,
-            "estOrganisateur" => $this->estOrganisateur
+            "estOrganisateur" => $this->estOrganisateur,
+            "emailAValider"=> $this->emailAValider,
+            "nonce" => $this->nonce
         ];
 
     }
@@ -123,6 +129,48 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
+     * @return string
+     */
+    public function getEmailAValider(): string
+    {
+        return $this->emailAValider;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getNonce(): string
+    {
+        return $this->nonce;
+    }
+
+    /**
+     * @param string $adresseMail
+     */
+    public function setAdresseMail(string $adresseMail): void
+    {
+        $this->adresseMail = $adresseMail;
+    }
+
+
+    /**
+     * @param string $emailAValider
+     */
+    public function setEmailAValider(string $emailAValider): void
+    {
+        $this->emailAValider = $emailAValider;
+    }
+    /**
+     * @param string $nonce
+     */
+    public function setNonce(string $nonce): void
+    {
+        $this->nonce = $nonce;
+    }
+
+
+    /**
      * @param bool $estAdmin
      */
     public function setEstAdmin(bool $estAdmin): void
@@ -149,11 +197,13 @@ class Utilisateur extends AbstractDataObject
             $tableauFormulaire['login'],
             $tableauFormulaire['nom'],
             $tableauFormulaire['prenom'],
-            $tableauFormulaire['adresseMail'],
+            "enAttente",
             $tableauFormulaire['dateNaissance'],
             PassWord::hash($tableauFormulaire['mdp']),
             0,
-            0);
+            0,
+            $_GET['adresseMail'],
+            PassWord::generateRandomString());
 
         if (isset($_GET["estAdmin"]) && $_GET["estAdmin"] == "on") {
             $utilisateur->setEstAdmin(1);

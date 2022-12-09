@@ -22,7 +22,7 @@
 
 
                             <div class="mx-3">
-                                <h5><label for="adresseMail">Email</label></h5>
+                                <h5><label for="adresseMail">Email&#42;</label></h5>
                                 <p>
                                     <input class="form-control" type="text" placeholder="dupontpaul1610@gmail.com"
                                            name="adresseMail"

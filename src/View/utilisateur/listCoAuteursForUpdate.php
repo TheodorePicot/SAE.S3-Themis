@@ -1,6 +1,12 @@
+<?php
+
+use Themis\Lib\ConnexionUtilisateur;
+use Themis\Model\Repository\CoAuteurRepository;
+
+?>
 <div class="col-auto">
     <label class="visually-hidden" for="coAuteurs"></label>
-    <select class="form-select h-100" name="coAuteurs[]" id="autoSizingSelect" multiple>
+    <select class="form-select h-100" name="coAuteurs[]" id="autoSizingSelect" <?php if((new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())) echo "disabled"?> multiple>
         <?php foreach ($utilisateurs as $utilisateur):
             $loginHTML = htmlspecialchars($utilisateur->getLogin()); ?>
             <?php if ((new \Themis\Model\Repository\CoAuteurRepository())->isCoAuteurInProposition($utilisateur->getLogin(), $proposition->getIdProposition())): ?>
