@@ -15,7 +15,7 @@ use Themis\Model\Repository\SectionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 use Themis\Model\Repository\VotantRepository;
 
-class ControllerProposition extends AbstractController
+class   ControllerProposition extends AbstractController
 {
     public function created(): void
     {
