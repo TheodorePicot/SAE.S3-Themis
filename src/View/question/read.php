@@ -17,7 +17,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
     <!--    QUESTION + DELETE UPDATE-->
 
-    <div class="d-flex align-content-center justify-content-center">
+    <div class="d-flex align-content-center justify-content-center my-5">
         <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?> - <?= $question->getLoginOrganisateur() ?></h1>
     </div>
 
@@ -69,7 +69,8 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
         <!--    CALENDRIER -->
 
         <div class="container d-flex containerTime col-md-12 col-lg-3 mx-3">
-            <div class="shadowBox wrapper">
+            <div class="">
+<!--                shadowBox wrapper-->
                 <h2> Calendrier</h2>
                 <ul class="sessions">
                     <li>
