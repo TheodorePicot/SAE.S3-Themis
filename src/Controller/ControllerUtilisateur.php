@@ -5,6 +5,7 @@ namespace Themis\Controller;
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
 use Themis\Lib\PassWord;
+use Themis\Lib\VerificationEmail;
 use Themis\Model\DataObject\Utilisateur;
 use Themis\Model\Repository\UtilisateurRepository;
 
@@ -29,6 +30,7 @@ class ControllerUtilisateur extends AbstractController
     public function created(): void
     {
         $user = Utilisateur::buildFromForm($_GET);
+        VerificationEmail::envoiEmailValidation($user);
         if ((new UtilisateurRepository())->select($_GET['login']) != null) {
             (new FlashMessage)->flash("mauvaisMdp", "Ce login existe déjà", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=create&controller=utilisateur");
@@ -176,5 +178,25 @@ class ControllerUtilisateur extends AbstractController
         $this->redirect("frontController.php?action=readAll");
         //todo garder la redirection vers readAll mais avec un message flash type danger
 
+    }
+
+    public function validerEmail() : void {
+        $login = $_GET['login'];
+        $user = (new UtilisateurRepository())->select($login);
+        if ($user!=null && $user->getNonce()!=""){
+            $nonce = $_GET['nonce'];
+            if (VerificationEmail::traiterEmailValidation($login, $nonce)){
+                (new FlashMessage())->flash("success", "Votre email est valide", FlashMessage::FLASH_SUCCESS);
+                $this->redirect("frontController.php?action=readAll");
+            }
+            else{
+                //(new FlashMessage())->flash("success", "Votre email n'est pas valide !", FlashMessage::FLASH_DANGER);
+                $this->redirect("frontController.php?action=readAll");
+            }
+        }
+        else{
+            //(new FlashMessage())->flash("success", "L'utilisateur ou le nonce n'existe pas !", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
     }
 }
