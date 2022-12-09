@@ -17,9 +17,12 @@ nav ul a:hover::after {
 }
 
 body {
-    background-color: #fdf7f2;
+    /*background-color: #fdf7f2;*/
     /*height: 100%;*/
     /*width: 100%;*/
+    background: rgb(253,247,242);
+    background: radial-gradient(circle, rgba(253,247,242,1) 0%, rgba(228,216,202,1) 100%);
+
 }
 
 a {
@@ -102,7 +105,10 @@ a {
 
 .nestedDivQuestion {
     height: 195px;
-    background-color: #C7B198;
+
+    background: rgb(230,202,171);
+    background: radial-gradient(circle, rgba(230,202,171,1) 0%, rgba(199,177,152,1) 100%);
+    /*background-color: #C7B198;*/
     box-shadow: 4px 3px 8px 1px #969696;
     /*background-image: linear-gradient(to bottom, rgba(30, 87, 153, 0.2) 0%, rgba(125, 185, 232, 0) 100%);*/
     /*background-repeat: repeat;*/
@@ -135,10 +141,14 @@ a {
     gap: 10px;
 }
 
-
 #accountImg {
     height: 50px;
     width: 50px;
+}
+
+#accountImgPage{
+    height: 100px;
+    width: 100px;
 }
 
 #preferenceImg {

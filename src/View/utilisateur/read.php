@@ -9,34 +9,44 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
 
 
 <div class="container-fluid">
-    <div class="row my-5 gy-4">
-        <div class="offset-md-4 offset-lg-4 col-md-6 col-lg-4">
-            <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
-                <div class="d-flex align-content-center justify-content-center">
-                    <h3>Mon compte</h3>
-                </div>
-                Login :
-                <?= htmlspecialchars($utilisateur->getLogin()) ?> <br>
-
-                Nom Utilisateur : <?= htmlspecialchars($utilisateur->getNom()) ?> <br>
-                Adresse email : <?= htmlspecialchars($utilisateur->getAdresseMail()) ?><br>
-                Date de Naissance : <?= htmlspecialchars($utilisateur->getDateNaissance()) ?><br>
-                <?php if ($utilisateur->isAdmin()) : ?>
-                    Droits : Administrateur
-                <?php elseif ($utilisateur->isOrganisateur()): ?>
-                    Droits : Organisateur
-                <?php else : ?>
-                    Droits : Utilisateur
-                <?php endif ?>
-                <div class="d-flex align-content-center justify-content-center my-3">
-                    <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
-                        <a class="btn btn-dark text-nowrap mx-1" href='<?= $hrefDelete ?>'> Supprimer</a>
-                        <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
-                    <?php endif ?>
-                </div>
-
-            </div>
+    <div class="offset-4 row my-5">
+        <div class="col col-lg-12">
+            <h1>
+                <img id="accountImgPage" alt="compte" src="assets/img/account.png">
+                <?= htmlspecialchars($utilisateur->getLogin()) ?> </h1>
         </div>
+        <div class="col-lg-3 my-lg-5 ">
+            <h3>Prenom <br></h3>
+            <div class="" style="background:;"">
+                <?= htmlspecialchars($utilisateur->getPrenom()) ?><br>
+            </div>
+        <h3>Adresse email <br></h3>
+            <?= htmlspecialchars($utilisateur->getAdresseMail()) ?><br>
+            <?php if ($utilisateur->isAdmin()) : ?>
+              <h3>  Droits <br></h3>
+                Administrateur
+            <?php elseif ($utilisateur->isOrganisateur()): ?>
+                Droits <br>
+                Organisateur
+            <?php else : ?>
+                Droits <br>
+                Utilisateur
+            <?php endif ?>
+        </div>
+        <div class="col-lg-3 my-lg-5 ">
+            <h3>Nom <br></h3>
+            <?= htmlspecialchars($utilisateur->getNom()) ?><br>
+            <h3>Date de Naissance <br></h3>
+            <?= htmlspecialchars($utilisateur->getDateNaissance()) ?><br>
+        </div>
+
+        <div class="col-md-12 col-lg-12 offset-lg-1 my-5">
+            <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
+                <a class="btn btn-dark text-nowrap mx-1" href='<?= $hrefDelete ?>'> Supprimer</a>
+                <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+            <?php endif ?>
+        </div>
+
 
     </div>
 </div>

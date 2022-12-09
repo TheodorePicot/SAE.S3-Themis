@@ -43,8 +43,7 @@ class ControllerUtilisateur extends AbstractController
 
             if ($creationCode == "") {
                 (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
-
-                $this->redirect("frontController.php?action=create&controller=utilisateur");
+                $this->redirect("frontController.php?action=readAll");
             } elseif ($creationCode == "23000") {
                 (new FlashMessage)->flash("loginExiste", "Ce login existe déjà", FlashMessage::FLASH_DANGER);
                 $this->redirect("frontController.php?action=create&controller=utilisateur");
@@ -110,7 +109,7 @@ class ControllerUtilisateur extends AbstractController
             $this->redirect("frontController.php?action=login&controller=utilisateur");
         } else {
             ConnexionUtilisateur::connect(($_GET["login"]));
-            (new FlashMessage)->flash("badPassword", "Connection effectué", FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage)->flash("badPassword", "Connexion réussie", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=read&controller=utilisateur&login={$_GET["login"]}");
         }
     }
