@@ -21,14 +21,18 @@ class ControllerQuestion extends AbstractController
     public function created(): void
     {
         $this->connectionCheck();
+        if (!($_GET['dateDebutProposition'] < $_GET['dateFinProposition'] && $_GET['dateFinProposition'] < $_GET['dateDebutVote'] && $_GET['dateDebutVote'] < $_GET['dateFinVote'])) {
+            (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
         if ($this->isOrganisateurOfQuestion($_GET["loginOrganisateur"])
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             (new QuestionRepository())->create(Question::buildFromForm($_GET));
-            $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
+//            $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
-            $this->createParticipants($idQuestion);
-            $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
+//            $this->createParticipants($idQuestion);
+//            $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
         } else {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");

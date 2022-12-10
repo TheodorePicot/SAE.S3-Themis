@@ -43,7 +43,6 @@ class Question extends AbstractDataObject
 
     public function tableFormat(): array
     {
-
             return [
                 "idQuestion" => $this->idQuestion,
                 "titreQuestion" => $this->titreQuestion,
