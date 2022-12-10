@@ -22,7 +22,11 @@ body {
     /*width: 100%;*/
     background: rgb(253,247,242);
     background: radial-gradient(circle, rgba(253,247,242,1) 0%, rgba(228,216,202,1) 100%);
+}
 
+#bodyLogin {
+    background: rgb(210,187,161);
+    background: radial-gradient(circle, rgba(210,187,161,1) 0%, rgba(189,183,221,1) 100%);
 }
 
 a {

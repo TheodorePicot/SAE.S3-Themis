@@ -23,7 +23,7 @@ use Themis\Lib\FlashMessage;
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
 
 </head>
-<body>
+<body <?php if(isset($_GET["action"]) && $_GET["action"] == "login") echo "id='bodyLogin'"?>>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light fs-5">
         <div class="container-fluid">
