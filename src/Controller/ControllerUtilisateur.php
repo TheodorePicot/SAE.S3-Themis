@@ -18,7 +18,7 @@ class ControllerUtilisateur extends AbstractController
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
-        $utilisateurs = (new UtilisateurRepository())->selectAll();
+        $utilisateurs = (new UtilisateurRepository())->selectAllOrdered();
         $this->showView("view.php", [
             "utilisateurs" => $utilisateurs,
             "pageTitle" => "Liste des utilisateurs",
@@ -29,18 +29,14 @@ class ControllerUtilisateur extends AbstractController
 
     public function created(): void
     {
-        $user = Utilisateur::buildFromForm($_GET);
-        VerificationEmail::envoiEmailValidation($user);
+        $user = Utilisateur::buildFromFormCreate($_GET);
+//        VerificationEmail::envoiEmailValidation($user);
         if ((new UtilisateurRepository())->select($_GET['login']) != null) {
             (new FlashMessage)->flash("mauvaisMdp", "Ce login existe déjà", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=create&controller=utilisateur");
         }
         if ($_GET["mdp"] == $_GET["mdpConfirmation"]) {
-            if ($user->isAdmin() && ConnexionUtilisateur::isAdministrator()) {
-                $creationCode = (new UtilisateurRepository)->create($user);
-            } elseif (!$user->isAdmin()) {
-                $creationCode = (new UtilisateurRepository)->create($user);
-            }
+            $creationCode = (new UtilisateurRepository)->create($user);
 
             if ($creationCode == "") {
                 (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
@@ -86,6 +82,10 @@ class ControllerUtilisateur extends AbstractController
 
     public function connect(): void
     {
+        if ((new UtilisateurRepository())->select($_GET["login"]) == null) {
+            (new FlashMessage)->flash("notAllInfo", "Ce login n'existe pas", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=login&controller=utilisateur");
+        }
         if (!isset($_GET["login"]) || !isset($_GET["mdp"])) {
             (new FlashMessage)->flash("notAllInfo", "Vous n'avez pas renseigné les informations nécessaires", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=login&controller=utilisateur");
@@ -106,46 +106,63 @@ class ControllerUtilisateur extends AbstractController
         $this->redirect("frontController.php?action=readAll");
     }
 
-    private function updatedAuxiliary()
-    {
-        $utilisateur = Utilisateur::buildFromForm($_GET);
-        (new UtilisateurRepository)->update($utilisateur);
-
-        $this->showView("view.php", [
-            "utilisateur" => $utilisateur,
-            "pageTitle" => "Info Utilisateur",
-            "pathBodyView" => "utilisateur/read.php"
-        ]);
-    }
-
-    public function updated(): void
+    public function updatedForInformation(): void
     {
         $utilisateurSelect = (new UtilisateurRepository)->select($_GET["login"]);
 
         $this->connectionCheck();
 
+        if (!ConnexionUtilisateur::isUser($_GET["login"]) && !$this->isAdmin()) {
+            (new FlashMessage)->flash("noAccess", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+        } else {
+            $formArray = $_GET;
+            unset($formArray["action"]);
+            unset($formArray["controller"]);
+            $formArray["estOrganisateur"] = 0;
+            $formArray["estAdmin"] = 0;
+            if ($this->isAdmin()) {
+                if (isset($_GET["estOrganisateur"])) {
+                    $formArray["estOrganisateur"] = $_GET["estOrganisateur"] == "on"?1:0;
+                }
+                if (isset($_GET["estAdmin"])) {
+                    $formArray["estAdmin"] = $_GET["estAdmin"] == "on"?1:0;
+                }
+                (new UtilisateurRepository())->updateInformation($formArray);
+            } elseif (ConnexionUtilisateur::isUser($_GET['login'])) {
+                (new UtilisateurRepository())->updateInformation($formArray);
+            }
+            (new FlashMessage)->flash("success", "Mise à jour effectuée", FlashMessage::FLASH_SUCCESS);
+        }
+        $this->redirect("frontController.php?action=readAll");
+    }
+
+    public function updatedForPassword()
+    {
+        $utilisateurSelect = (new UtilisateurRepository)->select($_GET["login"]);
+
+        $this->connectionCheck();
         if (!PassWord::check($_GET["mdpAncien"], $utilisateurSelect->getMdp())) {
             (new FlashMessage)->flash("incorrectPasswd", "Le mot de passe ancien ne correspond pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
         } else if ($_GET["mdp"] != $_GET["mdpConfirmation"]) {
             (new FlashMessage)->flash("incorrectPasswd", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
-        } else if (!ConnexionUtilisateur::isUser($_GET["login"]) || !$this->isAdmin()) {
+        } else if (!ConnexionUtilisateur::isUser($_GET["login"])) {
             (new FlashMessage)->flash("noAccess", "Les n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=update&controller=utilisateur&login={$_GET["login"]}");
         } else {
-            if ($this->isAdmin()) {
-                if (isset($_GET['estAdmin'])) {
-                    $utilisateurSelect->setEstAdmin(true);
-                } else $utilisateurSelect->setEstAdmin(false);
-                $this->updatedAuxiliary();
-            } elseif (ConnexionUtilisateur::isUser($_GET['login'])) {
-                $this->updatedAuxiliary();
-            }
+            $formArray = [
+                "mdp" => PassWord::hash($_GET["mdp"]),
+                "login" => $_GET["login"]
+            ];
+            (new UtilisateurRepository())->updatePassword($formArray);
+            (new FlashMessage)->flash("success", "Mise à jour effectuée", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=readAll");
+
         }
     }
 
-    public function update(): void
+    public function updateInformation(): void
     {
         $this->connectionCheck();
         if (ConnexionUtilisateur::isUser($_GET["login"]) || $this->isAdmin()) {
@@ -153,10 +170,27 @@ class ControllerUtilisateur extends AbstractController
             $this->showView("view.php", [
                 "utilisateur" => $utilisateur,
                 "pageTitle" => "Info Utilisateur",
-                "pathBodyView" => "utilisateur/update.php"
+                "pathBodyView" => "utilisateur/updateInformation.php"
             ]);
         } else {
-            (new FlashMessage)->flash("noAccess", "Les n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            (new FlashMessage)->flash("noAccess", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
+    }
+
+    public function updatePassword(): void
+    {
+        $this->connectionCheck();
+        if (ConnexionUtilisateur::isUser($_GET["login"])) {
+            $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
+            $this->showView("view.php", [
+                "utilisateur" => $utilisateur,
+                "pageTitle" => "Info Utilisateur",
+                "pathBodyView" => "utilisateur/updatePassword.php"
+            ]);
+        }
+        else {
+            (new FlashMessage)->flash("noAccess", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
     }
@@ -175,23 +209,23 @@ class ControllerUtilisateur extends AbstractController
         $this->redirect("frontController.php?action=readAll");
     }
 
-    public function validerEmail() : void {
+    public function validerEmail(): void
+    {
         $login = $_GET['login'];
         $user = (new UtilisateurRepository())->select($login);
-        if ($user!=null && $user->getNonce()!=""){
+        if ($user != null && $user->getNonce() != "") {
             $nonce = $_GET['nonce'];
-            if (VerificationEmail::traiterEmailValidation($login, $nonce)){
+            if (VerificationEmail::traiterEmailValidation($login, $nonce)) {
                 (new FlashMessage())->flash("success", "Votre email est valide", FlashMessage::FLASH_SUCCESS);
                 $this->redirect("frontController.php?action=readAll");
-            }
-            else{
+            } else {
                 //(new FlashMessage())->flash("success", "Votre email n'est pas valide !", FlashMessage::FLASH_DANGER);
                 $this->redirect("frontController.php?action=readAll");
             }
-        }
-        else{
+        } else {
             //(new FlashMessage())->flash("success", "L'utilisateur ou le nonce n'existe pas !", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
     }
+
 }

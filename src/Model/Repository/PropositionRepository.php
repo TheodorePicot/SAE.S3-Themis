@@ -26,13 +26,24 @@ class PropositionRepository extends AbstractRepository
         return $propositions;
     }
 
+    public function selectAllByUser(int $login): array
+    {
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"loginAuteur" = ?';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $pdoStatement->execute(array($login));
+
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
+    }
+
     public function build(array $objectArrayFormat): Proposition
     {
-        if (isset($objectArrayFormat['idProposition'])) { //la proposition existe déjà
-            return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur']);
-        } else {  //la proposition n'existe pas (ex : formulaire)
-            return new Proposition((int)null, $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur']);
-        }
+        return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur']);
     }
 
     protected function getTableName(): string

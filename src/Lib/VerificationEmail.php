@@ -23,21 +23,19 @@ class VerificationEmail
 
     public static function traiterEmailValidation($login, $nonce): bool
     {
-        $res = false;
-        $user = (new UtilisateurRepository())->select($login);
-        if ($user->getLogin() == $login && $user->getNonce() == $nonce){
-            $user->setAdresseMail($user->getEmailAValider());
-            $user->setEmailAValider("ok");
-            $user->setNonce("ok");
-            (new UtilisateurRepository())->update($user);
-            $res = true;
+        $utilisateur = (new UtilisateurRepository())->select($login);
+        if ($utilisateur->getLogin() == $login && $utilisateur->getNonce() == $nonce){
+            $utilisateur->setAdresseMail($utilisateur->getEmailAValider());
+            $utilisateur->setEmailAValider(null);
+            $utilisateur->setNonce(null);
+            (new UtilisateurRepository())->update($utilisateur);
+            return true;
         }
-        return $res;
+        return false;
     }
 
     public static function aValideEmail(Utilisateur $utilisateur) : bool
     {
-
-        return true;
+        return $utilisateur->getAdresseMail() != "";
     }
 }

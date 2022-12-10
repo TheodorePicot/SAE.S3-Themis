@@ -75,6 +75,11 @@ class SectionProposition extends AbstractDataObject
 
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
-        // TODO: Implement buildFromForm() method.
+        return new SectionProposition(
+            (int)null,
+            $formArray['texteProposition'],
+            $formArray['idSection'],
+            $formArray['idProposition']
+        );
     }
 }

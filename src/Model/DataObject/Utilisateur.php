@@ -14,8 +14,19 @@ class Utilisateur extends AbstractDataObject
     private string $mdp;
     private int $estAdmin;
     private int $estOrganisateur;
+    private ?string $emailAValider;
+    private ?string $nonce;
 
-    public function __construct(string $login, string $nom, string $prenom, ?string $adresseMail, ?string $dateNaissance, string $mdp, bool $estAdmin, bool $estOrganisateur)
+    public function __construct(string  $login,
+                                string  $nom,
+                                string  $prenom,
+                                ?string $adresseMail,
+                                ?string $dateNaissance,
+                                string  $mdp,
+                                bool    $estAdmin,
+                                bool    $estOrganisateur,
+                                ?string $emailAValider,
+                                ?string $nonce)
     {
         $this->login = $login;
         $this->nom = $nom;
@@ -25,6 +36,8 @@ class Utilisateur extends AbstractDataObject
         $this->mdp = $mdp;
         $this->estAdmin = $estAdmin;
         $this->estOrganisateur = $estOrganisateur;
+        $this->emailAValider = $emailAValider;
+        $this->nonce = $nonce;
     }
 
     public function tableFormat(): array
@@ -37,7 +50,9 @@ class Utilisateur extends AbstractDataObject
             "dateNaissance" => $this->dateNaissance,
             "mdp" => $this->mdp,
             "estAdmin" => $this->estAdmin,
-            "estOrganisateur" => $this->estOrganisateur
+            "estOrganisateur" => $this->estOrganisateur,
+            "nonce" => $this->nonce,
+            "emailAValider" => $this->emailAValider
         ];
 
     }
@@ -91,13 +106,20 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isEstOrganisateur(): bool
+    public function getNonce(): string
     {
-        return $this->estOrganisateur;
+        return $this->nonce;
     }
 
+    /**
+     * @return string
+     */
+    public function getEmailAValider(): string
+    {
+        return $this->emailAValider;
+    }
 
     /**
      * @return bool
@@ -133,6 +155,55 @@ class Utilisateur extends AbstractDataObject
         $this->mdp = PassWord::hash($mdpHache);
     }
 
+    /**
+     * @param string|null $emailAValider
+     */
+    public function setEmailAValider(?string $emailAValider): void
+    {
+        $this->emailAValider = $emailAValider;
+    }
+
+    /**
+     * @param string|null $adresseMail
+     */
+    public function setAdresseMail(?string $adresseMail): void
+    {
+        $this->adresseMail = $adresseMail;
+    }
+
+    /**
+     * @param string|null $nonce
+     */
+    public function setNonce(?string $nonce): void
+    {
+        $this->nonce = $nonce;
+    }
+
+    public static function buildFromFormCreate(array $formArray): Utilisateur
+    {
+        $utilisateur = new Utilisateur (
+            $formArray['login'],
+            $formArray['nom'],
+            $formArray['prenom'],
+            "",
+            $formArray['dateNaissance'],
+            PassWord::hash($formArray['mdp']),
+            0,
+            0,
+            $formArray['adresseMail'],
+            PassWord::generateRandomString()
+        );
+
+        if (isset($formArray["estAdmin"]) && $formArray["estAdmin"] == "on") {
+            $utilisateur->setEstAdmin(1);
+        }
+        if (isset($formArray["estOrganisateur"]) && $formArray["estOrganisateur"] == "on") {
+            $utilisateur->setEstOrganisateur(1);
+        }
+//        var_dump($formArray);
+        return $utilisateur;
+    }
+
     public static function buildFromForm(array $formArray): Utilisateur
     {
         $utilisateur = new Utilisateur (
@@ -143,14 +214,18 @@ class Utilisateur extends AbstractDataObject
             $formArray['dateNaissance'],
             PassWord::hash($formArray['mdp']),
             0,
-            0);
+            0,
+            null,
+            null
+        );
 
-        if (isset($_GET["estAdmin"]) && $_GET["estAdmin"] == "on") {
+        if (isset($formArray["estAdmin"]) && $formArray["estAdmin"] == "on") {
             $utilisateur->setEstAdmin(1);
         }
-        if (isset($_GET["estOrganisateur"]) && $_GET["estOrganisateur"] == "on") {
+        if (isset($formArray["estOrganisateur"]) && $formArray["estOrganisateur"] == "on") {
             $utilisateur->setEstOrganisateur(1);
         }
+//        var_dump($formArray);
         return $utilisateur;
     }
 }

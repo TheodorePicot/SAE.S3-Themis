@@ -36,21 +36,12 @@ class SectionPropositionRepository extends AbstractRepository
 
     public function build(array $objectArrayFormat): SectionProposition
     {
-        if (isset($objectArrayFormat['idSectionProposition'])) {
-            return new SectionProposition(
-                $objectArrayFormat['idSectionProposition'],
-                $objectArrayFormat['texteProposition'],
-                $objectArrayFormat['idSection'],
-                $objectArrayFormat['idProposition']
-            );
-        } else {
-            return new SectionProposition(
-                (int)null,
-                $objectArrayFormat['texteProposition'],
-                $objectArrayFormat['idSection'],
-                $objectArrayFormat['idProposition']
-            );
-        }
+        return new SectionProposition(
+            $objectArrayFormat['idSectionProposition'],
+            $objectArrayFormat['texteProposition'],
+            $objectArrayFormat['idSection'],
+            $objectArrayFormat['idProposition']
+        );
     }
 
     public function selectByPropositionAndSection(int $idProposition, int $idSection): ?SectionProposition

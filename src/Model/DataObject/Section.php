@@ -6,8 +6,8 @@ class Section extends AbstractDataObject
 {
     private int $idSection;
     private int $idQuestion;
-    private string $titreSection;
-    private string $descriptionSection;
+    private ?string $titreSection;
+    private ?string $descriptionSection;
 
     /**
      * @param int $idSection
@@ -15,7 +15,7 @@ class Section extends AbstractDataObject
      * @param string $titreSection
      * @param string $descriptionSection
      */
-    public function __construct(int $idSection, int $idQuestion, string $titreSection, string $descriptionSection)
+    public function __construct(int $idSection, int $idQuestion, ?string $titreSection, ?string $descriptionSection)
     {
         $this->idSection = $idSection;
         $this->idQuestion = $idQuestion;
@@ -76,6 +76,9 @@ class Section extends AbstractDataObject
 
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
-        // TODO: Implement buildFromForm() method.
+        return new Section((int)null,
+            $formArray["idQuestion"],
+            $formArray["titreSection"],
+            $formArray["descriptionSection"]);
     }
 }

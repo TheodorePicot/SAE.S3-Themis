@@ -22,7 +22,7 @@ class ControllerQuestion extends AbstractController
     {
         $this->connectionCheck();
         if ($this->isOrganisateurOfQuestion($_GET["loginOrganisateur"])
-            && ConnexionUtilisateur::isOrganisateur()
+            && $this->isOrganisateur()
             || $this->isAdmin()) {
             (new QuestionRepository())->create(Question::buildFromForm($_GET));
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
@@ -88,7 +88,7 @@ class ControllerQuestion extends AbstractController
     private function updateInformationAuxiliary(): void
     {
         $this->connectionCheck();
-        $question = (new QuestionRepository)->build($_GET);
+        $question = Question::buildFromForm($_GET);
         (new QuestionRepository)->update($question);
 
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {

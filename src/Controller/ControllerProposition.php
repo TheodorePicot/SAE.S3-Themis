@@ -5,6 +5,8 @@ namespace Themis\Controller;
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
 use Themis\Model\DataObject\CoAuteur;
+use Themis\Model\DataObject\Proposition;
+use Themis\Model\DataObject\SectionProposition;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\CoAuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
@@ -15,11 +17,11 @@ use Themis\Model\Repository\SectionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 use Themis\Model\Repository\VotantRepository;
 
-class   ControllerProposition extends AbstractController
+class ControllerProposition extends AbstractController
 {
     public function created(): void
     {
-        $proposition = (new PropositionRepository)->build($_GET);
+        $proposition = Proposition::buildFromForm($_GET);
         $this->connectionCheck();
         if ($this->isAuteurInQuestion($proposition->getIdQuestion())
             || $this->isAdmin()) {
@@ -29,7 +31,7 @@ class   ControllerProposition extends AbstractController
 
                 $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
                 foreach ($sections as $section) {
-                    $sectionProposition = (new SectionPropositionRepository)->build([
+                    $sectionProposition = SectionProposition::buildFromForm([
                         "texteProposition" => $_GET["descriptionSectionProposition{$section->getIdSection()}"],
                         "idSection" => $section->getIdSection(),
                         "idProposition" => $idProposition
@@ -131,13 +133,13 @@ class   ControllerProposition extends AbstractController
         if ($this->isAuteurInQuestion($_GET["idQuestion"])
             || $this->isCoAuteurInQuestion($_GET["idQuestion"])
             || $this->isAdmin()) {
-            $proposition = (new PropositionRepository)->build($_GET);
+            $proposition = Proposition::buildFromForm($_GET);
             (new PropositionRepository)->update($proposition);
             $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
 
             foreach ($sections as $section) {
                 $sectionsPropositionOld = (new SectionPropositionRepository())->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection());
-                $sectionPropositionNew = (new SectionPropositionRepository)->build([
+                $sectionPropositionNew = SectionProposition::buildFromForm([
                     "texteProposition" => $_GET["descriptionSectionProposition{$section->getIdSection()}"],
                     "idSection" => $section->getIdSection(),
                     "idProposition" => $proposition->getIdProposition(),
@@ -190,7 +192,6 @@ class   ControllerProposition extends AbstractController
     public function delete(): void
     {
         if ($this->isAuteurInQuestion($_GET["idQuestion"])
-            || $this->isCoAuteurInQuestion($_GET["idQuestion"])
             || $this->isAdmin()) {
             if ((new PropositionRepository)->delete($_GET["idProposition"])) {
                 (new FlashMessage())->flash("deleted", "Votre proposition a bien été supprimée", FlashMessage::FLASH_SUCCESS);

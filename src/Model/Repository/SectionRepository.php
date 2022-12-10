@@ -2,7 +2,6 @@
 
 namespace Themis\Model\Repository;
 
-use Themis\Model\DataObject\AbstractDataObject;
 use Themis\Model\DataObject\Section;
 
 class SectionRepository extends AbstractRepository
@@ -39,15 +38,8 @@ class SectionRepository extends AbstractRepository
                 $objectArrayFormat["idQuestion"],
                 "",
                 "");
-        }
-
-        if (isset($objectArrayFormat["idSection"])) {
-            return new Section($objectArrayFormat["idSection"],
-                $objectArrayFormat["idQuestion"],
-                $objectArrayFormat["titreSection"],
-                $objectArrayFormat["descriptionSection"]);
         } else {
-            return new Section((int)null,
+            return new Section($objectArrayFormat["idSection"],
                 $objectArrayFormat["idQuestion"],
                 $objectArrayFormat["titreSection"],
                 $objectArrayFormat["descriptionSection"]);

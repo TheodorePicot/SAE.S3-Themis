@@ -75,6 +75,6 @@ class Proposition extends AbstractDataObject
 
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
-        // TODO: Implement buildFromForm() method.
+        return new Proposition((int)null, $formArray['idQuestion'], $formArray['titreProposition'], $formArray['loginAuteur']);
     }
 }

@@ -4,7 +4,8 @@ use Themis\Lib\ConnexionUtilisateur;
 
 $utilisateurInURL = rawurlencode($utilisateur->getLogin());
 $hrefDelete = "frontController.php?action=delete&controller=utilisateur&login=" . $utilisateurInURL;
-$hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" . $utilisateurInURL;;
+$hrefUpdateInformation = "frontController.php?action=updateInformation&controller=utilisateur&login=" . $utilisateurInURL;
+$hrefUpdatePassword = "frontController.php?action=updatePassword&controller=utilisateur&login=" . $utilisateurInURL;
 ?>
 
 
@@ -18,11 +19,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                     <?php if ($utilisateur->isAdmin()) : ?>
                         Administrateur
                     <?php elseif ($utilisateur->isOrganisateur()): ?>
-                        Droits
                         Organisateur
-                        <!--                --><?php //else : ?>
-                        <!--                    Droits-->
-                        <!--                    Utilisateur-->
                     <?php endif ?>
                 </small>
             </h3>
@@ -30,7 +27,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
 
         </div>
         <div class="col-lg-3 ">
-            <h3>Prenom <br></h3>
+            <h3>Prénom <br></h3>
 
             <?= htmlspecialchars($utilisateur->getPrenom()) ?><br>
             <div class="my-lg-3">
@@ -44,7 +41,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
             <?= htmlspecialchars($utilisateur->getNom()) ?><br>
             <div class="my-lg-3">
                 <h3>Date de Naissance <br></h3>
-                <?= htmlspecialchars($utilisateur->getDateNaissance()) ?><br>
+                <?= htmlspecialchars(date("d-m-Y", strtotime($utilisateur->getDateNaissance()))) ?><br>
             </div>
         </div>
 
@@ -52,7 +49,11 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
         <div class="offset-1 col-lg-12 my-5">
             <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
                 <a class="btn btn-dark text-nowrap mx-1" href='<?= $hrefDelete ?>'> Supprimer</a>
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+                <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour information</a>
+
+            <?php endif ?>
+            <?php if (ConnexionUtilisateur::isUser($utilisateurInURL)) : ?>
+                <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdatePassword ?>'> Modifier mot de passe</a>
             <?php endif ?>
         </div>
     </div>
