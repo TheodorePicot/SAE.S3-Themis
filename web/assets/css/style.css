@@ -131,11 +131,9 @@ a {
     height: 50px;
 }
 
+
 /*CSS UTILISATEURS*/
 
-#containerFormLogin {
-    width: 500px;
-}
 
 #signButtons {
     gap: 10px;
@@ -154,4 +152,12 @@ a {
 #preferenceImg {
     height: 50px;
     width: 50px;
+}
+
+.btnLogin{
+    color: black;
+}
+
+.btnLogin:hover{
+    color: black;
 }
