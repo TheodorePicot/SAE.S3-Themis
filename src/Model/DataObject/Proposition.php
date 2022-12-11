@@ -73,7 +73,7 @@ class Proposition extends AbstractDataObject
         return $this->loginAuteur;
     }
 
-    public static function buildFromForm(array $formArray): AbstractDataObject
+    public static function buildFromForm(array $formArray): Proposition
     {
         if (isset($formArray["idProposition"])) {
             return new Proposition(

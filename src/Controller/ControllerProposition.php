@@ -21,8 +21,17 @@ class ControllerProposition extends AbstractController
 {
     public function created(): void
     {
-        $proposition = Proposition::buildFromForm($_GET);
         $this->connectionCheck();
+        $proposition = Proposition::buildFromForm($_GET);
+        $question = (new QuestionRepository)->select($proposition->getIdQuestion());
+        if (date("d-m-y h:i:s") < $question->getDateDebutProposition()) {
+            (new FlashMessage())->flash("tooLate", "La question n'est pas encore en cours d'écriture", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
+        if (date("d-m-y h:i:s") > $question->getDateFinProposition()) {
+            (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
         if ($this->isAuteurInQuestion($proposition->getIdQuestion())
             || $this->isAdmin()) {
             $creationCode = (new PropositionRepository)->create($proposition);
@@ -59,9 +68,18 @@ class ControllerProposition extends AbstractController
 
     public function create(): void
     {
+        $this->connectionCheck();
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        if (date("d-m-y h:i:s") < $question->getDateDebutProposition()) {
+            (new FlashMessage())->flash("tooLate", "La question n'est pas encore en cours d'écriture", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
+        if (date("d-m-y h:i:s") > $question->getDateFinProposition()) {
+            (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
         if ($this->isAuteurInQuestion($_GET["idQuestion"])
             || $this->isAdmin()) {
-            $question = (new QuestionRepository)->select($_GET["idQuestion"]);
             $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
             $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
             $this->showView("view.php", [
@@ -103,7 +121,7 @@ class ControllerProposition extends AbstractController
                     && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))) {
                 $this->readAuxiliary($question, $proposition);
             } else {
-                (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès cette proposition", FlashMessage::FLASH_DANGER);
+                (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès à cette proposition", FlashMessage::FLASH_DANGER);
                 $this->redirect("frontController.php?action=readAll");
             }
         } else {
@@ -114,11 +132,9 @@ class ControllerProposition extends AbstractController
                 $this->redirect("frontController.php?action=readAll");
             }
         }
-
     }
 
-    public function readByQuestion(): void
-    {
+    private function readByQuestionAuxiliary(): void {
         $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
 
         $this->showView("view.php", [
@@ -128,12 +144,42 @@ class ControllerProposition extends AbstractController
         ]);
     }
 
+    public function readByQuestion(): void
+    {
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        if (ConnexionUtilisateur::isConnected()) {
+            if ($this->isAuteurInQuestion($_GET["idQuestion"])
+                || $this->isCoAuteurInQuestion($_GET["idQuestion"])
+                || $this->isAdmin()
+                || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
+                    && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))) {
+                $this->readByQuestionAuxiliary();
+            }  else {
+                (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+                $this->redirect("frontController.php?action=readAll");
+            }
+        }  else {
+            if ((in_array($question, (new QuestionRepository())->selectAllFinished()))) {
+                $this->readByQuestionAuxiliary();
+            } else {
+                (new FlashMessage())->flash("readFailed", "Vous n'avez pas accès à cette question", FlashMessage::FLASH_DANGER);
+                $this->redirect("frontController.php?action=readAll");
+            }
+        }
+    }
+
     public function updated(): void
     {
+        $this->connectionCheck();
+        $proposition = Proposition::buildFromForm($_GET);
+        $question = (new QuestionRepository)->select($proposition->getIdQuestion());
+        if (date("d-m-y h:i:s") > $question->getDateFinProposition()) {
+            (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
         if ($this->isAuteurInQuestion($_GET["idQuestion"])
             || $this->isCoAuteurInQuestion($_GET["idQuestion"])
             || $this->isAdmin()) {
-            $proposition = Proposition::buildFromForm($_GET);
             (new PropositionRepository)->update($proposition);
             $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
 
@@ -166,6 +212,11 @@ class ControllerProposition extends AbstractController
 
     public function update(): void
     {
+        $this->connectionCheck();
+        if (date("d-m-y h:i:s") > $question->getDateFinProposition()) {
+            (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
 
@@ -191,6 +242,12 @@ class ControllerProposition extends AbstractController
 
     public function delete(): void
     {
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        if (date("d-m-y h:i:s") > $question->getDateFinProposition()) {
+            (new FlashMessage())->flash("tooLate", "Vous ne pouvez pas supprimer votre proposition après la période d'écriture", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
+        $this->connectionCheck();
         if ($this->isAuteurInQuestion($_GET["idQuestion"])
             || $this->isAdmin()) {
             if ((new PropositionRepository)->delete($_GET["idProposition"])) {
@@ -215,4 +272,5 @@ class ControllerProposition extends AbstractController
         return (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
 
     }
+
 }

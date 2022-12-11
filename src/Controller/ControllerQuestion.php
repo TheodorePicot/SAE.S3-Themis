@@ -21,6 +21,11 @@ class ControllerQuestion extends AbstractController
     public function created(): void
     {
         $this->connectionCheck();
+        $dateTmp = date("d-m-y h:i:s");
+        if (date("d-m-y H:i:s", strtotime($dateTmp . "24 hours")) > $_GET['dateDebutProposition']) {
+            (new FlashMessage())->flash("createdProblem", "Il faut 1 jour de préparation pour la question", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
         if (!($_GET['dateDebutProposition'] < $_GET['dateFinProposition'] && $_GET['dateFinProposition'] < $_GET['dateDebutVote'] && $_GET['dateDebutVote'] < $_GET['dateFinVote'])) {
             (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
@@ -221,8 +226,12 @@ class ControllerQuestion extends AbstractController
     public function updated(): void
     {
         $this->connectionCheck();
-        if (date("d-m-y h:i:s") > $_GET['dateDebutVote']) {
-            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez pas mettre à jour la question lors de la période de vote", FlashMessage::FLASH_SUCCESS);
+        if (!($_GET['dateDebutProposition'] < $_GET['dateFinProposition'] && $_GET['dateFinProposition'] < $_GET['dateDebutVote'] && $_GET['dateDebutVote'] < $_GET['dateFinVote'])) {
+            (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
+        if (date("d-m-y h:i:s") > $_GET['dateDebutProposition']) {
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
         }
         if ($this->isOrganisateurOfQuestion($_GET['loginOrganisateur']) && $this->isOrganisateur()
             || $this->isAdmin()) {
