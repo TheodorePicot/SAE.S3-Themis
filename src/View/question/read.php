@@ -107,7 +107,8 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
             <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
         </div>
 
-
+        <a class="btn btn-dark text-nowrap"
+           href="frontController.php?controller=vote&action=vote&idQuestion=<?= $question->getIdQuestion() ?>">Voter</a>
     </div>
 </div>
 

@@ -1,25 +1,39 @@
 <h2>Propositions</h2>
 <form action="frontController.php">
-    <input type="hidden" name="controller" value="vote">
-    <input type="hidden" name="action" value="saveVote">
-        <input type="hidden" name="login" value="jacques64">
-    <?php foreach ($propositions as $proposition) :
+    <?php use Themis\Lib\ConnexionUtilisateur;
+
+    foreach ($propositions as $proposition) :
         $titrePropositionHTML = htmlspecialchars($proposition->getTitreProposition());
         $propositionInURL = rawurlencode($proposition->getIdProposition());
         $questionInURL = rawurlencode($proposition->getIdQuestion());
         $hrefRead = "frontController.php?controller=proposition&action=read&idQuestion=$questionInURL&idProposition=$propositionInURL"; ?>
 
-        <div class="boxProposition overflow-hidden rounded-5 my-3">
+        <div class="col-6 boxProposition overflow-hidden rounded-5 my-3">
             <div class="nestedDivQuestion overflow-hidden text-start">
-                <a id="containerQuestion" href="<?= $hrefRead ?>">
-                    <div class="mx-3">
+                <div class=" mx-3 d-flex flex-row justify-content-between align-items-center">
+                    <a id="containerQuestion" href="<?= $hrefRead ?>">
                         <h3><?= $titrePropositionHTML ?></h3>
-                    </div>
-                </a>
+                    </a>
+                    <select class="form-select" aria-label="Select Vote" name="valueVote<?= $propositionInURL ?>" style="width: 160px;">
+                        <option selected></option>
+                        <option value="-2">Très Hostile</option>
+                        <option value="-1">Hostile</option>
+                        <option value="0">Indifférent</option>
+                        <option value="1">Favorable</option>
+                        <option value="2">Très Favorable</option>
+                    </select>
+                </div>
             </div>
+        </div>
+        <div class="form-check">
         </div>
     <?php endforeach; ?>
     <p>
+        <input type="hidden" name="controller" value="vote">
+            <input type="hidden" name="action" value="submitVote">
+        <?php if (ConnexionUtilisateur::isConnected()) : ?>
+            <input type="hidden" name="login" value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+        <?php endif ?>
         <input type="submit" value="Voter"/>
     </p>
 </form>

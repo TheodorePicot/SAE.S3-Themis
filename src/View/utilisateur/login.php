@@ -1,4 +1,3 @@
-
 <?php
 $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
 ?>
