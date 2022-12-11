@@ -11,6 +11,8 @@ $hrefVoter = "frontController.php?controller=vote&action=showPropositionsVote&id
 //$hrefCreateSection = "frontController.php?action=created&controller=section&idQuestion=$questionInURL";
 $hrefReadAll = "frontController.php?action=readAll";
 $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
+$dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 day"));
+
 ?>
 
 <div class="container-fluid">
@@ -22,7 +24,6 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
     </div>
 
     <div class="row my-5 my-4 gy-4 container-fluid">
-
         <div class="container-fluid col-md-12 col-lg-8">
             <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
                 <div class="mx-2">
@@ -72,32 +73,49 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
         <div class="container d-flex containerTime col-md-12 col-lg-3 mx-3">
             <div class="">
-                <!--                shadowBox wrapper-->
                 <h2> Calendrier</h2>
                 <ul class="sessions">
                     <li>
                         <div class="time">
                             <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutProposition()))) ?></b>
                         </div>
-                        <p> Date de début de proposition </p>
+                        <?php if ($dateOneDay->format("Y-m-d h:i:s") < $question->getDateFinProposition() && $dateOneDay->format("Y-m-d h:i:s") >= $question->getDateDebutProposition()): ?>
+                            <mark>Date de début de proposition</mark>
+                        <?php else : ?>
+                            <p>Date de début de proposition</p>
+                        <?php endif ?>
+
                     </li>
                     <li>
                         <div class="time">
                             <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinProposition()))) ?></b>
                         </div>
-                        <p> Date de fin de rédaction de proposition </p>
+                        <?php if ($dateOneDay->format("Y-m-d h:i:s") < $question->getDateDebutVote() && $dateOneDay->format("Y-m-d h:i:s") >= $question->getDateFinProposition()) : ?>
+                            <mark>Date de fin de rédaction de proposition</mark>
+                        <?php else : ?>
+                            <p> Date de fin de rédaction de proposition </p>
+                        <?php endif ?>
+
                     </li>
                     <li>
                         <div class="time">
                             <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutVote()))) ?></b>
                         </div>
-                        <p>Date de début de vote</p>
+                        <?php if ($dateOneDay->format("Y-m-d h:i:s") < $question->getDateFinVote() && $dateOneDay->format("Y-m-d h:i:s") >= $question->getDateDebutVote()) : ?>
+                            <mark>Date de début de vote</mark>
+                        <?php else : ?>
+                            <p> Date de début de vote </p>
+                        <?php endif ?>
                     </li>
                     <li>
                         <div class="time">
                             <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinVote()))) ?></b>
                         </div>
-                        <p>Date de fin de vote</p>
+                        <?php if ($dateOneDay->format("Y-m-d h:i:s") > $question->getDateFinVote()) : ?>
+                            <mark>Date de fin de vote</mark>
+                        <?php else : ?>
+                            <p>Date de fin de vote </p>
+                        <?php endif ?>
                     </li>
                 </ul>
             </div>
