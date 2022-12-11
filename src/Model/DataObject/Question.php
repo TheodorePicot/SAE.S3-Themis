@@ -4,7 +4,7 @@ namespace Themis\Model\DataObject;
 
 class Question extends AbstractDataObject
 {
-    private int $idQuestion;
+    private ?int $idQuestion;
     private string $titreQuestion;
     private string $descriptionQuestion;
     private string $dateDebutProposition;
@@ -22,7 +22,7 @@ class Question extends AbstractDataObject
      * @param string $dateDebutVote
      * @param string $dateFinVote
      */
-    public function __construct(int    $idQuestion,
+    public function __construct(?int    $idQuestion,
                                 string $titreQuestion,
                                 string $descriptionQuestion,
                                 string $dateDebutProposition,
@@ -43,6 +43,17 @@ class Question extends AbstractDataObject
 
     public function tableFormat(): array
     {
+        if ($this->idQuestion == 0) {
+            return [
+                "titreQuestion" => $this->titreQuestion,
+                "descriptionQuestion" => $this->descriptionQuestion,
+                "dateDebutProposition" => $this->dateDebutProposition,
+                "dateFinProposition" => $this->dateFinProposition,
+                "dateDebutVote" => $this->dateDebutVote,
+                "dateFinVote" => $this->dateFinVote,
+                "loginOrganisateur" => $this->loginOrganisateur
+            ];
+        } else {
             return [
                 "idQuestion" => $this->idQuestion,
                 "titreQuestion" => $this->titreQuestion,
@@ -53,7 +64,7 @@ class Question extends AbstractDataObject
                 "dateFinVote" => $this->dateFinVote,
                 "loginOrganisateur" => $this->loginOrganisateur
             ];
-
+        }
     }
 
     /**
@@ -129,13 +140,27 @@ class Question extends AbstractDataObject
 
     public static function buildFromForm(array $formArray): Question
     {
-        return new Question((int)null,
-            $formArray["titreQuestion"],
-            $formArray["descriptionQuestion"],
-            $formArray["dateDebutProposition"],
-            $formArray["dateFinProposition"],
-            $formArray["dateDebutVote"],
-            $formArray["dateFinVote"],
-            $formArray["loginOrganisateur"]);
+        if (isset($formArray["idQuestion"])) {
+            return new Question(
+                $formArray["idQuestion"],
+                $formArray["titreQuestion"],
+                $formArray["descriptionQuestion"],
+                $formArray["dateDebutProposition"],
+                $formArray["dateFinProposition"],
+                $formArray["dateDebutVote"],
+                $formArray["dateFinVote"],
+                $formArray["loginOrganisateur"]);
+        } else {
+            return new Question(
+                null,
+                $formArray["titreQuestion"],
+                $formArray["descriptionQuestion"],
+                $formArray["dateDebutProposition"],
+                $formArray["dateFinProposition"],
+                $formArray["dateDebutVote"],
+                $formArray["dateFinVote"],
+                $formArray["loginOrganisateur"]);
+        }
+
     }
 }

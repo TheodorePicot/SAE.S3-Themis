@@ -4,7 +4,7 @@ namespace Themis\Model\DataObject;
 
 class Section extends AbstractDataObject
 {
-    private int $idSection;
+    private ?int $idSection;
     private int $idQuestion;
     private ?string $titreSection;
     private ?string $descriptionSection;
@@ -15,7 +15,7 @@ class Section extends AbstractDataObject
      * @param string $titreSection
      * @param string $descriptionSection
      */
-    public function __construct(int $idSection, int $idQuestion, ?string $titreSection, ?string $descriptionSection)
+    public function __construct(?int $idSection, int $idQuestion, ?string $titreSection, ?string $descriptionSection)
     {
         $this->idSection = $idSection;
         $this->idQuestion = $idQuestion;
@@ -76,9 +76,19 @@ class Section extends AbstractDataObject
 
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
-        return new Section((int)null,
-            $formArray["idQuestion"],
-            $formArray["titreSection"],
-            $formArray["descriptionSection"]);
+        if (isset($formArray["idSection"])) {
+            return new Section(
+                $formArray["idSection"],
+                $formArray["idQuestion"],
+                $formArray["titreSection"],
+                $formArray["descriptionSection"]);
+        } else {
+            return new Section(
+                null,
+                $formArray["idQuestion"],
+                $formArray["titreSection"],
+                $formArray["descriptionSection"]);
+        }
+
     }
 }

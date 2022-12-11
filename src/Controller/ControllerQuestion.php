@@ -29,10 +29,10 @@ class ControllerQuestion extends AbstractController
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             (new QuestionRepository())->create(Question::buildFromForm($_GET));
-//            $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
+            $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
-//            $this->createParticipants($idQuestion);
-//            $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
+            $this->createParticipants($idQuestion);
+            $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
         } else {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
@@ -221,6 +221,9 @@ class ControllerQuestion extends AbstractController
     public function updated(): void
     {
         $this->connectionCheck();
+        if (date("d-m-y h:i:s") > $_GET['dateDebutVote']) {
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez pas mettre à jour la question lors de la période de vote", FlashMessage::FLASH_SUCCESS);
+        }
         if ($this->isOrganisateurOfQuestion($_GET['loginOrganisateur']) && $this->isOrganisateur()
             || $this->isAdmin()) {
             $this->updateInformationAuxiliary();

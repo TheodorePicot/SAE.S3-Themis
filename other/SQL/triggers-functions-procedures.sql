@@ -136,3 +136,25 @@ BEGIN
     RETURN nbUtilisateur > 0;
 END;
 $$
+
+-- Trigger pour ajouter un sectionProposition quand on ajoute une section à la question
+
+CREATE OR REPLACE FUNCTION createSectionPropositionWhenCreateSectionInQuestion()
+    RETURNS TRIGGER
+AS
+$body$
+DECLARE
+BEGIN
+
+    INSERT INTO "SectionProposition" ("texteProposition", "idSection", "idProposition")
+    SELECT '', NEW."idSection", "idProposition" FROM "Propositions" WHERE "idQuestion" = NEW."idQuestion";
+    RETURN NEW;
+
+END;
+$body$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_insert_section_proposition_after_insert_on_section
+    AFTER INSERT
+    ON "Sections"
+    FOR EACH ROW
+EXECUTE PROCEDURE createSectionPropositionWhenCreateSectionInQuestion();

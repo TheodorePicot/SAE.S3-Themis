@@ -117,6 +117,7 @@ abstract class AbstractRepository
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = $dataObject->tableFormat();
+        var_dump($values);
         $pdoStatement->execute($values);
     }
 

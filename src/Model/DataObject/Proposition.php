@@ -4,7 +4,7 @@ namespace Themis\Model\DataObject;
 
 class Proposition extends AbstractDataObject
 {
-    private int $idProposition;
+    private ?int $idProposition;
     private int $idQuestion;
     private string $titreProposition;
     private string $loginAuteur;
@@ -15,7 +15,7 @@ class Proposition extends AbstractDataObject
      * @param string $titreProposition
      * @param string $loginAuteur
      */
-    public function __construct(int $idProposition, int $idQuestion, string $titreProposition, string $loginAuteur)
+    public function __construct(?int $idProposition, int $idQuestion, string $titreProposition, string $loginAuteur)
     {
         $this->idProposition = $idProposition;
         $this->idQuestion = $idQuestion;
@@ -75,6 +75,20 @@ class Proposition extends AbstractDataObject
 
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
-        return new Proposition((int)null, $formArray['idQuestion'], $formArray['titreProposition'], $formArray['loginAuteur']);
+        if (isset($formArray["idProposition"])) {
+            return new Proposition(
+                $formArray["idProposition"],
+                $formArray['idQuestion'],
+                $formArray['titreProposition'],
+                $formArray['loginAuteur']
+            );
+        } else {
+            return new Proposition(
+                null,
+                $formArray['idQuestion'],
+                $formArray['titreProposition'],
+                $formArray['loginAuteur']
+            );
+        }
     }
 }
