@@ -60,7 +60,9 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
                 <div class="my-4">
                     <a class="btn btn-dark text-nowrap" href="<?= $hrefDelete ?>"
                        onclick="return confirm('Are you sure?');"> Supprimer</a>
-                    <a class="btn btn-dark text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
+                    <?php if (date_create()->format("Y-m-d h:i:s") < $question->getDateDebutProposition()) : ?>
+                        <a class="btn btn-dark text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
         </div>
@@ -70,7 +72,7 @@ $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 
         <div class="container d-flex containerTime col-md-12 col-lg-3 mx-3">
             <div class="">
-<!--                shadowBox wrapper-->
+                <!--                shadowBox wrapper-->
                 <h2> Calendrier</h2>
                 <ul class="sessions">
                     <li>

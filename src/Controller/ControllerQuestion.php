@@ -2,6 +2,7 @@
 
 namespace Themis\Controller;
 
+use DateTime;
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
 use Themis\Model\DataObject\Participant;
@@ -21,9 +22,9 @@ class ControllerQuestion extends AbstractController
     public function created(): void
     {
         $this->connectionCheck();
-        $dateTmp = date("d-m-y h:i:s");
-        if (date("d-m-y H:i:s", strtotime($dateTmp . "24 hours")) > $_GET['dateDebutProposition']) {
-            (new FlashMessage())->flash("createdProblem", "Il faut 1 jour de préparation pour la question", FlashMessage::FLASH_WARNING);
+        $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 day"));
+        if ($dateOneDay->format("Y-m-d h:i:s") >= $_GET['dateDebutProposition']) {
+            (new FlashMessage())->flash("createdProblem", "Il faut au moins un jour de préparation pour la question", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
         if (!($_GET['dateDebutProposition'] < $_GET['dateFinProposition'] && $_GET['dateFinProposition'] < $_GET['dateDebutVote'] && $_GET['dateDebutVote'] < $_GET['dateFinVote'])) {
@@ -113,11 +114,15 @@ class ControllerQuestion extends AbstractController
     {
         $this->connectionCheck();
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        if (date_create()->format("Y-m-d h:i:s") > $question->getDateDebutProposition()) {
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+        }
         if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur())
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
-            $utilisateurs = (new UtilisateurRepository)->selectAll();
+            $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
 
             if (isset($_GET["isInCreation"])) $message = "Création de votre question";
             else $message = "Mise à jour question";
@@ -226,13 +231,20 @@ class ControllerQuestion extends AbstractController
     public function updated(): void
     {
         $this->connectionCheck();
+        $oldQuestion = (new QuestionRepository)->select($_GET["idQuestion"]);
+        if (date_create()->format("Y-m-d h:i:s") > $oldQuestion->getDateDebutProposition()) {
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=readAll");
+        }
+        if ($_GET['dateDebutProposition'] < $oldQuestion->getDateDebutProposition()) {
+            (new FlashMessage())->flash("createdProblem", "Vous pouvez uniquement ajouter du temps d'attente", FlashMessage::FLASH_WARNING);
+            $this->redirect("frontController.php?action=readAll");
+        }
         if (!($_GET['dateDebutProposition'] < $_GET['dateFinProposition'] && $_GET['dateFinProposition'] < $_GET['dateDebutVote'] && $_GET['dateDebutVote'] < $_GET['dateFinVote'])) {
             (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
-        if (date("d-m-y h:i:s") > $_GET['dateDebutProposition']) {
-            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
-        }
+
         if ($this->isOrganisateurOfQuestion($_GET['loginOrganisateur']) && $this->isOrganisateur()
             || $this->isAdmin()) {
             $this->updateInformationAuxiliary();

@@ -9,7 +9,7 @@ use Themis\Model\Repository\UtilisateurRepository;
 
 class VerificationEmail
 {
-    public static function envoiEmailValidation(Utilisateur $utilisateur): void
+    public static function sendEmailValidation(Utilisateur $utilisateur): void
     {
         $loginURL = rawurlencode($utilisateur->getLogin());
         $nonceURL = rawurlencode($utilisateur->getNonce());
@@ -21,7 +21,7 @@ class VerificationEmail
         (new FlashMessage())->flash("success", $corpsEmail, FlashMessage::FLASH_SUCCESS);
     }
 
-    public static function traiterEmailValidation($login, $nonce): bool
+    public static function handleEmailValidation($login, $nonce): bool
     {
         $utilisateur = (new UtilisateurRepository())->select($login);
         if ($utilisateur->getLogin() == $login && $utilisateur->getNonce() == $nonce){
@@ -34,7 +34,7 @@ class VerificationEmail
         return false;
     }
 
-    public static function aValideEmail(Utilisateur $utilisateur) : bool
+    public static function hasValidatedEmail(Utilisateur $utilisateur) : bool
     {
         return $utilisateur->getAdresseMail() != "";
     }
