@@ -4,7 +4,8 @@ use Themis\Lib\ConnexionUtilisateur;
 
 $utilisateurInURL = rawurlencode($utilisateur->getLogin());
 $hrefDelete = "frontController.php?action=delete&controller=utilisateur&login=" . $utilisateurInURL;
-$hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" . $utilisateurInURL;;
+$hrefUpdateInformation = "frontController.php?action=updateInformation&controller=utilisateur&login=" . $utilisateurInURL;
+$hrefUpdatePassword = "frontController.php?action=updatePassword&controller=utilisateur&login=" . $utilisateurInURL;
 ?>
 
 
