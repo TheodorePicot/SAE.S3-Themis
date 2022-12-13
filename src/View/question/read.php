@@ -1,6 +1,8 @@
 <?php
 
 use Themis\Lib\ConnexionUtilisateur;
+use Themis\Model\Repository\QuestionRepository;
+use Themis\Model\Repository\VotantRepository;
 
 $questionInURL = rawurlencode($question->getIdQuestion());
 $hrefDelete = "frontController.php?action=delete&idQuestion=$questionInURL";
@@ -11,7 +13,7 @@ $hrefVoter = "frontController.php?controller=vote&action=showPropositionsVote&id
 //$hrefCreateSection = "frontController.php?action=created&controller=section&idQuestion=$questionInURL";
 $hrefReadAll = "frontController.php?action=readAll";
 $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
-$dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 day"));
+$date = date_create();
 
 ?>
 
@@ -57,11 +59,11 @@ $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 d
                 </div>
             </div>
 
-            <?php if (ConnexionUtilisateur::isUser($question->getLoginOrganisateur())) : ?>
+            <?php if (ConnexionUtilisateur::isUser($question->getLoginOrganisateur()) || ConnexionUtilisateur::isAdministrator()) : ?>
                 <div class="my-4">
                     <a class="btn btn-dark text-nowrap" href="<?= $hrefDelete ?>"
                        onclick="return confirm('Are you sure?');"> Supprimer</a>
-                    <?php if (date_create()->format("Y-m-d h:i:s") < $question->getDateDebutProposition()) : ?>
+                    <?php if (date_create()->format("Y-m-d H:i:s") < $question->getDateDebutProposition() || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-dark text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
                     <?php endif; ?>
                 </div>
@@ -79,7 +81,7 @@ $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 d
                         <div class="time">
                             <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutProposition()))) ?></b>
                         </div>
-                        <?php if ($dateOneDay->format("Y-m-d h:i:s") < $question->getDateFinProposition() && $dateOneDay->format("Y-m-d h:i:s") >= $question->getDateDebutProposition()): ?>
+                        <?php if ($date->format("Y-m-d H:i:s") < $question->getDateFinProposition() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutProposition()): ?>
                             <mark>Date de début de proposition</mark>
                         <?php else : ?>
                             <p>Date de début de proposition</p>
@@ -90,7 +92,7 @@ $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 d
                         <div class="time">
                             <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinProposition()))) ?></b>
                         </div>
-                        <?php if ($dateOneDay->format("Y-m-d h:i:s") < $question->getDateDebutVote() && $dateOneDay->format("Y-m-d h:i:s") >= $question->getDateFinProposition()) : ?>
+                        <?php if ($date->format("Y-m-d H:i:s") < $question->getDateDebutVote() && $date->format("Y-m-d H:i:s") >= $question->getDateFinProposition()) : ?>
                             <mark>Date de fin de rédaction de proposition</mark>
                         <?php else : ?>
                             <p> Date de fin de rédaction de proposition </p>
@@ -99,9 +101,10 @@ $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 d
                     </li>
                     <li>
                         <div class="time">
-                            <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutVote()))) ?></b>
+                            <b><?= htmlspecialchars(date("d-M-y h:i:s", strtotime($question->getDateDebutVote()))) ?></b>
                         </div>
-                        <?php if ($dateOneDay->format("Y-m-d h:i:s") < $question->getDateFinVote() && $dateOneDay->format("Y-m-d h:i:s") >= $question->getDateDebutVote()) : ?>
+                        <p><?= $date->format("Y-m-d H:i:s")?></p>
+                        <?php if ($date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote()) : ?>
                             <mark>Date de début de vote</mark>
                         <?php else : ?>
                             <p> Date de début de vote </p>
@@ -111,7 +114,7 @@ $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 d
                         <div class="time">
                             <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateFinVote()))) ?></b>
                         </div>
-                        <?php if ($dateOneDay->format("Y-m-d h:i:s") > $question->getDateFinVote()) : ?>
+                        <?php if ($date->format("Y-m-d H:i:s") > $question->getDateFinVote()) : ?>
                             <mark>Date de fin de vote</mark>
                         <?php else : ?>
                             <p>Date de fin de vote </p>
@@ -125,8 +128,14 @@ $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 d
             <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
         </div>
 
-        <a class="btn btn-dark text-nowrap"
-           href="frontController.php?controller=vote&action=vote&idQuestion=<?= $question->getIdQuestion() ?>">Voter</a>
+        <?php
+
+        if (ConnexionUtilisateur::isConnected() && (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting()) &&
+            (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion()) &&
+            $date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote())) : ?>
+            <a class="btn btn-dark text-nowrap"
+               href="frontController.php?controller=vote&action=vote&idQuestion=<?= $question->getIdQuestion() ?>">Voter</a>
+        <?php endif ?>
     </div>
 </div>
 

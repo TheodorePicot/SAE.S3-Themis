@@ -44,7 +44,9 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
             <?= htmlspecialchars($utilisateur->getNom()) ?><br>
             <div class="my-lg-3">
                 <h3>Date de Naissance <br></h3>
-                <?= htmlspecialchars($utilisateur->getDateNaissance()) ?><br>
+                <?php
+                $date = date_create($utilisateur->getDateNaissance());
+                echo htmlspecialchars($date->format("d-m-Y")); ?><br>
             </div>
         </div>
 

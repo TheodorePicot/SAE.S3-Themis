@@ -24,11 +24,11 @@ class ControllerProposition extends AbstractController
         $this->connectionCheck();
         $proposition = Proposition::buildFromForm($_GET);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
-        if (date_create()->format("Y-m-d h:i:s") < $question->getDateDebutProposition()) {
+        if (date_create()->format("Y-m-d H:i:s") < $question->getDateDebutProposition()) {
             (new FlashMessage())->flash("tooLate", "La question n'est pas encore en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
-        if (date_create()->format("Y-m-d h:i:s") > $question->getDateFinProposition()) {
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition()) {
             (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
@@ -70,11 +70,11 @@ class ControllerProposition extends AbstractController
     {
         $this->connectionCheck();
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
-        if (date_create()->format("Y-m-d h:i:s") < $question->getDateDebutProposition()) {
+        if (date_create()->format("Y-m-d H:i:s") < $question->getDateDebutProposition()) {
             (new FlashMessage())->flash("tooLate", "La question n'est pas encore en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
-        if (date_create()->format("Y-m-d h:i:s") > $question->getDateFinProposition()) {
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition()) {
             (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
@@ -173,7 +173,7 @@ class ControllerProposition extends AbstractController
         $this->connectionCheck();
         $proposition = Proposition::buildFromForm($_GET);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
-        if (date_create()->format("Y-m-d h:i:s") > $question->getDateFinProposition()) {
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition()) {
             (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
@@ -216,7 +216,7 @@ class ControllerProposition extends AbstractController
 
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
-        if (date_create()->format("Y-m-d h:i:s") > $question->getDateFinProposition()) {
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition()) {
             (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
@@ -243,7 +243,7 @@ class ControllerProposition extends AbstractController
     public function delete(): void
     {
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
-        if (date_create()->format("Y-m-d h:i:s") > $question->getDateFinProposition()) {
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition()) {
             (new FlashMessage())->flash("tooLate", "Vous ne pouvez pas supprimer votre proposition après la période d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }

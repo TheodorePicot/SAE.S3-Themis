@@ -14,7 +14,7 @@
                     <a id="containerQuestion" href="<?= $hrefRead ?>">
                         <h3><?= $titrePropositionHTML ?></h3>
                     </a>
-                    <select class="form-select" aria-label="Select Vote" name="valueVote<?= $propositionInURL ?>" style="width: 160px;">
+                    <select required class="form-select" aria-label="Select Vote" name="valueVote<?= $propositionInURL ?>" style="width: 160px;">
                         <option selected></option>
                         <option value="-2">Très Hostile</option>
                         <option value="-1">Hostile</option>
@@ -30,10 +30,11 @@
     <?php endforeach; ?>
     <p>
         <input type="hidden" name="controller" value="vote">
-            <input type="hidden" name="action" value="submitVote">
+        <input type="hidden" name="action" value="submitVote">
         <?php if (ConnexionUtilisateur::isConnected()) : ?>
-            <input type="hidden" name="login" value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+            <input type="hidden" name="loginVotant" value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
         <?php endif ?>
+        <input type="hidden" name="idQuestion" value="<?= $questionInURL ?>">
         <input type="submit" value="Voter"/>
     </p>
 </form>
