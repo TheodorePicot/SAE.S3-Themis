@@ -10,10 +10,14 @@ use Themis\Lib\FlashMessage;
 use Themis\Model\HTTP\Session;
 Session::getInstance();
 
+
 $controller = 'question';
 if (isset($_GET['controller'])){
     $controller = $_GET['controller'];
 }
+
+
+
 
 $controllerClassName = "Themis\Controller\Controller" . ucfirst($controller);
 
@@ -36,5 +40,6 @@ if (class_exists($controllerClassName)) {
     (new FlashMessage())->flash("classeExistePas", "La classe que vous essayez de charger n'existe pas", FlashMessage::FLASH_DANGER);
     header("location: frontController.php?action=readAll");
 }
+
 
 

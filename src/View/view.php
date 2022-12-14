@@ -117,31 +117,39 @@ use Themis\Lib\FlashMessage;
 
         <ul class="nav navbar-nav ms-auto">
             <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
-                <li class="d-flex">
-                    <a class="btn btn-dark text-nowrap align-self-center"
-                       href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
-                </li>
+                <div class="row">
+                    <li class="nav-item active d-flex">
+                        <a class="btn btn-dark col-sm-12 text-nowrap align-self-center"
+                           href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
+                    </li>
+                </div>
             <?php endif ?>
             <?php if (ConnexionUtilisateur::isConnected()) : ?>
-                <li class="d-flex">
-                    <a class=" btn btn-dark text-nowrap align-self-center"
-                       href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
-                </li>
+                <div class="row">
+                    <li class="nav-item active d-flex">
+                        <a class="btn btn-dark col-sm-12 text-nowrap my-sm-2 my-lg-0 mx-lg-2 align-self-center"
+                           href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
+                    </li>
+                </div>
             <?php endif ?>
             <?php if (ConnexionUtilisateur::isConnected()) : ?>
-                <li>
-                    <a class="nav-link"
-                       href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
-                        <img id="accountImg" alt="compte" src="assets/img/account.png">
-                    </a>
-                </li>
+                <div class="row">
+                    <li class="nav-item active">
+                        <a class="nav-link"
+                           href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+                            <img id="accountImg" alt="compte" src="assets/img/account.png">
+                        </a>
+                    </li>
+                </div>
             <?php endif ?>
             <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
-                <li>
-                    <a class="nav-link"
-                       href="frontController.php?action=readAll&controller=utilisateur">
-                        <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>
-                </li>
+                <div class="row">
+                    <li class="nav-item active">
+                        <a class="nav-link"
+                           href="frontController.php?action=readAll&controller=utilisateur">
+                            <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>
+                    </li>
+                </div>
             <?php endif ?>
             <?php if (!ConnexionUtilisateur::isConnected()) : ?>
                 <div class="row">
@@ -159,7 +167,6 @@ use Themis\Lib\FlashMessage;
                     </li>
                 </div>
             <?php endif ?>
-
         </ul>
     </div>
     <!--        <form class="d-flex">-->
