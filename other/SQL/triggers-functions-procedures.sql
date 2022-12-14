@@ -158,3 +158,26 @@ CREATE TRIGGER tr_insert_section_proposition_after_insert_on_section
     ON "Sections"
     FOR EACH ROW
 EXECUTE PROCEDURE createSectionPropositionWhenCreateSectionInQuestion();
+
+CREATE OR REPLACE FUNCTION updateSommeVoteOnProposition()
+    RETURNS TRIGGER
+AS
+$body$
+DECLARE
+    v_sommeDesVotes INT;
+BEGIN
+    SELECT SUM(valeur) INTO v_sommeDesVotes
+    FROM "Votes"
+    WHERE "idProposition" = NEW."idProposition";
+
+    UPDATE "Propositions" SET "sommeVotes" = v_sommeDesVotes WHERE "idProposition" = new."idProposition";
+    RETURN NEW;
+
+END;
+$body$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_udi_sommeVote_Proposition
+    AFTER INSERT OR DELETE OR UPDATE OF valeur
+    ON "Votes"
+    FOR EACH ROW
+EXECUTE PROCEDURE updateSommeVoteOnProposition();
