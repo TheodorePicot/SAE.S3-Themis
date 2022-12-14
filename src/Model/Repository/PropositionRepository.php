@@ -41,9 +41,29 @@ class PropositionRepository extends AbstractRepository
         return $dataObjects;
     }
 
+    public function selectAllByQuestionOrderedByVoteValue($idQuestion): array
+    {
+        $sqlQuery = 'SELECT * FROM "Propositions" WHERE "idQuestion" =:idQuestion ORDER BY "sommeVotes" DESC ';
+
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = [
+            "idQuestion" => $idQuestion
+        ];
+
+        $pdoStatement->execute($values);
+
+        $propositions = array();
+        foreach ($pdoStatement as $proposition) {
+            $propositions[] = $this->build($proposition);
+        }
+
+        return $propositions;
+    }
+
     public function build(array $objectArrayFormat): Proposition
     {
-        return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur']);
+        return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur'], $objectArrayFormat['sommeVotes']);
     }
 
     protected function getTableName(): string
@@ -61,7 +81,8 @@ class PropositionRepository extends AbstractRepository
         return [
             "idQuestion",
             "titreProposition",
-            "loginAuteur"
+            "loginAuteur",
+            "sommeVotes"
         ];
     }
 

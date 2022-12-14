@@ -154,7 +154,10 @@ class ControllerQuestion extends AbstractController
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
         $votants = (new VotantRepository)->selectAllByQuestion($_GET["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllByQuestion($_GET["idQuestion"]);
-        $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
+            $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_GET["idQuestion"]);
+        else
+            $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
 
         $this->showView("view.php", [
             "propositions" => $propositions,

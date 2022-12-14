@@ -125,7 +125,14 @@ $date = date_create();
         </div>
         <div class="container-fluid col-md-12 col-lg-10 my-5">
 
-            <?php require_once __DIR__ . "/../proposition/listByQuestion.php" ?>
+            <?php
+
+            if ($date->format("Y-m-d H:i:s") < $question->getDateFinVote())
+                require_once __DIR__ . "/../proposition/listByQuestion.php";
+            else
+                require_once __DIR__ . "/../proposition/listByQuestionGagnante.php";
+            ?>
+
         </div>
 
         <?php

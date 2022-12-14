@@ -34,14 +34,18 @@ class ControllerVote extends AbstractController
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
         if ($this->canVote($question)) {
             foreach ((new PropositionRepository())->selectByQuestion($_GET["idQuestion"]) as $proposition) {
-                $vote = new Vote($_GET["loginVotant"], $proposition->getIdProposition(), $_GET["valueVote{$proposition->getIdProposition() }"]);
-                (new VoteRepository)->create($vote);
+                $vote = new Vote($_GET["loginVotant"], $proposition->getIdProposition(), $_GET["valueVote{$proposition->getIdProposition()}"]);
+                if ((new VotantRepository)->votantHasAlreadyVoted($_GET["loginVotant"], $proposition->getIdProposition())) {
+                    (new VoteRepository)->update($vote);
+                } else {
+                    (new VoteRepository)->create($vote);
+                }
             }
-            $this->redirect("frontController.php?action=readAll");
+            (new FlashMessage())->flash("notAuthor", "Votre vote a été pris en compte", FlashMessage::FLASH_SUCCESS);
         } else {
             (new FlashMessage())->flash("notAuthor", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
-            $this->redirect("frontController.php?action=readAll");
         }
+        $this->redirect("frontController.php?action=readAll");
     }
 
     private function canVote($question) {
