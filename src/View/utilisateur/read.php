@@ -62,6 +62,8 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdatePassword ?>'> Modifier mot de passe</a>
             <?php endif ?>
         </div>
+
+
     </div>
 </div>
 
