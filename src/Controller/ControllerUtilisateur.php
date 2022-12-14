@@ -128,9 +128,11 @@ class ControllerUtilisateur extends AbstractController
                     $formArray["estAdmin"] = $_GET["estAdmin"] == "on"?1:0;
                 }
                 (new UtilisateurRepository())->updateInformation($formArray);
-            } elseif (ConnexionUtilisateur::isUser($_GET['login'])) {
+            } elseif ($this->isOrganisateur()) {
+                $formArray["estOrganisateur"] = 1;
                 (new UtilisateurRepository())->updateInformation($formArray);
-            }
+            } else
+                (new UtilisateurRepository())->updateInformation($formArray);
             (new FlashMessage)->flash("success", "Mise à jour effectuée", FlashMessage::FLASH_SUCCESS);
         }
         $this->redirect("frontController.php?action=readAll");

@@ -101,9 +101,8 @@ $date = date_create();
                     </li>
                     <li>
                         <div class="time">
-                            <b><?= htmlspecialchars(date("d-M-y h:i:s", strtotime($question->getDateDebutVote()))) ?></b>
+                            <b><?= htmlspecialchars(date("d-M-y G:i", strtotime($question->getDateDebutVote()))) ?></b>
                         </div>
-                        <p><?= $date->format("Y-m-d H:i:s")?></p>
                         <?php if ($date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote()) : ?>
                             <mark>Date de début de vote</mark>
                         <?php else : ?>

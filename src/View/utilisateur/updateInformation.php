@@ -33,17 +33,30 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 <input class="form-control" type="date" name="dateNaissance" id="dateNaissance"
                        value="<?= htmlspecialchars($utilisateur->getDateNaissance()) ?>">
 
-                <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
+                <?php if (ConnexionUtilisateur::isAdministrator() && ConnexionUtilisateur::isUser($_GET["login"])) : ?>
                     <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
-                    <input class="InputAddOn-field" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
-                        <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?>>
+                    <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
+                        <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?> disabled>
+                    <input type="hidden" placeholder="" name="estAdmin" value="on">
 
                     <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
                     <p>
                         <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur"
                                id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
+                        <input type="hidden" placeholder="" name="estAdmin" value="on">
                     </p>
+                <?php else : ?>
+                    <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
+                    <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
+                        <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?>>
+                    <input type="hidden" placeholder="" name="estAdmin" value="on">
 
+                    <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
+                    <p>
+                        <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur"
+                               id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
+                        <input type="hidden" placeholder="" name="estAdmin" value="on">
+                    </p>
                 <?php endif ?>
 
                 <input type='hidden' name='action' value='updatedForInformation'>
