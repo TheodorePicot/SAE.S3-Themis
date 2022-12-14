@@ -115,7 +115,7 @@ class ControllerProposition extends AbstractController
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         if (ConnexionUtilisateur::isConnected()) {
-            if ($this->isAuteurInQuestion($_GET["idQuestion"])
+            if ($this->isAuteurInQuestion($_GET["idQuestion"]) && $this->isAuteurOfProposition($_GET["idProposition"])
                 || $this->isCoAuteurInProposition($_GET["idProposition"])
                 || $this->isAdmin()
                 || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
@@ -179,7 +179,7 @@ class ControllerProposition extends AbstractController
             (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
-        if ($this->isAuteurInQuestion($_GET["idQuestion"])
+        if ($this->isAuteurInQuestion($_GET["idQuestion"]) && $this->isAuteurOfProposition($_GET["idProposition"])
             || $this->isCoAuteurInProposition($_GET["idProposition"])
             || $this->isAdmin()) {
             (new PropositionRepository)->update($proposition);
@@ -223,7 +223,7 @@ class ControllerProposition extends AbstractController
             (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
-        if ($this->isAuteurInQuestion($question->getIdQuestion())
+        if ($this->isAuteurInQuestion($question->getIdQuestion()) && $this->isAuteurOfProposition($_GET["idProposition"])
             || $this->isCoAuteurInProposition($_GET["idProposition"])
             || $this->isAdmin()) {
             $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
