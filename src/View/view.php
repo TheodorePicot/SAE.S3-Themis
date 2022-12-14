@@ -25,7 +25,7 @@ use Themis\Lib\FlashMessage;
     <title><?= $pageTitle ?></title>
 </head>
 
-<body <?php if ($_GET["action"] == "login") echo 'id="bodyLogin"'?>>
+<body <?php if (isset($_GET["action"]) && $_GET["action"] == "login") echo 'id="bodyLogin"'?>>
 <!-- Optional JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
