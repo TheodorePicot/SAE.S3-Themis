@@ -66,7 +66,7 @@ use Themis\Lib\ConnexionUtilisateur;
                     <input type='hidden' name='idProposition' value='<?= $proposition->getIdProposition() ?>'>
                     <input type='hidden' name='idQuestion' value='<?= $question->getIdQuestion() ?>'>
                     <input type="hidden" name="loginAuteur"
-                           value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+                           value="<?= $proposition->getLoginAuteur() ?>">
                     <input class="btn btn-dark" type="submit" value="Mettre à jour"/>
 
                 </div>
