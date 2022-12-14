@@ -23,9 +23,9 @@ class ControllerQuestion extends AbstractController
     {
         $this->connectionCheck();
         if (!$this->isAdmin()) {
-            $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 day"));
+            $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 minute"));
             if ($dateOneDay->format("Y-m-d H:i:s") >= $_GET['dateDebutProposition']) {
-                (new FlashMessage())->flash("createdProblem", "Il faut au moins un jour de préparation pour la question", FlashMessage::FLASH_WARNING);
+                (new FlashMessage())->flash("createdProblem", "Il faut au moins une minute de préparation pour la question", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
             if (!($_GET['dateDebutProposition'] < $_GET['dateFinProposition'] && $_GET['dateFinProposition'] < $_GET['dateDebutVote'] && $_GET['dateDebutVote'] < $_GET['dateFinVote'])) {
