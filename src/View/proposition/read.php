@@ -3,6 +3,7 @@
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\CoAuteurRepository;
+use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\SectionPropositionRepository;
 
 $idPropositionInURL = rawurlencode($proposition->getIdProposition());
@@ -66,9 +67,10 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
             <?php if (ConnexionUtilisateur::isConnected() &&
                 ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())
-                    || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())) || ConnexionUtilisateur::isAdministrator()) : ?>
+                    || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) || ConnexionUtilisateur::isAdministrator()) : ?>
                 <div class="">
-                    <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) || ConnexionUtilisateur::isAdministrator()) : ?>
+                    <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())  &&
+                        ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'
                            onclick="return confirm('Are you sure?');"> Supprimer</a>
                     <?php endif ?>
