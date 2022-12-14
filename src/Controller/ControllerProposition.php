@@ -95,7 +95,8 @@ class ControllerProposition extends AbstractController
         }
     }
 
-    private function readAuxiliary($question, $proposition) {
+    private function readAuxiliary($question, $proposition)
+    {
         $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
         $coAuteurs = (new CoAuteurRepository())->selectAllByProposition($proposition->getIdProposition());
 
@@ -115,7 +116,7 @@ class ControllerProposition extends AbstractController
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         if (ConnexionUtilisateur::isConnected()) {
             if ($this->isAuteurInQuestion($_GET["idQuestion"])
-                || $this->isCoAuteurInQuestion($_GET["idQuestion"])
+                || $this->isCoAuteurInProposition($_GET["idProposition"])
                 || $this->isAdmin()
                 || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
                     && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))) {
@@ -134,7 +135,8 @@ class ControllerProposition extends AbstractController
         }
     }
 
-    private function readByQuestionAuxiliary(): void {
+    private function readByQuestionAuxiliary(): void
+    {
         $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
 
         $this->showView("view.php", [
@@ -154,11 +156,11 @@ class ControllerProposition extends AbstractController
                 || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
                     && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))) {
                 $this->readByQuestionAuxiliary();
-            }  else {
+            } else {
                 (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
                 $this->redirect("frontController.php?action=readAll");
             }
-        }  else {
+        } else {
             if ((in_array($question, (new QuestionRepository())->selectAllFinished()))) {
                 $this->readByQuestionAuxiliary();
             } else {
@@ -178,7 +180,7 @@ class ControllerProposition extends AbstractController
             $this->redirect("frontController.php?action=readAll");
         }
         if ($this->isAuteurInQuestion($_GET["idQuestion"])
-            || $this->isCoAuteurInQuestion($_GET["idQuestion"])
+            || $this->isCoAuteurInProposition($_GET["idProposition"])
             || $this->isAdmin()) {
             (new PropositionRepository)->update($proposition);
             $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
@@ -191,12 +193,13 @@ class ControllerProposition extends AbstractController
                     "idProposition" => $proposition->getIdProposition(),
                     "idSectionProposition" => $sectionsPropositionOld->getIdSectionProposition()
                 ]);
+                echo $sectionsPropositionOld->getIdSectionProposition();
                 (new SectionPropositionRepository)->update($sectionPropositionNew);
             }
 
             (new CoAuteurRepository())->delete($proposition->getIdProposition());
 
-            if(isset($_GET["coAuteurs"])) {
+            if (isset($_GET["coAuteurs"])) {
                 foreach ($_GET["coAuteurs"] as $coAuteur) {
                     $coAuteurObject = new CoAuteur($proposition->getIdProposition(), $coAuteur);
                     (new CoAuteurRepository())->create($coAuteurObject);
@@ -221,7 +224,7 @@ class ControllerProposition extends AbstractController
             $this->redirect("frontController.php?action=readAll");
         }
         if ($this->isAuteurInQuestion($question->getIdQuestion())
-            || $this->isCoAuteurInQuestion($question->getIdQuestion())
+            || $this->isCoAuteurInProposition($_GET["idProposition"])
             || $this->isAdmin()) {
             $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
             $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
@@ -248,7 +251,7 @@ class ControllerProposition extends AbstractController
             $this->redirect("frontController.php?action=readAll");
         }
         $this->connectionCheck();
-        if ($this->isAuteurInQuestion($_GET["idQuestion"])
+        if ($this->isAuteurInQuestion($_GET["idQuestion"]) && $this->isAuteurOfProposition($_GET["idProposition"])
             || $this->isAdmin()) {
             if ((new PropositionRepository)->delete($_GET["idProposition"])) {
                 (new FlashMessage())->flash("deleted", "Votre proposition a bien été supprimée", FlashMessage::FLASH_SUCCESS);
@@ -262,15 +265,24 @@ class ControllerProposition extends AbstractController
         }
     }
 
-    private function isAuteurInQuestion(int $idQuestion)
+    private function isAuteurInQuestion(int $idQuestion): bool
     {
         return (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
     }
 
-    private function isCoAuteurInQuestion(int $idQuestion)
+    private function isCoAuteurInQuestion(int $idQuestion): bool
     {
-        return (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
+        return (new CoAuteurRepository())->coAuteurIsInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
+    }
 
+    private function isCoAuteurInProposition(int $idProposition): bool
+    {
+        return (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $idProposition);
+    }
+
+    private function isAuteurOfProposition(int $idProposition): bool
+    {
+        return ConnexionUtilisateur::isUser((new PropositionRepository())->select($idProposition)->getLoginAuteur());
     }
 
 }

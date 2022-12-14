@@ -2,6 +2,7 @@
 
 namespace Themis\Model\Repository;
 
+use PDOException;
 use Themis\Model\DataObject\CoAuteur;
 
 class CoAuteurRepository extends AbstractRepository
@@ -43,13 +44,17 @@ class CoAuteurRepository extends AbstractRepository
         $sqlQuery = "SELECT isCoAuteurInProposition(:login, :idProposition)";
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-
+//        echo $sqlQuery;
         $values = array(
             'login' => $login,
             'idProposition' => $idProposition
         );
-
-        $pdoStatement->execute($values);
+//        var_dump($values);
+        try {
+            $pdoStatement->execute($values);
+        }catch (PDOException $e) {
+//            echo $e->getCode();
+        }
 
         $dataObject = $pdoStatement->fetch();
 

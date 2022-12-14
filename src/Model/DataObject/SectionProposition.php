@@ -4,18 +4,18 @@ namespace Themis\Model\DataObject;
 
 class SectionProposition extends AbstractDataObject
 {
-    private int $idSectionProposition;
+    private ?int $idSectionProposition;
     private string $texteProposition;
     private int $idSection;
     private int $idProposition;
 
     /**
-     * @param int $idSectionProposition
+     * @param int|null $idSectionProposition
      * @param string $texteProposition
      * @param int $idSection
      * @param int $idProposition
      */
-    public function __construct(int $idSectionProposition, string $texteProposition, int $idSection, int $idProposition)
+    public function __construct(?int $idSectionProposition, string $texteProposition, int $idSection, int $idProposition)
     {
         $this->idSectionProposition = $idSectionProposition;
         $this->texteProposition = $texteProposition;
@@ -75,11 +75,21 @@ class SectionProposition extends AbstractDataObject
 
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
-        return new SectionProposition(
-            (int)null,
-            $formArray['texteProposition'],
-            $formArray['idSection'],
-            $formArray['idProposition']
-        );
+        if ($formArray['idSectionProposition']) {
+            return new SectionProposition(
+                $formArray['idSectionProposition'],
+                $formArray['texteProposition'],
+                $formArray['idSection'],
+                $formArray['idProposition']
+            );
+        } else {
+            return new SectionProposition(
+                null,
+                $formArray['texteProposition'],
+                $formArray['idSection'],
+                $formArray['idProposition']
+            );
+        }
+
     }
 }

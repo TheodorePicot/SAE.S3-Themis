@@ -66,9 +66,9 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
             <?php if (ConnexionUtilisateur::isConnected() &&
                 ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())
-                    || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()))) : ?>
+                    || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())) || ConnexionUtilisateur::isAdministrator()) : ?>
                 <div class="">
-                    <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())) : ?>
+                    <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'
                            onclick="return confirm('Are you sure?');"> Supprimer</a>
                     <?php endif ?>
