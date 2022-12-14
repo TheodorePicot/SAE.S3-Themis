@@ -12,7 +12,7 @@ use Themis\Lib\FlashMessage;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo.png"/>
 
 
     <!-- css -->
@@ -94,7 +94,8 @@ use Themis\Lib\FlashMessage;
             </defs>
         </svg>
     </a>
-    <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+    <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="toggler-icon top-bar"></span>
         <span class="toggler-icon middle-bar"></span>
@@ -116,24 +117,24 @@ use Themis\Lib\FlashMessage;
 
         <ul class="nav navbar-nav ms-auto">
             <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
-            <li class="d-flex">
+                <li class="d-flex">
                     <a class="btn btn-dark text-nowrap align-self-center"
                        href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
-            </li>
+                </li>
             <?php endif ?>
             <?php if (ConnexionUtilisateur::isConnected()) : ?>
-            <li class="d-flex">
+                <li class="d-flex">
                     <a class=" btn btn-dark text-nowrap align-self-center"
                        href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
-            </li>
+                </li>
             <?php endif ?>
             <?php if (ConnexionUtilisateur::isConnected()) : ?>
-            <li>
+                <li>
                     <a class="nav-link"
                        href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
                         <img id="accountImg" alt="compte" src="assets/img/account.png">
                     </a>
-            </li>
+                </li>
             <?php endif ?>
             <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
                 <li>
@@ -143,28 +144,31 @@ use Themis\Lib\FlashMessage;
                 </li>
             <?php endif ?>
             <?php if (!ConnexionUtilisateur::isConnected()) : ?>
-                <li class="d-flex">
-                    <a class="btn btn-dark text-nowrap"
-                       href="frontController.php?action=login&controller=utilisateur">Se Connecter</a>
-
-                </li>
+                <div class="row">
+                    <li class="nav-item active">
+                        <a class="btn btn-dark col-sm-12 text-nowrap"
+                           href="frontController.php?action=login&controller=utilisateur">Se Connecter</a>
+                    </li>
+                </div>
             <?php endif ?>
             <?php if (!ConnexionUtilisateur::isConnected()) : ?>
-                <li class="nav-item active">
-                    <a class="btn btn-dark text-nowrap"
-                       href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
-                </li>
+                <div class="row">
+                    <li class="nav-item active">
+                        <a class="btn btn-dark col-sm-12 text-nowrap my-sm-2 my-lg-0 mx-lg-2"
+                           href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
+                    </li>
+                </div>
             <?php endif ?>
 
         </ul>
     </div>
-<!--        <form class="d-flex">-->
-<!--            <input class="form-control me-2" type="search" name="searchValue" placeholder="Search"-->
-<!--                   aria-label="Search">-->
-<!--            <button class="btn btn-dark text-nowrap" name='action' value='readAllBySearchValue'-->
-<!--                    type="submit">Rechercher-->
-<!--            </button>-->
-<!--        </form>-->
+    <!--        <form class="d-flex">-->
+    <!--            <input class="form-control me-2" type="search" name="searchValue" placeholder="Search"-->
+    <!--                   aria-label="Search">-->
+    <!--            <button class="btn btn-dark text-nowrap" name='action' value='readAllBySearchValue'-->
+    <!--                    type="submit">Rechercher-->
+    <!--            </button>-->
+    <!--        </form>-->
 
 
     </div>
