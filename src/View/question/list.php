@@ -12,7 +12,7 @@
                 <li><a class="dropdown-item" href="frontController.php?action=readAllCurrentlyInVoting">Questions en cours de
                         vote</a></li>
                 <li><a class="dropdown-item" href="frontController.php?action=readAllFinished">Questions terminées</a></li>
-                <li><a class="dropdown-item" href="frontController.php?action=readAllByAlphabeticalOrder">Par Ordre Trié</a></li>
+                <li><a class="dropdown-item" href="frontController.php?action=readAllByAlphabeticalOrder">Par Ordre Alphabétique</a></li>
 
             </ul>
         </div>
