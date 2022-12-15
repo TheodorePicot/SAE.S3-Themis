@@ -1,27 +1,5 @@
 <?php
 
-use Themis\Lib\ConnexionUtilisateur;
-use Themis\Model\Repository\AuteurRepository;
-
-?>
-
-    <div class="d-flex align-content-center justify-content-center">
-
-
-    </div>
-
-<?php
-
-if (ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]) &&
-    ($question->getDateDebutProposition() <= date("d-m-y h:i:s") && date("d-m-y h:i:s") < $question->getDateFinProposition())) : ?>
-    <div class="d-flex align-content-center justify-content-center my-3">
-        <a class="btn btn-dark text-nowrap"
-           href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
-            Ajouter une proposition</a>
-    </div>
-<?php endif ?>
-<?php
-
 $count = 1;
 $valGagnante = 0;
 $hasPrintedAutrePropo = false;

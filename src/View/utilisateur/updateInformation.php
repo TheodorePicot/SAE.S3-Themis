@@ -61,7 +61,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
                 <input type='hidden' name='controller' value='utilisateur'>
                 <div class="d-flex align-content-center justify-content-center">
 
-                    <input class="btn btn-dark" type="submit" value="Envoyer"/>
+                    <input class="btn btn-dark" type="submit" value="Mettre à jour"/>
                 </div>
             </div>
 

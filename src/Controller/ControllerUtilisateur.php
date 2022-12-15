@@ -201,6 +201,8 @@ class ControllerUtilisateur extends AbstractController
     {
         if (ConnexionUtilisateur::isUser($_GET["login"])) {
             if ((new UtilisateurRepository)->delete($_GET['login'])) {
+                $this->connectionCheck();
+                ConnexionUtilisateur::disconnect();
                 (new FlashMessage())->flash("deleted", "Votre compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
             } else {
                 (new FlashMessage())->flash("deleteFailed", "erreur de suppréssion de votre compte", FlashMessage::FLASH_DANGER);

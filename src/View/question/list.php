@@ -27,7 +27,7 @@
                 <div class="nestedDivQuestion overflow-hidden text-center">
                     <a class="lienQuestion btn m-3" href="<?= $hrefRead ?>">
                         <h3><?= $titreQuestionHTML ?></h3>
-                        <p><?= $question->getShortDescriptionQuestion() ?></p>
+                        <p><?= $parser->text($question->getShortDescriptionQuestion()) ?></p>
                     </a>
                 </div>
             </div>

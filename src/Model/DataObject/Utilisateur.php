@@ -185,7 +185,7 @@ class Utilisateur extends AbstractDataObject
             $formArray['login'],
             $formArray['nom'],
             $formArray['prenom'],
-            "",
+            $formArray['adresseMail'],
             $formArray['dateNaissance'],
             PassWord::hash($formArray['mdp']),
             0,

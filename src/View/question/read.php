@@ -29,7 +29,7 @@ $date = date_create();
         <div class="container-fluid col-md-12 col-lg-8">
             <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
                 <div class="mx-2">
-                    <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
+                    <?= $parser->text(htmlspecialchars($question->getDescriptionQuestion())) ?>
                 </div>
             </div>
 
@@ -139,8 +139,11 @@ $date = date_create();
         if (ConnexionUtilisateur::isConnected() && (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting()) &&
             (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion()) &&
             $date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote())) : ?>
-            <a class="btn btn-dark text-nowrap"
+        <div class="d-flex align-content-center justify-content-center my-3">
+            <a class="btn btn-dark text-nowrap w-25"
                href="frontController.php?controller=vote&action=vote&idQuestion=<?= $question->getIdQuestion() ?>">Voter</a>
+        </div>
+
         <?php endif ?>
     </div>
 </div>

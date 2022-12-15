@@ -1,0 +1,16 @@
+{
+  "name": "vendor_name/sae.s3-themis",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "theod",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "erusev/parsedown": "^1.6",
+    "ext-http": "*"
+  }
+}
