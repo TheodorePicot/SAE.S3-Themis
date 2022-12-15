@@ -42,7 +42,7 @@ $parser->setBreaksEnabled(true);
         crossorigin="anonymous"></script>
 
 
-<nav class="navbar  navbar-expand-lg navbar-light mx-5 fs-5">
+<nav class="navbar navbar-expand-lg navbar-light mx-5 fs-5">
     <a href="frontController.php" class="navbar-brand mb-0 h1">
         <svg width="60" height="60" viewBox="0 0 83 83" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_54_125)">
