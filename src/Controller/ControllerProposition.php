@@ -95,8 +95,10 @@ class ControllerProposition extends AbstractController
         }
     }
 
-    private function readAuxiliary($question, $proposition)
+    public function read(): void
     {
+        $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
+        $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
         $coAuteurs = (new CoAuteurRepository())->selectAllByProposition($proposition->getIdProposition());
 
@@ -110,33 +112,9 @@ class ControllerProposition extends AbstractController
         ]);
     }
 
-    public function read(): void
+    public function readByQuestion(): void
     {
-        $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
-        $question = (new QuestionRepository)->select($proposition->getIdQuestion());
-        if (ConnexionUtilisateur::isConnected()) {
-            if ($this->isAuteurInQuestion($_GET["idQuestion"]) && $this->isAuteurOfProposition($_GET["idProposition"])
-                || $this->isCoAuteurInProposition($_GET["idProposition"])
-                || $this->isAdmin()
-                || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
-                    && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))) {
-                $this->readAuxiliary($question, $proposition);
-            } else {
-                (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès à cette proposition", FlashMessage::FLASH_DANGER);
-                $this->redirect("frontController.php?action=readAll");
-            }
-        } else {
-            if ((in_array($question, (new QuestionRepository())->selectAllFinished()))) {
-                $this->readAuxiliary($question, $proposition);
-            } else {
-                (new FlashMessage())->flash("readFailed", "Vous n'avez pas accès à cette question", FlashMessage::FLASH_DANGER);
-                $this->redirect("frontController.php?action=readAll");
-            }
-        }
-    }
-
-    private function readByQuestionAuxiliary(): void
-    {
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
         $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
 
         $this->showView("view.php", [
@@ -144,30 +122,6 @@ class ControllerProposition extends AbstractController
             "pageTitle" => "Info Proposition",
             "pathBodyView" => "proposition/listByQuestion.php"
         ]);
-    }
-
-    public function readByQuestion(): void
-    {
-        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
-        if (ConnexionUtilisateur::isConnected()) {
-            if ($this->isAuteurInQuestion($_GET["idQuestion"])
-                || $this->isCoAuteurInQuestion($_GET["idQuestion"])
-                || $this->isAdmin()
-                || (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting())
-                    && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]))) {
-                $this->readByQuestionAuxiliary();
-            } else {
-                (new FlashMessage())->flash("createFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
-                $this->redirect("frontController.php?action=readAll");
-            }
-        } else {
-            if ((in_array($question, (new QuestionRepository())->selectAllFinished()))) {
-                $this->readByQuestionAuxiliary();
-            } else {
-                (new FlashMessage())->flash("readFailed", "Vous n'avez pas accès à cette question", FlashMessage::FLASH_DANGER);
-                $this->redirect("frontController.php?action=readAll");
-            }
-        }
     }
 
     public function updated(): void

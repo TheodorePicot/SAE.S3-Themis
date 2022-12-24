@@ -16,9 +16,6 @@ if (isset($_GET['controller'])){
     $controller = $_GET['controller'];
 }
 
-
-
-
 $controllerClassName = "Themis\Controller\Controller" . ucfirst($controller);
 
 $controllerClassObject = new $controllerClassName();

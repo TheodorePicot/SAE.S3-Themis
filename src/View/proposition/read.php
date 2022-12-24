@@ -14,7 +14,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
 <!--    QUESTION + PROPOSITION + DELETE UPDATE-->
 <div class="d-flex align-content-center justify-content-center">
-    <h1> Proposition pour : <?= htmlspecialchars($question->getTitreQuestion()) ?></h1>
+    <h1> Proposition pour : <?= htmlspecialchars($question->getTitreQuestion()) ?> - <?= $proposition->getLoginAuteur() ?></h1>
 </div>
 
 <div class='container-fluid'>
@@ -27,7 +27,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
             <div class="my-4">
                 <h2>Titre de la proposition</h2>
-                <p><?= $proposition->getTitreProposition() ?> - <?= $proposition->getLoginAuteur() ?></p>
+                <p><?= $proposition->getTitreProposition() ?></p>
             </div>
 
             <h2>Sections</h2>
