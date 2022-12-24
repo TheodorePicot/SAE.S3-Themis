@@ -4,7 +4,7 @@
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
 
-require __DIR__ ."/../../vendor/autoload.php";
+require __DIR__ . "/../../vendor/autoload.php";
 $parser = new Parsedown();
 $parser->setBreaksEnabled(true);
 
@@ -29,7 +29,7 @@ $parser->setBreaksEnabled(true);
     <title><?= $pageTitle ?></title>
 </head>
 
-<body <?php if (isset($_GET["action"]) && $_GET["action"] == "login") echo 'id="bodyLogin"'?>>
+<body <?php if (isset($_GET["action"]) && $_GET["action"] == "login") echo 'id="bodyLogin"' ?>>
 <!-- Optional JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -139,8 +139,9 @@ $parser->setBreaksEnabled(true);
             <?php if (ConnexionUtilisateur::isConnected()) : ?>
                 <div class="row">
                     <li class="nav-item active">
-                        <a class="nav-link"
+                        <a class="nav-link mx-1"
                            href="frontController.php?action=read&controller=utilisateur&login=<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+                            <?= ConnexionUtilisateur::getConnectedUserLogin() ?>
                             <img id="accountImg" alt="compte" src="assets/img/account.png">
                         </a>
                     </li>
@@ -172,16 +173,6 @@ $parser->setBreaksEnabled(true);
                 </div>
             <?php endif ?>
         </ul>
-    </div>
-    <!--        <form class="d-flex">-->
-    <!--            <input class="form-control me-2" type="search" name="searchValue" placeholder="Search"-->
-    <!--                   aria-label="Search">-->
-    <!--            <button class="btn btn-dark text-nowrap" name='action' value='readAllBySearchValue'-->
-    <!--                    type="submit">Rechercher-->
-    <!--            </button>-->
-    <!--        </form>-->
-
-
     </div>
 
 

@@ -6,7 +6,7 @@
             <form method="get" action="frontController.php">
                 <fieldset>
                     <div class="d-flex align-content-center justify-content-center">
-                        <h1 class="display-3"> Bienvenue sur Themis</h1>
+                        <h1 class="display-3">Themis</h1>
                     </div>
                     <div class="my-4">
                         <input type="hidden" name="controller" value="utilisateur">
