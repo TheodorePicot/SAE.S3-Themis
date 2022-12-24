@@ -2,19 +2,12 @@ nav li {
     padding: 0 20px;
 }
 
-nav a:after {
-    content: '';
-    width: 0;
-    height: 1px;
-    background-color: black;
-    margin: auto;
-    display: block;
+
+nav ul li a:hover {
+    color: #0d6efd;
 }
 
-nav ul a:hover::after {
-    width: 100%;
-    transition: width 0.2s linear;
-}
+
 
 body {
     /*background-color: #fdf7f2;*/
@@ -31,10 +24,6 @@ body {
     background: radial-gradient(circle, rgba(210, 187, 161, 1) 0%, rgba(189, 183, 221, 1) 100%);
 }
 
-a {
-    text-decoration: none;
-    color: black;
-}
 
 /*CSS QUESTIONS*/
 
@@ -63,11 +52,6 @@ a {
     /*width: 400px;*/
 }
 
-.wrapper {
-    background: #c7b198;
-    padding: 2rem;
-    border-radius: 15px;
-}
 
 .sessions {
     margin-top: 2rem;
@@ -242,4 +226,5 @@ a {
     margin-top: 20px;
     transform: rotate(0deg);
 }
+
 
