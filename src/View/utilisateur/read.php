@@ -10,9 +10,8 @@ $hrefUpdateInformation = "frontController.php?action=updateInformation&controlle
 $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=utilisateur&login=" . $utilisateurInURL;
 ?>
 
-
 <div class="container-fluid">
-    <div class="offset-2 offset-lg-4 row my-5">
+    <div class="offset-2 offset-lg-3 row my-5">
         <div class="col col-lg-12 my-5">
             <h3>
                 <img id="accountImgPage" alt="compte" src="assets/img/account.png">
@@ -54,31 +53,28 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
         </div>
 
 
-<!--        <div class="">-->
-<!--        <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"-->
-<!--           aria-expanded="false" aria-controls="multiCollapseExample1">Mes questions</a>-->
-<!--        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"-->
-<!--                data-bs-target="#multiCollapseExample2" aria-expanded="false"-->
-<!--                aria-controls="multiCollapseExample2">Mes propositions-->
-<!--        </button>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="col-6 ">-->
-<!--            <div class="collapse multi-collapse col-lg-12 my-5" id="multiCollapseExample1">-->
-<!--                <div class="card card-body">-->
-<!--                    En cours-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="collapse multi-collapse " id="multiCollapseExample2">-->
-<!--                <div class="card card-body">-->
-<!--                    En cours-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="">
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
+               aria-expanded="false" aria-controls="multiCollapseExample1">Mes questions</a>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#multiCollapseExample2" aria-expanded="false"
+                    aria-controls="multiCollapseExample2">Mes propositions
+            </button>
+        </div>
 
+        <div class="col-6 ">
+            <div class="collapse multi-collapse col-lg-12 my-5" id="multiCollapseExample1">
+                <div class="card card-body">
+                    <?php require_once __DIR__ . "/../question/listByUserForRead.php" ?>
+                </div>
+            </div>
 
-
+            <div class="collapse multi-collapse " id="multiCollapseExample2">
+                <div class="card card-body">
+                    <?php require_once __DIR__ . "/../proposition/listByUserForRead.php" ?>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-12 my-5">
             <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
                 <a class="btn btn-dark text-nowrap mx-1 " href='<?= $hrefDelete ?>'> Supprimer</a>
@@ -86,7 +82,11 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 
             <?php endif ?>
             <?php if (ConnexionUtilisateur::isUser($utilisateurInURL)) : ?>
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdatePassword ?>'> Modifier mot de passe</a>
+                <a class="btn btn-dark text-nowrap my-2" href='<?= $hrefUpdatePassword ?>'> Modifier mot de passe</a>
+            <?php endif ?>
+            <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
+                <a class="btn btn-dark text-nowrap mx-1"
+                   href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
             <?php endif ?>
         </div>
 

@@ -7,6 +7,8 @@ use Themis\Lib\FlashMessage;
 use Themis\Lib\PassWord;
 use Themis\Lib\VerificationEmail;
 use Themis\Model\DataObject\Utilisateur;
+use Themis\Model\Repository\PropositionRepository;
+use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 
 class ControllerUtilisateur extends AbstractController
@@ -65,8 +67,12 @@ class ControllerUtilisateur extends AbstractController
         $this->connectionCheck();
         if (ConnexionUtilisateur::isUser($_GET["login"]) || $this->isAdmin()) {
             $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
+            $questions = (new QuestionRepository())->selectAllByUser($_GET["login"]);
+            $propositions = (new PropositionRepository())->selectAllByUser($_GET['login']);
             $this->showView("view.php", [
                 "utilisateur" => $utilisateur,
+                "questions" => $questions,
+                "propositions" => $propositions,
                 "pageTitle" => "Info Utilisateur",
                 "pathBodyView" => "utilisateur/read.php"
             ]);
@@ -123,10 +129,10 @@ class ControllerUtilisateur extends AbstractController
             $formArray["estAdmin"] = 0;
             if ($this->isAdmin()) {
                 if (isset($_GET["estOrganisateur"])) {
-                    $formArray["estOrganisateur"] = $_GET["estOrganisateur"] == "on"?1:0;
+                    $formArray["estOrganisateur"] = $_GET["estOrganisateur"] == "on" ? 1 : 0;
                 }
                 if (isset($_GET["estAdmin"])) {
-                    $formArray["estAdmin"] = $_GET["estAdmin"] == "on"?1:0;
+                    $formArray["estAdmin"] = $_GET["estAdmin"] == "on" ? 1 : 0;
                 }
                 (new UtilisateurRepository())->updateInformation($formArray);
             } elseif ($this->isOrganisateur()) {
@@ -190,8 +196,7 @@ class ControllerUtilisateur extends AbstractController
                 "pageTitle" => "Info Utilisateur",
                 "pathBodyView" => "utilisateur/updatePassword.php"
             ]);
-        }
-        else {
+        } else {
             (new FlashMessage)->flash("noAccess", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }

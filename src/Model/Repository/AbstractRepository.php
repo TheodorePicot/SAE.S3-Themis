@@ -59,9 +59,9 @@ abstract class AbstractRepository
     }
 
     /**
-     * Cette fonction nous permet de prendre les attributs bruts, dans une liste, donnés par un utilisateur.
+     * Cette fonction permet de prendre les attributs bruts, dans une liste, donnés par un utilisateur.
      * Nous transformons cette liste possédant les attributs en DataObject.
-     * Cela nous permet de manipuler les données.
+     * Cela permet de manipuler les données.
      * @param array $objectArrayFormat
      * @return AbstractDataObject
      */

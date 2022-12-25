@@ -120,22 +120,14 @@ $parser->setBreaksEnabled(true);
         <!--        ELEMENTS A DROITE DE LA NAVBAR-->
 
         <ul class="nav navbar-nav ms-auto">
-            <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
-                <div class="row">
-                    <li class="nav-item active d-flex">
-                        <a class="btn btn-dark col-sm-12 text-nowrap align-self-center"
-                           href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
-                    </li>
-                </div>
-            <?php endif ?>
-            <?php if (ConnexionUtilisateur::isConnected()) : ?>
-                <div class="row">
-                    <li class="nav-item active d-flex">
-                        <a class="btn btn-dark col-sm-12 text-nowrap my-sm-2 my-lg-0 mx-lg-2 align-self-center"
-                           href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
-                    </li>
-                </div>
-            <?php endif ?>
+<!--            --><?php //if (ConnexionUtilisateur::isAdministrator()) : ?>
+<!--                <div class="row">-->
+<!--                    <li class="nav-item active d-flex">-->
+<!--                        <a class="btn btn-dark col-sm-12 text-nowrap align-self-center"-->
+<!--                           href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>-->
+<!--                    </li>-->
+<!--                </div>-->
+<!--            --><?php //endif ?>
             <?php if (ConnexionUtilisateur::isConnected()) : ?>
                 <div class="row">
                     <li class="nav-item active">
@@ -146,11 +138,20 @@ $parser->setBreaksEnabled(true);
                         </a>
                     </li>
                 </div>
+            <?php endif ?> 
+            <?php if (ConnexionUtilisateur::isConnected()) : ?>
+                <div class="row">
+                    <li class="nav-item active d-flex">
+                        <a class="btn btn-dark col-sm-12 text-nowrap my-sm-2 my-lg-0 mx-lg-2 align-self-center"
+                           href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
+                    </li>
+                </div>
             <?php endif ?>
+
             <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
                 <div class="row">
                     <li class="nav-item active">
-                        <a class="nav-link"
+                        <a class="nav-link mx-1"
                            href="frontController.php?action=readAll&controller=utilisateur">
                             <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>
                     </li>

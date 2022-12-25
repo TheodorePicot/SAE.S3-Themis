@@ -33,8 +33,6 @@
 
 
 
-
-
     <div class="row mx-5 my-5 gy-4 gx-5">
 
         <?php foreach ($questions as $question) :
