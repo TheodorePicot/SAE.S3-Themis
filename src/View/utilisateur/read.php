@@ -88,6 +88,11 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
                 <a class="btn btn-dark text-nowrap mx-1"
                    href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
             <?php endif ?>
+            <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
+                <a class="nav-link"
+                   href="frontController.php?action=readAll&controller=utilisateur">
+                    <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>
+            <?php endif ?>
         </div>
 
 
