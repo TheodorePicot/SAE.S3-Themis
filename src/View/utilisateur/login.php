@@ -31,7 +31,7 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
                         <input type='hidden' name='action' value='connect'>
                         <input type='hidden' name='controller' value='utilisateur'>
                         <div class="d-flex align-content-center justify-content-center my-5">
-                            <button class="btnLogin btn btn-lg btn-dark bg-transparent" type="submit"> Se connecter
+                            <button class="btn btn-lg btn-dark" type="submit">Se connecter
                             </button>
                         </div>
                         <p class="d-flex align-content-center justify-content-center">

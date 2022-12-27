@@ -12,8 +12,8 @@ a:hover {
 }
 
 body {
-    background: rgb(237, 222, 206);
-    background: radial-gradient(circle, rgba(237, 222, 206, 1) 15%, rgba(235, 213, 221, 1) 100%);
+    background: rgb(253,247,242);
+    background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(215,199,187,1) 100%);
     /*background: rgb(253, 247, 242);*/
     /*background: radial-gradient(circle, rgba(253, 247, 242, 1) 0%, rgba(228, 216, 202, 1) 100%);*/
     /*padding-top: 70px;*/
@@ -147,13 +147,6 @@ body {
     width: 50px;
 }
 
-.btnLogin {
-    color: black;
-}
-
-.btnLogin:hover {
-    color: black;
-}
 
 /*BURGER MENU*/
 
@@ -241,16 +234,13 @@ mark {
         margin-left: auto;
         margin-right: auto;
         width: 8em;
-
-
     }
 }
 
 .btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
-    background-color: #231e19 !important;
+    background-color: #5f5651 !important;
 }
 
 .btn-dark {
     border:  #958678 !important;
-
 }
