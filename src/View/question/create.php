@@ -4,7 +4,7 @@ use Themis\Lib\ConnexionUtilisateur;
 
 ?>
 
-<form method="get" action="frontController.php" xmlns="http://www.w3.org/1999/html">
+<form method="post" action="frontController.php?action=created" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <div class="d-flex align-content-center justify-content-center">
             <h1>Créer une Question</h1>
@@ -75,7 +75,7 @@ use Themis\Lib\ConnexionUtilisateur;
             </div>
         </div>
 
-        <input type='hidden' name='action' value='created'>
+<!--        <input type='hidden' name='action' value='created'>-->
         <input type="hidden" name="loginOrganisateur" value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
 
 

@@ -8,7 +8,6 @@ use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\Section;
 use Themis\Model\Repository\AuteurRepository;
-use Themis\Model\Repository\CoAuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
@@ -23,19 +22,19 @@ class ControllerQuestion extends AbstractController
         $this->connectionCheck();
         if (!$this->isAdmin()) {
             $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 minute"));
-            if ($dateOneDay->format("Y-m-d H:i:s") >= $_GET['dateDebutProposition']) {
+            if ($dateOneDay->format("Y-m-d H:i:s") >= $_POST['dateDebutProposition']) {
                 (new FlashMessage())->flash("createdProblem", "Il faut au moins une minute de préparation pour la question", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
-            if (!($_GET['dateDebutProposition'] < $_GET['dateFinProposition'] && $_GET['dateFinProposition'] < $_GET['dateDebutVote'] && $_GET['dateDebutVote'] < $_GET['dateFinVote'])) {
+            if (!($_POST['dateDebutProposition'] < $_POST['dateFinProposition'] && $_POST['dateFinProposition'] < $_POST['dateDebutVote'] && $_POST['dateDebutVote'] < $_POST['dateFinVote'])) {
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
         }
-        if ($this->isOrganisateurOfQuestion($_GET["loginOrganisateur"])
+        if ($this->isOrganisateurOfQuestion($_POST["loginOrganisateur"])
             && $this->isOrganisateur()
             || $this->isAdmin()) {
-            (new QuestionRepository())->create(Question::buildFromForm($_GET));
+            (new QuestionRepository())->create(Question::buildFromForm($_POST));
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             $this->createParticipants($idQuestion);
@@ -44,6 +43,7 @@ class ControllerQuestion extends AbstractController
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
+        var_dump($_POST);
     }
 
     public function create(): void
@@ -65,12 +65,12 @@ class ControllerQuestion extends AbstractController
 
     private function createParticipants(int $idQuestion)
     {
-        foreach ($_GET["votants"] as $votant) {
+        foreach ($_POST["votants"] as $votant) {
             $votantObject = new Participant($votant, $idQuestion);
             (new VotantRepository)->create($votantObject);
         }
 
-        foreach ($_GET["auteurs"] as $auteur) {
+        foreach ($_POST["auteurs"] as $auteur) {
             $auteurObject = new Participant($auteur, $idQuestion);
             (new AuteurRepository)->create($auteurObject);
         }

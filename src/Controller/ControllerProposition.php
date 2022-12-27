@@ -15,7 +15,6 @@ use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionPropositionRepository;
 use Themis\Model\Repository\SectionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
-use Themis\Model\Repository\VotantRepository;
 
 class ControllerProposition extends AbstractController
 {

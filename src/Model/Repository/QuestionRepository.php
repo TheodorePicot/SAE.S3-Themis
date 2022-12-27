@@ -76,7 +76,7 @@ class QuestionRepository extends AbstractRepository
         return $dataObjects;
     }
 
-    public function selectAllByUser(string $login): array //TODO vérifier si string !!
+    public function selectAllByUser(string $login): array
     {
         $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"loginOrganisateur" = ?';
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
