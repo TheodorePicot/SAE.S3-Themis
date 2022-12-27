@@ -133,15 +133,15 @@ $parser->setBreaksEnabled(true);
                         </li>
                     </div>
                 <?php endif ?>
-                <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
-                    <div class="row">
-                        <li class="nav-item active text-center mx-auto">
-                            <a class="nav-link"
-                               href="frontController.php?action=readAll&controller=utilisateur">
-                                <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>
-                        </li>
-                    </div>
-                <?php endif ?>
+<!--                --><?php //if (ConnexionUtilisateur::isAdministrator()) : ?>
+<!--                    <div class="row">-->
+<!--                        <li class="nav-item active text-center mx-auto">-->
+<!--                            <a class="nav-link"-->
+<!--                               href="frontController.php?action=readAll&controller=utilisateur">-->
+<!--                                <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>-->
+<!--                        </li>-->
+<!--                    </div>-->
+<!--                --><?php //endif ?>
                 <?php if (ConnexionUtilisateur::isConnected()) : ?>
                     <div class="row">
                         <li class="nav-item active d-flex justify-content-center mx-auto">
