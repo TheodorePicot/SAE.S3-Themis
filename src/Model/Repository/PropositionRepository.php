@@ -26,7 +26,7 @@ class PropositionRepository extends AbstractRepository
         return $propositions;
     }
 
-    public function selectAllByUser(string $login): array //TODO vérifier
+    public function selectAllByUser(string $login): array
     {
         $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"loginAuteur" = ?';
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
