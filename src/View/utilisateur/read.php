@@ -53,7 +53,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
         </div>
 
 
-        <div class="">
+        <div class="my-3">
             <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
                aria-expanded="false" aria-controls="multiCollapseExample1">Mes questions</a>
             <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
@@ -62,7 +62,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
             </button>
         </div>
 
-        <div class="col-6 ">
+        <div class="col-6">
             <div class="collapse multi-collapse col-lg-12 my-5" id="multiCollapseExample1">
                 <div class="card card-body">
                     <?php require_once __DIR__ . "/../question/listByUserForRead.php" ?>

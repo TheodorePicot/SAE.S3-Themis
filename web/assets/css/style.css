@@ -238,9 +238,10 @@ mark {
 }
 
 .btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
-    background-color: #5f5651 !important;
+    background-color: #7f7164 !important;
 }
 
 .btn-dark {
-    border:  #958678 !important;
+    border: #927b81 !important;
 }
+
