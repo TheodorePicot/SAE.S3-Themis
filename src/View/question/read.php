@@ -27,7 +27,7 @@ $date = date_create();
 
     <div class="row my-5 my-4 gy-4 container-fluid">
         <div class="container-fluid col-md-12 col-lg-8">
-            <div class="shadowBox card card-body border-0 rounded-4" style="background: #C7B198;">
+            <div class="shadowBox card card-body border-0 rounded-4">
                 <div class="mx-2">
                     <?= $parser->text(htmlspecialchars($question->getDescriptionQuestion())) ?>
                 </div>
@@ -37,9 +37,9 @@ $date = date_create();
                 <?php require_once __DIR__ . "/../section/listByQuestionForRead.php" ?>
             </div>
 
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
+            <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
                aria-expanded="false" aria-controls="multiCollapseExample1">Auteurs</a>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+            <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
                     data-bs-target="#multiCollapseExample2" aria-expanded="false"
                     aria-controls="multiCollapseExample2">Votants
             </button>

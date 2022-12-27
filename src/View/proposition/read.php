@@ -68,7 +68,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
             <?php if (ConnexionUtilisateur::isConnected() &&
                 ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())
                     || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) || ConnexionUtilisateur::isAdministrator()) : ?>
-                <div class="">
+                <div class="my-2">
                     <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())  &&
                         ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'

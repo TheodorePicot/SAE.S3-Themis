@@ -30,7 +30,7 @@ if(ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpant
         <div class="nestedDivQuestion overflow-hidden text-start">
             <a id="containerQuestion" href="<?= $hrefRead ?>">
                 <div class="mx-3">
-                    <h3><?= $titrePropositionHTML ?></h3>
+                    <h4><?= $titrePropositionHTML ?></h4>
                 </div>
             </a>
         </div>

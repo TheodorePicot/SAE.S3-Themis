@@ -54,9 +54,9 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 
 
         <div class="">
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
+            <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
                aria-expanded="false" aria-controls="multiCollapseExample1">Mes questions</a>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+            <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
                     data-bs-target="#multiCollapseExample2" aria-expanded="false"
                     aria-controls="multiCollapseExample2">Mes propositions
             </button>

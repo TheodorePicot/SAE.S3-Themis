@@ -2,26 +2,32 @@ nav li {
     padding: 0 20px;
 }
 
-
-nav ul li a:hover {
-    color: #0d6efd;
+a {
+    color: #4f4343;
+    text-decoration: none;
 }
 
-
+a:hover {
+    color: #5f564d;
+}
 
 body {
-    /*background-color: #fdf7f2;*/
-    /*height: 100%;*/
-    /*width: 100%;*/
-    background: rgb(253, 247, 242);
-    background: radial-gradient(circle, rgba(253, 247, 242, 1) 0%, rgba(228, 216, 202, 1) 100%);
+    background: rgb(237, 222, 206);
+    background: radial-gradient(circle, rgba(237, 222, 206, 1) 15%, rgba(235, 213, 221, 1) 100%);
+    /*background: rgb(253, 247, 242);*/
+    /*background: radial-gradient(circle, rgba(253, 247, 242, 1) 0%, rgba(228, 216, 202, 1) 100%);*/
     /*padding-top: 70px;*/
 
 }
 
 #bodyLogin {
-    background: rgb(210, 187, 161);
-    background: radial-gradient(circle, rgba(210, 187, 161, 1) 0%, rgba(189, 183, 221, 1) 100%);
+    background: rgb(236, 223, 209);
+    background: radial-gradient(circle, rgba(236, 223, 209, 1) 15%, rgba(233, 202, 227, 1) 100%);
+}
+
+#bodyCreateUser {
+    background: rgb(236, 223, 209);
+    background: radial-gradient(circle, rgba(236, 223, 209, 1) 15%, rgba(233, 202, 227, 1) 100%);
 }
 
 
@@ -29,9 +35,10 @@ body {
 
 /*FORMULAIRE CREER QUESTION*/
 
+
 .form-control {
-    box-shadow: 4px 3px 8px 1px #c7b198;
-    border: #C7B198 10px;
+    box-shadow: 4px 3px 8px 1px #dacac1;
+    border: #d8c7b4 10px;
 }
 
 .form-select {
@@ -40,8 +47,6 @@ body {
 
 }
 
-
-/*CALENDRIER*/
 
 .containerTime {
 
@@ -94,19 +99,16 @@ body {
 
 .nestedDivQuestion {
     height: 195px;
-
-    background: rgb(230, 202, 171);
-    background: radial-gradient(circle, rgba(230, 202, 171, 1) 0%, rgba(199, 177, 152, 1) 100%);
-    /*background-color: #C7B198;*/
+    background: rgb(205, 184, 171);
+    background: radial-gradient(circle, rgba(205, 184, 171, 1) 15%, rgba(199, 177, 152, 1) 100%);
     box-shadow: 4px 3px 8px 1px #969696;
-    /*background-image: linear-gradient(to bottom, rgba(30, 87, 153, 0.2) 0%, rgba(125, 185, 232, 0) 100%);*/
-    /*background-repeat: repeat;*/
     border-radius: 10px;
     padding: 5px;
 }
 
 .shadowBox {
-    background-color: #C7B198;
+    background: rgb(205, 184, 171);
+    background: radial-gradient(circle, rgba(205, 184, 171, 1) 15%, rgba(199, 177, 152, 1) 100%);
     box-shadow: 4px 3px 8px 1px #969696;
     /*background-image: linear-gradient(to bottom, rgba(30, 87, 153, 0.2) 0%, rgba(125, 185, 232, 0) 100%);*/
     /*background-repeat: repeat;*/
@@ -118,6 +120,8 @@ body {
 
 .boxProposition {
     height: 50px;
+    background: rgb(209, 192, 175);
+    background: radial-gradient(circle, rgba(209, 192, 175, 1) 15%, rgba(206, 183, 167, 1) 100%);
 }
 
 
@@ -153,7 +157,7 @@ body {
 
 /*BURGER MENU*/
 
-.navbar-toggler{
+.navbar-toggler {
     width: 20px;
     height: 50px;
     position: relative;
@@ -165,18 +169,18 @@ body {
 .navbar-toggler,
 .navbar-toggler:focus,
 .navbar-toggler:active,
-.navbar-toggler-icon:focus{
+.navbar-toggler-icon:focus {
     outline: none;
     box-shadow: none;
     border: 0;
 }
 
-.navbar-toggler span{
+.navbar-toggler span {
     margin: 0px;
     padding: 0px;
 }
 
-.toggler-icon{
+.toggler-icon {
     display: block;
     position: absolute;
     height: 3px;
@@ -189,42 +193,64 @@ body {
     transition: .35s ease-in-out;
 }
 
-.middle-bar{
+.middle-bar {
     margin-top: 0px;
 }
 
 /*when navigation is clicked*/
 
-.navbar-toggler .top-bar{
+.navbar-toggler .top-bar {
     margin-top: 0px;
     transform: rotate(135deg);
 }
 
-.navbar-toggler .middle-bar{
+.navbar-toggler .middle-bar {
     opacity: 0;
     filter: alpha(opacity=0);
 }
 
-.navbar-toggler .bottom-bar{
+.navbar-toggler .bottom-bar {
     margin-top: 0px;
     transform: rotate(-135deg);
 }
 
 /*when the navbar is collapsed*/
 
-.navbar-toggler.collapsed .top-bar{
+.navbar-toggler.collapsed .top-bar {
     margin-top: -20px;
     transform: rotate(0deg);
 }
 
-.navbar-toggler.collapsed .middle-bar{
+.navbar-toggler.collapsed .middle-bar {
     opacity: 1;
     filter: alpha(opacity=100);
 }
 
-.navbar-toggler.collapsed .bottom-bar{
+.navbar-toggler.collapsed .bottom-bar {
     margin-top: 20px;
     transform: rotate(0deg);
 }
 
+mark {
+    background-color: #ceb8a8;
+    color: black;
+}
 
+@media (max-width: 767px) {
+    .nav-item {
+        margin-left: auto;
+        margin-right: auto;
+        width: 8em;
+
+
+    }
+}
+
+.btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
+    background-color: #231e19 !important;
+}
+
+.btn-dark {
+    border:  #958678 !important;
+
+}
