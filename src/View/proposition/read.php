@@ -3,7 +3,6 @@
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\CoAuteurRepository;
-use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\SectionPropositionRepository;
 
 $idPropositionInURL = rawurlencode($proposition->getIdProposition());
@@ -14,7 +13,8 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 
 <!--    QUESTION + PROPOSITION + DELETE UPDATE-->
 <div class="d-flex align-content-center justify-content-center">
-    <h1> Proposition pour : <?= htmlspecialchars($question->getTitreQuestion()) ?> - <?= $proposition->getLoginAuteur() ?></h1>
+    <h1> Proposition pour : <?= htmlspecialchars($question->getTitreQuestion()) ?>
+        - <?= $proposition->getLoginAuteur() ?></h1>
 </div>
 
 <div class='container-fluid'>
@@ -35,9 +35,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
             <div class="my-4">
                 <?php
                 $count = 1;
-                foreach ($sections
-
-                as $section) : ?>
+                foreach ($sections as $section) : ?>
                 <div class="my-4">
 
                     <h3><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h3>
@@ -48,9 +46,9 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
                     <div class="my-4">
                         <h4>Proposition pour la section <?= $count ?> : </h4>
                         <p><?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></p>
-                        <?php $count++;
-                        endforeach; ?>
                     </div>
+                    <?php $count++;
+                    endforeach; ?>
                 </div>
             </div>
 
@@ -69,7 +67,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
                 ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())
                     || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) || ConnexionUtilisateur::isAdministrator()) : ?>
                 <div class="my-2">
-                    <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())  &&
+                    <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) &&
                         ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'
                            onclick="return confirm('Are you sure?');"> Supprimer</a>
