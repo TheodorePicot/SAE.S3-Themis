@@ -153,16 +153,16 @@ $parser->setBreaksEnabled(true);
 
                 <?php if (!ConnexionUtilisateur::isConnected()) : ?>
                     <div class="row">
-                        <li class="nav-item active">
-                            <a class="btn btn-dark col-sm-12 text-nowrap"
+                        <li class="nav-item active d-flex justify-content-center mx-auto">
+                            <a class="btn btn-dark text-nowrap align-self-center"
                                href="frontController.php?action=login&controller=utilisateur">Se Connecter</a>
                         </li>
                     </div>
                 <?php endif ?>
                 <?php if (!ConnexionUtilisateur::isConnected()) : ?>
                     <div class="row">
-                        <li class="nav-item active">
-                            <a class="btn btn-dark col-sm-12 text-nowrap my-sm-2 my-lg-0 mx-lg-2"
+                        <li class="nav-item active d-flex justify-content-center mx-auto">
+                            <a class="btn btn-dark text-nowrap align-self-center mx-lg-1 my-2"
                                href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
                         </li>
                     </div>
