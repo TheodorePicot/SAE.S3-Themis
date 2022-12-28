@@ -1,5 +1,5 @@
 <h2>Propositions</h2>
-<form action="frontController.php">
+<form method="post" action="frontController.php">
     <?php use Themis\Lib\ConnexionUtilisateur;
     use Themis\Model\Repository\VotantRepository;
     use Themis\Model\Repository\VoteRepository;

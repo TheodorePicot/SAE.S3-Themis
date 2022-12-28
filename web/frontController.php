@@ -11,23 +11,28 @@ use Themis\Model\HTTP\Session;
 Session::getInstance();
 
 
+if (isset($_POST['action'])) $method = $_POST;
+elseif (isset($_GET['action'])) $method = $_GET;
+
 $controller = 'question';
-if (isset($_GET['controller'])){
-    $controller = $_GET['controller'];
+if (isset($method['controller'])){
+    $controller = $method['controller'];
 }
 
 $controllerClassName = "Themis\Controller\Controller" . ucfirst($controller);
 
 $controllerClassObject = new $controllerClassName();
 
+
+
 if (class_exists($controllerClassName)) {
 
     $classMethods = get_class_methods($controllerClassName);
 
-    if (!isset($_GET['action'])) $controllerClassObject->readAll();
+    if (!isset($method['action'])) $controllerClassObject->readAll();
 
-    elseif (in_array($_GET['action'], $classMethods)) {
-        $action = $_GET['action'];
+    elseif (in_array($method['action'], $classMethods)) {
+        $action = $method['action'];
         $controllerClassObject->$action();
     } else {
         (new FlashMessage())->flash("methodeExistePas", "La méthode que vous essayez d'appeler n'existe pas", FlashMessage::FLASH_DANGER);

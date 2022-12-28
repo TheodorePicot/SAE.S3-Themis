@@ -3,7 +3,7 @@
 use Themis\Lib\ConnexionUtilisateur;
 
 ?>
-<form method="get" action="frontController.php" class="needs-validation" novalidate>
+<form method="post" action="frontController.php" class="needs-validation" novalidate>
     <fieldset>
 
         <div class="d-flex align-content-center justify-content-center">

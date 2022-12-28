@@ -31,11 +31,11 @@ class ControllerVote extends AbstractController
 
     public function submitVote()
     {
-        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $question = (new QuestionRepository)->select($_POST["idQuestion"]);
         if ($this->canVote($question)) {
-            foreach ((new PropositionRepository())->selectByQuestion($_GET["idQuestion"]) as $proposition) {
-                $vote = new Vote($_GET["loginVotant"], $proposition->getIdProposition(), $_GET["valueVote{$proposition->getIdProposition()}"]);
-                if ((new VotantRepository)->votantHasAlreadyVoted($_GET["loginVotant"], $proposition->getIdProposition())) {
+            foreach ((new PropositionRepository())->selectByQuestion($_POST["idQuestion"]) as $proposition) {
+                $vote = new Vote($_POST["loginVotant"], $proposition->getIdProposition(), $_POST["valueVote{$proposition->getIdProposition()}"]);
+                if ((new VotantRepository)->votantHasAlreadyVoted($_POST["loginVotant"], $proposition->getIdProposition())) {
                     (new VoteRepository)->update($vote);
                 } else {
                     (new VoteRepository)->create($vote);

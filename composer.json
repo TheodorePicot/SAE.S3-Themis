@@ -11,6 +11,7 @@
   ],
   "require": {
     "erusev/parsedown": "^1.6",
-    "ext-http": "*"
+    "ext-http": "*",
+    "ext-pdo": "*"
   }
 }

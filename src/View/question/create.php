@@ -64,7 +64,7 @@ use Themis\Lib\ConnexionUtilisateur;
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateFinVote">Date de fin du vote</label></h5>
-                    <input class=form-control rol type="datetime-local" placeholder="JJ/MM/YYYY" name="dateFinVote"
+                    <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateFinVote"
                            id="dateFinVote"
                            required/>
                 </div>

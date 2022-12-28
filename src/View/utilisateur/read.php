@@ -77,7 +77,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
         </div>
         <div class="col-lg-12 my-5">
             <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
-                <a class="btn btn-dark text-nowrap mx-1 " href='<?= $hrefDelete ?>'> Supprimer</a>
+                <a class="btn btn-dark text-nowrap mx-1 " href='<?= $hrefDelete ?>' onclick="return confirm('Are you sure?');"> Supprimer</a>
                 <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour information</a>
 
             <?php endif ?>

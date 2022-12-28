@@ -21,7 +21,7 @@ class ControllerProposition extends AbstractController
     public function created(): void
     {
         $this->connectionCheck();
-        $proposition = Proposition::buildFromForm($_GET);
+        $proposition = Proposition::buildFromForm($_POST);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         if (date_create()->format("Y-m-d H:i:s") < $question->getDateDebutProposition()) {
             (new FlashMessage())->flash("tooLate", "La question n'est pas encore en cours d'écriture", FlashMessage::FLASH_WARNING);
@@ -40,14 +40,14 @@ class ControllerProposition extends AbstractController
                 $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
                 foreach ($sections as $section) {
                     $sectionProposition = SectionProposition::buildFromForm([
-                        "texteProposition" => $_GET["descriptionSectionProposition{$section->getIdSection()}"],
+                        "texteProposition" => $_POST["descriptionSectionProposition{$section->getIdSection()}"],
                         "idSection" => $section->getIdSection(),
                         "idProposition" => $idProposition
                     ]);
                     (new SectionPropositionRepository)->create($sectionProposition);
                 }
-                if (isset($_GET["coAuteurs"])) {
-                    foreach ($_GET["coAuteurs"] as $coAuteur) {
+                if (isset($_POST["coAuteurs"])) {
+                    foreach ($_POST["coAuteurs"] as $coAuteur) {
                         $coAuteurObject = new CoAuteur($idProposition, $coAuteur);
                         (new CoAuteurRepository)->create($coAuteurObject);
                     }
@@ -113,7 +113,6 @@ class ControllerProposition extends AbstractController
 
     public function readByQuestion(): void
     {
-        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
         $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
 
         $this->showView("view.php", [
@@ -126,14 +125,14 @@ class ControllerProposition extends AbstractController
     public function updated(): void
     {
         $this->connectionCheck();
-        $proposition = Proposition::buildFromForm($_GET);
+        $proposition = Proposition::buildFromForm($_POST);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition()) {
             (new FlashMessage())->flash("tooLate", "La question n'est plus en cours d'écriture", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
-        if ($this->isAuteurInQuestion($_GET["idQuestion"]) && $this->isAuteurOfProposition($_GET["idProposition"])
-            || $this->isCoAuteurInProposition($_GET["idProposition"])
+        if ($this->isAuteurInQuestion($_POST["idQuestion"]) && $this->isAuteurOfProposition($_POST["idProposition"])
+            || $this->isCoAuteurInProposition($_POST["idProposition"])
             || $this->isAdmin()) {
             (new PropositionRepository)->update($proposition);
             $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
@@ -141,7 +140,7 @@ class ControllerProposition extends AbstractController
             foreach ($sections as $section) {
                 $sectionsPropositionOld = (new SectionPropositionRepository())->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection());
                 $sectionPropositionNew = SectionProposition::buildFromForm([
-                    "texteProposition" => $_GET["descriptionSectionProposition{$section->getIdSection()}"],
+                    "texteProposition" => $_POST["descriptionSectionProposition{$section->getIdSection()}"],
                     "idSection" => $section->getIdSection(),
                     "idProposition" => $proposition->getIdProposition(),
                     "idSectionProposition" => $sectionsPropositionOld->getIdSectionProposition()
@@ -152,8 +151,8 @@ class ControllerProposition extends AbstractController
 
             (new CoAuteurRepository())->delete($proposition->getIdProposition());
 
-            if (isset($_GET["coAuteurs"])) {
-                foreach ($_GET["coAuteurs"] as $coAuteur) {
+            if (isset($_POST["coAuteurs"])) {
+                foreach ($_POST["coAuteurs"] as $coAuteur) {
                     $coAuteurObject = new CoAuteur($proposition->getIdProposition(), $coAuteur);
                     (new CoAuteurRepository())->create($coAuteurObject);
                 }
