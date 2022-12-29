@@ -161,6 +161,7 @@ $parser->setBreaksEnabled(true);
                         </li>
                     </div>
                 <?php endif ?>
+
                 <?php if (!ConnexionUtilisateur::isConnected()) : ?>
                     <div class="row">
                         <li class="nav-item active d-flex justify-content-center mx-auto">

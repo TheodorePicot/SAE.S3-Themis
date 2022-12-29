@@ -23,13 +23,15 @@
         </div>
 
             <form class="d-flex col-md-5 col-lg-5">
-                <input class="form-control me-2" type="search" name="searchValue" placeholder="Search"
+                <input class="form-control me-2" type="search" name="searchValue" placeholder="Rechercher une question"
                        aria-label="Search">
                 <button class="btn btn-dark text-nowrap" name='action' value='readAllBySearchValue'
                         type="submit">Rechercher
                 </button>
             </form>
+
     </div>
+
 
 
 

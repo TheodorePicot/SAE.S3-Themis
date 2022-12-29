@@ -64,4 +64,10 @@ class FlashMessage
             $flashMessage['message']
         );
     }
+
+    public static function containsMessage(string $type): bool
+    {
+        return isset($_SESSION[$type]);
+    }
+
 }

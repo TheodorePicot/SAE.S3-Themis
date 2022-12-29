@@ -9,6 +9,7 @@ $loader->register();
 
 use Themis\Lib\FlashMessage;
 use Themis\Model\HTTP\Session;
+
 Session::getInstance();
 
 if (isset($_POST['action'])) $method = $_POST;

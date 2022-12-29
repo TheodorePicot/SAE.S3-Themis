@@ -3,13 +3,16 @@ nav li {
 }
 
 a {
-    color: #4f4343;
+    color: #000000;
     text-decoration: none;
+
 }
 
 a:hover {
-    color: #5f564d;
+    color: #827970;
 }
+
+
 
 body {
     font-family: Gotham-Medium, serif;
@@ -26,11 +29,18 @@ body {
     background: radial-gradient(circle, rgba(236, 223, 209, 1) 15%, rgba(233, 202, 227, 1) 100%);
 }
 
+#bodyLogin main{
+    font-family: Gotham-Thin, serif;
+}
+
 #bodyCreateUser {
     background: rgb(236, 223, 209);
     background: radial-gradient(circle, rgba(236, 223, 209, 1) 15%, rgba(233, 202, 227, 1) 100%);
 }
 
+#bodyCreateUser main{
+    font-family: Gotham-Thin, serif;
+}
 
 /*CSS QUESTIONS*/
 
@@ -240,9 +250,13 @@ mark {
 
 .btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
     background-color: #685e55 !important;
+
 }
 
 .btn-dark {
     border: #927b81 !important;
+
 }
+
+
 
