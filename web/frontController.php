@@ -1,4 +1,5 @@
 <?php
+//phpinfo();
 require_once __DIR__ . '/../src/Lib/Psr4AutoloaderClass.php';
 $loader = new Themis\Lib\Psr4AutoloaderClass();
 $loader->addNamespace('Themis', __DIR__ . '/../src');
@@ -9,7 +10,6 @@ $loader->register();
 use Themis\Lib\FlashMessage;
 use Themis\Model\HTTP\Session;
 Session::getInstance();
-
 
 if (isset($_POST['action'])) $method = $_POST;
 elseif (isset($_GET['action'])) $method = $_GET;
@@ -22,8 +22,6 @@ if (isset($method['controller'])){
 $controllerClassName = "Themis\Controller\Controller" . ucfirst($controller);
 
 $controllerClassObject = new $controllerClassName();
-
-
 
 if (class_exists($controllerClassName)) {
 

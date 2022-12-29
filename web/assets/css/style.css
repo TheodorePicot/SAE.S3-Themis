@@ -1,16 +1,9 @@
-@font-face {
-    font-family: Helvetica-Neue;
-    src: url(../fonts/Helvetica-Neue-Medium.ttf);
-    font-weight: normal;
-}
-
 nav li {
     padding: 0 20px;
 }
 
 a {
     color: #4f4343;
-    font-family: Helvetica-Neue, serif;
     text-decoration: none;
 }
 
@@ -19,6 +12,7 @@ a:hover {
 }
 
 body {
+    font-family: Gotham-Light, serif;
     background: rgb(253,247,242);
     background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(215,199,187,1) 100%);
     /*background: rgb(253, 247, 242);*/
