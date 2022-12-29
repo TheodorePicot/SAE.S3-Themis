@@ -1,16 +1,11 @@
 <?php
-
 use Themis\Lib\ConnexionUtilisateur;
-
-$utilisateurInURL = rawurlencode($utilisateur->getLogin());
-$hrefDelete = "frontController.php?action=delete&controller=utilisateur&login=" . $utilisateurInURL;
-$hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" . $utilisateurInURL;;
 ?>
 
 
 <div class='container'>
     <div class="row my-5">
-        <form method="get" action="frontController.php">
+        <form method="post" action="frontController.php">
 
             <div class="offset-lg-3 offset-md-3 col-md-6 col-lg-6">
                 <h5><label class="my-2" for="login">Login </label></h5>
@@ -67,6 +62,5 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
 
         </form>
     </div>
-
 </div>
 

@@ -15,6 +15,7 @@ use Themis\Lib\ConnexionUtilisateur;
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input type="text" class="form-control" placeholder="?" name="titreQuestion" id="titreQuestion"
                            max="99" maxlength="99"
+                           value="<?php if (isset($_SESSION["createQuestion"]["titreQuestion"])) echo $_SESSION["createQuestion"]["titreQuestion"] ?>"
                            required/>
                 </div>
 
@@ -22,7 +23,8 @@ use Themis\Lib\ConnexionUtilisateur;
                     <h3><label for="descriptionQuestion" class="form-label">Description</label></h3>
                     <textarea class="form-control input-group-lg" placeholder="description question"
                               name="descriptionQuestion" id="descriptionQuestion"
-                              maxlength="700" required rows="5" cols="40"></textarea>
+                              maxlength="700" required rows="5"
+                              cols="40"><?php if (isset($_SESSION["createQuestion"]["descriptionQuestion"])) echo $_SESSION["createQuestion"]["descriptionQuestion"] ?></textarea>
                 </div>
 
                 <div class="container col-md-6 col-lg-6 my-3">
@@ -47,37 +49,35 @@ use Themis\Lib\ConnexionUtilisateur;
                 <div class="container col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutProposition">Date de début des propositions</label></h5>
                     <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateDebutProposition"
-                           id="dateDebutProposition" required/>
+                           id="dateDebutProposition" value="<?php if (isset($_SESSION["createQuestion"]["dateDebutProposition"])) echo $_SESSION["createQuestion"]["dateDebutProposition"] ?>" required/>
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
 
                     <h5><label for="dateFinProposition">Date de fin des propositions</label></h5>
                     <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateFinProposition"
-                           id="dateFinProposition" required/>
+                           id="dateFinProposition" value="<?php if (isset($_SESSION["createQuestion"]["dateFinProposition"])) echo $_SESSION["createQuestion"]["dateFinProposition"] ?>" required/>
                 </div>
 
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutVote">Date de début du vote</label></h5>
                     <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateDebutVote"
-                           id="dateDebutVote"
+                           id="dateDebutVote" value="<?php if (isset($_SESSION["createQuestion"]["dateDebutVote"])) echo $_SESSION["createQuestion"]["dateDebutVote"] ?>"
                            required/>
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateFinVote">Date de fin du vote</label></h5>
                     <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateFinVote"
-                           id="dateFinVote"
+                           id="dateFinVote" value="<?php if (isset($_SESSION["createQuestion"]["dateFinVote"])) echo $_SESSION["createQuestion"]["dateFinVote"] ?>"
                            required/>
                 </div>
 
             </div>
-            <div class="btn mx-5" style="border-radius: 4px">
-                <input class="btn btn-dark" type="submit" value="Continuer"/>
+            <div class="d-flex align-content-center justify-content-center my-3" style="border-radius: 4px">
+                <input class="btn btn-dark text-nowrap" type="submit" value="Continuer"/>
             </div>
         </div>
 
-<!--        <input type='hidden' name='action' value='created'>-->
+        <!--        <input type='hidden' name='action' value='created'>-->
         <input type="hidden" name="loginOrganisateur" value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
-
-
     </fieldset>
 </form>

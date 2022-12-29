@@ -4,6 +4,7 @@ namespace Themis\Controller;
 
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
+use Themis\Lib\FormData;
 use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\Section;
@@ -26,10 +27,12 @@ class ControllerQuestion extends AbstractController
             if (!$this->isAdmin()) {
                 $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 minute"));
                 if ($dateOneDay->format("Y-m-d H:i:s") >= $_POST['dateDebutProposition']) {
+                    FormData::saveFormData("createQuestion");
                     (new FlashMessage())->flash("createdProblem", "Il faut au moins une minute de préparation pour la question", FlashMessage::FLASH_WARNING);
                     $this->redirect("frontController.php?action=create");
                 }
                 if (!($_POST['dateDebutProposition'] < $_POST['dateFinProposition'] && $_POST['dateFinProposition'] < $_POST['dateDebutVote'] && $_POST['dateDebutVote'] < $_POST['dateFinVote'])) {
+                    FormData::saveFormData("createQuestion");
                     (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                     $this->redirect("frontController.php?action=create");
                 }
@@ -38,12 +41,12 @@ class ControllerQuestion extends AbstractController
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             $this->createParticipants($idQuestion);
+            FormData::deleteFormData("createQuestion");
             $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
         } else {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
         }
-//        var_dump($_POST);
     }
 
     public function create(): void

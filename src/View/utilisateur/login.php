@@ -4,7 +4,7 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
 <div class="container" xmlns="http://www.w3.org/1999/html">
     <div class="row my-5">
         <div class=" col-md-8 col-lg-4 container my-5">
-            <form method="get" action="frontController.php">
+            <form method="post" action="frontController.php">
                 <fieldset>
                     <div class="d-flex align-content-center justify-content-center my-5">
                         <h1 class="display-2">
@@ -15,14 +15,15 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
                         <div class="mx-3">
 
                             <p>
-                                <input class="form-control form-control-lg" type="text" placeholder="pseudo"
+                                <input class="form-control form-control-lg <?= isset($_GET["invalidLogin"]) ? "is-invalid" : "" ?>" type="text" placeholder="pseudo"
                                        name="login"
+                                       value="<?php if (isset($_SESSION["loginUtilisateur"]["login"])) echo $_SESSION["loginUtilisateur"]["login"] ?>"
                                        id="login"
                                        required/>
                             </p>
                         </div>
                         <div class="mx-3">
-                            <input class="form-control form-control-lg" type="password" placeholder="mot de passe"
+                            <input class="form-control form-control-lg <?= isset($_GET["invalidPswd"]) ? "is-invalid" : "" ?>" type="password" placeholder="mot de passe"
                                    name="mdp" id="mdp" minlength="8"
                                    required/>
 
