@@ -59,7 +59,7 @@ class FlashMessage
 
     function formatFlashMessage(array $flashMessage): string
     {
-        return sprintf('<div class="flash-message alert alert-%s">%s</div>',
+        return sprintf('<div class="alert alert-%s">%s</div>',
             $flashMessage['type'],
             $flashMessage['message']
         );

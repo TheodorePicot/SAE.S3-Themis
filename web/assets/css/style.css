@@ -1,9 +1,16 @@
+@font-face {
+    font-family: Helvetica-Neue;
+    src: url(../fonts/Helvetica-Neue-Medium.ttf);
+    font-weight: normal;
+}
+
 nav li {
     padding: 0 20px;
 }
 
 a {
     color: #4f4343;
+    font-family: Helvetica-Neue, serif;
     text-decoration: none;
 }
 
