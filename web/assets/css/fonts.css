@@ -29,31 +29,31 @@
 }
 
 @font-face {
-    font-family: 'Gotham-Light';
-    src: url(../Fonts/Gotham-Light.otf);
+    font-family: "Gotham-Light";
+    src: url(../fonts/Gotham-Light.otf);
 }
 
 @font-face {
-    font-family: 'Gotham-Medium';
-    src: url(../Fonts/Gotham-Medium.otf);
+    font-family: "Gotham-Medium";
+    src: url(../fonts/Gotham-Medium.otf);
 }
 
 @font-face {
-    font-family: 'Gotham-Regular';
-    src: url(../Fonts/Gotham-Regular.otf);
+    font-family: "Gotham-Regular";
+    src: url(../fonts/Gotham-Regular.otf);
 }
 
 @font-face {
-    font-family: 'Gotham-Thin';
-    src: url(../Fonts/Gotham-Thin.otf);
+    font-family: "Gotham-Thin";
+    src: url(../fonts/Gotham-Thin.otf);
 }
 
 @font-face {
-    font-family: 'Gotham-Thin-Italic';
-    src: url(../Fonts/Gotham-Thin-Italic.otf);
+    font-family: "Gotham-Thin-Italic";
+    src: url(../fonts/Gotham-Thin-Italic.otf);
 }
 
 @font-face {
-    font-family: 'Gotham-Ultra';
-    src: url(../Fonts/Gotham-Ultra.otf);
+    font-family: "Gotham-Ultra";
+    src: url(../fonts/Gotham-Ultra.otf);
 }

@@ -12,15 +12,11 @@ a:hover {
     color: #827970;
 }
 
-
-
 body {
-    font-family: Gotham-Medium, serif;
+    font-family: "Gotham-Medium", sans-serif;
     background-color: #fdf7f2;
     /*background: rgb(253,247,242);*/
     /*background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(215,199,187,1) 100%);*/
-
-
 }
 
 #bodyLogin {
@@ -29,7 +25,7 @@ body {
 }
 
 #bodyLogin main{
-    font-family: Gotham-Thin, serif;
+    font-family: "Gotham-Thin", sans-serif;
 }
 
 #bodyCreateUser {
@@ -38,7 +34,7 @@ body {
 }
 
 #bodyCreateUser main{
-    font-family: Gotham-Thin, serif;
+    font-family: "Gotham-Thin", sans-serif;
 }
 
 /*CSS QUESTIONS*/
@@ -228,7 +224,7 @@ mark {
 
 .btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
     background-color: #685e55 !important;
-    font-family: Gotham-Medium, serif;
+    font-family: "Gotham-Medium", sans-serif;
 
 
 }
