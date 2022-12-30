@@ -2,13 +2,11 @@
 
 namespace Themis\Lib;
 
-use Themis\Model\HTTP\Session;
-
 class FormData
 {
     public static function saveFormData(string $actionName) {
         foreach ($_POST as $item => $value) {
-            $_SESSION[$actionName][$item] = $value;
+            $_SESSION['formData'][$actionName][$item] = $value;
             echo $item;
             var_dump($_SESSION['formData'][$actionName][$item]);
         }

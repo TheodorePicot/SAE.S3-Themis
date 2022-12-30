@@ -17,6 +17,7 @@ class ControllerUtilisateur extends AbstractController
 
     public function readAll(): void
     {
+        FormData::unsetAll();
         if (!$this->isAdmin()) {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
@@ -56,6 +57,7 @@ class ControllerUtilisateur extends AbstractController
 
     public function create()
     {
+        FormData::deleteFormData("connection");
         $this->showView("view.php", [
             "pageTitle" => "Inscription",
             "pathBodyView" => "utilisateur/create.php"
@@ -65,6 +67,7 @@ class ControllerUtilisateur extends AbstractController
     public function read(): void
     {
         $this->connectionCheck();
+        FormData::unsetAll();
         if (ConnexionUtilisateur::isUser($_GET["login"]) || $this->isAdmin()) {
             $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
             $questions = (new QuestionRepository())->selectAllByUser($_GET["login"]);
@@ -89,7 +92,7 @@ class ControllerUtilisateur extends AbstractController
 
     public function connect(): void
     {
-        FormData::saveFormData("loginUtilisateur");
+        FormData::saveFormData("connection");
         if ((new UtilisateurRepository())->select($_POST["login"]) == null) {
             (new FlashMessage)->flash("badLogin", "Ce login n'existe pas", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=login&controller=utilisateur&invalidLogin=1");
@@ -111,6 +114,7 @@ class ControllerUtilisateur extends AbstractController
     public function disconnect(): void
     {
         $this->connectionCheck();
+        FormData::unsetAll();
         ConnexionUtilisateur::disconnect();
         $this->redirect("frontController.php?action=readAll");
     }
@@ -118,7 +122,6 @@ class ControllerUtilisateur extends AbstractController
     public function updatedForInformation(): void
     {
         $this->connectionCheck();
-
         if (!ConnexionUtilisateur::isUser($_POST["login"]) && !$this->isAdmin()) {
             (new FlashMessage)->flash("noAccess", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
         } else {
@@ -189,6 +192,7 @@ class ControllerUtilisateur extends AbstractController
     public function updatePassword(): void
     {
         $this->connectionCheck();
+        FormData::unsetAll();
         if (ConnexionUtilisateur::isUser($_GET["login"])) {
             $utilisateur = (new UtilisateurRepository)->select($_GET["login"]);
             $this->showView("view.php", [

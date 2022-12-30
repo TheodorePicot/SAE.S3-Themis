@@ -4,6 +4,7 @@ namespace Themis\Controller;
 
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
+use Themis\Lib\FormData;
 use Themis\Model\DataObject\CoAuteur;
 use Themis\Model\DataObject\Proposition;
 use Themis\Model\DataObject\SectionProposition;
@@ -96,6 +97,7 @@ class ControllerProposition extends AbstractController
 
     public function read(): void
     {
+        FormData::unsetAll();
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
@@ -168,7 +170,7 @@ class ControllerProposition extends AbstractController
     public function update(): void
     {
         $this->connectionCheck();
-
+        FormData::unsetAll();
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition()) {

@@ -24,18 +24,16 @@ class ControllerQuestion extends AbstractController
         if ($this->isOrganisateurOfQuestion($_POST["loginOrganisateur"])
             && $this->isOrganisateur()
             || $this->isAdmin()) {
-            if (!$this->isAdmin()) {
-                $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 minute"));
-                if ($dateOneDay->format("Y-m-d H:i:s") >= $_POST['dateDebutProposition']) {
-                    FormData::saveFormData("createQuestion");
-                    (new FlashMessage())->flash("createdProblem", "Il faut au moins une minute de préparation pour la question", FlashMessage::FLASH_WARNING);
-                    $this->redirect("frontController.php?action=create");
-                }
-                if (!($_POST['dateDebutProposition'] < $_POST['dateFinProposition'] && $_POST['dateFinProposition'] < $_POST['dateDebutVote'] && $_POST['dateDebutVote'] < $_POST['dateFinVote'])) {
-                    FormData::saveFormData("createQuestion");
-                    (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
-                    $this->redirect("frontController.php?action=create");
-                }
+            $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 minute"));
+            if ($dateOneDay->format("Y-m-d H:i:s") >= $_POST['dateDebutProposition']) {
+                FormData::saveFormData("createQuestion");
+                (new FlashMessage())->flash("createdProblem", "Il faut au moins une minute de préparation pour la question", FlashMessage::FLASH_WARNING);
+                $this->redirect("frontController.php?action=create");
+            }
+            if (!($_POST['dateDebutProposition'] < $_POST['dateFinProposition'] && $_POST['dateFinProposition'] < $_POST['dateDebutVote'] && $_POST['dateDebutVote'] < $_POST['dateFinVote'])) {
+                FormData::saveFormData("createQuestion");
+                (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
+                $this->redirect("frontController.php?action=create");
             }
             (new QuestionRepository())->create(Question::buildFromForm($_POST));
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
@@ -119,11 +117,9 @@ class ControllerQuestion extends AbstractController
         $this->connectionCheck();
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
 
-        if (!$this->isAdmin()) {
-            if (date_create()->format("Y-m-d H:i:s") > $question->getDateDebutProposition()) {
-                (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
-                $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
-            }
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateDebutProposition()) {
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
         }
         if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur())
             && $this->isOrganisateur()
@@ -150,6 +146,7 @@ class ControllerQuestion extends AbstractController
 
     public function read(): void
     {
+        FormData::unsetAll();
         $question = (new QuestionRepository())->select($_GET["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
         $votants = (new VotantRepository)->selectAllByQuestion($_GET["idQuestion"]);
@@ -172,6 +169,7 @@ class ControllerQuestion extends AbstractController
 
     public function readAll(): void
     {
+        FormData::unsetAll();
         $this->showQuestions((new QuestionRepository)->selectAll());
     }
 

@@ -17,7 +17,7 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
                             <p>
                                 <input class="form-control form-control-lg <?= isset($_GET["invalidLogin"]) ? "is-invalid" : "" ?>" type="text" placeholder="pseudo"
                                        name="login"
-                                       value="<?php if (isset($_SESSION["loginUtilisateur"]["login"])) echo $_SESSION["loginUtilisateur"]["login"] ?>"
+                                       value="<?php if (isset($_SESSION["formData"]["connection"]["login"])) echo $_SESSION["formData"]["connection"]["login"] ?>"
                                        id="login"
                                        required/>
                             </p>
