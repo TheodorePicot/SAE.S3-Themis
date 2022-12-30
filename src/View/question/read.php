@@ -33,9 +33,14 @@ $date = date_create();
                 </div>
             </div>
 
-            <div class="my-5">
+            <div class="d-flex align-content-center justify-content-center my-3">
+                <h2 class="my-3"> Plan de la question</h2>
+            </div>
+
+            <div class="my-3">
                 <?php require_once __DIR__ . "/../section/listByQuestionForRead.php" ?>
             </div>
+
 
             <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
                aria-expanded="false" aria-controls="multiCollapseExample1">Auteurs</a>
@@ -137,12 +142,12 @@ $date = date_create();
         <?php
 
         if (ConnexionUtilisateur::isConnected() && (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting()) &&
-            (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion()) &&
-            $date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote())) : ?>
-        <div class="d-flex align-content-center justify-content-center my-3">
-            <a class="btn btn-dark text-nowrap w-25"
-               href="frontController.php?controller=vote&action=vote&idQuestion=<?= $question->getIdQuestion() ?>">Voter</a>
-        </div>
+                (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion()) &&
+                $date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote())) : ?>
+            <div class="d-flex align-content-center justify-content-center my-3">
+                <a class="btn btn-dark text-nowrap w-25"
+                   href="frontController.php?controller=vote&action=vote&idQuestion=<?= $question->getIdQuestion() ?>">Voter</a>
+            </div>
 
         <?php endif ?>
     </div>
