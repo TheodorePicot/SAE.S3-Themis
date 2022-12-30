@@ -109,7 +109,7 @@ body {
 /*LISTE PROPOSITIONS*/
 
 .boxProposition {
-    height: 50px;
+    height: 45px;
     background: rgb(209, 192, 175);
     background: radial-gradient(circle, rgba(209, 192, 175, 1) 15%, rgba(206, 183, 167, 1) 100%);
 }

@@ -28,7 +28,7 @@ foreach ($propositions as $proposition) :
         <div class="nestedDivQuestion overflow-hidden text-start">
             <a id="containerQuestion" href="<?= $hrefRead ?>">
                 <div class="mx-3">
-                    <h3><?= $titrePropositionHTML ?> - Points : <?= $proposition->getSommeVotes() ?></h3>
+                    <h5><?= $titrePropositionHTML ?> - Points : <?= $proposition->getSommeVotes() ?></h5>
                 </div>
             </a>
         </div>
