@@ -16,11 +16,10 @@ a:hover {
 
 body {
     font-family: Gotham-Medium, serif;
-    background: rgb(253,247,242);
-    background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(215,199,187,1) 100%);
-    /*background: rgb(253, 247, 242);*/
-    /*background: radial-gradient(circle, rgba(253, 247, 242, 1) 0%, rgba(228, 216, 202, 1) 100%);*/
-    /*padding-top: 70px;*/
+    background-color: #fdf7f2;
+    /*background: rgb(253,247,242);*/
+    /*background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(215,199,187,1) 100%);*/
+
 
 }
 
@@ -109,7 +108,7 @@ body {
 /*LISTE PROPOSITIONS*/
 
 .boxProposition {
-    height: 45px;
+    height: 40px;
     background: rgb(209, 192, 175);
     background: radial-gradient(circle, rgba(209, 192, 175, 1) 15%, rgba(206, 183, 167, 1) 100%);
 }
@@ -229,6 +228,8 @@ mark {
 
 .btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
     background-color: #685e55 !important;
+    font-family: Gotham-Medium, serif;
+
 
 }
 

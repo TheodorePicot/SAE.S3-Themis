@@ -12,7 +12,7 @@ use Themis\Model\Repository\AuteurRepository;
 
 <?php
 
-if(ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]) &&
+if (ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]) &&
     ($question->getDateDebutProposition() <= date_create()->format("Y-m-d H:i:s") && date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition())) : ?>
     <div class="d-flex align-content-center justify-content-center my-3">
         <a class="btn btn-dark text-nowrap"
@@ -26,13 +26,11 @@ if(ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpant
     $questionInURL = rawurlencode($proposition->getIdQuestion());
     $hrefRead = "frontController.php?controller=proposition&action=read&idQuestion=$questionInURL&idProposition=$propositionInURL"; ?>
 
-    <div class="boxProposition overflow-hidden rounded-5  my-3">
-        <div class="nestedDivQuestion overflow-hidden text-start">
-            <a id="containerQuestion" href="<?= $hrefRead ?>">
-                <div class="mx-3">
-                    <h5><?= $titrePropositionHTML ?></h5>
-                </div>
-            </a>
-        </div>
+    <div class="boxProposition overflow-hidden rounded-5 my-3 d-flex align-items-center">
+        <a id="containerQuestion" href="<?= $hrefRead ?>">
+            <div class="mx-3">
+                <h5><?= $titrePropositionHTML ?></h5>
+            </div>
+        </a>
     </div>
 <?php endforeach; ?>

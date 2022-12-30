@@ -11,26 +11,42 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 ?>
 
 <div class="container-fluid">
-    <div class="offset-2 offset-lg-3 row my-5">
-        <div class="col col-lg-12 my-5">
-            <h3>
+    <div class="offset-1 offset-lg-3 row my-5">
+
+        <div class="row my-5">
+            <h3 class="col-lg-6 col-sm-12 align-self-center">
                 <img id="accountImgPage" alt="compte" src="assets/img/account.png">
                 <?= htmlspecialchars($utilisateur->getLogin()) ?>
                 <small class="text-muted">
                     <?php if ($utilisateur->isAdmin()) : ?>
                         Administrateur
                     <?php elseif ($utilisateur->isOrganisateur()): ?>
-
                         Organisateur
                         <!--                --><?php //else : ?>
                         <!--                    Droits-->
                         <!--                    Utilisateur-->
                     <?php endif ?>
+
                 </small>
             </h3>
-
-
+            <?php if ($utilisateur->isAdmin()) : ?>
+                <div class="dropdown align-self-center col-sm-12 col-lg-3">
+                    <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Fonctionnalités
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="frontController.php?controller=utilisateur&action=create">Créer
+                                un utilisateur</a></li>
+                        <li><a class="dropdown-item" href="frontController.php?action=readAll&controller=utilisateur">Liste
+                                des
+                                utilisateurs</a></li>
+                    </ul>
+                </div>
+            <?php endif ?>
         </div>
+
+
         <div class="col-lg-3 ">
             <h3>Prenom <br></h3>
 
@@ -51,53 +67,48 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
                 echo htmlspecialchars($date->format("d-m-Y")); ?><br>
             </div>
         </div>
+    </div>
 
+    <div class="container-fluid">
 
-        <div class="my-3">
+        <div class="d-flex align-content-center justify-content-center my-3">
             <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
                aria-expanded="false" aria-controls="multiCollapseExample1">Mes questions</a>
-            <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
+            <button class="btn btn-dark mx-4" type="button" data-bs-toggle="collapse"
                     data-bs-target="#multiCollapseExample2" aria-expanded="false"
                     aria-controls="multiCollapseExample2">Mes propositions
             </button>
         </div>
 
-        <div class="col-6">
-            <div class="collapse multi-collapse col-lg-12 my-5" id="multiCollapseExample1">
+        <div class="row my-4 mx-4">
+            <div class="collapse multi-collapse col-6 " id="multiCollapseExample1">
                 <div class="card card-body">
                     <?php require_once __DIR__ . "/../question/listByUserForRead.php" ?>
                 </div>
             </div>
 
-            <div class="collapse multi-collapse " id="multiCollapseExample2">
+            <div class="collapse multi-collapse col-6" id="multiCollapseExample2">
                 <div class="card card-body">
                     <?php require_once __DIR__ . "/../proposition/listByUserForRead.php" ?>
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 my-5">
-            <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
-                <a class="btn btn-dark text-nowrap mx-1 " href='<?= $hrefDelete ?>' onclick="return confirm('Are you sure?');"> Supprimer</a>
-                <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour information</a>
 
-            <?php endif ?>
-            <?php if (ConnexionUtilisateur::isUser($utilisateurInURL)) : ?>
-                <a class="btn btn-dark text-nowrap my-2" href='<?= $hrefUpdatePassword ?>'> Modifier mot de passe</a>
-            <?php endif ?>
-            <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
-                <a class="btn btn-dark text-nowrap mx-1"
-                   href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
-            <?php endif ?>
-            <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
-                <a class="nav-link"
-                   href="frontController.php?action=readAll&controller=utilisateur">
-                    <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>
-            <?php endif ?>
+        <div class=" col-lg-12 d-flex align-content-center justify-content-center my-3">
+            <div>
+                <?php if (ConnexionUtilisateur::isUser($utilisateurInURL) || ConnexionUtilisateur::isAdministrator()) : ?>
+                    <a class="btn btn-dark text-nowrap mx-2 " href='<?= $hrefDelete ?>'
+                       onclick="return confirm('Are you sure?');"> Supprimer</a>
+                    <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour
+                        mes informations</a>
+                <?php endif ?>
+
+            </div>
         </div>
 
-
     </div>
-</div>
+
+
 
 
 

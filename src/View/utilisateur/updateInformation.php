@@ -1,5 +1,10 @@
 <?php
+
 use Themis\Lib\ConnexionUtilisateur;
+
+$utilisateurInURL = rawurlencode($utilisateur->getLogin());
+$hrefUpdateInformation = "frontController.php?action=updateInformation&controller=utilisateur&login=" . $utilisateurInURL;
+$hrefUpdatePassword = "frontController.php?action=updatePassword&controller=utilisateur&login=" . $utilisateurInURL
 ?>
 
 
@@ -28,35 +33,48 @@ use Themis\Lib\ConnexionUtilisateur;
                 <input class="form-control" type="date" name="dateNaissance" id="dateNaissance"
                        value="<?= htmlspecialchars($utilisateur->getDateNaissance()) ?>">
 
-                <?php if (ConnexionUtilisateur::isAdministrator() && ConnexionUtilisateur::isUser($_GET["login"])) : ?>
-                    <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
-                    <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
-                        <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?> disabled>
-                    <input type="hidden" placeholder="" name="estAdmin" value="on">
 
-                    <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
-                    <p>
-                        <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur"
-                               id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
+                <div class="my-4">
+                    <?php if (ConnexionUtilisateur::isAdministrator() && ConnexionUtilisateur::isUser($_GET["login"])) : ?>
+                        <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
+                        <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
+                            <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?> disabled>
                         <input type="hidden" placeholder="" name="estAdmin" value="on">
-                    </p>
-                <?php elseif (ConnexionUtilisateur::isAdministrator()) : ?>
-                    <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
-                    <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
-                        <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?>>
 
-                    <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
-                    <p>
-                        <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur"
-                               id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
-                    </p>
-                <?php endif ?>
+                        <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
+                        <p>
+                            <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur"
+                                   id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
+                            <input type="hidden" placeholder="" name="estAdmin" value="on">
+                        </p>
+
+                    <?php elseif (ConnexionUtilisateur::isAdministrator()) : ?>
+                        <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
+                        <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
+                            <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?>>
+
+                        <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
+                        <p>
+                            <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur"
+                                   id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
+                        </p>
+                    <?php endif ?>
+                </div>
+
 
                 <input type='hidden' name='action' value='updatedForInformation'>
                 <input type='hidden' name='controller' value='utilisateur'>
-                <div class="d-flex align-content-center justify-content-center">
 
-                    <input class="btn btn-dark" type="submit" value="Mettre à jour"/>
+                <div class="my-3 d-flex align-content-center justify-content-center">
+                    <?php if (ConnexionUtilisateur::isUser($utilisateurInURL)) : ?>
+                        <a class="btn btn-dark text-nowrap my-2" href='<?= $hrefUpdatePassword ?>'> Modifier le mot de
+                            passe</a>
+                    <?php endif ?>
+                </div>
+
+
+                <div class="d-flex align-content-center justify-content-center">
+                    <input class="btn btn-dark" type="submit" value="Enregistrer"/>
                 </div>
             </div>
 

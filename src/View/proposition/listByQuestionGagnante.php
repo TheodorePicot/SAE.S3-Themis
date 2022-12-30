@@ -24,13 +24,11 @@ foreach ($propositions as $proposition) :
     </div>
 <?php endif;
     $count++ ?>
-    <div class="boxProposition overflow-hidden rounded-5  my-3">
-        <div class="nestedDivQuestion overflow-hidden text-start">
-            <a id="containerQuestion" href="<?= $hrefRead ?>">
-                <div class="mx-3">
-                    <h5><?= $titrePropositionHTML ?> - Points : <?= $proposition->getSommeVotes() ?></h5>
-                </div>
-            </a>
-        </div>
+    <div class="boxProposition overflow-hidden rounded-5 my-3 d-flex align-items-center">
+        <a id="containerQuestion" href="<?= $hrefRead ?>">
+            <div class="mx-3">
+                <h5><?= $titrePropositionHTML ?> - Points : <?= $proposition->getSommeVotes() ?></h5>
+            </div>
+        </a>
     </div>
 <?php endforeach; ?>
