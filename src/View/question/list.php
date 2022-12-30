@@ -1,7 +1,7 @@
 <div id="listeQuestion" class="container-fluid">
 
-    <div class="row mx-5 my-5 gy-4 gx-5 d-flex">
-        <div class="dropdown col-7">
+    <div class="row mx-md-3 mx-lg-5 my-5 gy-4 gx-5 d-flex">
+        <div class="dropdown col-md-4 col-lg-7">
             <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                 Filtre
@@ -22,7 +22,7 @@
             </ul>
         </div>
 
-            <form class="d-flex col-md-5 col-lg-5">
+            <form class="d-flex col-sm-12 col-md-8 col-lg-5">
                 <input class="form-control me-2" type="search" name="searchValue" placeholder="Rechercher une question"
                        aria-label="Search">
                 <button class="btn btn-dark text-nowrap" name='action' value='readAllBySearchValue'
@@ -35,7 +35,7 @@
 
 
 
-    <div class="row mx-5 my-5 gy-4 gx-5">
+    <div class="row mx-md-3 mx-lg-5 my-5 gy-4 gx-5">
 
         <?php foreach ($questions as $question) :
             $titreQuestionHTML = htmlspecialchars($question->getTitreQuestion());
@@ -43,7 +43,7 @@
             $questionInURL = rawurlencode($question->getIdQuestion());
             $hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;
             ?>
-        <div class="overflow-hidden col-md-6 col-lg-4" style="height: 250px">
+        <div class="overflow-hidden col-sm-12 col-md-6 col-lg-4" style="height: 250px">
             <a class="card rounded-3 overflow-hidden shadowBox text-center" href="<?= $hrefRead ?>" style="height: 96%">
                 <div class="card-header">
                     <?= $loginOrganisateur ?>
