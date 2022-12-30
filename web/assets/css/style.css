@@ -96,27 +96,6 @@ body {
 
 /*LISTE QUESTIONS*/
 
-.box {
-    height: 205px;
-}
-
-.lienQuestion h3 {
-    font-weight: bold;
-}
-
-.lienQuestion:hover {
-    color: #fafafa;
-}
-
-.nestedDivQuestion {
-    height: 195px;
-    background: rgb(205, 184, 171);
-    background: radial-gradient(circle, rgba(205, 184, 171, 1) 15%, rgba(199, 177, 152, 1) 100%);
-    box-shadow: 4px 3px 8px 1px #969696;
-    border-radius: 10px;
-    padding: 5px;
-}
-
 .shadowBox {
     background: rgb(205, 184, 171);
     background: radial-gradient(circle, rgba(205, 184, 171, 1) 15%, rgba(199, 177, 152, 1) 100%);
