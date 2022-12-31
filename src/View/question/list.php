@@ -1,6 +1,6 @@
 <div id="listeQuestion" class="container-fluid">
 
-    <div class="row mx-md-3 mx-lg-5 my-5 gy-4 gx-5 d-flex">
+    <div class="row mx-md-3 mx-lg-5 my-5 gy-4">
         <div class="dropdown col-md-4 col-lg-7">
             <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -35,7 +35,7 @@
 
 
 
-    <div class="row mx-md-3 mx-lg-5 my-5 gy-4 gx-5">
+    <div class="row mx-md-3 mx-lg-5 my-5 gy-4">
 
         <?php foreach ($questions as $question) :
             $titreQuestionHTML = htmlspecialchars($question->getTitreQuestion());

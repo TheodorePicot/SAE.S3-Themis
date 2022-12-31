@@ -12,66 +12,68 @@ htmlspecialchars($question->getTitreQuestion())
 ?>
 
 
-<div class="container-fluid">
-    <!--    QUESTION + PROPOSITION + DELETE UPDATE-->
-    <div class="d-flex align-content-center justify-content-center my-5">
-        <h1> <?= $proposition->getTitreProposition() ?>
-            - <?= $proposition->getLoginAuteur() ?></h1>
-    </div>
+<!--    QUESTION + PROPOSITION + DELETE UPDATE-->
+<div class="d-flex align-content-center justify-content-center my-5">
+    <h1> <?= $proposition->getTitreProposition() ?>
 
-    <div class='container-fluid'>
-        <div class="row my-5 gy-4">
-            <div class="container-fluid col-md-11">
+        - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
+</div>
 
+<div class='container-fluid'>
+    <div class="row my-5 gy-4">
+        <div class="container-fluid col-md-11">
+            <div class="d-flex align-content-center justify-content-center">
+                <h2>Plan de la question</h2>
+            </div>
 
-                <h2>Sections</h2>
+            <div class="my-4">
+                <?php
+                $count = 1;
+                foreach ($sections
 
+                as $section) : ?>
                 <div class="my-4">
-                    <?php
-                    $count = 1;
-                    foreach ($sections
+                    <h4><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h4>
+                    <div class="shadowBox card card-body border-0 col-md-10">
+                        <?= htmlspecialchars($section->getDescriptionSection()) ?>
+                    </div>
 
-                    as $section) : ?>
                     <div class="my-4">
-
-                        <h4><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h4>
-                        <div class="shadowBox card card-body border-0 col-md-10" >
-                            <?= htmlspecialchars($section->getDescriptionSection()) ?>
-                        </div>
-
-                        <div class="my-4">
-                            <h4>Proposition pour la section <?= $count ?> : </h4>
+                        <h4 class="my-3">Proposition pour la section <?= $count ?> : </h4>
+                        <div class="shadowBoxProposition card card-body border-0 col-md-10">
                             <p><?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></p>
                         </div>
-                        <?php $count++;
-                        endforeach; ?>
                     </div>
+
+                    <?php $count++;
+                    endforeach; ?>
                 </div>
-
-
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#coAuteurs" aria-expanded="false"
-                        aria-controls="coAuteurs">Co-Auteurs
-                </button>
-                <div class="collapse multi-collapse col-6" id="coAuteurs">
-                    <div class="card card-body">
-                        <?php require_once __DIR__ . "/../utilisateur/listCoAuteursForRead.php" ?>
-                    </div>
-                </div>
-
-                <?php if (ConnexionUtilisateur::isConnected() &&
-                    ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())
-                        || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) || ConnexionUtilisateur::isAdministrator()) : ?>
-                    <div class="my-2">
-                        <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) &&
-                            ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
-                            <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'
-                               onclick="return confirm('Are you sure?');"> Supprimer</a>
-                        <?php endif ?>
-                        <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
-                    </div>
-                <?php endif ?>
             </div>
+
+
+            <button class="btn btn-dark my-4" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#coAuteurs" aria-expanded="false"
+                    aria-controls="coAuteurs">Co-Auteurs
+            </button>
+            <div class="collapse multi-collapse col-6" id="coAuteurs">
+                <div class="card card-body">
+                    <?php require_once __DIR__ . "/../utilisateur/listCoAuteursForRead.php" ?>
+                </div>
+            </div>
+
+            <?php if (ConnexionUtilisateur::isConnected() &&
+                ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())
+                    || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) || ConnexionUtilisateur::isAdministrator()) : ?>
+                <div class="my-2">
+                    <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) &&
+                        ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
+                        <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'
+                           onclick="return confirm('Are you sure?');"> Supprimer</a>
+                    <?php endif ?>
+                    <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+                </div>
+            <?php endif ?>
         </div>
     </div>
 </div>
+
