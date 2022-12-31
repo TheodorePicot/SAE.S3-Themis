@@ -12,14 +12,15 @@ htmlspecialchars($question->getTitreQuestion())
 ?>
 
 
-<!--    QUESTION + PROPOSITION + DELETE UPDATE-->
-<div class="d-flex align-content-center justify-content-center my-5">
-    <h1> <?= $proposition->getTitreProposition() ?>
+<!-- QUESTION + PROPOSITION + DELETE UPDATE -->
 
-        - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
-</div>
 
 <div class='container-fluid'>
+    <div class="d-flex align-content-center justify-content-center my-5" >
+        <h1 style="width: 92%"> <?= $proposition->getTitreProposition() ?>
+
+            - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
+    </div>
     <div class="row my-5 gy-4">
         <div class="container-fluid col-md-11">
             <div class="d-flex align-content-center justify-content-center">
