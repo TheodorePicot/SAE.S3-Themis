@@ -15,7 +15,6 @@ htmlspecialchars($question->getTitreQuestion())
 <!--    QUESTION + PROPOSITION + DELETE UPDATE-->
 <div class="d-flex align-content-center justify-content-center my-5">
     <h1> <?= $proposition->getTitreProposition() ?>
-
         - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
 </div>
 
