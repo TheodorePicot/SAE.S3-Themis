@@ -252,6 +252,10 @@ class ControllerUtilisateur extends AbstractController
 
     public function readAllBySearchValue(): void
     {
+        if (!$this->isAdmin()) {
+            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
         $this->showUsers((new UtilisateurRepository())->selectAllBySearchValue($_GET["searchValue"]));
     }
 
