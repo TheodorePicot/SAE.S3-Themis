@@ -11,7 +11,7 @@ class UtilisateurRepository extends AbstractRepository
      */
     public function build(array $objectArrayFormat): Utilisateur
     {
-        if($objectArrayFormat["adresseMail"] == "") {
+        if ($objectArrayFormat["adresseMail"] == "") {
             return new Utilisateur($objectArrayFormat["login"],
                 $objectArrayFormat["nom"],
                 $objectArrayFormat["prenom"],
@@ -72,7 +72,7 @@ class UtilisateurRepository extends AbstractRepository
     public function updateInformation(array $newValues): void
     {
         var_dump($newValues);
-        $sqlQuery = 'UPDATE ' . $this->getTableName() .  ' SET nom =:nom, prenom =:prenom, "adresseMail" =:adresseMail, "dateNaissance" =:dateNaissance, "estAdmin" =:estAdmin, "estOrganisateur" =:estOrganisateur WHERE login =:login';
+        $sqlQuery = 'UPDATE ' . $this->getTableName() . ' SET nom =:nom, prenom =:prenom, "adresseMail" =:adresseMail, "dateNaissance" =:dateNaissance, "estAdmin" =:estAdmin, "estOrganisateur" =:estOrganisateur WHERE login =:login';
         echo $sqlQuery;
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $pdoStatement->execute($newValues);
@@ -100,6 +100,17 @@ class UtilisateurRepository extends AbstractRepository
             $users[] = $this->build($user);
         }
         return $users;
+    }
+
+    public function selectAllOrderedAdminWithLimit(): array
+    {
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} WHERE estAdmin is TRUE ORDER BY {$this->getOrderColumn()} LIMIT 10");
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
     }
 
 }
