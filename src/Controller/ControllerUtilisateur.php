@@ -241,4 +241,18 @@ class ControllerUtilisateur extends AbstractController
         }
     }
 
+    private function showUsers(array $utilisateurs)
+    {
+        $this->showView("view.php", [
+            "utilisateurs" => $utilisateurs,
+            "pageTitle" => "utilisateurs",
+            "pathBodyView" => "utilisateur/list.php"
+        ]);
+    }
+
+    public function readAllBySearchValue(): void
+    {
+        $this->showUsers((new UtilisateurRepository())->selectAllBySearchValue($_GET["searchValue"]));
+    }
+
 }

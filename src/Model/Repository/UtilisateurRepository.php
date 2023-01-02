@@ -86,4 +86,20 @@ class UtilisateurRepository extends AbstractRepository
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $pdoStatement->execute($newValues);
     }
+
+    public function selectAllBySearchValue(string $element): array
+    {
+        $databaseTable = $this->getTableName();
+        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . 'LOWER("login") LIKE ? ';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $pdoStatement->execute(array("%" . strtolower($element) . "%"));
+
+        $users = array();
+        foreach ($pdoStatement as $user) {
+            $users[] = $this->build($user);
+        }
+        return $users;
+    }
+
 }
