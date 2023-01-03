@@ -17,8 +17,22 @@ use Themis\Model\Repository\SectionPropositionRepository;
 use Themis\Model\Repository\SectionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
 
+/**
+ * Classe dédiée aux fonctions CRUD et autres des propositions
+ */
 class ControllerProposition extends AbstractController
 {
+    /**
+     * Créer une proposition avec les informations du formulaire envoyé par l'auteur
+     *
+     * Cette méthode est appelée quand un auteur soumet les informations du formulaire dans {@link src/View/proposition/create.php}
+     * puis elle créée une {@link Proposition}. Elle fait des verification de droits et de cohérence de date.
+     * Si toutes ces vérifications sont validées, elle insère les données dans la base de données.
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     *
+     *
+     * @return void
+     */
     public function created(): void
     {
         $this->connectionCheck();
@@ -39,6 +53,7 @@ class ControllerProposition extends AbstractController
                 $idProposition = DatabaseConnection::getPdo()->lastInsertId();
 
                 $sections = (new SectionRepository)->selectAllByQuestion($proposition->getIdQuestion());
+                // Pour toutes les sections de la question, on crée une section pour la proposition
                 foreach ($sections as $section) {
                     $sectionProposition = SectionProposition::buildFromForm([
                         "texteProposition" => $_POST["descriptionSectionProposition{$section->getIdSection()}"],
@@ -66,6 +81,17 @@ class ControllerProposition extends AbstractController
         $this->redirect("frontController.php?action=readAll");
     }
 
+    /**
+     * Permet de rediriger l'auteur vers la vue {@link src/View/proposition/create.php} pour qu'il puisse créer une proposition
+     *
+     * Méthode appelée par l'auteur quand il est dans la vue {@link src/View/proposition/listByQuestion.php}.
+     * Elle fait des verification de droits et de cohérence de date.
+     * Si toutes ces vérifications sont validées, elle redirige l'utilisateur dans la vue {@link src/View/proposition/create.php}.
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     *
+     *
+     * @return void
+     */
     public function create(): void
     {
         $this->connectionCheck();
@@ -95,8 +121,17 @@ class ControllerProposition extends AbstractController
         }
     }
 
+    /**
+     * Permet de lire la proposition sélectionnée
+     *
+     * Cette méthode charge les données nécessaires puis fait appelle à {@link AbstractController::showView()}
+     * pour afficher la vue {@link src/View/proposition/read.php}.
+     *
+     * @return void
+     */
     public function read(): void
     {
+        /** Pour supprimer les données des formulaires stockées dans {@var $_SESSION} car elles ne sont plus utiles */
         FormData::unsetAll();
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
@@ -113,6 +148,11 @@ class ControllerProposition extends AbstractController
         ]);
     }
 
+    /**
+     * Liste toutes les questions appartenant à une question
+     *
+     * @return void
+     */
     public function readByQuestion(): void
     {
         $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
@@ -124,6 +164,17 @@ class ControllerProposition extends AbstractController
         ]);
     }
 
+    /**
+     * Met à jour une proposition avec les informations du formulaire envoyé par l'auteur
+     *
+     * Cette méthode est appelée quand un auteur soumet les informations du formulaire dans {@link src/View/proposition/update.php}
+     * puis elle créée une {@link Proposition} qui représente la nouvelle version de la proposition.
+     * Elle fait des verification de droits et de cohérence de date.
+     * Si toutes ces vérifications sont validées, elle met à jour les données de la proposition dans la base de données.
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     *
+     * @return void
+     */
     public function updated(): void
     {
         $this->connectionCheck();
@@ -147,12 +198,11 @@ class ControllerProposition extends AbstractController
                     "idProposition" => $proposition->getIdProposition(),
                     "idSectionProposition" => $sectionsPropositionOld->getIdSectionProposition()
                 ]);
-                echo $sectionsPropositionOld->getIdSectionProposition();
                 (new SectionPropositionRepository)->update($sectionPropositionNew);
             }
 
+            // Mise à jour des coAuteur en les supprimant puis en insérant les coAuteurs de la nouvelle liste
             (new CoAuteurRepository())->delete($proposition->getIdProposition());
-
             if (isset($_POST["coAuteurs"])) {
                 foreach ($_POST["coAuteurs"] as $coAuteur) {
                     $coAuteurObject = new CoAuteur($proposition->getIdProposition(), $coAuteur);
@@ -167,9 +217,20 @@ class ControllerProposition extends AbstractController
         }
     }
 
+    /**
+     * Permet de rediriger l'auteur vers la vue {@link src/View/proposition/update.php} pour qu'il puisse mettre à jour sa proposition
+     *
+     * Méthode appelée par l'auteur quand il est dans la vue {@link src/View/proposition/read.php}
+     * Elle fait des verification de droits et de cohérence de date.
+     * Si toutes ces vérifications sont validées, elle redirige l'utilisateur dans la vue {@link src/View/proposition/update.php}.
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     *
+     * @return void
+     */
     public function update(): void
     {
         $this->connectionCheck();
+        /** Pour supprimer les données des formulaires stockées dans {@var $_SESSION} car elles ne sont plus utiles */
         FormData::unsetAll();
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
@@ -197,6 +258,14 @@ class ControllerProposition extends AbstractController
         }
     }
 
+    /**
+     * Supprime une proposition
+     *
+     * Elle fait des verification de droits et de cohérence de date.
+     * Si toutes ces vérifications sont validées, elle supprime la proposition de la base de données
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     * @return void
+     */
     public function delete(): void
     {
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
@@ -219,21 +288,32 @@ class ControllerProposition extends AbstractController
         }
     }
 
+    /**
+     * Permet de savoir si l'utilisateur est auteur de la question sélectionnée
+     *
+     * @param int $idQuestion La question dans laquelle on regarde si l'utilisateur est auteur
+     * @return bool
+     */
     private function isAuteurInQuestion(int $idQuestion): bool
     {
         return (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
     }
 
-    private function isCoAuteurInQuestion(int $idQuestion): bool
-    {
-        return (new CoAuteurRepository())->coAuteurIsInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
-    }
-
+    /**
+     * Permet de savoir si l'utilisateur est co-auteur de la question sélectionnée
+     *
+     * @param int $idProposition La proposition dans laquelle on regarde si l'utilisateur est coAuteur
+     * @return bool
+     */
     private function isCoAuteurInProposition(int $idProposition): bool
     {
         return (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $idProposition);
     }
 
+    /**
+     * @param int $idProposition La proposition dans laquelle on regarde si l'utilisateur est Auteur
+     * @return bool
+     */
     private function isAuteurOfProposition(int $idProposition): bool
     {
         return ConnexionUtilisateur::isUser((new PropositionRepository())->select($idProposition)->getLoginAuteur());

@@ -31,8 +31,9 @@ $parser->setBreaksEnabled(true);
     <title><?= $pageTitle ?></title>
 </head>
 
-<body <?php if (isset($_GET["action"]) && $_GET["action"] == "login") echo 'id="bodyLogin"' ?>>
-<body <?php if (isset($_GET["action"]) && $_GET["action"] == "create" && isset($_GET['controller']) && $_GET['controller'] == "utilisateur") echo 'id="bodyCreateUser"' ?>>
+<body <?php if (isset($_GET["action"]) && $_GET["action"] == "login") echo 'id="bodyLogin"';
+            if (isset($_GET["action"]) && $_GET["action"] == "create" && isset($_GET['controller']) && $_GET['controller'] == "utilisateur") echo 'id="bodyCreateUser"'
+?>>
 
 <!-- Optional JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -135,15 +136,15 @@ $parser->setBreaksEnabled(true);
                         </li>
                     </div>
                 <?php endif ?>
-<!--                --><?php //if (ConnexionUtilisateur::isAdministrator()) : ?>
-<!--                    <div class="row">-->
-<!--                        <li class="nav-item active text-center mx-auto">-->
-<!--                            <a class="nav-link"-->
-<!--                               href="frontController.php?action=readAll&controller=utilisateur">-->
-<!--                                <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>-->
-<!--                        </li>-->
-<!--                    </div>-->
-<!--                --><?php //endif ?>
+                <!--                --><?php //if (ConnexionUtilisateur::isAdministrator()) : ?>
+                <!--                    <div class="row">-->
+                <!--                        <li class="nav-item active text-center mx-auto">-->
+                <!--                            <a class="nav-link"-->
+                <!--                               href="frontController.php?action=readAll&controller=utilisateur">-->
+                <!--                                <img id="accountImg" alt="compte" src="assets/img/panel.png"></a>-->
+                <!--                        </li>-->
+                <!--                    </div>-->
+                <!--                --><?php //endif ?>
                 <?php if (ConnexionUtilisateur::isConnected()) : ?>
                     <div class="row">
                         <li class="nav-item active d-flex justify-content-center mx-auto">
@@ -172,10 +173,7 @@ $parser->setBreaksEnabled(true);
                 <?php endif ?>
             </ul>
         </div>
-
-
     </nav>
-
 </div>
 <main class="my-5">
     <?php
