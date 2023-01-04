@@ -7,6 +7,7 @@ use Themis\Lib\FlashMessage;
 use Themis\Lib\FormData;
 use Themis\Model\DataObject\CoAuteur;
 use Themis\Model\DataObject\Proposition;
+use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\SectionProposition;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\CoAuteurRepository;
@@ -16,6 +17,7 @@ use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionPropositionRepository;
 use Themis\Model\Repository\SectionRepository;
 use Themis\Model\Repository\UtilisateurRepository;
+use Themis\Model\Repository\VotantRepository;
 
 /**
  * Classe dédiée aux fonctions CRUD et autres des propositions
@@ -135,17 +137,39 @@ class ControllerProposition extends AbstractController
         FormData::unsetAll();
         $proposition = (new PropositionRepository)->select($_GET["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
-        $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
-        $coAuteurs = (new CoAuteurRepository())->selectAllByProposition($proposition->getIdProposition());
+        $this->connectionCheck();
+        if ($this->hasReadAccess($question, $proposition)) {
+            $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
+            $coAuteurs = (new CoAuteurRepository())->selectAllByProposition($proposition->getIdProposition());
+            $this->showView("view.php", [
+                "coAuteurs" => $coAuteurs,
+                "proposition" => $proposition,
+                "question" => $question,
+                "sections" => $sections,
+                "pageTitle" => "Info Proposition",
+                "pathBodyView" => "proposition/read.php"
+            ]);
+        } else {
+            (new FlashMessage())->flash("createFailed", "Cette proposition est privée", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
 
-        $this->showView("view.php", [
-            "coAuteurs" => $coAuteurs,
-            "proposition" => $proposition,
-            "question" => $question,
-            "sections" => $sections,
-            "pageTitle" => "Info Proposition",
-            "pathBodyView" => "proposition/read.php"
-        ]);
+    }
+
+    public function hasReadAccess(Question $question, Proposition $proposition) {
+        return ( date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutProposition() &&
+                date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition() &&
+                $this->isAuteurOfProposition($proposition->getIdProposition()) ||
+                $this->isCoAuteurInProposition($proposition->getIdProposition()) )
+            ||
+            ( date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutVote() &&
+                date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition() &&
+                $this->isAuteurInQuestion($question->getIdQuestion()) ||
+                $this->isCoAuteurInQuestion($question->getIdQuestion()) ||
+                $this->isVotantInQuestion($question->getIdQuestion()) )
+            ||
+            date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition();
+
     }
 
     /**
@@ -299,6 +323,12 @@ class ControllerProposition extends AbstractController
         return (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
     }
 
+    private function isCoAuteurInQuestion(int $idQuestion): bool
+    {
+        return (new CoAuteurRepository)->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
+    }
+
+
     /**
      * Permet de savoir si l'utilisateur est co-auteur de la question sélectionnée
      *
@@ -317,6 +347,11 @@ class ControllerProposition extends AbstractController
     private function isAuteurOfProposition(int $idProposition): bool
     {
         return ConnexionUtilisateur::isUser((new PropositionRepository())->select($idProposition)->getLoginAuteur());
+    }
+
+    private function isVotantInQuestion(int $idQuestion): bool
+    {
+        return (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);
     }
 
 }

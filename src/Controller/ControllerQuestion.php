@@ -44,7 +44,7 @@ class ControllerQuestion extends AbstractController
                 (new FlashMessage())->flash("createdProblem", "Il faut au moins une minute de préparation pour la question", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
-            if (!($_POST['dateDebutProposition'] < $_POST['dateFinProposition'] && $_POST['dateFinProposition'] < $_POST['dateDebutVote'] && $_POST['dateDebutVote'] < $_POST['dateFinVote'])) {
+            if (!($_POST['dateDebutProposition'] < $_POST['dateFinProposition'] && $_POST['dateFinProposition'] <= $_POST['dateDebutVote'] && $_POST['dateDebutVote'] < $_POST['dateFinVote'])) {
                 FormData::saveFormData("createQuestion");
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
@@ -381,7 +381,12 @@ class ControllerQuestion extends AbstractController
     public function delete(): void
     {
         $this->connectionCheck();
-        if ($this->isOrganisateurOfQuestion((new QuestionRepository())->select($_GET["idQuestion"])->getLoginOrganisateur()) && $this->isOrganisateur()
+        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote()) {
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus supprimer la question", FlashMessage::FLASH_SUCCESS);
+            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+        }
+        if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur()) && $this->isOrganisateur()
             || $this->isAdmin()) {
             (new QuestionRepository())->delete($_GET["idQuestion"]);
             (new FlashMessage())->flash("deleted", "Votre question a été supprimée", FlashMessage::FLASH_SUCCESS);

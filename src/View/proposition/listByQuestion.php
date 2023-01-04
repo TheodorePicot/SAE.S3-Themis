@@ -1,5 +1,6 @@
 <?php
 
+use Themis\Controller\ControllerProposition;
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Model\Repository\AuteurRepository;
 
@@ -20,12 +21,15 @@ if (ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpan
             Ajouter une proposition</a>
     </div>
 <?php endif ?>
+
+
+
 <?php foreach ($propositions as $proposition) :
+    if (ConnexionUtilisateur::isConnected() && (new ControllerProposition())->hasReadAccess($question, $proposition)) :
     $titrePropositionHTML = htmlspecialchars($proposition->getTitreProposition());
     $propositionInURL = rawurlencode($proposition->getIdProposition());
     $questionInURL = rawurlencode($proposition->getIdQuestion());
     $hrefRead = "frontController.php?controller=proposition&action=read&idQuestion=$questionInURL&idProposition=$propositionInURL"; ?>
-
     <div class="boxProposition overflow-hidden rounded-5 my-3 d-flex align-items-center">
         <a id="containerQuestion" href="<?= $hrefRead ?>">
             <div class="mx-3">
@@ -33,4 +37,4 @@ if (ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpan
             </div>
         </a>
     </div>
-<?php endforeach; ?>
+<?php endif; endforeach; ?>
