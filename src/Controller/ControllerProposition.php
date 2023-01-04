@@ -189,7 +189,7 @@ class ControllerProposition extends AbstractController
     }
 
     /**
-     * Met à jour une proposition avec les informations du formulaire envoyé par l'auteur
+     * Met à jour une proposition avec les informations du formulaire envoyées par l'auteur
      *
      * Cette méthode est appelée quand un auteur soumet les informations du formulaire dans {@link src/View/proposition/update.php}
      * puis elle créée une {@link Proposition} qui représente la nouvelle version de la proposition.

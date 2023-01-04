@@ -88,7 +88,7 @@ class ControllerQuestion extends AbstractController
     }
 
     /**
-     * Méthode auxiliaire permettant d'ajouter des participants à une question
+     * Méthode auxiliaire permettant d'ajouter des participants d'une question
      * c.-à-d. les auteurs et les votants
      *
      * @param int $idQuestion
@@ -111,6 +111,8 @@ class ControllerQuestion extends AbstractController
      * Méthode auxiliaire que l'organisateur peut appeler durant la création ou la mise à jour de la question.
      * Elle ajoute une section à la question dans la base de données puis redirige l'organisateur vers la creation/mise à jour
      * de la question pour qu'il continue ses ajouts/modifications.
+     * Elle insère également toutes les informations du formulaire en même temps qu'elle fait la suppréssion de la section
+     * pour que l'utilisateur ne perde pas des informations écrites dans d'autres inputs.
      *
      * @return void
      */
@@ -308,12 +310,22 @@ class ControllerQuestion extends AbstractController
     }
 
     /**
+     * Met à jour une question avec les informations du formulaire envoyées par l'auteur
+     *
+     * Cette méthode est appelée quand un auteur soumet les informations du formulaire dans {@link src/View/question/update.php}
+     * puis elle créée une {@link Question} qui représente la nouvelle version de la proposition.
+     * Elle fait des verification de droits et de cohérence de date.
+     * Si toutes ces vérifications sont validées, elle met à jour les données de la question dans la base de données.
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     *
      * @return void
      */
     public function updated(): void
     {
         $this->connectionCheck();
-        if (!$this->isAdmin()) {
+
+        if ($this->isOrganisateurOfQuestion($_POST['loginOrganisateur']) && $this->isOrganisateur()
+            || $this->isAdmin()) {
             $oldQuestion = (new QuestionRepository)->select($_POST["idQuestion"]);
             if (date_create()->format("Y-m-d H:i:s") > $oldQuestion->getDateDebutProposition()) {
                 (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
@@ -327,9 +339,6 @@ class ControllerQuestion extends AbstractController
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
-        }
-        if ($this->isOrganisateurOfQuestion($_POST['loginOrganisateur']) && $this->isOrganisateur()
-            || $this->isAdmin()) {
             $this->updateInformationAuxiliary();
 
             if (isset($_POST["isInCreation"])) {
@@ -344,6 +353,12 @@ class ControllerQuestion extends AbstractController
     }
 
     /**
+     * Méthode auxiliaire que l'organisateur peut appeler durant la création ou la mise à jour de la question.
+     * Elle supprime une section à la question dans la base de données puis redirige l'organisateur vers la creation/mise à jour
+     * de la question pour qu'il continue ses ajouts/modifications.
+     * Elle insère également toutes les informations du formulaire en même temps qu'elle fait la suppréssion de la section
+     * pour que l'utilisateur ne perde pas des informations écrites dans d'autres inputs.
+     *
      * @return void
      */
     public function deleteLastSection(): void
@@ -366,6 +381,10 @@ class ControllerQuestion extends AbstractController
     }
 
     /**
+     * Méthode auxiliaire permettant de des participants d'une question
+     * c.-à-d. les auteurs et les votants.
+     * Cette méthode est appelée pour la mise à jour d'une question {@link updateInformationAuxiliary()}
+     *
      * @param int $idQuestion
      * @return void
      */

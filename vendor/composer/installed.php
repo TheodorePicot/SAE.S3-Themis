@@ -3,7 +3,7 @@
         'name' => 'vendor_name/sae.s3-themis',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'a048080a66b5374481f8b65806a627879a41f0b8',
+        'reference' => '463e7608c451a2867a094952457b39c427b48b64',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'vendor_name/sae.s3-themis' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'a048080a66b5374481f8b65806a627879a41f0b8',
+            'reference' => '463e7608c451a2867a094952457b39c427b48b64',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -4,6 +4,11 @@ namespace Themis\Config;
 
 class Conf
 {
+    /**
+     * Liste contenant toutes les informations concernant la base de données
+     *
+     * @var array|string[]
+     */
     static private array $databases = array(
         'hostname' => 'themis-db-instance.cnowxclkulrh.eu-west-3.rds.amazonaws.com',
         'port' => '5432',
