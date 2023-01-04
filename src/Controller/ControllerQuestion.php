@@ -395,6 +395,14 @@ class ControllerQuestion extends AbstractController
     }
 
     /**
+     * Supprime une question
+     *
+     * Elle fait des verification de droits et de cohérence de date.
+     * Si toutes ces vérifications sont validées, elle supprime la question de la base de données
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     *
+     *
+     *
      * @return void
      */
     public function delete(): void
@@ -416,6 +424,10 @@ class ControllerQuestion extends AbstractController
     }
 
     /**
+     * Regarde si l'utilisateur donné en paramètre est organisateur de la question.
+     *
+     * @see ConnexionUtilisateur::isUser()
+     *
      * @param $loginOrganisateur
      * @return bool
      */
