@@ -181,3 +181,7 @@ CREATE TRIGGER tr_udi_sommeVote_Proposition
     ON "Votes"
     FOR EACH ROW
 EXECUTE PROCEDURE updateSommeVoteOnProposition();
+
+-- ENUM pour système de vote
+
+CREATE TYPE systemeVote AS ENUM ('JugementMajoritaire', 'ScrutinUninominal');
