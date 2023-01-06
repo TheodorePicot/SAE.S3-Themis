@@ -129,7 +129,7 @@ $parser->setBreaksEnabled(true);
                     <div class="row">
                         <li class="nav-item active text-center">
                             <a class="nav-link mx-1"
-                               href="frontController.php?action=read&controller=utilisateur&login=<?= urlencode(ConnexionUtilisateur::getConnectedUserLogin()) ?>">
+                               href="frontController.php?action=read&controller=utilisateur&login=<?= rawurlencode(ConnexionUtilisateur::getConnectedUserLogin()) ?>">
                                 <?= htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin()) ?>
                                 <img id="accountImg" alt="compte" src="assets/img/account.png">
                             </a>

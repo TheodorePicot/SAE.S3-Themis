@@ -15,7 +15,7 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
                         <div class="mx-3">
 
                             <p>
-                                <input class="form-control form-control-lg <?= isset($_GET["invalidLogin"]) ? "is-invalid" : "" ?>" type="text" placeholder="pseudo"
+                                <input class="form-control form-control-lg <?= isset($_REQUEST["invalidLogin"]) ? "is-invalid" : "" ?>" type="text" placeholder="pseudo"
                                        name="login"
                                        value="<?php if (isset($_SESSION["formData"]["connection"]["login"])) echo $_SESSION["formData"]["connection"]["login"] ?>"
                                        id="login"
@@ -23,7 +23,7 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
                             </p>
                         </div>
                         <div class="mx-3">
-                            <input class="form-control form-control-lg <?= isset($_GET["invalidPswd"]) ? "is-invalid" : "" ?>" type="password" placeholder="mot de passe"
+                            <input class="form-control form-control-lg <?= isset($_REQUEST["invalidPswd"]) ? "is-invalid" : "" ?>" type="password" placeholder="mot de passe"
                                    name="mdp" id="mdp" minlength="8"
                                    required/>
 
