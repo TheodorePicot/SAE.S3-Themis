@@ -28,7 +28,9 @@ class ControllerQuestion extends AbstractController
      * Elle fait des verification de droits et de cohérence de date.
      * Si toutes ces vérifications sont validées, elle créée une {@link Question} puis elle insère les données de cet objet dans la base de données.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
-     *
+     * La méthode {@link FormData::saveFormData()} permet de stocker toutes les données dans {@link $_SESSION} par rapport au
+     * refresh des formulaires lors de l'incohérence des dates. Si nous ne faisons pas cela les informations données dans le formulaire serait perdues
+     * lors de la redirection.
      *
      * @return void
      */

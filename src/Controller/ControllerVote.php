@@ -17,11 +17,10 @@ class ControllerVote extends AbstractController
         $question = (new QuestionRepository)->select($_GET["idQuestion"]);
         if ($this->canVote($question)) {
             $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
-
             $this->showView("view.php", [
                 "propositions" => $propositions,
                 "pageTitle" => "Info Proposition",
-                "pathBodyView" => "vote/listProposition.php"
+                "pathBodyView" => "vote/listPropositionJugement.php"
             ]);
         } else {
             (new FlashMessage())->flash("notAuthor", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);

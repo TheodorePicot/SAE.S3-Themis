@@ -35,7 +35,8 @@ class QuestionRepository extends AbstractRepository
             $objectArrayFormat["dateFinProposition"],
             $objectArrayFormat["dateDebutVote"],
             $objectArrayFormat["dateFinVote"],
-            $objectArrayFormat["loginOrganisateur"]);
+            $objectArrayFormat["loginOrganisateur"],
+            $objectArrayFormat["systemeVote"]);
     }
 
     public function selectAllCurrentlyInWriting(): array
@@ -105,7 +106,8 @@ class QuestionRepository extends AbstractRepository
             "dateFinProposition",
             "dateDebutVote",
             "dateFinVote",
-            "loginOrganisateur"
+            "loginOrganisateur",
+            "systemeVote"
         ];
     }
 

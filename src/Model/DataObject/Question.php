@@ -12,6 +12,7 @@ class Question extends AbstractDataObject
     private string $dateDebutVote;
     private string $dateFinVote;
     private string $loginOrganisateur;
+    private string $systemeVote;
 
     /**
      * @param int $idQuestion
@@ -29,7 +30,8 @@ class Question extends AbstractDataObject
                                 string $dateFinProposition,
                                 string $dateDebutVote,
                                 string $dateFinVote,
-                                string $loginOrganisateur)
+                                string $loginOrganisateur,
+                                string $systemeVote)
     {
         $this->idQuestion = $idQuestion;
         $this->titreQuestion = $titreQuestion;
@@ -39,6 +41,7 @@ class Question extends AbstractDataObject
         $this->dateDebutVote = $dateDebutVote;
         $this->dateFinVote = $dateFinVote;
         $this->loginOrganisateur = $loginOrganisateur;
+        $this->systemeVote = $systemeVote;
     }
 
     public function tableFormat(): array
@@ -51,7 +54,8 @@ class Question extends AbstractDataObject
                 "dateFinProposition" => $this->dateFinProposition,
                 "dateDebutVote" => $this->dateDebutVote,
                 "dateFinVote" => $this->dateFinVote,
-                "loginOrganisateur" => $this->loginOrganisateur
+                "loginOrganisateur" => $this->loginOrganisateur,
+                "systemeVote" => $this->systemeVote
             ];
         } else {
             return [
@@ -62,7 +66,8 @@ class Question extends AbstractDataObject
                 "dateFinProposition" => $this->dateFinProposition,
                 "dateDebutVote" => $this->dateDebutVote,
                 "dateFinVote" => $this->dateFinVote,
-                "loginOrganisateur" => $this->loginOrganisateur
+                "loginOrganisateur" => $this->loginOrganisateur,
+                "systemeVote" => $this->systemeVote
             ];
         }
     }
@@ -134,8 +139,17 @@ class Question extends AbstractDataObject
     public function getShortDescriptionQuestion(): string
     {
         $tmp = substr($this->descriptionQuestion, 0, 120);
-        $tmp .= "...";
+        if (strlen($this->descriptionQuestion) > 120) $tmp .= "...";
+
         return $tmp;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSystemeVote(): string
+    {
+        return $this->systemeVote;
     }
 
     public static function buildFromForm(array $formArray): Question
@@ -149,7 +163,8 @@ class Question extends AbstractDataObject
                 $formArray["dateFinProposition"],
                 $formArray["dateDebutVote"],
                 $formArray["dateFinVote"],
-                $formArray["loginOrganisateur"]);
+                $formArray["loginOrganisateur"],
+                $formArray["systemeVote"]);
         } else {
             return new Question(
                 null,
@@ -159,7 +174,8 @@ class Question extends AbstractDataObject
                 $formArray["dateFinProposition"],
                 $formArray["dateDebutVote"],
                 $formArray["dateFinVote"],
-                $formArray["loginOrganisateur"]);
+                $formArray["loginOrganisateur"],
+                $formArray["systemeVote"]);
         }
 
     }
