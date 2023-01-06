@@ -20,8 +20,8 @@ body {
 }
 
 #bodyLogin {
-    background: rgb(236, 223, 209);
-    background: radial-gradient(circle, rgba(236, 223, 209, 1) 15%, rgba(233, 202, 227, 1) 100%);
+    background: rgb(253,247,242);
+    background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(209,183,214,1) 100%);
 }
 
 #bodyLogin main{
@@ -29,8 +29,8 @@ body {
 }
 
 #bodyCreateUser {
-    background: rgb(236, 223, 209);
-    background: radial-gradient(circle, rgba(236, 223, 209, 1) 15%, rgba(233, 202, 227, 1) 100%);
+    background: rgb(253,247,242);
+    background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(209,183,214,1) 100%);
 }
 
 #bodyCreateUser main{

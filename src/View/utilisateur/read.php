@@ -4,6 +4,7 @@ use Themis\Lib\ConnexionUtilisateur;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\VotantRepository;
 
+
 $utilisateurInURL = rawurlencode($utilisateur->getLogin());
 $hrefDelete = "frontController.php?action=delete&controller=utilisateur&login=" . $utilisateurInURL;
 $hrefUpdateInformation = "frontController.php?action=updateInformation&controller=utilisateur&login=" . $utilisateurInURL;

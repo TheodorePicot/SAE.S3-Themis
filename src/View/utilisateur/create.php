@@ -11,10 +11,10 @@
                         <input type="hidden" name="action" value="created">
 
                         <div class="mx-3">
-                            <h5><label for="login">Login</label></h5>
+
                             <p>
                                 <input class="form-control form-control-lg <?= isset($_GET["invalidLogin"]) ? "is-invalid" : "" ?>"
-                                       type="text" placeholder="Paul16" name="login"
+                                       type="text" placeholder="Pseudo" name="login"
                                        id="login"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["login"])) echo $_SESSION["createUtilisateur"]["login"] ?>"
                                        required/>
@@ -23,10 +23,9 @@
 
 
                         <div class="mx-3">
-                            <h5><label for="adresseMail">Email&#42;</label></h5>
                             <p>
                                 <input class="form-control form-control-lg" type="text"
-                                       placeholder="dupontpaul1610@gmail.com"
+                                       placeholder="Email"
                                        name="adresseMail"
                                        id="adresseMail"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["adresseMail"])) echo $_SESSION["createUtilisateur"]["adresseMail"] ?>"
@@ -35,9 +34,8 @@
                         </div>
 
                         <div class="mx-3">
-                            <h5><label for="nom">Nom</label></h5>
                             <p>
-                                <input class="form-control form-control-lg" type="text" placeholder="Dupont" name="nom"
+                                <input class="form-control form-control-lg" type="text" placeholder="Nom" name="Nom"
                                        id="nom"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["nom"])) echo $_SESSION["createUtilisateur"]["nom"] ?>"
                                        required/>
@@ -45,39 +43,26 @@
                         </div>
 
                         <div class="mx-3">
-                            <h5><label for="prenom">Prénom</label></h5>
                             <p>
-                                <input class="form-control form-control-lg" type="text" placeholder="Paul" name="prenom"
+                                <input class="form-control form-control-lg" type="text" placeholder="Prénom" name="Prenom"
                                        id="prenom"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["prenom"])) echo $_SESSION["createUtilisateur"]["prenom"] ?>"
                                        required/>
                             </p>
                         </div>
-                        <div class="mx-3">
-                            <h5><label for="dateNaissance">Date de naissance</label></h5>
-                            <p>
-                                <input class="form-control form-control-lg" type="date" name="dateNaissance"
-                                       id="dateNaissance"
-                                       value="<?php if (isset($_SESSION["createUtilisateur"]["dateNaissance"])) echo $_SESSION["createUtilisateur"]["dateNaissance"] ?>"
-                                       required/>
-                            </p>
-                        </div>
-
                         <div class="mx-3 ">
-                            <h5><label for="mdp">Mot de passe&#42;</label></h5>
                             <p>
                                 <input class="form-control form-control-lg <?= isset($_GET["invalidPswd"]) ? "is-invalid" : "" ?>"
-                                       type="password" name="mdp" id="mdp"
+                                       type="password" name="mdp" id="mdp" placeholder="Mot de passe"
                                        minlength="8"
                                        required/>
                             </p>
                         </div>
 
                         <div class="mx-3 ">
-                            <h5><label for="mdpConfirmation">Confirmation mot de passe&#42;</label></h5>
                             <p>
                                 <input class="form-control form-control-lg <?= isset($_GET["invalidPswd"]) ? "is-invalid" : "" ?>"
-                                       type="password" name="mdpConfirmation"
+                                       type="password" name="mdpConfirmation" placeholder="Confirmation du mot de passe"
                                        id="mdpConfirmation"
                                        minlength="8"
                                        required/>

@@ -134,4 +134,18 @@ abstract class AbstractRepository
 
         return $pdoStatement->execute($values);
     }
+
+    public function selectAllOrderedWithLimit(): array
+    {
+        $databaseTable = $this->getTableName();
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} ORDER BY {$this->getOrderColumn()} LIMIT 10");
+
+        $dataObjects = array(); 
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
+    }
+
 }
