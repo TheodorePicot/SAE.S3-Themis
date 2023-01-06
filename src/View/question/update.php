@@ -70,6 +70,14 @@ use Themis\Lib\ConnexionUtilisateur;
                            name="dateFinVote"
                            id="dateFinVote" required/>
                 </div>
+                <h3><label for="systemeVote" class="form-label">Choix du système de vote</label></h3>
+
+                <div class="col-auto">
+                    <select class="form-select h-100" name="systemeVote" id="autoSizingSelect" required>
+                        <option value="JugementMajoritaire" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "JugementMajoritaire") echo "selected" ?>>Jugement Majoritaire</option>
+                        <option value="ScrutinUninominal" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "ScrutinUninominal") echo "selected" ?>>Scrutin Uninominal</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -79,12 +87,12 @@ use Themis\Lib\ConnexionUtilisateur;
                     <input type="hidden" name="idQuestion" value="<?= htmlspecialchars($question->getIdQuestion()) ?>">
                     <input type="hidden" name="loginOrganisateur"
                            value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
-                    <?php if(isset($_GET["isInCreation"])) : ?>
+                    <?php if(isset($_REQUEST["isInCreation"])) : ?>
                         <input type="hidden" name="isInCreation" value="isInCreation">
                     <?php endif ?>
                     <?php require_once __DIR__ . "/../section/listByQuestionForUpdate.php" ?>
                 </div>
-                <?php if(isset($_GET["isInCreation"])) : ?>
+                <?php if(isset($_REQUEST["isInCreation"])) : ?>
                     <input type="hidden" name="isInCreation" value="isInCreation">
                     <div class="col-12 d-flex align-content-center justify-content-center">
                         <button class="btn btn-lg btn-dark text-nowrap" type="submit" name="action" value="updated">Créer</button>

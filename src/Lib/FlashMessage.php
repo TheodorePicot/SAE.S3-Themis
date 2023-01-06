@@ -14,8 +14,6 @@ class FlashMessage
     {
         if ($name !== '' && $message !== '' && $type !== '') {
             $this->createFlashMessage($name, $message, $type);
-        } elseif ($name !== '' && $message === '' && $type === '') {
-            $this->displayFlashMessage($name);
         } elseif ($name === '' && $message === '' && $type === '') {
             $this->returnAllFlashMessages();
         }
@@ -27,19 +25,6 @@ class FlashMessage
             unset($_SESSION[self::FLASH][$name]);
         }
         $_SESSION[self::FLASH][$name] = ['message' => $message, 'type' => $type];
-    }
-
-    function displayFlashMessage(string $name): void
-    {
-        if (!isset($_SESSION[self::FLASH][$name])) {
-            return;
-        }
-
-        $flashMessage = $_SESSION[self::FLASH][$name];
-
-        unset($_SESSION[self::FLASH][$name]);
-
-        echo($flashMessage);
     }
 
     function returnAllFlashMessages(): void
@@ -64,10 +49,4 @@ class FlashMessage
             $flashMessage['message']
         );
     }
-
-    public static function containsMessage(string $type): bool
-    {
-        return isset($_SESSION[$type]);
-    }
-
 }

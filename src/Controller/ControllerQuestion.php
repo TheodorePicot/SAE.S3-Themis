@@ -37,21 +37,21 @@ class ControllerQuestion extends AbstractController
     public function created(): void
     {
         $this->connectionCheck();
-        if ($this->isOrganisateurOfQuestion($_POST["loginOrganisateur"])
+        if ($this->isOrganisateurOfQuestion($_REQUEST["loginOrganisateur"])
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 minute"));
-            if ($dateOneDay->format("Y-m-d H:i:s") >= $_POST['dateDebutProposition']) {
+            if ($dateOneDay->format("Y-m-d H:i:s") >= $_REQUEST['dateDebutProposition']) {
                 FormData::saveFormData("createQuestion");
                 (new FlashMessage())->flash("createdProblem", "Il faut au moins une minute de préparation pour la question", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
-            if (!($_POST['dateDebutProposition'] < $_POST['dateFinProposition'] && $_POST['dateFinProposition'] <= $_POST['dateDebutVote'] && $_POST['dateDebutVote'] < $_POST['dateFinVote'])) {
+            if (!($_REQUEST['dateDebutProposition'] < $_REQUEST['dateFinProposition'] && $_REQUEST['dateFinProposition'] <= $_REQUEST['dateDebutVote'] && $_REQUEST['dateDebutVote'] < $_REQUEST['dateFinVote'])) {
                 FormData::saveFormData("createQuestion");
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
-            (new QuestionRepository())->create(Question::buildFromForm($_POST));
+            (new QuestionRepository())->create(Question::buildFromForm($_REQUEST));
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             $this->createParticipants($idQuestion);
@@ -98,12 +98,12 @@ class ControllerQuestion extends AbstractController
      */
     private function createParticipants(int $idQuestion)
     {
-        foreach ($_POST["votants"] as $votant) {
+        foreach ($_REQUEST["votants"] as $votant) {
             $votantObject = new Participant($votant, $idQuestion);
             (new VotantRepository)->create($votantObject);
         }
 
-        foreach ($_POST["auteurs"] as $auteur) {
+        foreach ($_REQUEST["auteurs"] as $auteur) {
             $auteurObject = new Participant($auteur, $idQuestion);
             (new AuteurRepository)->create($auteurObject);
         }
@@ -121,16 +121,16 @@ class ControllerQuestion extends AbstractController
     public function addSection(): void
     {
         $this->connectionCheck();
-        if ($this->isOrganisateurOfQuestion($_POST["loginOrganisateur"])
+        if ($this->isOrganisateurOfQuestion($_REQUEST["loginOrganisateur"])
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             $this->updateInformationAuxiliary();
-            (new SectionRepository)->create(new Section((int)null, $_POST["idQuestion"], "", ""));
+            (new SectionRepository)->create(new Section((int)null, $_REQUEST["idQuestion"], "", ""));
 
-            if (isset($_POST["isInCreation"]))
-                $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_POST["idQuestion"]}");
+            if (isset($_REQUEST["isInCreation"]))
+                $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_REQUEST["idQuestion"]}");
             else
-                $this->redirect("frontController.php?action=update&idQuestion={$_POST["idQuestion"]}");
+                $this->redirect("frontController.php?action=update&idQuestion={$_REQUEST["idQuestion"]}");
         } else {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=readAll");
@@ -148,11 +148,11 @@ class ControllerQuestion extends AbstractController
     private function updateInformationAuxiliary(): void
     {
         $this->connectionCheck();
-        $question = Question::buildFromForm($_POST);
+        $question = Question::buildFromForm($_REQUEST);
         (new QuestionRepository)->update($question);
 
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_POST["titreSection{$section->getIdSection()}"], $_POST["descriptionSection{$section->getIdSection()}"]);
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"]);
             (new SectionRepository)->update($updatedSection);
         }
 
@@ -173,19 +173,19 @@ class ControllerQuestion extends AbstractController
     public function update(): void
     {
         $this->connectionCheck();
-        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
 
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateDebutProposition()) {
             (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
-            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+            $this->redirect("frontController.php?action=read&idQuestion={$_REQUEST["idQuestion"]}");
         }
         if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur())
             && $this->isOrganisateur()
             || $this->isAdmin()) {
-            $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
+            $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
             $utilisateurs = (new UtilisateurRepository)->selectAllOrdered();
 
-            if (isset($_GET["isInCreation"])) $message = "Création de votre question";
+            if (isset($_REQUEST["isInCreation"])) $message = "Création de votre question";
             else $message = "Mise à jour question";
 
             $this->showView("view.php", [
@@ -213,14 +213,14 @@ class ControllerQuestion extends AbstractController
     public function read(): void
     {
         FormData::unsetAll();
-        $question = (new QuestionRepository())->select($_GET["idQuestion"]);
-        $sections = (new SectionRepository)->selectAllByQuestion($_GET["idQuestion"]);
-        $votants = (new VotantRepository)->selectAllByQuestion($_GET["idQuestion"]);
-        $auteurs = (new AuteurRepository)->selectAllByQuestion($_GET["idQuestion"]);
+        $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
+        $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
+        $votants = (new VotantRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
+        $auteurs = (new AuteurRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
-            $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_GET["idQuestion"]);
+            $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_REQUEST["idQuestion"]);
         else
-            $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
+            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
 
         $this->showView("view.php", [
             "propositions" => $propositions,
@@ -308,7 +308,7 @@ class ControllerQuestion extends AbstractController
      */
     public function readAllBySearchValue(): void
     {
-        $this->showQuestions((new QuestionRepository())->selectAllBySearchValue($_GET["searchValue"]));
+        $this->showQuestions((new QuestionRepository())->selectAllBySearchValue($_REQUEST["searchValue"]));
     }
 
     /**
@@ -326,24 +326,24 @@ class ControllerQuestion extends AbstractController
     {
         $this->connectionCheck();
 
-        if ($this->isOrganisateurOfQuestion($_POST['loginOrganisateur']) && $this->isOrganisateur()
+        if ($this->isOrganisateurOfQuestion($_REQUEST['loginOrganisateur']) && $this->isOrganisateur()
             || $this->isAdmin()) {
-            $oldQuestion = (new QuestionRepository)->select($_POST["idQuestion"]);
+            $oldQuestion = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
             if (date_create()->format("Y-m-d H:i:s") > $oldQuestion->getDateDebutProposition()) {
                 (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
                 $this->redirect("frontController.php?action=readAll");
             }
-            if ($_POST['dateDebutProposition'] < $oldQuestion->getDateDebutProposition()) {
+            if ($_REQUEST['dateDebutProposition'] < $oldQuestion->getDateDebutProposition()) {
                 (new FlashMessage())->flash("createdProblem", "Vous pouvez uniquement ajouter du temps d'attente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
-            if (!($_POST['dateDebutProposition'] < $_POST['dateFinProposition'] && $_POST['dateFinProposition'] < $_POST['dateDebutVote'] && $_POST['dateDebutVote'] < $_POST['dateFinVote'])) {
+            if (!($_REQUEST['dateDebutProposition'] < $_REQUEST['dateFinProposition'] && $_REQUEST['dateFinProposition'] < $_REQUEST['dateDebutVote'] && $_REQUEST['dateDebutVote'] < $_REQUEST['dateFinVote'])) {
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
             $this->updateInformationAuxiliary();
 
-            if (isset($_POST["isInCreation"])) {
+            if (isset($_REQUEST["isInCreation"])) {
                 (new FlashMessage())->flash("created", "Votre question a été créée", FlashMessage::FLASH_SUCCESS);
             } else {
                 (new FlashMessage())->flash("updated", "Votre question a été mise à jour", FlashMessage::FLASH_SUCCESS);
@@ -366,16 +366,16 @@ class ControllerQuestion extends AbstractController
     public function deleteLastSection(): void
     {
         $this->connectionCheck();
-        if ($this->isOrganisateurOfQuestion($_POST["loginOrganisateur"])
+        if ($this->isOrganisateurOfQuestion($_REQUEST["loginOrganisateur"])
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             $this->updateInformationAuxiliary();
-            (new SectionRepository)->delete($_POST["lastIdSection"]);
+            (new SectionRepository)->delete($_REQUEST["lastIdSection"]);
 
-            if (isset($_POST["isInCreation"]))
-                $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_POST["idQuestion"]}");
+            if (isset($_REQUEST["isInCreation"]))
+                $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_REQUEST["idQuestion"]}");
             else
-                $this->redirect("frontController.php?action=update&idQuestion={$_POST["idQuestion"]}");
+                $this->redirect("frontController.php?action=update&idQuestion={$_REQUEST["idQuestion"]}");
         } else {
             (new FlashMessage())->flash("updatedFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
@@ -410,14 +410,14 @@ class ControllerQuestion extends AbstractController
     public function delete(): void
     {
         $this->connectionCheck();
-        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote()) {
             (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus supprimer la question", FlashMessage::FLASH_SUCCESS);
-            $this->redirect("frontController.php?action=read&idQuestion={$_GET["idQuestion"]}");
+            $this->redirect("frontController.php?action=read&idQuestion={$_REQUEST["idQuestion"]}");
         }
         if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur()) && $this->isOrganisateur()
             || $this->isAdmin()) {
-            (new QuestionRepository())->delete($_GET["idQuestion"]);
+            (new QuestionRepository())->delete($_REQUEST["idQuestion"]);
             (new FlashMessage())->flash("deleted", "Votre question a été supprimée", FlashMessage::FLASH_SUCCESS);
         } else {
             (new FlashMessage())->flash("deleteFailed", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);

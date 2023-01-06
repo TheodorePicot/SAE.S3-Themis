@@ -2,8 +2,6 @@
 
 use Themis\Lib\ConnexionUtilisateur;
 
-
-
 ?>
 <form method="post" action="frontController.php" class="needs-validation" novalidate>
     <fieldset>
@@ -67,7 +65,7 @@ use Themis\Lib\ConnexionUtilisateur;
                     <input type="hidden" name="action" value="created">
                     <input type="hidden" name="controller" value="proposition">
                     <input type="hidden" name="loginAuteur"
-                           value="<?= ConnexionUtilisateur::getConnectedUserLogin() ?>">
+                           value="<?= htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin()) ?>">
                     <input type="hidden" name="idQuestion" value="<?= $question->getIdQuestion() ?>">
 
                     <div class="d-flex align-content-center justify-content-center my-3" style="border-radius: 4px">

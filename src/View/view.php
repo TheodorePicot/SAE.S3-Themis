@@ -31,8 +31,8 @@ $parser->setBreaksEnabled(true);
     <title><?= $pageTitle ?></title>
 </head>
 
-<body <?php if (isset($_GET["action"]) && $_GET["action"] == "login") echo 'id="bodyLogin"';
-            if (isset($_GET["action"]) && $_GET["action"] == "create" && isset($_GET['controller']) && $_GET['controller'] == "utilisateur") echo 'id="bodyCreateUser"'
+<body <?php if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "login") echo 'id="bodyLogin"';
+            if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQUEST['controller']) && $_REQUEST['controller'] == "utilisateur") echo 'id="bodyCreateUser"'
 ?>>
 
 <!-- Optional JavaScript -->

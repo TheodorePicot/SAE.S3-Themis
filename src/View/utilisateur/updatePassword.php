@@ -12,15 +12,15 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
 
             <div class="offset-lg-3 offset-md-3 col-md-6 col-lg-6">
                 <h5><label class="my-2" for="mdpAncien">Ancien mot de passe&#42; </label></h5>
-                <input class="form-control <?= isset($_GET["invalidOld"]) ? "is-invalid" : "" ?>" type="password" name="mdpAncien" id="mdpAncien"
+                <input class="form-control <?= isset($_REQUEST["invalidOld"]) ? "is-invalid" : "" ?>" type="password" name="mdpAncien" id="mdpAncien"
                        value="">
 
                 <h5><label class="my-2" for="mdp">Nouveau mot de passe&#42; </label></h5>
-                <input class="form-control <?= isset($_GET["invalidNew"]) ? "is-invalid" : "" ?>" type="password" name="mdp" id="mdp"
+                <input class="form-control <?= isset($_REQUEST["invalidNew"]) ? "is-invalid" : "" ?>" type="password" name="mdp" id="mdp"
                        value="">
 
                 <h5><label class="my-2" for="mdpConfirmation">Confirmer le nouveau mot de passe&#42; </label></h5>
-                <input class="form-control <?= isset($_GET["invalidNew"]) ? "is-invalid" : "" ?>" type="password" name="mdpConfirmation" id="mdpConfirmation"
+                <input class="form-control <?= isset($_REQUEST["invalidNew"]) ? "is-invalid" : "" ?>" type="password" name="mdpConfirmation" id="mdpConfirmation"
                        value="">
 
                 <input type='hidden' name='action' value='updatedForPassword'>

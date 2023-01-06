@@ -44,8 +44,6 @@ use Themis\Lib\ConnexionUtilisateur;
                         <option value="ScrutinUninominal" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "ScrutinUninominal") echo "selected" ?>>Scrutin Uninominal</option>
                     </select>
                 </div>
-
-
             </div>
         </div>
 

@@ -72,7 +72,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
                 </div>
 
                 <div class="my-4">
-                    <?php if (ConnexionUtilisateur::isAdministrator() && ConnexionUtilisateur::isUser($_GET["login"])) : ?>
+                    <?php if (ConnexionUtilisateur::isAdministrator() && ConnexionUtilisateur::isUser($_REQUEST["login"])) : ?>
                         <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
                         <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
                             <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?> disabled>

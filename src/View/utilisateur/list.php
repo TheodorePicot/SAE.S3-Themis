@@ -25,7 +25,7 @@
                     $countA++;
                 }
             }
-            if ($countA == 0) echo 'Il n\'y a pas d\'administrateur avec un login contenant "' . $_GET['searchValue'] . '".';
+            if ($countA == 0) echo 'Il n\'y a pas d\'administrateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
             ?>
         </div>
 
@@ -42,7 +42,7 @@
                     $countO++;
                 }
             }
-            if ($countO == 0) echo 'Il n\'y a pas d\'organisateur avec un login contenant "' . $_GET['searchValue'] . '".';
+            if ($countO == 0) echo 'Il n\'y a pas d\'organisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
             ?>
         </div>
 
@@ -61,7 +61,7 @@
                     $countU++;
                 }
             }
-            if ($countU == 0) echo 'Il n\'y a pas d\'utilisateur avec un login contenant "' . $_GET['searchValue'] . '".';
+            if ($countU == 0) echo 'Il n\'y a pas d\'utilisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
             ?>
         </div>
 

@@ -14,9 +14,9 @@ class ControllerVote extends AbstractController
 {
     public function vote()
     {
-        $question = (new QuestionRepository)->select($_GET["idQuestion"]);
+        $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if ($this->canVote($question)) {
-            $propositions = (new PropositionRepository)->selectByQuestion($_GET["idQuestion"]);
+            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
             $this->showView("view.php", [
                 "propositions" => $propositions,
                 "pageTitle" => "Info Proposition",
@@ -30,11 +30,11 @@ class ControllerVote extends AbstractController
 
     public function submitVote()
     {
-        $question = (new QuestionRepository)->select($_POST["idQuestion"]);
+        $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if ($this->canVote($question)) {
-            foreach ((new PropositionRepository())->selectByQuestion($_POST["idQuestion"]) as $proposition) {
-                $vote = new Vote($_POST["loginVotant"], $proposition->getIdProposition(), $_POST["valueVote{$proposition->getIdProposition()}"]);
-                if ((new VotantRepository)->votantHasAlreadyVoted($_POST["loginVotant"], $proposition->getIdProposition())) {
+            foreach ((new PropositionRepository())->selectByQuestion($_REQUEST["idQuestion"]) as $proposition) {
+                $vote = new Vote($_REQUEST["loginVotant"], $proposition->getIdProposition(), $_REQUEST["valueVote{$proposition->getIdProposition()}"]);
+                if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) {
                     (new VoteRepository)->update($vote);
                 } else {
                     (new VoteRepository)->create($vote);

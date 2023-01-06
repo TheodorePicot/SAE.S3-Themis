@@ -13,11 +13,11 @@ use Themis\Model\Repository\AuteurRepository;
 
 <?php
 
-if (ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_GET["idQuestion"]) &&
+if (ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_REQUEST["idQuestion"]) &&
     ($question->getDateDebutProposition() <= date_create()->format("Y-m-d H:i:s") && date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition())) : ?>
     <div class="d-flex align-content-center justify-content-center my-3">
         <a class="btn btn-dark text-nowrap"
-           href="frontController.php?controller=proposition&action=create&idQuestion=<?= $question->getIdQuestion() ?>">+
+           href="frontController.php?controller=proposition&action=create&idQuestion=<?= rawurldecode($question->getIdQuestion()) ?>">+
             Ajouter une proposition</a>
     </div>
 <?php endif ?>

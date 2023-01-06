@@ -13,7 +13,7 @@
                         <div class="mx-3">
                             <h5><label for="login">Login</label></h5>
                             <p>
-                                <input class="form-control form-control-lg <?= isset($_GET["invalidLogin"]) ? "is-invalid" : "" ?>"
+                                <input class="form-control form-control-lg <?= isset($_REQUEST["invalidLogin"]) ? "is-invalid" : "" ?>"
                                        type="text" placeholder="Paul16" name="login"
                                        id="login"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["login"])) echo $_SESSION["createUtilisateur"]["login"] ?>"
@@ -66,7 +66,7 @@
                         <div class="mx-3 ">
                             <h5><label for="mdp">Mot de passe&#42;</label></h5>
                             <p>
-                                <input class="form-control form-control-lg <?= isset($_GET["invalidPswd"]) ? "is-invalid" : "" ?>"
+                                <input class="form-control form-control-lg <?= isset($_REQUEST["invalidPswd"]) ? "is-invalid" : "" ?>"
                                        type="password" name="mdp" id="mdp"
                                        minlength="8"
                                        required/>
@@ -76,7 +76,7 @@
                         <div class="mx-3 ">
                             <h5><label for="mdpConfirmation">Confirmation mot de passe&#42;</label></h5>
                             <p>
-                                <input class="form-control form-control-lg <?= isset($_GET["invalidPswd"]) ? "is-invalid" : "" ?>"
+                                <input class="form-control form-control-lg <?= isset($_REQUEST["invalidPswd"]) ? "is-invalid" : "" ?>"
                                        type="password" name="mdpConfirmation"
                                        id="mdpConfirmation"
                                        minlength="8"
