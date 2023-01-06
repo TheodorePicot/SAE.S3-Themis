@@ -33,7 +33,7 @@ class ControllerVote extends AbstractController
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if ($this->canVote($question)) {
             foreach ((new PropositionRepository())->selectByQuestion($_REQUEST["idQuestion"]) as $proposition) {
-                $vote = new Vote($_REQUEST["loginVotant"], $proposition->getIdProposition(), $_REQUEST["valueVote{$proposition->getIdProposition()}"]);
+                $vote = new Vote($_REQUEST["loginVotant"], $proposition->getIdProposition());
                 if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) {
                     (new VoteRepository)->update($vote);
                 } else {
