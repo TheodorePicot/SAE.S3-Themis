@@ -39,6 +39,7 @@
 
         <?php foreach ($questions as $question) :
             $titreQuestionHTML = htmlspecialchars($question->getTitreQuestion());
+            $descriptionQuestion = htmlspecialchars($question->getShortDescriptionQuestion());
             $loginOrganisateur = htmlspecialchars($question->getLoginOrganisateur());
             $questionInURL = rawurlencode($question->getIdQuestion());
             $hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;
@@ -51,7 +52,7 @@
                 <div class="card-body ">
                     <h5 class="card-title"><?= $titreQuestionHTML ?></h5>
 
-                    <p class="card-text"><?=$question->getShortDescriptionQuestion()?></p>
+                    <p class="card-text"><?= $descriptionQuestion?></p>
                 </div>
             </a>
         </div>
