@@ -87,6 +87,18 @@ class UtilisateurRepository extends AbstractRepository
         $pdoStatement->execute($newValues);
     }
 
+
+    public function selectAllOrderedAdminWithLimit(): array
+    {
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} WHERE estAdmin is TRUE ORDER BY {$this->getOrderColumn()} LIMIT 10");
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+
+        return $dataObjects;
+    }
+
     public function selectAllBySearchValue(string $element): array
     {
         $databaseTable = $this->getTableName();
@@ -100,17 +112,6 @@ class UtilisateurRepository extends AbstractRepository
             $users[] = $this->build($user);
         }
         return $users;
-    }
-
-    public function selectAllOrderedAdminWithLimit(): array
-    {
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} WHERE estAdmin is TRUE ORDER BY {$this->getOrderColumn()} LIMIT 10");
-        $dataObjects = array();
-        foreach ($pdoStatement as $dataObject) {
-            $dataObjects[] = $this->build($dataObject);
-        }
-
-        return $dataObjects;
     }
 
 }
