@@ -31,13 +31,16 @@ class ControllerUtilisateur extends AbstractController
      */
     public function readAll(): void
     {
+
         FormData::unsetAll();
         $this->connectionCheck();
         if (!$this->isAdmin()) {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
-        $utilisateurs = (new UtilisateurRepository())->selectAllOrdered();
+
+        $utilisateurs = (new UtilisateurRepository())->selectAllOrderedWithLimit();
+
         $this->showView("view.php", [
             "utilisateurs" => $utilisateurs,
             "pageTitle" => "Liste des utilisateurs",
