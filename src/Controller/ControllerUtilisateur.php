@@ -81,6 +81,8 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet de rediriger l'utilisateur vers la vue {@link src/View/utilisateur/create.php} pour qu'il puisse créer son compte
+     *
      * @return void
      */
     public function create()
@@ -93,6 +95,11 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet de lire le compte du l'utilisateur sélectionnée
+     *
+     * Cette méthode charge les données nécessaires puis fait appelle à {@link AbstractController::showView()}
+     * pour afficher la vue {@link src/View/utilisateur/read.php}.
+     *
      * @return void
      */
     public function read(): void
@@ -114,6 +121,8 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet de rediriger l'utilisateur vers la vue {@link src/View/utilisateur/login.php} pour qu'il puisse se connecter
+     *
      * @return void
      */
     public function login(): void
@@ -125,6 +134,17 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Connecte l'utilisateur par rapport aux informations du formulaire
+     *
+     * Cette méthode est appelée quand un utilisateur soumet les informations du formulaire dans {@link src/View/utilisateur/login.php}
+     * Elle vérifie si le login et le mot de passe transmi existent dans la base de donnée. Puis elle vérifie que l'utilisateur transmet bien un login et
+     * un mot de passe.
+     * Si toutes ces vérifications sont validées, elle connecte l'utilisateur.
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     * La méthode {@link FormData::saveFormData()} permet de stocker toutes les données dans {@link $_SESSION} par rapport au
+     * refresh des formulaires lors de l'incohérence des dates. Si nous ne faisons pas cela les informations données dans le formulaire serait perdues
+     * lors de la redirection.
+     *
      * @return void
      */
     public function connect(): void
@@ -149,6 +169,8 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     *
+     *
      * @return void
      */
     public function disconnect(): void
