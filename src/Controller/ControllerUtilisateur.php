@@ -15,9 +15,24 @@ use Themis\Model\Repository\UtilisateurRepository;
 class ControllerUtilisateur extends AbstractController
 {
 
+    /**
+     * Permet d'afficher tous les utilisateurs
+     * Cette méthode est réservée uniquement aux administrateurs.
+     * Elle vérifie si l'utilisateur actuellement connecté est bien admin.
+     * Si oui elle le redirige vers la bonne vue.
+     * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     *
+     * La méthode de la première ligne permet d'effacer toutes données stocker dans {@link $_SESSION} par rapport au
+     * refresh des formulaires lors de l'incohérence des dates pour la création d'une question.
+     *
+     * @see FormData::unsetAll();
+     *
+     * @return void
+     */
     public function readAll(): void
     {
         FormData::unsetAll();
+        $this->connectionCheck();
         if (!$this->isAdmin()) {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
@@ -31,6 +46,13 @@ class ControllerUtilisateur extends AbstractController
     }
 
 
+    /**
+     * Permet de créer un compte.
+     *
+     * Cette méthode créée un {@link Utilisateur}
+     *
+     * @return void
+     */
     public function created(): void
     {
         $user = Utilisateur::buildFromFormCreate($_POST);
@@ -55,6 +77,9 @@ class ControllerUtilisateur extends AbstractController
         }
     }
 
+    /**
+     * @return void
+     */
     public function create()
     {
         FormData::deleteFormData("connection");
@@ -64,6 +89,9 @@ class ControllerUtilisateur extends AbstractController
         ]);
     }
 
+    /**
+     * @return void
+     */
     public function read(): void
     {
         $this->connectionCheck();
@@ -82,6 +110,9 @@ class ControllerUtilisateur extends AbstractController
         } else $this->redirect("frontController.php?action=readAll");
     }
 
+    /**
+     * @return void
+     */
     public function login(): void
     {
         $this->showView("view.php", [
@@ -90,6 +121,9 @@ class ControllerUtilisateur extends AbstractController
         ]);
     }
 
+    /**
+     * @return void
+     */
     public function connect(): void
     {
         FormData::saveFormData("connection");
@@ -111,6 +145,9 @@ class ControllerUtilisateur extends AbstractController
         }
     }
 
+    /**
+     * @return void
+     */
     public function disconnect(): void
     {
         $this->connectionCheck();
@@ -119,6 +156,9 @@ class ControllerUtilisateur extends AbstractController
         $this->redirect("frontController.php?action=readAll");
     }
 
+    /**
+     * @return void
+     */
     public function updatedForInformation(): void
     {
         $this->connectionCheck();
@@ -148,6 +188,9 @@ class ControllerUtilisateur extends AbstractController
         $this->redirect("frontController.php?controller=utilisateur&action=read&login={$_POST["login"]}");
     }
 
+    /**
+     * @return void
+     */
     public function updatedForPassword()
     {
         $utilisateurSelect = (new UtilisateurRepository)->select($_POST["login"]);
@@ -173,6 +216,9 @@ class ControllerUtilisateur extends AbstractController
         }
     }
 
+    /**
+     * @return void
+     */
     public function updateInformation(): void
     {
         $this->connectionCheck();
@@ -189,6 +235,9 @@ class ControllerUtilisateur extends AbstractController
         }
     }
 
+    /**
+     * @return void
+     */
     public function updatePassword(): void
     {
         $this->connectionCheck();
@@ -206,6 +255,9 @@ class ControllerUtilisateur extends AbstractController
         }
     }
 
+    /**
+     * @return void
+     */
     public function delete(): void
     {
         if (ConnexionUtilisateur::isUser($_GET["login"])) {
@@ -222,6 +274,9 @@ class ControllerUtilisateur extends AbstractController
         $this->redirect("frontController.php?action=readAll");
     }
 
+    /**
+     * @return void
+     */
     public function validerEmail(): void
     {
         $login = $_GET['login'];
@@ -241,6 +296,10 @@ class ControllerUtilisateur extends AbstractController
         }
     }
 
+    /**
+     * @param array $utilisateurs
+     * @return void
+     */
     private function showUsers(array $utilisateurs)
     {
         $this->showView("view.php", [
@@ -250,6 +309,9 @@ class ControllerUtilisateur extends AbstractController
         ]);
     }
 
+    /**
+     * @return void
+     */
     public function readAllBySearchValue(): void
     {
         if (!$this->isAdmin()) {

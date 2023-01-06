@@ -34,7 +34,17 @@ use Themis\Lib\ConnexionUtilisateur;
                 <div class="container col-md-6 col-lg-6 my-3">
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForCreate.php" ?>
+                </div class="container col-md-6 col-lg-6 my-3">
+
+                <h3><label for="systemeVote" class="form-label">Choix du système de vote</label></h3>
+
+                <div class="col-auto">
+                    <select class="form-select h-100" name="systemeVote" id="autoSizingSelect" required>
+                        <option value="JugementMajoritaire" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "JugementMajoritaire") echo "selected" ?>>Jugement Majoritaire</option>
+                        <option value="ScrutinUninominal" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "ScrutinUninominal") echo "selected" ?>>Scrutin Uninominal</option>
+                    </select>
                 </div>
+
 
             </div>
         </div>
@@ -43,7 +53,7 @@ use Themis\Lib\ConnexionUtilisateur;
 
         <div class="container-fluid">
             <div class="row mx-5 my-4 gy-2">
-                <h2>Calendrier</h2>
+                <h3>Calendrier</h3>
 
 
                 <div class="container col-md-6 col-lg-6 my-4">

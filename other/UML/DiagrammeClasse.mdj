@@ -1144,7 +1144,8 @@
 															"_parent": {
 																"$ref": "AAAAAAGFg5/p7X1ymaE="
 															},
-															"name": "array $objectArrayFormat"
+															"name": "array $objectArrayFormat",
+															"type": ""
 														},
 														{
 															"_type": "UMLParameter",
@@ -1261,7 +1262,8 @@
 															"_parent": {
 																"$ref": "AAAAAAGFg7MDdH3cXZQ="
 															},
-															"name": "AbstractDataObject $dataObject"
+															"name": "AbstractDataObject $dataObject",
+															"type": ""
 														},
 														{
 															"_type": "UMLParameter",
@@ -1288,7 +1290,8 @@
 															"_parent": {
 																"$ref": "AAAAAAGFg7NiLH3pdd8="
 															},
-															"name": "string $primaryKeyValue"
+															"name": "string $primaryKeyValue",
+															"type": ""
 														},
 														{
 															"_type": "UMLParameter",
@@ -3285,8 +3288,8 @@
 																	},
 																	"visible": false,
 																	"font": "Arial;13;0",
-																	"left": -144,
-																	"top": -272,
+																	"left": 960,
+																	"top": -400,
 																	"height": 13
 																},
 																{
@@ -3296,8 +3299,8 @@
 																		"$ref": "AAAAAAGFg9RHvoO0qjc="
 																	},
 																	"font": "Arial;13;1",
-																	"left": 837,
-																	"top": 687,
+																	"left": 1389,
+																	"top": 623,
 																	"width": 208.84423828125,
 																	"height": 13,
 																	"text": "DataBaseConnection"
@@ -3310,8 +3313,8 @@
 																	},
 																	"visible": false,
 																	"font": "Arial;13;0",
-																	"left": -144,
-																	"top": -272,
+																	"left": 960,
+																	"top": -400,
 																	"width": 100.4072265625,
 																	"height": 13,
 																	"text": "(from Repository)"
@@ -3324,15 +3327,15 @@
 																	},
 																	"visible": false,
 																	"font": "Arial;13;0",
-																	"left": -144,
-																	"top": -272,
+																	"left": 960,
+																	"top": -400,
 																	"height": 13,
 																	"horizontalAlignment": 1
 																}
 															],
 															"font": "Arial;13;0",
-															"left": 832,
-															"top": 680,
+															"left": 1384,
+															"top": 616,
 															"width": 218.84423828125,
 															"height": 25,
 															"stereotypeLabel": {
@@ -3368,8 +3371,8 @@
 																		"$ref": "AAAAAAGFg9R5ZoPc4Lo="
 																	},
 																	"font": "Arial;13;0",
-																	"left": 837,
-																	"top": 710,
+																	"left": 1389,
+																	"top": 646,
 																	"width": 208.84423828125,
 																	"height": 13,
 																	"underline": true,
@@ -3386,8 +3389,8 @@
 																		"$ref": "AAAAAAGFg9VPjoPsjV8="
 																	},
 																	"font": "Arial;13;0",
-																	"left": 837,
-																	"top": 725,
+																	"left": 1389,
+																	"top": 661,
 																	"width": 208.84423828125,
 																	"height": 13,
 																	"text": "-PDO $pdo",
@@ -3395,8 +3398,8 @@
 																}
 															],
 															"font": "Arial;13;0",
-															"left": 832,
-															"top": 705,
+															"left": 1384,
+															"top": 641,
 															"width": 218.84423828125,
 															"height": 38
 														},
@@ -3420,8 +3423,8 @@
 																		"$ref": "AAAAAAGFg9VGVIPmz6o="
 																	},
 																	"font": "Arial;13;0",
-																	"left": 837,
-																	"top": 748,
+																	"left": 1389,
+																	"top": 684,
 																	"width": 208.84423828125,
 																	"height": 13,
 																	"text": "+__construct()",
@@ -3437,8 +3440,8 @@
 																		"$ref": "AAAAAAGFg9XK1IP1nGU="
 																	},
 																	"font": "Arial;13;0",
-																	"left": 837,
-																	"top": 763,
+																	"left": 1389,
+																	"top": 699,
 																	"width": 208.84423828125,
 																	"height": 13,
 																	"underline": true,
@@ -3455,8 +3458,8 @@
 																		"$ref": "AAAAAAGFg9ZfuIQB4LQ="
 																	},
 																	"font": "Arial;13;0",
-																	"left": 837,
-																	"top": 778,
+																	"left": 1389,
+																	"top": 714,
 																	"width": 208.84423828125,
 																	"height": 13,
 																	"underline": true,
@@ -3465,8 +3468,8 @@
 																}
 															],
 															"font": "Arial;13;0",
-															"left": 832,
-															"top": 743,
+															"left": 1384,
+															"top": 679,
 															"width": 218.84423828125,
 															"height": 53
 														},
@@ -3481,8 +3484,8 @@
 															},
 															"visible": false,
 															"font": "Arial;13;0",
-															"left": -72,
-															"top": -136,
+															"left": 480,
+															"top": -200,
 															"width": 10,
 															"height": 10
 														},
@@ -3497,16 +3500,16 @@
 															},
 															"visible": false,
 															"font": "Arial;13;0",
-															"left": -72,
-															"top": -136,
+															"left": 480,
+															"top": -200,
 															"width": 10,
 															"height": 10
 														}
 													],
 													"font": "Arial;13;0",
 													"containerChangeable": true,
-													"left": 832,
-													"top": 680,
+													"left": 1384,
+													"top": 616,
 													"width": 218.84423828125,
 													"height": 116,
 													"nameCompartment": {
@@ -3749,7 +3752,8 @@
 														"$ref": "AAAAAAGFg9RHvYOx1gQ="
 													},
 													"name": "PDO $pdo",
-													"visibility": "private"
+													"visibility": "private",
+													"type": ""
 												}
 											],
 											"operations": [
