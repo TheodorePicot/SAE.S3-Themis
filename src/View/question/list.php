@@ -22,7 +22,7 @@
             </ul>
         </div>
 
-            <form class="d-flex col-sm-12 col-md-8 col-lg-5">
+            <form method="post" class="d-flex col-sm-12 col-md-8 col-lg-5">
                 <input class="form-control me-2" type="search" name="searchValue" placeholder="Rechercher une question"
                        aria-label="Search">
                 <button class="btn btn-dark text-nowrap" name='action' value='readAllBySearchValue'

@@ -32,7 +32,7 @@ $parser->setBreaksEnabled(true);
 </head>
 
 <body <?php if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "login") echo 'id="bodyLogin"';
-            if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQUEST['controller']) && $_REQUEST['controller'] == "utilisateur") echo 'id="bodyCreateUser"'
+if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQUEST['controller']) && $_REQUEST['controller'] == "utilisateur") echo 'id="bodyCreateUser"'
 ?>>
 
 <!-- Optional JavaScript -->
@@ -126,23 +126,23 @@ $parser->setBreaksEnabled(true);
 
             <ul class="nav navbar-nav ms-auto">
                 <?php if (ConnexionUtilisateur::isConnected()) : ?>
-                    <div class="row">
-                        <li class="nav-item active text-center">
-                            <a class="nav-link mx-1"
-                               href="frontController.php?action=read&controller=utilisateur&login=<?= rawurlencode(ConnexionUtilisateur::getConnectedUserLogin()) ?>">
-                                <?= htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin()) ?>
-                                <img id="accountImg" alt="compte" src="assets/img/account.png">
-                            </a>
-                        </li>
-                    </div>
+
+                    <li class="nav-item active text-center">
+                        <a class="nav-link mx-1"
+                           href="frontController.php?action=read&controller=utilisateur&login=<?= rawurlencode(ConnexionUtilisateur::getConnectedUserLogin()) ?>">
+                            <?= htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin()) ?>
+                            <img id="accountImg" alt="compte" src="assets/img/account.png">
+                        </a>
+                    </li>
+
                 <?php endif ?>
                 <?php if (ConnexionUtilisateur::isConnected()) : ?>
-                    <div class="row">
-                        <li class="nav-item active d-flex justify-content-center mx-auto">
-                            <a class="btn btn-dark text-nowrap align-self-center"
-                               href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
-                        </li>
-                    </div>
+
+                    <li class="nav-item active d-flex justify-content-center mx-auto">
+                        <a class="btn btn-dark text-nowrap align-self-center"
+                           href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
+                    </li>
+
                 <?php endif ?>
 
                 <?php if (!ConnexionUtilisateur::isConnected()) : ?>

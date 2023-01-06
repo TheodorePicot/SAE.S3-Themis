@@ -25,8 +25,8 @@ class ControllerQuestion extends AbstractController
      * Créer une question avec les informations du formulaire envoyé par l'organisateur
      *
      * Cette méthode est appelée quand un organisateur soumet les informations du formulaire dans {@link src/View/question/create.php}
-     * Elle fait des verification de droits et de cohérence de date.
-     * Si toutes ces vérifications sont validées, elle créée une {@link Question} puis elle insère les données de cet objet dans la base de données.
+     * Elle fait des vérifications de droits et de cohérence de date.
+     * Si toutes ces vérifications sont validées, elle crée une {@link Question} puis elle insère les données de cet objet dans la base de données.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
      * La méthode {@link FormData::saveFormData()} permet de stocker toutes les données dans {@link $_SESSION} par rapport au
      * refresh des formulaires lors de l'incohérence des dates. Si nous ne faisons pas cela les informations données dans le formulaire serait perdues
@@ -113,7 +113,7 @@ class ControllerQuestion extends AbstractController
      * Méthode auxiliaire que l'organisateur peut appeler durant la création ou la mise à jour de la question.
      * Elle ajoute une section à la question dans la base de données puis redirige l'organisateur vers la creation/mise à jour
      * de la question pour qu'il continue ses ajouts/modifications.
-     * Elle insère également toutes les informations du formulaire en même temps qu'elle fait la suppréssion de la section
+     * Elle insère également toutes les informations du formulaire en même temps qu'elle fait la suppression de la section
      * pour que l'utilisateur ne perde pas des informations écrites dans d'autres inputs.
      *
      * @return void
@@ -437,4 +437,30 @@ class ControllerQuestion extends AbstractController
     {
         return ConnexionUtilisateur::isUser($loginOrganisateur);
     }
+
+
+    public function readAllVotantsBySearchValue(): void
+    {
+        FormData::unsetAll();
+        $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
+        $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
+        $votants =  (new VotantRepository())->selectAllVotantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
+        $auteurs = (new AuteurRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
+            $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_REQUEST["idQuestion"]);
+        else
+            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
+
+        $this->showView("view.php", [
+            "propositions" => $propositions,
+            "sections" => $sections,
+            "question" => $question,
+            "votants" => $votants,
+            "auteurs" => $auteurs,
+            "pageTitle" => "Info question",
+            "pathBodyView" => "question/read.php"
+        ]);
+
+    }
+
 }

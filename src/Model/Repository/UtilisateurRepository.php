@@ -81,28 +81,17 @@ class UtilisateurRepository extends AbstractRepository
     public function updatePassword(array $newValues): void
     {
         var_dump($newValues);
-        $sqlQuery = 'UPDATE themis."Utilisateurs" SET mdp =:mdp WHERE login =:login';
+        $sqlQuery = "UPDATE {$this->getTableName()} SET mdp =:mdp WHERE login =:login";
         echo $sqlQuery;
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $pdoStatement->execute($newValues);
     }
 
 
-    public function selectAllOrderedAdminWithLimit(): array
-    {
-        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} WHERE estAdmin is TRUE ORDER BY {$this->getOrderColumn()} LIMIT 10");
-        $dataObjects = array();
-        foreach ($pdoStatement as $dataObject) {
-            $dataObjects[] = $this->build($dataObject);
-        }
-
-        return $dataObjects;
-    }
-
     public function selectAllBySearchValue(string $element): array
     {
-        $databaseTable = $this->getTableName();
-        $sqlQuery = "SELECT * FROM $databaseTable WHERE " . 'LOWER("login") LIKE ? ';
+
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . 'LOWER("login") LIKE ? ';
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $pdoStatement->execute(array("%" . strtolower($element) . "%"));
@@ -113,5 +102,83 @@ class UtilisateurRepository extends AbstractRepository
         }
         return $users;
     }
+
+    public function selectAllAdminBySearchValue(string $element): array
+    {
+
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"estAdmin" is TRUE ' . ' AND LOWER("login") LIKE ? ';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $pdoStatement->execute(array("%" . strtolower($element) . "%"));
+
+        $users = array();
+        foreach ($pdoStatement as $user) {
+            $users[] = $this->build($user);
+        }
+        return $users;
+    }
+
+    public function selectAllOrganisateurBySearchValue(string $element): array
+    {
+
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"estOrganisateur" is TRUE AND "estAdmin" is NOT TRUE' . ' AND LOWER("login") LIKE ? ';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $pdoStatement->execute(array("%" . strtolower($element) . "%"));
+
+        $users = array();
+        foreach ($pdoStatement as $user) {
+            $users[] = $this->build($user);
+        }
+        return $users;
+    }
+
+    public function selectAllUtilisateurBySearchValue(string $element): array
+    {
+
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"estAdmin" is NOT TRUE AND "estOrganisateur" IS NOT TRUE' . ' AND LOWER("login") LIKE ? ';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $pdoStatement->execute(array("%" . strtolower($element) . "%"));
+
+        $users = array();
+        foreach ($pdoStatement as $user) {
+            $users[] = $this->build($user);
+        }
+        return $users;
+    }
+
+
+    public function selectAllOrderedAdminWithLimit(): array
+    {
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} WHERE" . '"estAdmin" is TRUE ORDER BY ' . "{$this->getOrderColumn()} LIMIT 10");
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+        return $dataObjects;
+    }
+
+    public function selectAllOrderedOrganisateurWithLimit(): array
+    {
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()}  WHERE" . '"estAdmin" is NOT TRUE AND "estOrganisateur" IS TRUE ORDER BY ' . "{$this->getOrderColumn()} LIMIT 10");
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+        return $dataObjects;
+    }
+
+    public function selectAllOrderedUtilisateurWithLimit(): array
+    {
+        $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()}  WHERE" . '"estAdmin" is NOT TRUE AND "estOrganisateur" IS NOT TRUE ORDER BY ' . "{$this->getOrderColumn()} LIMIT 10");
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+        return $dataObjects;
+    }
+
+
 
 }

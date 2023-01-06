@@ -25,9 +25,9 @@ class ControllerUtilisateur extends AbstractController
      * La méthode de la première ligne permet d'effacer toutes données stocker dans {@link $_SESSION} par rapport au
      * refresh des formulaires lors de l'incohérence des dates pour la création d'une question.
      *
+     * @return void
      * @see FormData::unsetAll();
      *
-     * @return void
      */
     public function readAll(): void
     {
@@ -38,10 +38,15 @@ class ControllerUtilisateur extends AbstractController
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
+        $organisateurs = (new UtilisateurRepository())->selectAllOrderedOrganisateurWithLimit();
 
-        $utilisateurs = (new UtilisateurRepository())->selectAllOrderedWithLimit();
+        $utilisateurs = (new UtilisateurRepository())->selectAllOrderedUtilisateurWithLimit();
+
+        $administrateurs = (new UtilisateurRepository())->selectAllOrderedAdminWithLimit();
 
         $this->showView("view.php", [
+            "organisateurs" => $organisateurs,
+            "administrateurs" => $administrateurs,
             "utilisateurs" => $utilisateurs,
             "pageTitle" => "Liste des utilisateurs",
             "pathBodyView" => "utilisateur/list.php"
@@ -315,13 +320,65 @@ class ControllerUtilisateur extends AbstractController
     /**
      * @return void
      */
-    public function readAllBySearchValue(): void
+
+
+    public function readAllAdminBySearchValue(): void
     {
         if (!$this->isAdmin()) {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
-        $this->showUsers((new UtilisateurRepository())->selectAllBySearchValue($_REQUEST["searchValue"]));
+        $administrateurs = (new UtilisateurRepository())->selectAllAdminBySearchValue($_REQUEST["searchValue"]);
+        $organisateurs = (new UtilisateurRepository())->selectAllOrderedOrganisateurWithLimit();
+        $utilisateurs = (new UtilisateurRepository())->selectAllOrderedUtilisateurWithLimit();
+
+        $this->showView("view.php", [
+            "organisateurs" => $organisateurs,
+            "utilisateurs" => $utilisateurs,
+            "administrateurs" => $administrateurs,
+            "pageTitle" => "utilisateurs",
+            "pathBodyView" => "utilisateur/list.php"
+        ]);
     }
+
+    public function readAllOrganisateurBySearchValue(): void
+    {
+        if (!$this->isAdmin()) {
+            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
+        $administrateurs = (new UtilisateurRepository())->selectAllOrderedAdminWithLimit();
+        $organisateurs = (new UtilisateurRepository())->selectAllOrganisateurBySearchValue($_REQUEST["searchValue"]);
+        $utilisateurs = (new UtilisateurRepository())->selectAllOrderedUtilisateurWithLimit();
+
+        $this->showView("view.php", [
+            "organisateurs" => $organisateurs,
+            "utilisateurs" => $utilisateurs,
+            "administrateurs" => $administrateurs,
+            "pageTitle" => "utilisateurs",
+            "pathBodyView" => "utilisateur/list.php"
+        ]);
+    }
+
+    public function readAllUtilisateurBySearchValue(): void
+    {
+        if (!$this->isAdmin()) {
+            (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=readAll");
+        }
+        $administrateurs = (new UtilisateurRepository())->selectAllOrderedAdminWithLimit();
+        $organisateurs = (new UtilisateurRepository())->selectAllOrderedOrganisateurWithLimit();
+        $utilisateurs = (new UtilisateurRepository())->selectAllUtilisateurBySearchValue($_REQUEST["searchValue"]);
+
+        $this->showView("view.php", [
+            "organisateurs" => $organisateurs,
+            "utilisateurs" => $utilisateurs,
+            "administrateurs" => $administrateurs,
+            "pageTitle" => "utilisateurs",
+            "pathBodyView" => "utilisateur/list.php"
+        ]);
+    }
+
+
 
 }

@@ -59,6 +59,15 @@ $date = date_create();
 
                 <div class="collapse multi-collapse col-6" id="multiCollapseExample2">
                     <div class="card card-body">
+                        <div class="row">
+                            <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
+                                <input required class="form-control me-2" type="search" name="searchValue" placeholder="votants"
+                                       aria-label="Search">
+                                <button class="btn btn-dark text-nowrap" name='action' value='readAllVotantsBySearchValue'
+                                        type="submit">Rechercher
+                                </button>
+                            </form>
+                        </div>
                         <?php require_once __DIR__ . "/../utilisateur/listVotantsForRead.php" ?>
                     </div>
                 </div>

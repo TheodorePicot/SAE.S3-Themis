@@ -2,11 +2,33 @@
 
 
     <div class="row">
-        <form class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
-            <input class="form-control me-2" type="search" name="searchValue" placeholder="Rechercher un utilisateur"
+        <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
+            <input required class="form-control me-2" type="search" name="searchValue" placeholder="administrateurs"
                    aria-label="Search">
             <input type='hidden' name='controller' value='utilisateur'>
-            <button class="btn btn-dark text-nowrap" name='action' value='readAllBySearchValue'
+            <button class="btn btn-dark text-nowrap" name='action' value='readAllAdminBySearchValue'
+                    type="submit">Rechercher
+            </button>
+        </form>
+    </div>
+
+    <div class="row">
+        <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
+            <input required class="form-control me-2" type="search" name="searchValue" placeholder="organisateurs"
+                   aria-label="Search">
+            <input type='hidden' name='controller' value='utilisateur'>
+            <button class="btn btn-dark text-nowrap" name='action' value='readAllOrganisateurBySearchValue'
+                    type="submit">Rechercher
+            </button>
+        </form>
+    </div>
+
+    <div class="row">
+        <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
+            <input required class="form-control me-2" type="search" name="searchValue" placeholder="utilisateurs"
+                   aria-label="Search">
+            <input type='hidden' name='controller' value='utilisateur'>
+            <button class="btn btn-dark text-nowrap" name='action' value='readAllUtilisateurBySearchValue'
                     type="submit">Rechercher
             </button>
         </form>
@@ -18,12 +40,10 @@
             <h3> Administrateurs </h3>
             <?php
             $countA = 0;
-            foreach ($utilisateurs as $user) {
-                if ($user->isAdmin()) {
-                    echo '<ul><li style="list-style: none"><a href="frontController.php?action=read&login=' . rawurlencode($user->getLogin()) .
-                        '&controller=utilisateur">' . htmlspecialchars($user->getLogin()) . '</a></li></ul>';
-                    $countA++;
-                }
+            foreach ($administrateurs as $administrateur) {
+                echo '<ul><li style="list-style: none"><a href="frontController.php?action=read&login=' . rawurlencode($administrateur->getLogin()) .
+                    '&controller=utilisateur">' . htmlspecialchars($administrateur->getLogin()) . '</a></li></ul>';
+                $countA++;
             }
             if ($countA == 0) echo 'Il n\'y a pas d\'administrateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
             ?>
@@ -33,14 +53,14 @@
             <h3> Organisateurs </h3>
             <?php
             $countO = 0;
-            foreach ($utilisateurs as $user) {
-                if ($user->isOrganisateur() && !$user->isAdmin()) {
-                    echo '
-    <ul><li style="list-style: none"><a href="frontController.php?action=read&login=' . rawurlencode($user->getLogin()) .
-                        '&controller=utilisateur">' . htmlspecialchars($user->getLogin()) . '</a></li>
+            foreach ($organisateurs as $organisateur) {
+
+                echo '
+    <ul><li style="list-style: none"><a href="frontController.php?action=read&login=' . rawurlencode($organisateur->getLogin()) .
+                    '&controller=utilisateur">' . htmlspecialchars($organisateur->getLogin()) . '</a></li>
     </ul>';
-                    $countO++;
-                }
+                $countO++;
+
             }
             if ($countO == 0) echo 'Il n\'y a pas d\'organisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
             ?>
@@ -51,15 +71,14 @@
             <?php
             $countU = 0;
             foreach ($utilisateurs as $user) {
-                if (!$user->isAdmin() && !$user->isOrganisateur()) {
-                    echo '
+
+                echo '
     <ul>
         <li style="list-style: none"><a href="frontController.php?action=read&login=' . rawurlencode($user->getLogin()) .
-                        '&controller=utilisateur">' . htmlspecialchars($user->getLogin()) . '</a></li>
+                    '&controller=utilisateur">' . htmlspecialchars($user->getLogin()) . '</a></li>
     </ul>
     ';
-                    $countU++;
-                }
+                $countU++;
             }
             if ($countU == 0) echo 'Il n\'y a pas d\'utilisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
             ?>
