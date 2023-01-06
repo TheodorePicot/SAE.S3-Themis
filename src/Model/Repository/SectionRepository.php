@@ -64,5 +64,4 @@ class SectionRepository extends AbstractRepository
     {
         return "idSection";
     }
-
 }

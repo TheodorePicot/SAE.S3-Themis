@@ -2,22 +2,19 @@
 
 namespace Themis\Model\DataObject;
 
-class Vote extends AbstractDataObject
+abstract class Vote extends AbstractDataObject
 {
     private string $loginVotant;
     private int $idProposition;
-    private int $valeur;
 
     /**
      * @param string $loginVotant
      * @param int $idProposition
-     * @param int $valeur
      */
-    public function __construct(string $loginVotant, int $idProposition, int $valeur)
+    public function __construct(string $loginVotant, int $idProposition)
     {
         $this->loginVotant = $loginVotant;
         $this->idProposition = $idProposition;
-        $this->valeur = $valeur;
     }
 
 
@@ -26,7 +23,6 @@ class Vote extends AbstractDataObject
         return [
             "loginVotant" => $this->loginVotant,
             "idProposition" => $this->idProposition,
-            "valeur" => $this->valeur
         ];
     }
 
@@ -46,20 +42,5 @@ class Vote extends AbstractDataObject
         return $this->idProposition;
     }
 
-    /**
-     * @return int
-     */
-    public function getValeur(): int
-    {
-        return $this->valeur;
-    }
-
-    public static function buildFromForm(array $formArray): Vote
-    {
-        return new Vote(
-            $formArray["loginVotant"],
-            $formArray["idProposition"],
-            $formArray["valeur"]
-        );
-    }
+    public abstract static function buildFromForm(array $formArray): Vote;
 }
