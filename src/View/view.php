@@ -1,4 +1,3 @@
-<!-- Imports -->
 <?php
 
 use Themis\Lib\ConnexionUtilisateur;
@@ -16,7 +15,6 @@ $parser->setBreaksEnabled(true);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo.png"/>
 
 
     <!-- css -->
@@ -24,9 +22,6 @@ $parser->setBreaksEnabled(true);
     <link rel="stylesheet" href="assets/css/fonts.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
 
     <title><?= $pageTitle ?></title>
 </head>
@@ -115,11 +110,15 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
                 <li class="nav-item active text-center">
                     <a href="frontController.php" class="nav-link ">Questions</a>
                 </li>
+
                 <?php if (ConnexionUtilisateur::isConnected() && (ConnexionUtilisateur::isOrganisateur() || ConnexionUtilisateur::isAdministrator())) : ?>
                     <li class="nav-item active text-center">
                         <a class="nav-link " href="frontController.php?action=create">Créer une Question</a>
                     </li>
                 <?php endif ?>
+                <li class="nav-item active text-center">
+                    <a class="nav-link" href="frontController.php?action=readAPropos">À propos</a>
+                </li>
             </ul>
 
             <!--        ELEMENTS A DROITE DE LA NAVBAR-->

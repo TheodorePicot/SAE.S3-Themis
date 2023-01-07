@@ -14,7 +14,7 @@
                             <h5><label for="login">Login</label></h5>
                             <p>
                                 <input class="form-control form-control-lg <?= isset($_REQUEST["invalidLogin"]) ? "is-invalid" : "" ?>"
-                                       type="text" placeholder="Paul16" name="login"
+                                       type="text" name="login"
                                        id="login"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["login"])) echo $_SESSION["createUtilisateur"]["login"] ?>"
                                        required/>
@@ -26,7 +26,6 @@
                             <h5><label for="adresseMail">Email&#42;</label></h5>
                             <p>
                                 <input class="form-control form-control-lg" type="text"
-                                       placeholder="dupontpaul1610@gmail.com"
                                        name="adresseMail"
                                        id="adresseMail"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["adresseMail"])) echo $_SESSION["createUtilisateur"]["adresseMail"] ?>"
@@ -37,7 +36,7 @@
                         <div class="mx-3">
                             <h5><label for="nom">Nom</label></h5>
                             <p>
-                                <input class="form-control form-control-lg" type="text" placeholder="Dupont" name="nom"
+                                <input class="form-control form-control-lg" type="text"  name="nom"
                                        id="nom"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["nom"])) echo $_SESSION["createUtilisateur"]["nom"] ?>"
                                        required/>
@@ -47,7 +46,7 @@
                         <div class="mx-3">
                             <h5><label for="prenom">Prénom</label></h5>
                             <p>
-                                <input class="form-control form-control-lg" type="text" placeholder="Paul" name="prenom"
+                                <input class="form-control form-control-lg" type="text" name="prenom"
                                        id="prenom"
                                        value="<?php if (isset($_SESSION["createUtilisateur"]["prenom"])) echo $_SESSION["createUtilisateur"]["prenom"] ?>"
                                        required/>

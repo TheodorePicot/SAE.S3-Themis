@@ -428,23 +428,27 @@ class ControllerQuestion extends AbstractController
     /**
      * Regarde si l'utilisateur donné en paramètre est organisateur de la question.
      *
-     * @see ConnexionUtilisateur::isUser()
-     *
      * @param $loginOrganisateur
      * @return bool
+     * @see ConnexionUtilisateur::isUser()
+     *
      */
     private function isOrganisateurOfQuestion($loginOrganisateur)
     {
         return ConnexionUtilisateur::isUser($loginOrganisateur);
     }
 
-
+    /**
+     * Renvoie la liste des votants lors d'une recherche
+     *
+     * @return void
+     */
     public function readAllVotantsBySearchValue(): void
     {
         FormData::unsetAll();
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
-        $votants =  (new VotantRepository())->selectAllVotantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
+        $votants = (new VotantRepository())->selectAllVotantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
             $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_REQUEST["idQuestion"]);
@@ -462,5 +466,12 @@ class ControllerQuestion extends AbstractController
         ]);
 
     }
+
+    public function readAPropos(): void
+    {
+        $this->showView("view.php", ["pageTitle" => "A propos",
+            "pathBodyView" => "divers/aPropos.php"]);
+    }
+
 
 }
