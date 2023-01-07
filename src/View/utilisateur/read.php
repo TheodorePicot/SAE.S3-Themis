@@ -32,17 +32,9 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
             </h3>
             <?php if ($utilisateur->isAdmin()) : ?>
                 <div class="dropdown align-self-center col-sm-12 col-lg-3">
-                    <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        Fonctionnalités
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="frontController.php?controller=utilisateur&action=create">Créer
-                                un utilisateur</a></li>
-                        <li><a class="dropdown-item" href="frontController.php?action=readAll&controller=utilisateur">Liste
-                                des
-                                utilisateurs</a></li>
-                    </ul>
+                    <a class="btn btn-primary text-nowrap align-self-center"
+                       href="frontController.php?action=readAll&controller=utilisateur"> Outils d'administrations</a>
+
                 </div>
             <?php endif ?>
         </div>

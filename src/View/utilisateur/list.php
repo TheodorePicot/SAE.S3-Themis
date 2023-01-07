@@ -1,9 +1,14 @@
 <div class="container-fluid">
 
+
+    <div class="d-flex align-content-center justify-content-center my-5">
+        <h3>Liste des utilisateurs </h3>
+    </div>
+
     <!--    LISTE DES ADMINISTRATEURS-->
 
     <div class="row offset-lg-1 my-5">
-        <div class="col-md-3 col-lg-3 shadowBox   my-sm-4 mx-md-4 mx-lg-4">
+        <div class="col-md-3 col-lg-3 shadowBox my-sm-4 mx-md-4 mx-lg-4">
             <h3> Administrateurs </h3>
             <div class="my-4">
                 <form method="post" class="d-flex">
@@ -28,9 +33,9 @@
             ?>
         </div>
 
-<!--        LISTE DES ORGANISATEURS-->
+        <!--        LISTE DES ORGANISATEURS-->
 
-        <div class="col-md-3 col-lg-3 shadowBoxProposition  my-sm-4 mx-md-4 mx-lg-4">
+        <div class="col-md-3 col-lg-3 shadowBox my-sm-4 mx-md-4 mx-lg-4">
             <h3> Organisateurs </h3>
             <div class="my-4">
                 <form method="post" class="d-flex">
@@ -92,5 +97,10 @@
             if ($countU == 0) echo 'Il n\'y a pas d\'utilisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
             ?>
         </div>
+    </div>
 
+
+    <div class="d-flex align-content-center justify-content-center my-5">
+        <a class="btn btn-primary text-nowrap align-self-center"
+           href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
     </div>

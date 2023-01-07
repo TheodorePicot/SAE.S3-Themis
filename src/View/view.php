@@ -127,7 +127,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
                 <?php if (ConnexionUtilisateur::isConnected()) : ?>
 
                     <li class="nav-item active text-center">
-                        <a class="nav-link mx-1"
+                        <a class="nav-link"
                            href="frontController.php?action=read&controller=utilisateur&login=<?= rawurlencode(ConnexionUtilisateur::getConnectedUserLogin()) ?>">
                             <?= htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin()) ?>
                             <img id="accountImg" alt="compte" src="assets/img/account.png">
@@ -135,10 +135,19 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
                     </li>
 
                 <?php endif ?>
+                <?php if (ConnexionUtilisateur::isAdministrator()) : ?>
+                    <li class="nav-item active text-center">
+                        <a class="nav-link"
+                           href="frontController.php?action=readAll&controller=utilisateur">
+                            <img id="accountImg" alt="compte" src="assets/img/panel.png">
+                        </a>
+                    </li>
+
+                <?php endif ?>
                 <?php if (ConnexionUtilisateur::isConnected()) : ?>
 
                     <li class="nav-item active d-flex justify-content-center mx-auto">
-                        <a class="btn btn-dark text-nowrap align-self-center"
+                        <a class="btn btn-primary text-nowrap align-self-center"
                            href="frontController.php?controller=utilisateur&action=disconnect">Se déconnecter</a>
                     </li>
 
