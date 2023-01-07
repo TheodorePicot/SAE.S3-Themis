@@ -1,43 +1,22 @@
 <div class="container-fluid">
 
-
-    <div class="row">
-        <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
-            <input required class="form-control me-2" type="search" name="searchValue" placeholder="administrateurs"
-                   aria-label="Search">
-            <input type='hidden' name='controller' value='utilisateur'>
-            <button class="btn btn-dark text-nowrap" name='action' value='readAllAdminBySearchValue'
-                    type="submit">Rechercher
-            </button>
-        </form>
-    </div>
-
-    <div class="row">
-        <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
-            <input required class="form-control me-2" type="search" name="searchValue" placeholder="organisateurs"
-                   aria-label="Search">
-            <input type='hidden' name='controller' value='utilisateur'>
-            <button class="btn btn-dark text-nowrap" name='action' value='readAllOrganisateurBySearchValue'
-                    type="submit">Rechercher
-            </button>
-        </form>
-    </div>
-
-    <div class="row">
-        <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
-            <input required class="form-control me-2" type="search" name="searchValue" placeholder="utilisateurs"
-                   aria-label="Search">
-            <input type='hidden' name='controller' value='utilisateur'>
-            <button class="btn btn-dark text-nowrap" name='action' value='readAllUtilisateurBySearchValue'
-                    type="submit">Rechercher
-            </button>
-        </form>
-    </div>
-
+    <!--    LISTE DES ADMINISTRATEURS-->
 
     <div class="row offset-lg-1 my-5">
         <div class="col-md-3 col-lg-3 shadowBox   my-sm-4 mx-md-4 mx-lg-4">
             <h3> Administrateurs </h3>
+            <div class="my-4">
+                <form method="post" class="d-flex">
+                    <input required class="form-control me-2" type="search" name="searchValue"
+                           placeholder="administrateurs"
+                           aria-label="Search">
+                    <input type='hidden' name='controller' value='utilisateur'>
+                    <button class="btn btn-dark text-nowrap" name='action' value='readAllAdminBySearchValue'
+                            type="submit">Rechercher
+                    </button>
+                </form>
+            </div>
+
             <?php
             $countA = 0;
             foreach ($administrateurs as $administrateur) {
@@ -49,8 +28,22 @@
             ?>
         </div>
 
+<!--        LISTE DES ORGANISATEURS-->
+
         <div class="col-md-3 col-lg-3 shadowBoxProposition  my-sm-4 mx-md-4 mx-lg-4">
             <h3> Organisateurs </h3>
+            <div class="my-4">
+                <form method="post" class="d-flex">
+                    <input required class="form-control me-2" type="search" name="searchValue"
+                           placeholder="organisateurs"
+                           aria-label="Search">
+                    <input type='hidden' name='controller' value='utilisateur'>
+                    <button class="btn btn-dark text-nowrap" name='action' value='readAllOrganisateurBySearchValue'
+                            type="submit">Rechercher
+                    </button>
+                </form>
+            </div>
+
             <?php
             $countO = 0;
             foreach ($organisateurs as $organisateur) {
@@ -66,8 +59,24 @@
             ?>
         </div>
 
+
+        <!--        LISTE DES UTILISATEURS-->
+
         <div class="col-md-3 col-lg-3 shadowBox my-sm-4 mx-md-4 mx-lg-4">
             <h3> Utilisateurs </h3>
+            <div class="my-3">
+                <form method="post" class="d-flex">
+                    <input required class="form-control me-2" type="search" name="searchValue"
+                           placeholder="utilisateurs"
+                           aria-label="Search">
+                    <input type='hidden' name='controller' value='utilisateur'>
+                    <button class="btn btn-dark text-nowrap" name='action' value='readAllUtilisateurBySearchValue'
+                            type="submit">Rechercher
+                    </button>
+                </form>
+            </div>
+
+
             <?php
             $countU = 0;
             foreach ($utilisateurs as $user) {

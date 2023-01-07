@@ -77,7 +77,7 @@ class ControllerUtilisateur extends AbstractController
                 ConnexionUtilisateur::connect(($_REQUEST["login"]));
                 (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
                 FormData::deleteFormData("createUtilisateur");
-                $this->redirect("frontController.php?action=read&controller=utilisateur&login={$_REQUEST["login"]}");
+                $this->redirect("frontController.php?action=readAll");
             }
         } else {
             (new FlashMessage)->flash("mauvaisMdp", "Les mots de passes sont différents !", FlashMessage::FLASH_DANGER);
