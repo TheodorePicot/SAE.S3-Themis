@@ -4,9 +4,11 @@ namespace Themis\Controller;
 
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
+use Themis\Model\DataObject\ScrutinUninominal;
 use Themis\Model\DataObject\Vote;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
+use Themis\Model\Repository\ScrutinUninominalRepository;
 use Themis\Model\Repository\VotantRepository;
 use Themis\Model\Repository\VoteRepository;
 
@@ -17,11 +19,21 @@ class ControllerVote extends AbstractController
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if ($this->canVote($question)) {
             $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
-            $this->showView("view.php", [
-                "propositions" => $propositions,
-                "pageTitle" => "Info Proposition",
-                "pathBodyView" => "vote/listPropositionJugement.php"
-            ]);
+            if ($_REQUEST["systemeVote"] == "ScrutinUninominal"){
+                $this->showView("view.php", [
+                    "propositions" => $propositions,
+                    "pageTitle" => "Info Proposition",
+                    "pathBodyView" => "vote/listPropositionScrutin.php"
+                ]);
+            }
+            else{
+                $this->showView("view.php", [
+                    "propositions" => $propositions,
+                    "pageTitle" => "Info Proposition",
+                    "pathBodyView" => "vote/listPropositionJugement.php"
+                ]);
+            }
+
         } else {
             (new FlashMessage())->flash("notAuthor", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
@@ -32,12 +44,22 @@ class ControllerVote extends AbstractController
     {
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if ($this->canVote($question)) {
-            foreach ((new PropositionRepository())->selectByQuestion($_REQUEST["idQuestion"]) as $proposition) {
-                $vote = new Vote($_REQUEST["loginVotant"], $proposition->getIdProposition());
+            if ($_REQUEST["systemeVote"] == "ScrutinUninominal"){
+                $voteUninominal = new ScrutinUninominal($_REQUEST["loginVotant"], $_REQUEST["vote"$proposition->getIdProposition()]);//Je sais pas comme trouver l'id de la proposition cochée
                 if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) {
-                    (new VoteRepository)->update($vote);
+                    (new ScrutinUninominalRepository())->update($voteUninominal);
                 } else {
-                    (new VoteRepository)->create($vote);
+                    (new ScrutinUninominalRepository())->create($voteUninominal);
+                }
+            }
+            else{
+                foreach ((new PropositionRepository())->selectByQuestion($_REQUEST["idQuestion"]) as $proposition) {
+                    $vote = new Vote($_REQUEST["loginVotant"], $proposition->getIdProposition());
+                    if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) {
+                        (new VoteRepository)->update($vote);
+                    } else {
+                        (new VoteRepository)->create($vote);
+                    }
                 }
             }
             (new FlashMessage())->flash("notAuthor", "Votre vote a été pris en compte", FlashMessage::FLASH_SUCCESS);
