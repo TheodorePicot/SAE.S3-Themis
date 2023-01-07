@@ -231,6 +231,19 @@ mark {
     }
 }
 
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #313030 !important;
+    font-family: "Gotham-Medium", sans-serif;
+
+
+}
+
+.btn-primary {
+    border: #484646 !important;
+
+}
+
 .btn-dark, .btn-dark:hover, .btn-dark:active, .btn-dark:visited {
     background-color: #685e55 !important;
     font-family: "Gotham-Medium", sans-serif;

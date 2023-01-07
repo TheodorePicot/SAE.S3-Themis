@@ -104,14 +104,14 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 
                 <div class="my-3 d-flex align-content-center justify-content-center">
                     <?php if (ConnexionUtilisateur::isUser($utilisateur->getLogin())) : ?>
-                        <a class="btn btn-dark text-nowrap my-2" href='<?= $hrefUpdatePassword ?>'> Modifier le mot de
+                        <a class="btn btn-primary text-nowrap my-2" href='<?= $hrefUpdatePassword ?>'> Modifier le mot de
                             passe</a>
                     <?php endif ?>
                 </div>
 
 
                 <div class="d-flex align-content-center justify-content-center">
-                    <input class="btn btn-dark" type="submit" value="Enregistrer"/>
+                    <input class="btn btn-primary" type="submit" value="Enregistrer"/>
                 </div>
             </div>
 

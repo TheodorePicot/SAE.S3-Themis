@@ -81,7 +81,7 @@ use Themis\Lib\ConnexionUtilisateur;
 
             </div>
             <div class="d-flex align-content-center justify-content-center my-3" style="border-radius: 4px">
-                <input class="btn btn-dark text-nowrap" type="submit" value="Continuer"/>
+                <input class="btn btn-primary text-nowrap" type="submit" value="Continuer"/>
             </div>
         </div>
 

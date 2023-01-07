@@ -2,7 +2,7 @@
 
     <div class="row mx-md-3 mx-lg-5 my-5 gy-4">
         <div class="dropdown col-md-4 col-lg-7">
-            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                 Filtre
             </button>
@@ -25,7 +25,7 @@
             <form method="post" class="d-flex col-sm-12 col-md-8 col-lg-5">
                 <input class="form-control me-2" type="search" name="searchValue" placeholder="Rechercher une question"
                        aria-label="Search">
-                <button class="btn btn-dark text-nowrap" name='action' value='readAllBySearchValue'
+                <button class="btn btn-primary text-nowrap" name='action' value='readAllBySearchValue'
                         type="submit">Rechercher
                 </button>
             </form>
