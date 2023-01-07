@@ -24,18 +24,21 @@
                             $vote = (new VoteRepository)->selectVote(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition());
                         ?>
                             <option value=""></option>
-                            <option <?php if ($vote->getValeur() == -2) echo "selected" ?> value="-2">Très Hostile</option>
-                            <option <?php if ($vote->getValeur() == -1) echo "selected" ?> value="-1">Hostile</option>
-                            <option <?php if ($vote->getValeur() == 0) echo "selected" ?> value="0">Indifférent</option>
-                            <option <?php if ($vote->getValeur() == 1) echo "selected" ?> value="1">Favorable</option>
-                            <option <?php if ($vote->getValeur() == 2) echo "selected" ?> value="2">Très Favorable</option>
+                            <option <?php if ($vote->getValeur() == -2) echo "selected" ?> value="-2">A Rejeter</option>
+                            <option <?php if ($vote->getValeur() == -1) echo "selected" ?> value="-1">Insuffisant</option>
+                            <option <?php if ($vote->getValeur() == 0) echo "selected" ?> value="0">Passable</option>
+                            <option <?php if ($vote->getValeur() == 2) echo "selected" ?> value="2">Assez Bien</option>
+                            <option <?php if ($vote->getValeur() == 1) echo "selected" ?> value="1">Bien</option>
+                            <option <?php if ($vote->getValeur() == 2) echo "selected" ?> value="2">Très Bien</option>
+
                         <?php else: ?>
                             <option value=""></option>
-                            <option value="-2">Très Hostile</option>
-                            <option value="-1">Hostile</option>
-                            <option value="0">Indifférent</option>
-                            <option value="1">Favorable</option>
-                            <option value="2">Très Favorable</option>
+                            <option value="">A Rejeter</option>
+                            <option value="">Insuffisant</option>
+                            <option value="">Passable</option>
+                            <option value="">Assez Bien</option>
+                            <option value="">Bien</option>
+                            <option value="">Très Bien</option>
                         <?php endif; ?>
                         </select>
                 </div>
