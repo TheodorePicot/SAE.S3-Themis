@@ -72,4 +72,12 @@ class ScrutinUninominalRepository extends VoteRepository
         $pdoStatement->execute($values);
         return (int) $pdoStatement->fetch()[0];
     }
+
+    public function update(AbstractDataObject $dataObject): void
+    {
+        $sqlQuery = 'UPDATE "ScrutinUninominal" SET "idProposition" =:valeur WHERE "loginVotant" =:loginVotant AND "idProposition" =:idProposition';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+        $values = $dataObject->tableFormat();
+        $pdoStatement->execute($values);
+    }
 }

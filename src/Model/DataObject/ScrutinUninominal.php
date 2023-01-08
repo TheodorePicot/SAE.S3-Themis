@@ -2,6 +2,8 @@
 
 namespace Themis\Model\DataObject;
 
+use Themis\Model\Repository\DatabaseConnection;
+
 class ScrutinUninominal extends Vote
 {
     /**
