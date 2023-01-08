@@ -10,16 +10,16 @@ use Themis\Model\Repository\VotantRepository;
 
 class ScrutinUninominalRepository extends VoteRepository
 {
-    public function selectVote($loginVotant, $idProposition): ?Vote
+    public function selectVote($loginVotant, $idQuestion): ?Vote
     {
-        $sqlQuery = 'SELECT * FROM themis."Votes" 
+        $sqlQuery = 'SELECT * FROM themis."ScrutinUninominal" 
                     WHERE "loginVotant" = :loginVotant
-                    AND "idProposition" = :idProposition';
+                    AND "idQuestion" = :idQuestion';
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = array(
             'loginVotant' => $loginVotant,
-            'idProposition' => $idProposition
+            'idProposition' => $idQuestion
         );
 
         try {
@@ -45,6 +45,7 @@ class ScrutinUninominalRepository extends VoteRepository
         return [
             "loginVotant",
             "idProposition",
+            "idQuestion"
         ];
     }
 
@@ -61,7 +62,7 @@ class ScrutinUninominalRepository extends VoteRepository
 
     public function build(array $objectArrayFormat): ScrutinUninominal
     {
-        return new ScrutinUninominal($objectArrayFormat["LoginVotant"], $objectArrayFormat["idProposition"]);
+        return new ScrutinUninominal($objectArrayFormat["LoginVotant"], $objectArrayFormat["idProposition"], $objectArrayFormat["idQuestion"]);
     }
 
     public function getNbVotesProposition(int $idProposition): int
@@ -75,9 +76,47 @@ class ScrutinUninominalRepository extends VoteRepository
 
     public function update(AbstractDataObject $dataObject): void
     {
-        $sqlQuery = 'UPDATE "ScrutinUninominal" SET "idProposition" =:valeur WHERE "loginVotant" =:loginVotant AND "idProposition" =:idProposition';
+        $sqlQuery = 'UPDATE themis."ScrutinUninominal" SET "idProposition" =:idProposition WHERE "loginVotant" =:loginVotant AND "idQuestion" =:idQuestion';
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = $dataObject->tableFormat();
+        var_dump($values);
+        echo $sqlQuery;
         $pdoStatement->execute($values);
+    }
+
+    public function votantHasAlreadyVotedScrutin(string $loginVotant, int $idQuestion): bool
+    {
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} 
+                    WHERE \"idQuestion\" =:idQuestion
+                    AND \"loginVotant\" =:loginVotant";
+        echo $sqlQuery;
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = array(
+            'loginVotant' => $loginVotant,
+            'idQuestion' => $idQuestion
+        );
+
+        $pdoStatement->execute($values);
+
+        return $pdoStatement->rowCount() > 0;
+    }
+
+    public function votantHasAlreadyVotedForPropositionScrutin(string $loginVotant, int $idProposition): bool
+    {
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} 
+                    WHERE \"loginVotant\" = :loginVotant
+                    AND \"idProposition\" = :idProposition";
+//        echo $sqlQuery;
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = array(
+            'loginVotant' => $loginVotant,
+            'idProposition' => $idProposition
+        );
+
+        $pdoStatement->execute($values);
+
+        return $pdoStatement->rowCount() > 0;
     }
 }
