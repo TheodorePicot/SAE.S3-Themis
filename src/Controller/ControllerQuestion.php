@@ -454,7 +454,7 @@ class ControllerQuestion extends AbstractController
         FormData::unsetAll();
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
-        $votants = (new VotantRepository())->selectAllVotantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
+        $votants = (new VotantRepository())->selectAllParticipantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
             $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_REQUEST["idQuestion"]);
@@ -478,7 +478,7 @@ class ControllerQuestion extends AbstractController
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
-        $auteurs = (new AuteurRepository)->selectAllVotantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
+        $auteurs = (new AuteurRepository)->selectAllParticipantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
             $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_REQUEST["idQuestion"]);
         else
