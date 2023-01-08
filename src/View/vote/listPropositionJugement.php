@@ -21,25 +21,25 @@
                     <select required class="form-select" aria-label="Select Vote"
                             name="valueVote<?= $propositionInURL ?>" style="width: 160px;">
                         <?php
-                        if ((new VotantRepository)->votantHasAlreadyVoted(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) :
+                        if ((new JugementMajoritaireRepository())->votantHasAlreadyVoted(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) :
                             $vote = (new JugementMajoritaireRepository())->selectVote(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition());
                         ?>
                             <option value=""></option>
-                            <option <?php if ($vote->getValeur() == -2) echo "selected" ?> value="-2">A Rejeter</option>
-                            <option <?php if ($vote->getValeur() == -1) echo "selected" ?> value="-1">Insuffisant</option>
-                            <option <?php if ($vote->getValeur() == 0) echo "selected" ?> value="0">Passable</option>
-                            <option <?php if ($vote->getValeur() == 2) echo "selected" ?> value="2">Assez Bien</option>
-                            <option <?php if ($vote->getValeur() == 1) echo "selected" ?> value="1">Bien</option>
-                            <option <?php if ($vote->getValeur() == 2) echo "selected" ?> value="2">Très Bien</option>
+                            <option <?php if ($vote->getValeur() == 0) echo "selected" ?> value="0">A Rejeter</option>
+                            <option <?php if ($vote->getValeur() == 1) echo "selected" ?> value="1">Insuffisant</option>
+                            <option <?php if ($vote->getValeur() == 2) echo "selected" ?> value="2">Passable</option>
+                            <option <?php if ($vote->getValeur() == 3) echo "selected" ?> value="3">Assez Bien</option>
+                            <option <?php if ($vote->getValeur() == 4) echo "selected" ?> value="4">Bien</option>
+                            <option <?php if ($vote->getValeur() == 5) echo "selected" ?> value="5">Très Bien</option>
 
                         <?php else: ?>
                             <option value=""></option>
-                            <option value="">A Rejeter</option>
-                            <option value="">Insuffisant</option>
-                            <option value="">Passable</option>
-                            <option value="">Assez Bien</option>
-                            <option value="">Bien</option>
-                            <option value="">Très Bien</option>
+                            <option value="0">A Rejeter</option>
+                            <option value="1">Insuffisant</option>
+                            <option value="2">Passable</option>
+                            <option value="3">Assez Bien</option>
+                            <option value="4">Bien</option>
+                            <option value="5">Très Bien</option>
                         <?php endif; ?>
                         </select>
                 </div>

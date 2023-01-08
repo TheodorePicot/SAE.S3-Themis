@@ -57,7 +57,7 @@ class ControllerVote extends AbstractController
             else{
                 foreach ((new PropositionRepository())->selectByQuestion($_REQUEST["idQuestion"]) as $proposition) {
                     $vote = new JugementMajoritaire($_REQUEST["loginVotant"], $proposition->getIdProposition(), $_REQUEST["valueVote{$proposition->getIdProposition()}"]);
-                    if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) { // Faire méthode pour JugementMajoritaire
+                    if ((new JugementMajoritaireRepository())->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) { // Faire méthode pour JugementMajoritaire
                         (new JugementMajoritaireRepository)->update($vote);
                     } else {
                         (new JugementMajoritaireRepository)->create($vote);
