@@ -1,6 +1,7 @@
 <h2>Propositions</h2>
 <form method="post" action="frontController.php">
     <?php use Themis\Lib\ConnexionUtilisateur;
+    use Themis\Model\Repository\JugementMajoritaireRepository;
     use Themis\Model\Repository\VotantRepository;
     use Themis\Model\Repository\VoteRepository;
 
@@ -21,7 +22,7 @@
                             name="valueVote<?= $propositionInURL ?>" style="width: 160px;">
                         <?php
                         if ((new VotantRepository)->votantHasAlreadyVoted(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) :
-                            $vote = (new VoteRepository)->selectVote(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition());
+                            $vote = (new JugementMajoritaireRepository())->selectVote(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition());
                         ?>
                             <option value=""></option>
                             <option <?php if ($vote->getValeur() == -2) echo "selected" ?> value="-2">A Rejeter</option>

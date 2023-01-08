@@ -10,7 +10,7 @@ class Utilisateur extends AbstractDataObject
     private string $nom;
     private string $prenom;
     private ?string $adresseMail;
-    private string $dateNaissance;
+    private ?string $dateNaissance;
     private string $mdp;
     private int $estAdmin;
     private int $estOrganisateur;
@@ -84,7 +84,7 @@ class Utilisateur extends AbstractDataObject
     /**
      * @return string
      */
-    public function getAdresseMail(): string
+    public function getAdresseMail(): ?string
     {
         return $this->adresseMail;
     }
@@ -92,7 +92,7 @@ class Utilisateur extends AbstractDataObject
     /**
      * @return string
      */
-    public function getDateNaissance(): string
+    public function getDateNaissance(): ?string
     {
         return $this->dateNaissance;
     }

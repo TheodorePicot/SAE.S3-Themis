@@ -4,8 +4,10 @@ namespace Themis\Controller;
 
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
+use Themis\Model\DataObject\JugementMajoritaire;
 use Themis\Model\DataObject\ScrutinUninominal;
 use Themis\Model\DataObject\Vote;
+use Themis\Model\Repository\JugementMajoritaireRepository;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\ScrutinUninominalRepository;
@@ -19,7 +21,7 @@ class ControllerVote extends AbstractController
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if ($this->canVote($question)) {
             $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
-            if ($_REQUEST["systemeVote"] == "ScrutinUninominal"){
+            if ($question->getSystemeVote() == "ScrutinUninominal"){
                 $this->showView("view.php", [
                     "propositions" => $propositions,
                     "pageTitle" => "Info Proposition",
@@ -44,9 +46,9 @@ class ControllerVote extends AbstractController
     {
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if ($this->canVote($question)) {
-            if ($_REQUEST["systemeVote"] == "ScrutinUninominal"){
-                $voteUninominal = new ScrutinUninominal($_REQUEST["loginVotant"], $_REQUEST["vote"$proposition->getIdProposition()]);//Je sais pas comme trouver l'id de la proposition cochée
-                if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) {
+            if ($question->getSystemeVote() == "ScrutinUninominal"){
+                $voteUninominal = new ScrutinUninominal($_REQUEST["loginVotant"], $_REQUEST["idPropositionVote"]); // Je sais pas comme trouver l'id de la proposition cochée
+                if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $_REQUEST["idPropositionVote"])) {
                     (new ScrutinUninominalRepository())->update($voteUninominal);
                 } else {
                     (new ScrutinUninominalRepository())->create($voteUninominal);
@@ -54,11 +56,11 @@ class ControllerVote extends AbstractController
             }
             else{
                 foreach ((new PropositionRepository())->selectByQuestion($_REQUEST["idQuestion"]) as $proposition) {
-                    $vote = new Vote($_REQUEST["loginVotant"], $proposition->getIdProposition());
+                    $vote = new JugementMajoritaire($_REQUEST["loginVotant"], $proposition->getIdProposition(), $_REQUEST["valueVote{$proposition->getIdProposition()}"]);
                     if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) {
-                        (new VoteRepository)->update($vote);
+                        (new JugementMajoritaireRepository)->update($vote);
                     } else {
-                        (new VoteRepository)->create($vote);
+                        (new JugementMajoritaireRepository)->create($vote);
                     }
                 }
             }

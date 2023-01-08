@@ -51,18 +51,19 @@ $date = date_create();
             <!--                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>-->
 
             <div class="row my-4">
-                <div class="collapse multi-collapse col-6" id="multiCollapseExample1">
+                <div class="collapse multi-collapse col-6 <?= isset($_REQUEST["hasSearchedAuteurs"])? "show":""?>" id="multiCollapseExample1" >
                     <div class="card card-body">
                         <?php require_once __DIR__ . "/../utilisateur/listAuteursForRead.php" ?>
                     </div>
                 </div>
 
-                <div class="collapse multi-collapse col-6" id="multiCollapseExample2">
+                <div class="collapse multi-collapse col-6 <?= isset($_REQUEST["hasSearchedVotants"])? "show":""?>" id="multiCollapseExample2">
                     <div class="card card-body">
                         <div class="row">
                             <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
                                 <input required class="form-control me-2" type="search" name="searchValue" placeholder="votants"
                                        aria-label="Search">
+                                <input type="hidden" name="hasSearchedVotants" value="true">
                                 <button class="btn btn-dark text-nowrap" name='action' value='readAllVotantsBySearchValue'
                                         type="submit">Rechercher
                                 </button>
@@ -148,9 +149,7 @@ $date = date_create();
 
         </div>
 
-        <?php
-
-        if (ConnexionUtilisateur::isConnected() && (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting()) &&
+        <?php if (ConnexionUtilisateur::isConnected() && (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting()) &&
                 (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion()) &&
                 $date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote())) : ?>
             <div class="d-flex align-content-center justify-content-center my-3">

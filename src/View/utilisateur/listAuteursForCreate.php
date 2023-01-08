@@ -1,4 +1,4 @@
-<div class="col-auto">
+<div class="col-auto" style="height: 250px">
     <label class="visually-hidden" for="auteurs"></label>
     <select class="form-select h-100" name="auteurs[]" id="autoSizingSelect" required multiple>
         <?php foreach ($utilisateurs

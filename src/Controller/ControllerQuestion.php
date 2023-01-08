@@ -40,10 +40,9 @@ class ControllerQuestion extends AbstractController
         if ($this->isOrganisateurOfQuestion($_REQUEST["loginOrganisateur"])
             && $this->isOrganisateur()
             || $this->isAdmin()) {
-            $dateOneDay = date_add(date_create(), date_interval_create_from_date_string("1 minute"));
-            if ($dateOneDay->format("Y-m-d H:i:s") >= $_REQUEST['dateDebutProposition']) {
+            if (date_create()->format("Y-m-d H:i:s") >= $_REQUEST['dateFinProposition']) {
                 FormData::saveFormData("createQuestion");
-                (new FlashMessage())->flash("createdProblem", "Il faut au moins une minute de préparation pour la question", FlashMessage::FLASH_WARNING);
+                (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
             if (!($_REQUEST['dateDebutProposition'] < $_REQUEST['dateFinProposition'] && $_REQUEST['dateFinProposition'] <= $_REQUEST['dateDebutVote'] && $_REQUEST['dateDebutVote'] < $_REQUEST['dateFinVote'])) {
@@ -175,7 +174,7 @@ class ControllerQuestion extends AbstractController
         $this->connectionCheck();
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
 
-        if (date_create()->format("Y-m-d H:i:s") > $question->getDateDebutProposition()) {
+        if (date_create()->format("Y-m-d H:i:s") >= $question->getDateFinProposition() || $this->aPropositionIsInQuestion($_REQUEST["idQuestion"])) {
             (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=read&idQuestion={$_REQUEST["idQuestion"]}");
         }
@@ -200,6 +199,11 @@ class ControllerQuestion extends AbstractController
             (new FlashMessage())->flash("updateFailed", "Vous n'avez pas accès à cette méthode (update)", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
         }
+    }
+
+    public function aPropositionIsInQuestion(int $question): bool
+    {
+        return (new PropositionRepository())->aPropositionIsInQuestion($question);
     }
 
     /**
@@ -329,7 +333,7 @@ class ControllerQuestion extends AbstractController
         if ($this->isOrganisateurOfQuestion($_REQUEST['loginOrganisateur']) && $this->isOrganisateur()
             || $this->isAdmin()) {
             $oldQuestion = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
-            if (date_create()->format("Y-m-d H:i:s") > $oldQuestion->getDateDebutProposition()) {
+            if (date_create()->format("Y-m-d H:i:s") > $oldQuestion->getDateFinProposition()) {
                 (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
                 $this->redirect("frontController.php?action=readAll");
             }
@@ -337,7 +341,7 @@ class ControllerQuestion extends AbstractController
                 (new FlashMessage())->flash("createdProblem", "Vous pouvez uniquement ajouter du temps d'attente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
-            if (!($_REQUEST['dateDebutProposition'] < $_REQUEST['dateFinProposition'] && $_REQUEST['dateFinProposition'] < $_REQUEST['dateDebutVote'] && $_REQUEST['dateDebutVote'] < $_REQUEST['dateFinVote'])) {
+            if (!($_REQUEST['dateDebutProposition'] < $_REQUEST['dateFinProposition'] && $_REQUEST['dateFinProposition'] <= $_REQUEST['dateDebutVote'] && $_REQUEST['dateDebutVote'] < $_REQUEST['dateFinVote'])) {
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
@@ -441,6 +445,8 @@ class ControllerQuestion extends AbstractController
     /**
      * Renvoie la liste des votants lors d'une recherche
      *
+     * La variable {@link $votants} est modifié par rapport à la valeur
+     *
      * @return void
      */
     public function readAllVotantsBySearchValue(): void
@@ -464,9 +470,11 @@ class ControllerQuestion extends AbstractController
             "pageTitle" => "Info question",
             "pathBodyView" => "question/read.php"
         ]);
-
     }
 
-
-
+    public function readAPropos(): void
+    {
+        $this->showView("view.php", ["pageTitle" => "A propos",
+            "pathBodyView" => "divers/aPropos.php"]);
+    }
 }

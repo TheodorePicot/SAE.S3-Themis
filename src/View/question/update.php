@@ -74,8 +74,8 @@ use Themis\Lib\ConnexionUtilisateur;
 
                 <div class="col-auto">
                     <select class="form-select h-100" name="systemeVote" id="autoSizingSelect" required>
-                        <option value="JugementMajoritaire" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "JugementMajoritaire") echo "selected" ?>>Jugement Majoritaire</option>
-                        <option value="ScrutinUninominal" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "ScrutinUninominal") echo "selected" ?>>Scrutin Uninominal</option>
+                        <option value="JugementMajoritaire" <?php if ($question->getSystemeVote() == "JugementMajoritaire") echo "selected" ?>>Jugement Majoritaire</option>
+                        <option value="ScrutinUninominal" <?php if ($question->getSystemeVote()  == "ScrutinUninominal") echo "selected" ?>>Scrutin Uninominal</option>
                     </select>
                 </div>
             </div>
