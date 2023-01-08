@@ -1591,7 +1591,7 @@
 													"_parent": {
 														"$ref": "AAAAAAGFg5uWKHzq2y0="
 													},
-													"name": "votantHasAlreadyVoted",
+													"name": "votantHasAlreadyVotedScrutin",
 													"parameters": [
 														{
 															"_type": "UMLParameter",
@@ -2840,7 +2840,7 @@
 																	"top": 718,
 																	"width": 397.8330078125,
 																	"height": 13,
-																	"text": "+votantHasAlreadyVoted(string $loginVotant, int $idProposition): bool",
+																	"text": "+votantHasAlreadyVotedScrutin(string $loginVotant, int $idProposition): bool",
 																	"horizontalAlignment": 0
 																}
 															],

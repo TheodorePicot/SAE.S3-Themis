@@ -12,7 +12,7 @@ class ScrutinUninominalRepository extends VoteRepository
 {
     public function selectVote($loginVotant, $idProposition): ?Vote
     {
-        $sqlQuery = 'SELECT * FROM ' . $this->getTableName() . '
+        $sqlQuery = 'SELECT * FROM themis."Votes" 
                     WHERE "loginVotant" = :loginVotant
                     AND "idProposition" = :idProposition';
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
