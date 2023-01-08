@@ -20,20 +20,20 @@ body {
 }
 
 #bodyLogin {
-    background: rgb(253,247,242);
-    background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(209,183,214,1) 100%);
+    background: rgb(253, 247, 242);
+    background: radial-gradient(circle, rgba(253, 247, 242, 1) 15%, rgba(209, 183, 214, 1) 100%);
 }
 
-#bodyLogin main{
+#bodyLogin main {
     font-family: "Gotham-Thin", sans-serif;
 }
 
 #bodyCreateUser {
-    background: rgb(253,247,242);
-    background: radial-gradient(circle, rgba(253,247,242,1) 15%, rgba(209,183,214,1) 100%);
+    background: rgb(253, 247, 242);
+    background: radial-gradient(circle, rgba(253, 247, 242, 1) 15%, rgba(209, 183, 214, 1) 100%);
 }
 
-#bodyCreateUser main{
+#bodyCreateUser main {
     font-family: "Gotham-Thin", sans-serif;
 }
 
@@ -231,9 +231,8 @@ mark {
     }
 }
 
-
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #313030 !important;
+    background-color: #434242 !important;
     font-family: "Gotham-Medium", sans-serif;
 
 
@@ -248,16 +247,18 @@ mark {
     background-color: #685e55 !important;
     font-family: "Gotham-Medium", sans-serif;
 
-
 }
 
 .btn-dark {
     border: #927b81 !important;
-
 }
 
-
-
+@media (max-width: 1200px) {
+    .navbar-nav > li {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+}
 
 
 

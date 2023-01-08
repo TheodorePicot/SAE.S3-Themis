@@ -467,11 +467,6 @@ class ControllerQuestion extends AbstractController
 
     }
 
-    public function readAPropos(): void
-    {
-        $this->showView("view.php", ["pageTitle" => "A propos",
-            "pathBodyView" => "divers/aPropos.php"]);
-    }
 
 
 }

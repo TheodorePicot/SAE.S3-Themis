@@ -113,7 +113,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
 
                 <?php if (ConnexionUtilisateur::isConnected() && (ConnexionUtilisateur::isOrganisateur() || ConnexionUtilisateur::isAdministrator())) : ?>
                     <li class="nav-item active text-center">
-                        <a class="nav-link " href="frontController.php?action=create">Créer une Question</a>
+                        <a class="nav-link" href="frontController.php?action=create">Créer une Question</a>
                     </li>
                 <?php endif ?>
                 <li class="nav-item active text-center">
@@ -125,7 +125,6 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
 
             <ul class="nav navbar-nav ms-auto">
                 <?php if (ConnexionUtilisateur::isConnected()) : ?>
-
                     <li class="nav-item active text-center">
                         <a class="nav-link"
                            href="frontController.php?action=read&controller=utilisateur&login=<?= rawurlencode(ConnexionUtilisateur::getConnectedUserLogin()) ?>">

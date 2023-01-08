@@ -7,8 +7,9 @@
 
     <!--    LISTE DES ADMINISTRATEURS-->
 
-    <div class="row offset-lg-1 my-5">
-        <div class="col-md-3 col-lg-3 shadowBox my-sm-4 mx-md-4 mx-lg-4">
+    <div class="row offset-md-0 offset-lg-1 my-5">
+
+        <div class="col-md-12 col-md-4 col-lg-3 shadowBox my-4 mx-md-0 mx-lg-3 overflow-hidden">
             <h3> Administrateurs </h3>
             <div class="my-4">
                 <form method="post" class="d-flex">
@@ -35,7 +36,7 @@
 
         <!--        LISTE DES ORGANISATEURS-->
 
-        <div class="col-md-3 col-lg-3 shadowBox my-sm-4 mx-md-4 mx-lg-4">
+        <div class="col-md-12 col-md-4 col-lg-3 shadowBox my-4 mx-lg-4 overflow-hidden">
             <h3> Organisateurs </h3>
             <div class="my-4">
                 <form method="post" class="d-flex">
@@ -67,9 +68,9 @@
 
         <!--        LISTE DES UTILISATEURS-->
 
-        <div class="col-md-3 col-lg-3 shadowBox my-sm-4 mx-md-4 mx-lg-4">
+        <div class="col-md-12 col-md-4 col-lg-3 shadowBox my-4 mx-lg-4 overflow-hidden">
             <h3> Utilisateurs </h3>
-            <div class="my-3">
+            <div class="my-4">
                 <form method="post" class="d-flex">
                     <input required class="form-control me-2" type="search" name="searchValue"
                            placeholder="utilisateurs"
@@ -87,10 +88,10 @@
             foreach ($utilisateurs as $user) {
 
                 echo '
-    <ul>
+     <ul>
         <li style="list-style: none"><a href="frontController.php?action=read&login=' . rawurlencode($user->getLogin()) .
                     '&controller=utilisateur">' . htmlspecialchars($user->getLogin()) . '</a></li>
-    </ul>
+     </ul>
     ';
                 $countU++;
             }

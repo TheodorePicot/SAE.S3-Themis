@@ -73,4 +73,12 @@ abstract class AbstractController
     protected function isOrganisateur() {
         return ConnexionUtilisateur::isOrganisateur();
     }
+
+    public function readAPropos(): void
+    {
+        $this->showView("view.php", ["pageTitle" => "A propos",
+            "pathBodyView" => "divers/aPropos.php"]);
+    }
+
+
 }
