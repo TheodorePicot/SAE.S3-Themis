@@ -155,7 +155,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
                 <?php if (!ConnexionUtilisateur::isConnected()) : ?>
                     <div class="row">
                         <li class="nav-item active d-flex justify-content-center mx-auto">
-                            <a class="btn btn-dark text-nowrap align-self-center"
+                            <a class="btn btn-primary text-nowrap align-self-center"
                                href="frontController.php?action=login&controller=utilisateur">Se Connecter</a>
                         </li>
                     </div>
@@ -164,7 +164,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
                 <?php if (!ConnexionUtilisateur::isConnected()) : ?>
                     <div class="row">
                         <li class="nav-item active d-flex justify-content-center mx-auto">
-                            <a class="btn btn-dark text-nowrap align-self-center mx-lg-1 my-2"
+                            <a class="btn btn-primary text-nowrap align-self-center mx-lg-1 my-2"
                                href="frontController.php?controller=utilisateur&action=create">S'inscrire</a>
                         </li>
                     </div>

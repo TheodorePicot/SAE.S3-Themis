@@ -41,7 +41,6 @@ $date = date_create();
                 <?php require_once __DIR__ . "/../section/listByQuestionForRead.php" ?>
             </div>
 
-
             <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
                aria-expanded="false" aria-controls="multiCollapseExample1">Auteurs</a>
             <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
@@ -51,20 +50,42 @@ $date = date_create();
             <!--                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>-->
 
             <div class="row my-4">
-                <div class="collapse multi-collapse col-6 <?= isset($_REQUEST["hasSearchedAuteurs"])? "show":""?>" id="multiCollapseExample1" >
+                <div class="collapse multi-collapse col-sm-12 col-lg-6 <?= isset($_REQUEST["hasSearchedAuteurs"]) ? "show" : "" ?>"
+                     id="multiCollapseExample1">
                     <div class="card card-body">
+                        <div class="row">
+                            <div class="d-flex align-content-center justify-content-center">
+                                <h4>Auteurs</h4>
+                            </div>
+                            <form method="post" class="d-flex">
+                                <input required class="form-control me-2" type="search" name="searchValue"
+                                       placeholder="auteurs"
+                                       aria-label="Search">
+                                <input type="hidden" name="hasSearchedAuteurs" value="true">
+                                <button class="btn btn-dark text-nowrap" name='action'
+                                        value='readAllAuteursBySearchValue'
+                                        type="submit">Rechercher
+                                </button>
+                            </form>
+                        </div>
                         <?php require_once __DIR__ . "/../utilisateur/listAuteursForRead.php" ?>
                     </div>
                 </div>
 
-                <div class="collapse multi-collapse col-6 <?= isset($_REQUEST["hasSearchedVotants"])? "show":""?>" id="multiCollapseExample2">
+                <div class="collapse multi-collapse col-sm-12 col-lg-6 my-3 my-lg-0 <?= isset($_REQUEST["hasSearchedVotants"]) ? "show" : "" ?>"
+                     id="multiCollapseExample2">
                     <div class="card card-body">
                         <div class="row">
-                            <form method="post" class=" offset-lg-6 offset-md-4 d-flex col-sm-12 col-md-8 col-lg-5">
-                                <input required class="form-control me-2" type="search" name="searchValue" placeholder="votants"
+                            <div class="d-flex align-content-center justify-content-center">
+                                <h4>Votants</h4>
+                            </div>
+                            <form method="post" class="d-flex">
+                                <input required class="form-control me-2" type="search" name="searchValue"
+                                       placeholder="votants"
                                        aria-label="Search">
                                 <input type="hidden" name="hasSearchedVotants" value="true">
-                                <button class="btn btn-dark text-nowrap" name='action' value='readAllVotantsBySearchValue'
+                                <button class="btn btn-dark text-nowrap" name='action'
+                                        value='readAllVotantsBySearchValue'
                                         type="submit">Rechercher
                                 </button>
                             </form>

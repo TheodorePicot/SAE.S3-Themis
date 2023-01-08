@@ -42,7 +42,6 @@ class VotantRepository extends AbstractParticipantRepository
             'loginVotant' => $loginVotant,
             'idProposition' => $idProposition
         );
-
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
@@ -57,19 +56,5 @@ class VotantRepository extends AbstractParticipantRepository
         return false;
     }
 
-    public function selectAllVotantsBySearchValue(string $element, int $idQuestion)
-    {
-
-        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"idQuestion"=?' . ' AND LOWER("login") LIKE ? ';
-        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-
-        $pdoStatement->execute(array($idQuestion ,"%" . strtolower($element) . "%"));
-
-        $users = array();
-        foreach ($pdoStatement as $user) {
-            $users[] = $this->build($user);
-        }
-        return $users;
-    }
 
 }
