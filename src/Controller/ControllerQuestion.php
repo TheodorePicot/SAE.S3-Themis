@@ -28,9 +28,6 @@ class ControllerQuestion extends AbstractController
      * Elle fait des vérifications de droits et de cohérence de date.
      * Si toutes ces vérifications sont validées, elle crée une {@link Question} puis elle insère les données de cet objet dans la base de données.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
-     * La méthode {@link FormData::saveFormData()} permet de stocker toutes les données dans {@link $_SESSION} par rapport au
-     * refresh des formulaires lors de l'incohérence des dates. Si nous ne faisons pas cela les informations données dans le formulaire serait perdues
-     * lors de la redirection.
      *
      * @return void
      */
@@ -460,7 +457,7 @@ class ControllerQuestion extends AbstractController
     {
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
-        $votants = (new VotantRepository())->selectAllVotantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
+        $votants = (new VotantRepository())->selectAllParticipantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
             $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);

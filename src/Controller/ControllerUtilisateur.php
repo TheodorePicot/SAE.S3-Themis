@@ -16,22 +16,16 @@ class ControllerUtilisateur extends AbstractController
 {
 
     /**
-     * Permet d'afficher tous les utilisateurs
+     * Permet d'afficher tous les utilisateurs.
+     *
      * Cette méthode est réservée uniquement aux administrateurs.
      * Elle vérifie si l'utilisateur actuellement connecté est bien admin.
      * Si oui elle le redirige vers la bonne vue.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
      *
-     * La méthode de la première ligne permet d'effacer toutes données stocker dans {@link $_SESSION} par rapport au
-     * refresh des formulaires lors de l'incohérence des dates pour la création d'une question.
-     *
-     * @return void
-     * @see FormData::unsetAll();
-     *
      */
     public function readAll(): void
     {
-
         $this->connectionCheck();
         if (!$this->isAdmin()) {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
@@ -141,7 +135,7 @@ class ControllerUtilisateur extends AbstractController
      * Connecte l'utilisateur par rapport aux informations du formulaire
      *
      * Cette méthode est appelée quand un utilisateur soumet les informations du formulaire dans {@link src/View/utilisateur/login.php}
-     * Elle vérifie si le login et le mot de passe transmi existent dans la base de donnée. Puis elle vérifie que l'utilisateur transmet bien un login et
+     * Elle vérifie si le login et le mot de passe transmit existent dans la base de donnée. Puis, elle vérifie que l'utilisateur transmet bien un login et
      * un mot de passe.
      * Si toutes ces vérifications sont validées, elle connecte l'utilisateur.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
