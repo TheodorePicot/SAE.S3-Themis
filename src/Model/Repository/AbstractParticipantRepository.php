@@ -51,4 +51,37 @@ abstract class AbstractParticipantRepository extends AbstractRepository
             "idQuestion"
         ];
     }
+
+
+    public function selectAllOrderedByQuestionWithLimit($idQuestion): array
+    {
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE \"idQuestion\"=:idQuestion ORDER BY {$this->getOrderColumn()} LIMIT 10";
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = array(
+            'idQuestion' => $idQuestion,
+        );
+        $pdoStatement->execute($values);
+        $dataObjects = array();
+        foreach ($pdoStatement as $dataObject) {
+            $dataObjects[] = $this->build($dataObject);
+        }
+        return $dataObjects;
+    }
+
+    public function selectAllVotantsBySearchValue(string $element, int $idQuestion)
+    {
+
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"idQuestion"=?' . ' AND LOWER("login") LIKE ? ';
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $pdoStatement->execute(array($idQuestion, "%" . strtolower($element) . "%"));
+
+        $users = array();
+        foreach ($pdoStatement as $user) {
+            $users[] = $this->build($user);
+        }
+        return $users;
+    }
+
 }

@@ -102,7 +102,7 @@
                         <?php endif ?>
                         <div class="d-flex align-content-center justify-content-center my-5">
 
-                            <input class="btn btn-dark" type="submit" value="S'enregistrer"/>
+                            <input class="btn btn-primary" type="submit" value="S'enregistrer"/>
                         </div>
 
                     </div>
