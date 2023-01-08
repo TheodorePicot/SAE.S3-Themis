@@ -10,7 +10,7 @@ use Themis\Lib\ConnexionUtilisateur;
         </div>
 
         <div class='container-fluid'>
-            <div class="row mx-5 my-5 gy-4">
+            <div class="row mx-5 gy-4">
                 <div class="container-fluid col-12">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input class="form-control" type="text" placeholder="?"
@@ -35,6 +35,15 @@ use Themis\Lib\ConnexionUtilisateur;
                 <div class="container col-md-6 col-lg-6 mt-3 mb-5">
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForUpdate.php" ?>
+                </div>
+
+                <h3><label for="systemeVote" class="form-label">Choix du système de vote</label></h3>
+
+                <div class="col-auto">
+                    <select class="form-select h-100" name="systemeVote" id="autoSizingSelect" required>
+                        <option value="JugementMajoritaire" <?php if ($question->getSystemeVote() == "JugementMajoritaire") echo "selected" ?>>Jugement Majoritaire</option>
+                        <option value="ScrutinUninominal" <?php if ($question->getSystemeVote()  == "ScrutinUninominal") echo "selected" ?>>Scrutin Uninominal</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -71,13 +80,6 @@ use Themis\Lib\ConnexionUtilisateur;
                            id="dateFinVote" required/>
                 </div>
                 <h3><label for="systemeVote" class="form-label">Choix du système de vote</label></h3>
-
-                <div class="col-auto">
-                    <select class="form-select h-100" name="systemeVote" id="autoSizingSelect" required>
-                        <option value="JugementMajoritaire" <?php if ($question->getSystemeVote() == "JugementMajoritaire") echo "selected" ?>>Jugement Majoritaire</option>
-                        <option value="ScrutinUninominal" <?php if ($question->getSystemeVote()  == "ScrutinUninominal") echo "selected" ?>>Scrutin Uninominal</option>
-                    </select>
-                </div>
             </div>
         </div>
 

@@ -160,7 +160,8 @@ class ControllerProposition extends AbstractController
         return ( date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutProposition() &&
                 date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition() &&
                 $this->isAuteurOfProposition($proposition->getIdProposition()) ||
-                $this->isCoAuteurInProposition($proposition->getIdProposition()) )
+                $this->isCoAuteurInProposition($proposition->getIdProposition()) ||
+                ConnexionUtilisateur::isUser($question->getLoginOrganisateur()))
             ||
             ( date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutVote() &&
                 date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition() &&

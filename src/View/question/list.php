@@ -7,7 +7,7 @@
                 Filtre
             </button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="frontController.php?action=readAll">Toutes les questions</a></li>
+                <li><a class="dropdown-item" href="frontController.php?action=readAllByIdQuestion">Toutes les questions</a></li>
                 <li><a class="dropdown-item" href="frontController.php?action=readAllCurrentlyInWriting">Questions
                         en cours
                         d'écriture</a></li>

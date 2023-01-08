@@ -25,18 +25,18 @@ if (class_exists($controllerClassName)) {
 
     $classMethods = get_class_methods($controllerClassName);
 
-    if (!isset($_REQUEST['action'])) $controllerClassObject->readAll();
+    if (!isset($_REQUEST['action'])) $controllerClassObject->readAllByIdQuestion();
 
     elseif (in_array($_REQUEST['action'], $classMethods)) {
         $action = $_REQUEST['action'];
         $controllerClassObject->$action();
     } else {
         (new FlashMessage())->flash("methodeExistePas", "La méthode que vous essayez d'appeler n'existe pas", FlashMessage::FLASH_DANGER);
-        header("location: frontController.php?action=readAll");
+        header("location: frontController.php?action=readAllByIdQuestion");
     }
 } else {
     (new FlashMessage())->flash("classeExistePas", "La classe que vous essayez de charger n'existe pas", FlashMessage::FLASH_DANGER);
-    header("location: frontController.php?action=readAll");
+    header("location: frontController.php?action=readAllByIdQuestion");
 }
 
 

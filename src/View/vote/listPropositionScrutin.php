@@ -17,9 +17,8 @@
                     <a id="containerQuestion" href="<?= $hrefRead ?>">
                         <h3><?= $titrePropositionHTML ?></h3>
                     </a>
-                    <input class="form-check-input" type="radio" name="idPropositionVote" value="<?= $proposition->getIdProposition() ?>" id="idPropositionVote" checked>
+                    <input class="form-check-input" type="radio" name="idPropositionVote" value="<?= $proposition->getIdProposition() ?>" id="idPropositionVote" <?php if (ConnexionUtilisateur::isConnected() && (new VotantRepository())->votantHasAlreadyVoted(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) echo "checked"?>>
                     <label class="form-check-label" for="idPropositionVote">
-                        Default checked radio
                     </label>
                 </div>
             </div>

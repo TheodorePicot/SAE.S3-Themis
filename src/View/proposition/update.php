@@ -1,6 +1,6 @@
 <?php
 
-use Themis\Lib\ConnexionUtilisateur;
+use Themis\Model\Repository\SectionPropositionRepository;
 
 ?>
 <form method="post" action="frontController.php">
@@ -54,7 +54,7 @@ use Themis\Lib\ConnexionUtilisateur;
                                           name="descriptionSectionProposition<?= $section->getIdSection() ?>"
                                           id="descriptionSectionProposition<?= $section->getIdSection() ?>" required
                                           rows="5"
-                                          cols="40"><?= (new \Themis\Model\Repository\SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></textarea>
+                                          cols="40"><?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></textarea>
                             </div>
 
                             <?php $count++;
