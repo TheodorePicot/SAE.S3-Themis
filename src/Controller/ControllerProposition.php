@@ -169,7 +169,6 @@ class ControllerProposition extends AbstractController
                 $this->isVotantInQuestion($question->getIdQuestion()) )
             ||
             date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition();
-
     }
 
     /**

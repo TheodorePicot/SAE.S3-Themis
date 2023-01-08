@@ -1,4 +1,4 @@
-<div class="col-auto">
+<div class="col-auto" style="height: 250px">
     <label  class="visually-hidden" for="votants"></label>
     <select class="form-select h-100" name="votants[]" id="autoSizingSelect" required multiple>
         <?php use Themis\Model\Repository\VotantRepository;

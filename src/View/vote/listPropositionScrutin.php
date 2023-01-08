@@ -17,8 +17,8 @@
                     <a id="containerQuestion" href="<?= $hrefRead ?>">
                         <h3><?= $titrePropositionHTML ?></h3>
                     </a>
-                    <input class="form-check-input" type="radio" name="vote<?= $proposition->getIdProposition() ?>" id="vote<?= $proposition->getIdProposition() ?>" checked>
-                    <label class="form-check-label" for="vote<?= $proposition->getIdProposition() ?>">
+                    <input class="form-check-input" type="radio" name="idPropositionVote" value="<?= $proposition->getIdProposition() ?>" id="idPropositionVote" checked>
+                    <label class="form-check-label" for="idPropositionVote">
                         Default checked radio
                     </label>
                 </div>

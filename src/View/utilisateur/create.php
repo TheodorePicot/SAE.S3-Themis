@@ -11,12 +11,12 @@
                         <input type="hidden" name="action" value="created">
 
                         <div class="mx-3">
-                            <h5><label for="login">Login</label></h5>
+                            <h5><label for="login">Login&#42</label></h5>
                             <p>
                                 <input class="form-control form-control-lg <?= isset($_REQUEST["invalidLogin"]) ? "is-invalid" : "" ?>"
                                        type="text" name="login"
                                        id="login"
-                                       value="<?php if (isset($_SESSION["createUtilisateur"]["login"])) echo $_SESSION["createUtilisateur"]["login"] ?>"
+                                       value="<?php if (isset($_SESSION["formData"]["createUtilisateur"]["login"])) echo $_SESSION["formData"]["createUtilisateur"]["login"] ?>"
                                        required/>
                             </p>
                         </div>
@@ -28,27 +28,27 @@
                                 <input class="form-control form-control-lg" type="text"
                                        name="adresseMail"
                                        id="adresseMail"
-                                       value="<?php if (isset($_SESSION["createUtilisateur"]["adresseMail"])) echo $_SESSION["createUtilisateur"]["adresseMail"] ?>"
+                                       value="<?php if (isset($_SESSION["formData"]["createUtilisateur"]["adresseMail"])) echo $_SESSION["formData"]["createUtilisateur"]["adresseMail"] ?>"
                                        required/>
                             </p>
                         </div>
 
                         <div class="mx-3">
-                            <h5><label for="nom">Nom</label></h5>
+                            <h5><label for="nom">Nom&#42</label></h5>
                             <p>
                                 <input class="form-control form-control-lg" type="text"  name="nom"
                                        id="nom"
-                                       value="<?php if (isset($_SESSION["createUtilisateur"]["nom"])) echo $_SESSION["createUtilisateur"]["nom"] ?>"
+                                       value="<?php if (isset($_SESSION["formData"]["createUtilisateur"]["nom"])) echo $_SESSION["formData"]["createUtilisateur"]["nom"] ?>"
                                        required/>
                             </p>
                         </div>
 
                         <div class="mx-3">
-                            <h5><label for="prenom">Prénom</label></h5>
+                            <h5><label for="prenom">Prénom&#42</label></h5>
                             <p>
                                 <input class="form-control form-control-lg" type="text" name="prenom"
                                        id="prenom"
-                                       value="<?php if (isset($_SESSION["createUtilisateur"]["prenom"])) echo $_SESSION["createUtilisateur"]["prenom"] ?>"
+                                       value="<?php if (isset($_SESSION["formData"]["createUtilisateur"]["prenom"])) echo $_SESSION["formData"]["createUtilisateur"]["prenom"] ?>"
                                        required/>
                             </p>
                         </div>
@@ -57,8 +57,7 @@
                             <p>
                                 <input class="form-control form-control-lg" type="date" name="dateNaissance"
                                        id="dateNaissance"
-                                       value="<?php if (isset($_SESSION["createUtilisateur"]["dateNaissance"])) echo $_SESSION["createUtilisateur"]["dateNaissance"] ?>"
-                                       required/>
+                                       value="<?php if (isset($_SESSION["formData"]["createUtilisateur"]["dateNaissance"])) echo $_SESSION["formData"]["createUtilisateur"]["dateNaissance"] ?>"/>
                             </p>
                         </div>
 

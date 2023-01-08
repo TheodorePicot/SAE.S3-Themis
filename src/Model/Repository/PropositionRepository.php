@@ -41,9 +41,9 @@ class PropositionRepository extends AbstractRepository
         return $dataObjects;
     }
 
-    public function selectAllByQuestionOrderedByVoteValue($idQuestion): array
+    public function selectAllByQuestionOrderedByVoteValue(int $idQuestion): array
     {
-        $sqlQuery = 'SELECT * FROM "Propositions" WHERE "idQuestion" =:idQuestion ORDER BY "sommeVotes" DESC ';
+        $sqlQuery = "SELECT * FROM {$this->getTableName()}" . ' WHERE "idQuestion" =:idQuestion ORDER BY "sommeVotes" DESC';
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
@@ -59,6 +59,20 @@ class PropositionRepository extends AbstractRepository
         }
 
         return $propositions;
+    }
+
+    public function aPropositionIsInQuestion(int $idQuestion): bool
+    {
+        $sqlQuery = "SELECT * FROM {$this->getTableName()}" . ' WHERE "idQuestion" =:idQuestion';
+
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = [
+            "idQuestion" => $idQuestion
+        ];
+
+        $pdoStatement->execute($values);
+        return $pdoStatement->rowCount() > 0;
     }
 
     public function build(array $objectArrayFormat): Proposition
