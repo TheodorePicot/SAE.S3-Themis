@@ -162,10 +162,14 @@ $date = date_create();
 
             <?php
 
+
             if ($date->format("Y-m-d H:i:s") < $question->getDateFinVote())
                 require_once __DIR__ . "/../proposition/listByQuestion.php";
             else
-                require_once __DIR__ . "/../proposition/listByQuestionGagnante.php";
+                if ($question->getSystemeVote() == "ScrutinUninominal")
+                    require_once __DIR__ . "/../proposition/listByQuestionGagnanteScrutin.php";
+                else
+                    require_once __DIR__ . "/../proposition/listByQuestionGagnanteJugement.php";
             ?>
 
         </div>

@@ -43,7 +43,7 @@ class PropositionRepository extends AbstractRepository
 
     public function selectAllByQuestionsOrderedByVoteValueScrutin(int $idQuestion): array
     {
-        $sqlQuery = "SELECT p.\"idProposition\" FROM \"Propositions\" p JOIN themis.\"ScrutinUninominal\" s ON p.\"idProposition\" = s.\"idProposition\" WHERE \"idQuestion\" =:idQuestion GROUP BY p.\"idProposition\" ORDER BY COUNT(*) DESC";
+        $sqlQuery = "SELECT \"idProposition\" FROM themis.\"ScrutinUninominal\" WHERE \"idQuestion\" =:idQuestion GROUP BY \"idProposition\" ORDER BY COUNT(*) DESC";
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 

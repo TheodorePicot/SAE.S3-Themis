@@ -16,7 +16,7 @@
                     <a id="containerQuestion" href="<?= $hrefRead ?>">
                         <h3><?= $titrePropositionHTML ?></h3>
                     </a>
-                    <input class="form-check-input" type="radio" name="idPropositionVote" value="<?= $proposition->getIdProposition() ?>" id="idPropositionVote" <?php if (ConnexionUtilisateur::isConnected() && (new ScrutinUninominalRepository())->votantHasAlreadyVoted(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) echo "checked"?>>
+                    <input class="form-check-input" <?= (ConnexionUtilisateur::isConnected() && (new ScrutinUninominalRepository())->votantHasAlreadyVotedForPropositionScrutin(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) ? "checked" : ""; ?> type="radio" name="idPropositionVote" value="<?= $proposition->getIdProposition() ?>" id="idPropositionVote">
                     <label class="form-check-label" for="idPropositionVote">
                     </label>
                 </div>
