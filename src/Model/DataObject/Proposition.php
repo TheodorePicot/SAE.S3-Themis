@@ -8,7 +8,6 @@ class Proposition extends AbstractDataObject
     private int $idQuestion;
     private string $titreProposition;
     private string $loginAuteur;
-    private int $sommeVotes;
 
     /**
      * @param int $idProposition
@@ -16,13 +15,12 @@ class Proposition extends AbstractDataObject
      * @param string $titreProposition
      * @param string $loginAuteur
      */
-    public function __construct(?int $idProposition, int $idQuestion, string $titreProposition, string $loginAuteur, int $sommeVotes)
+    public function __construct(?int $idProposition, int $idQuestion, string $titreProposition, string $loginAuteur)
     {
         $this->idProposition = $idProposition;
         $this->idQuestion = $idQuestion;
         $this->titreProposition = $titreProposition;
         $this->loginAuteur = $loginAuteur;
-        $this->sommeVotes = $sommeVotes;
     }
 
     public function tableFormat(): array
@@ -32,7 +30,6 @@ class Proposition extends AbstractDataObject
                 "idQuestion" => $this->idQuestion,
                 "titreProposition" => $this->titreProposition,
                 "loginAuteur" => $this->loginAuteur,
-                "sommeVotes" => $this->sommeVotes
             ];
         } else {
             return [
@@ -40,7 +37,6 @@ class Proposition extends AbstractDataObject
                 "idQuestion" => $this->idQuestion,
                 "titreProposition" => $this->titreProposition,
                 "loginAuteur" => $this->loginAuteur,
-                "sommeVotes" => $this->sommeVotes
             ];
         }
     }
@@ -76,15 +72,6 @@ class Proposition extends AbstractDataObject
     {
         return $this->loginAuteur;
     }
-
-    /**
-     * @return int
-     */
-    public function getSommeVotes(): int
-    {
-        return $this->sommeVotes;
-    }
-
 
     public static function buildFromForm(array $formArray): Proposition
     {

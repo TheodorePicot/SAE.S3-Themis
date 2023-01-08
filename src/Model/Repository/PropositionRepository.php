@@ -41,9 +41,9 @@ class PropositionRepository extends AbstractRepository
         return $dataObjects;
     }
 
-    public function selectAllByQuestionOrderedByVoteValue(int $idQuestion): array
+    public function selectAllByQuestionsOrderedByVoteValueScrutin(int $idQuestion): array
     {
-        $sqlQuery = "SELECT * FROM {$this->getTableName()}" . ' WHERE "idQuestion" =:idQuestion ORDER BY "sommeVotes" DESC';
+        $sqlQuery = "SELECT p.\"idProposition\" FROM \"Propositions\" p JOIN themis.\"ScrutinUninominal\" s ON p.\"idProposition\" = s.\"idProposition\" WHERE \"idQuestion\" =:idQuestion GROUP BY p.\"idProposition\" ORDER BY COUNT(*) DESC";
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
@@ -55,7 +55,7 @@ class PropositionRepository extends AbstractRepository
 
         $propositions = array();
         foreach ($pdoStatement as $proposition) {
-            $propositions[] = $this->build($proposition);
+            $propositions[] = $this->select($proposition[0]);
         }
 
         return $propositions;
@@ -77,7 +77,7 @@ class PropositionRepository extends AbstractRepository
 
     public function build(array $objectArrayFormat): Proposition
     {
-        return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur'], $objectArrayFormat['sommeVotes']);
+        return new Proposition($objectArrayFormat['idProposition'], $objectArrayFormat['idQuestion'], $objectArrayFormat['titreProposition'], $objectArrayFormat['loginAuteur']);
     }
 
     protected function getTableName(): string
@@ -96,7 +96,6 @@ class PropositionRepository extends AbstractRepository
             "idQuestion",
             "titreProposition",
             "loginAuteur",
-            "sommeVotes"
         ];
     }
 

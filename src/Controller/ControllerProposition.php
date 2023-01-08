@@ -134,7 +134,6 @@ class ControllerProposition extends AbstractController
     public function read(): void
     {
         /** Pour supprimer les données des formulaires stockées dans {@var $_SESSION} car elles ne sont plus utiles */
-        FormData::unsetAll();
         $proposition = (new PropositionRepository)->select($_REQUEST["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         $this->connectionCheck();
@@ -255,7 +254,6 @@ class ControllerProposition extends AbstractController
     {
         $this->connectionCheck();
         /** Pour supprimer les données des formulaires stockées dans {@var $_SESSION} car elles ne sont plus utiles */
-        FormData::unsetAll();
         $proposition = (new PropositionRepository)->select($_REQUEST["idProposition"]);
         $question = (new QuestionRepository)->select($proposition->getIdQuestion());
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition()) {

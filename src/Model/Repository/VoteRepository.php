@@ -8,36 +8,33 @@ use Themis\Model\DataObject\Vote;
 
 abstract class VoteRepository extends AbstractRepository
 {
-
-    protected function getTableName(): string
-    {
-        return 'themis."Votes"';
-    }
-
-    protected function getColumnNames(): array
-    {
-        return [
-            "loginVotant",
-            "idProposition",
-            "valeur"
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public abstract function build(array $objectArrayFormat): Vote;
-
-    protected function getOrderColumn(): string
-    {
-        return "loginVotant";
-    }
-
-    protected function getPrimaryKey(): string
-    {
-        return "loginVotant";
-    }
-
     public abstract function selectVote($loginVotant, $idProposition): ?Vote;
+
+    public function votantHasAlreadyVoted(string $loginVotant, int $idProposition): bool
+    {
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} 
+                    WHERE \"loginVotant\" = :loginVotant
+                    AND \"idProposition\" = :idProposition";
+//        echo $sqlQuery;
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = array(
+            'loginVotant' => $loginVotant,
+            'idProposition' => $idProposition
+        );
+
+        try {
+            $pdoStatement->execute($values);
+        } catch (PDOException $exception) {
+            echo $exception->getCode();
+            return $exception->getCode();
+        }
+        $dataObject = $pdoStatement->fetch();
+//        echo $dataObject[0];
+        if ($dataObject != false) {
+            return $dataObject[0] == $loginVotant;
+        }
+        return false;
+    }
 
 }

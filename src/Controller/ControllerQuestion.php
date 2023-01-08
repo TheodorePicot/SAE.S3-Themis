@@ -216,14 +216,13 @@ class ControllerQuestion extends AbstractController
      */
     public function read(): void
     {
-        FormData::unsetAll();
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
-        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
-            $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_REQUEST["idQuestion"]);
-        else
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
+            $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
+        else // TODO faire le if de jugement majoritaire
             $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
 
         $this->showView("view.php", [
@@ -246,7 +245,6 @@ class ControllerQuestion extends AbstractController
      */
     public function readAll(): void
     {
-        FormData::unsetAll();
         $this->showQuestions((new QuestionRepository)->selectAllByIdQuestion());
     }
 
@@ -460,14 +458,13 @@ class ControllerQuestion extends AbstractController
      */
     public function readAllVotantsBySearchValue(): void
     {
-        FormData::unsetAll();
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository())->selectAllVotantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
-        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
-            $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_REQUEST["idQuestion"]);
-        else
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
+            $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
+        else // TODO pour JugementMajoritaire
             $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
 
         $this->showView("view.php", [
@@ -483,14 +480,13 @@ class ControllerQuestion extends AbstractController
 
     public function readAllAuteursBySearchValue(): void
     {
-        FormData::unsetAll();
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllVotantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
-        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote())
-            $propositions = (new PropositionRepository)->selectAllByQuestionOrderedByVoteValue($_REQUEST["idQuestion"]);
-        else
+        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
+            $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
+        else // TODO pour JugementMajoritaire
             $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
 
         $this->showView("view.php", [

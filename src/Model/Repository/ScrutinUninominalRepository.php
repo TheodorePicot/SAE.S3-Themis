@@ -4,6 +4,7 @@ namespace Themis\Model\Repository;
 
 use PDOException;
 use Themis\Model\DataObject\AbstractDataObject;
+use Themis\Model\DataObject\ScrutinUninominal;
 use Themis\Model\DataObject\Vote;
 use Themis\Model\Repository\VotantRepository;
 
@@ -34,16 +35,41 @@ class ScrutinUninominalRepository extends VoteRepository
         return $this->build($dataObject);
     }
 
-    public function update(AbstractDataObject $dataObject): void
+    protected function getTableName(): string
     {
-        $sqlQuery = 'UPDATE "Votes" SET valeur =:valeur WHERE "loginVotant" =:loginVotant AND "idProposition" =:idProposition';
-        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-        $values = $dataObject->tableFormat();
-        $pdoStatement->execute($values);
+        return 'themis."ScrutinUninominal"';
     }
 
-    public function build(array $objectArrayFormat): Vote
+    protected function getColumnNames(): array
     {
-        // TODO: Implement build() method.
+        return [
+            "loginVotant",
+            "idProposition",
+        ];
+    }
+
+    protected function getOrderColumn(): string
+    {
+        return "loginVotant";
+    }
+
+    protected function getPrimaryKey(): string
+    {
+        return "loginVotant";
+    }
+
+
+    public function build(array $objectArrayFormat): ScrutinUninominal
+    {
+        return new ScrutinUninominal($objectArrayFormat["LoginVotant"], $objectArrayFormat["idProposition"]);
+    }
+
+    public function getNbVotesProposition(int $idProposition): int
+    {
+        $sqlQuery = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+        $values = ["idProposition" => $idProposition];
+        $pdoStatement->execute($values);
+        return (int) $pdoStatement->fetch()[0];
     }
 }

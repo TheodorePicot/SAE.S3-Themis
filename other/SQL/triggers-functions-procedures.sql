@@ -185,3 +185,5 @@ EXECUTE PROCEDURE updateSommeVoteOnProposition();
 -- ENUM pour système de vote
 
 CREATE TYPE systemeVote AS ENUM ('JugementMajoritaire', 'ScrutinUninominal');
+
+DROP FUNCTION updateSommeVoteOnProposition;

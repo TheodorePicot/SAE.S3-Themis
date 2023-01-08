@@ -48,7 +48,7 @@ class ControllerVote extends AbstractController
         if ($this->canVote($question)) {
             if ($question->getSystemeVote() == "ScrutinUninominal"){
                 $voteUninominal = new ScrutinUninominal($_REQUEST["loginVotant"], $_REQUEST["idPropositionVote"]); // Je sais pas comme trouver l'id de la proposition cochée
-                if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $_REQUEST["idPropositionVote"])) {
+                if ((new ScrutinUninominalRepository())->votantHasAlreadyVoted($_REQUEST["loginVotant"], $_REQUEST["idPropositionVote"])) {
                     (new ScrutinUninominalRepository())->update($voteUninominal);
                 } else {
                     (new ScrutinUninominalRepository())->create($voteUninominal);
@@ -57,7 +57,7 @@ class ControllerVote extends AbstractController
             else{
                 foreach ((new PropositionRepository())->selectByQuestion($_REQUEST["idQuestion"]) as $proposition) {
                     $vote = new JugementMajoritaire($_REQUEST["loginVotant"], $proposition->getIdProposition(), $_REQUEST["valueVote{$proposition->getIdProposition()}"]);
-                    if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) {
+                    if ((new VotantRepository)->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) { // Faire méthode pour JugementMajoritaire
                         (new JugementMajoritaireRepository)->update($vote);
                     } else {
                         (new JugementMajoritaireRepository)->create($vote);

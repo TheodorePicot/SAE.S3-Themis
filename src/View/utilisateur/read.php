@@ -56,8 +56,11 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
             <div class="my-lg-3 text-nowrap">
                 <h3>Date de Naissance <br></h3>
                 <?php
-                $date = date_create($utilisateur->getDateNaissance());
-                echo htmlspecialchars($date->format("d-m-Y")); ?><br>
+                if ($utilisateur->getDateNaissance() != null) {
+                    $date = date_create($utilisateur->getDateNaissance());
+                    echo htmlspecialchars($date->format("d-m-Y"));
+                } else
+                    echo "non renseignée"?><br>
             </div>
         </div>
     </div>

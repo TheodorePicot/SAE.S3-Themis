@@ -53,7 +53,6 @@ use Themis\Lib\ConnexionUtilisateur;
             <div class="row mx-5 my-4 gy-2">
                 <h3>Calendrier</h3>
 
-
                 <div class="container col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutProposition">Date de début des propositions</label></h5>
                     <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateDebutProposition"

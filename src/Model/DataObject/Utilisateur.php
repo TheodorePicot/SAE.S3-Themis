@@ -179,7 +179,7 @@ class Utilisateur extends AbstractDataObject
         $this->nonce = $nonce;
     }
 
-    public static function buildFromFormCreate(array $formArray): Utilisateur
+    public static function buildFromFormCreate(array $formArray): Utilisateur // TODO email a valider
     {
         $utilisateur = new Utilisateur (
             $formArray['login'],
@@ -206,12 +206,13 @@ class Utilisateur extends AbstractDataObject
 
     public static function buildFromForm(array $formArray): Utilisateur
     {
+        echo "la date de naissance : " . $formArray['dateNaissance'];
         $utilisateur = new Utilisateur (
             $formArray['login'],
             $formArray['nom'],
             $formArray['prenom'],
-            $formArray['adresseMail'],
-            $formArray['dateNaissance'],
+            $formArray['adresseMail'] ,
+            $formArray['dateNaissance'] == "" ? null:$formArray['adresseMail'],
             PassWord::hash($formArray['mdp']),
             0,
             0,

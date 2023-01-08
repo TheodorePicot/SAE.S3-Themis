@@ -32,7 +32,6 @@ class ControllerUtilisateur extends AbstractController
     public function readAll(): void
     {
 
-        FormData::unsetAll();
         $this->connectionCheck();
         if (!$this->isAdmin()) {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
@@ -63,7 +62,7 @@ class ControllerUtilisateur extends AbstractController
      */
     public function created(): void
     {
-        $user = Utilisateur::buildFromFormCreate($_REQUEST);
+        $user = Utilisateur::buildFromForm($_REQUEST);
         FormData::saveFormData("createUtilisateur");
 //        VerificationEmail::sendEmailValidation($user);
         if ((new UtilisateurRepository())->select($_REQUEST['login']) != null) {
