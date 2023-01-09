@@ -10,7 +10,7 @@ use Themis\Model\DataObject\Vote;
 class JugementMajoritaireRepository extends VoteRepository
 {
 
-    public function build(array $objectArrayFormat): Vote
+    public function build(array $objectArrayFormat): JugementMajoritaire
     {
         return new JugementMajoritaire($objectArrayFormat["loginVotant"], $objectArrayFormat["idProposition"], $objectArrayFormat["valeur"]);    }
 
@@ -71,21 +71,50 @@ class JugementMajoritaireRepository extends VoteRepository
         $pdoStatement->execute($values);
     }
 
-    public function getVoteProposition(int $idProposition): array
+    public function getValeurFrequenceProposition(int $idProposition): array
     {
-        $sqlQuery = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
+        $sqlQuery = "SELECT valeur FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = ["idProposition" => $idProposition];
         $pdoStatement->execute($values);
-        return (int) $pdoStatement->fetch()[0];
+        $valeurFrequence = array();
+        foreach ($pdoStatement as $jugementMajoritaire) {
+            $object = $this->build($jugementMajoritaire);
+            switch ($object->getValeur()) {
+                case 0:
+                    $valeurFrequence[0]++;
+                    break;
+                case 1:
+                    $valeurFrequence[1]++;
+                    break;
+                case 2:
+                    $valeurFrequence[2]++;
+                    break;
+                case 3:
+                    $valeurFrequence[3]++;
+                    break;
+                case 4:
+                    $valeurFrequence[4]++;
+                    break;
+                case 5:
+                    $valeurFrequence[5]++;
+                    break;
+            }
+        }
+        return $valeurFrequence;
     }
 
-    public function getNbVotesProposition(int $idProposition): array
+    public function getValeurFrequencePropositionsByQuestion(int $idQuestion): array
     {
-        $sqlQuery = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
+        $sqlQuery = "SELECT * FROM \"Propositions\" WHERE \"idQuestion\" =:idQuestion";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-        $values = ["idProposition" => $idProposition];
+        $values = ["idQuestion" => $idQuestion];
         $pdoStatement->execute($values);
-        return (int) $pdoStatement->fetch()[0];
+        $frequenceForEachProposition = array();
+        foreach ($pdoStatement as $jugementMajoritaire) {
+            $object = $this->build($jugementMajoritaire);
+            $frequenceForEachProposition[$object->getIdProposition()] = $this->getValeurFrequenceProposition($object->getIdProposition());
+        }
+        return $frequenceForEachProposition;
     }
 }

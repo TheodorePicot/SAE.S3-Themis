@@ -38,12 +38,12 @@ class ControllerQuestion extends AbstractController
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             if (date_create()->format("Y-m-d H:i:s") >= $_REQUEST['dateFinProposition']) {
-                FormData::saveFormData("createQuestion");
+                FormData::saveFormData();
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
             if (!($_REQUEST['dateDebutProposition'] < $_REQUEST['dateFinProposition'] && $_REQUEST['dateFinProposition'] <= $_REQUEST['dateDebutVote'] && $_REQUEST['dateDebutVote'] < $_REQUEST['dateFinVote'])) {
-                FormData::saveFormData("createQuestion");
+                FormData::saveFormData();
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
@@ -51,7 +51,7 @@ class ControllerQuestion extends AbstractController
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             $this->createParticipants($idQuestion);
-            FormData::deleteFormData("createQuestion");
+            FormData::unsetAll();
             $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
         } else {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
