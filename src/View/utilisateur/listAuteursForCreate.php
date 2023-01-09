@@ -6,7 +6,7 @@
         foreach ($utilisateurs
                        as $utilisateur):
             $count++?>
-            <option value="<?= htmlspecialchars($utilisateur->getLogin()) ?>" <?php if (isset($_SESSION["formData"]["auteurs"]) && in_array($utilisateur->getLogin(), $_SESSION["formData"]["auteurs"])) unset($_SESSION['formData']["auteurs"]);echo "selected" ?>><?= htmlspecialchars($utilisateur->getLogin()) ?></option>
+            <option value="<?= htmlspecialchars($utilisateur->getLogin()) ?>" <?php if (isset($_SESSION["formData"]["createQuestion"]["auteurs"]) && in_array($utilisateur->getLogin(), $_SESSION["formData"]["createQuestion"]["auteurs"])) echo "selected" ?>><?= htmlspecialchars($utilisateur->getLogin()) ?></option>
 
         <?php endforeach; ?>
     </select>

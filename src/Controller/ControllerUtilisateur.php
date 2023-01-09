@@ -16,16 +16,23 @@ class ControllerUtilisateur extends AbstractController
 {
 
     /**
-     * Permet d'afficher tous les utilisateurs.
-     *
+     * Permet d'afficher tous les utilisateurs
      * Cette méthode est réservée uniquement aux administrateurs.
      * Elle vérifie si l'utilisateur actuellement connecté est bien admin.
      * Si oui elle le redirige vers la bonne vue.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
      *
+     * La méthode de la première ligne permet d'effacer toutes données stocker dans {@link $_SESSION} par rapport au
+     * refresh des formulaires lors de l'incohérence des dates pour la création d'une question.
+     *
+     * @return void
+     * @see FormData::unsetAll();
+     *
      */
     public function readAll(): void
     {
+
+        FormData::unsetAll();
         $this->connectionCheck();
         if (!$this->isAdmin()) {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_DANGER);
@@ -57,7 +64,7 @@ class ControllerUtilisateur extends AbstractController
     public function created(): void
     {
         $user = Utilisateur::buildFromForm($_REQUEST);
-        FormData::saveFormData();
+        FormData::saveFormData("createUtilisateur");
 //        VerificationEmail::sendEmailValidation($user);
         if ((new UtilisateurRepository())->select($_REQUEST['login']) != null) {
             (new FlashMessage)->flash("mauvaisMdp", "Ce login existe déjà", FlashMessage::FLASH_DANGER);
@@ -69,7 +76,7 @@ class ControllerUtilisateur extends AbstractController
             if ($creationCode == "") {
                 ConnexionUtilisateur::connect(($_REQUEST["login"]));
                 (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
-                FormData::unsetAll();
+                FormData::deleteFormData("createUtilisateur");
                 $this->redirect("frontController.php?action=readAll");
             }
         } else {
@@ -85,7 +92,7 @@ class ControllerUtilisateur extends AbstractController
      */
     public function create()
     {
-        FormData::unsetAll();
+        FormData::deleteFormData("connection");
         $this->showView("view.php", [
             "pageTitle" => "Inscription",
             "pathBodyView" => "utilisateur/create.php"
@@ -135,7 +142,7 @@ class ControllerUtilisateur extends AbstractController
      * Connecte l'utilisateur par rapport aux informations du formulaire
      *
      * Cette méthode est appelée quand un utilisateur soumet les informations du formulaire dans {@link src/View/utilisateur/login.php}
-     * Elle vérifie si le login et le mot de passe transmit existent dans la base de donnée. Puis, elle vérifie que l'utilisateur transmet bien un login et
+     * Elle vérifie si le login et le mot de passe transmi existent dans la base de donnée. Puis elle vérifie que l'utilisateur transmet bien un login et
      * un mot de passe.
      * Si toutes ces vérifications sont validées, elle connecte l'utilisateur.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
@@ -147,7 +154,7 @@ class ControllerUtilisateur extends AbstractController
      */
     public function connect(): void
     {
-        FormData::saveFormData();
+        FormData::saveFormData("connection");
         if ((new UtilisateurRepository())->select($_REQUEST["login"]) == null) {
             (new FlashMessage)->flash("badLogin", "Ce login n'existe pas", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=login&controller=utilisateur&invalidLogin=1");
@@ -160,7 +167,7 @@ class ControllerUtilisateur extends AbstractController
             $this->redirect("frontController.php?action=login&controller=utilisateur&invalidPswd=1");
         } else {
             ConnexionUtilisateur::connect(($_REQUEST["login"]));
-            FormData::unsetAll();
+            FormData::deleteFormData("loginUtilisateur");
             (new FlashMessage)->flash("connectionGood", "Connexion réussie", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=read&controller=utilisateur&login={$_REQUEST["login"]}");
         }

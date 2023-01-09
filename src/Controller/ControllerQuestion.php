@@ -28,6 +28,9 @@ class ControllerQuestion extends AbstractController
      * Elle fait des vérifications de droits et de cohérence de date.
      * Si toutes ces vérifications sont validées, elle crée une {@link Question} puis elle insère les données de cet objet dans la base de données.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
+     * La méthode {@link FormData::saveFormData()} permet de stocker toutes les données dans {@link $_SESSION} par rapport au
+     * refresh des formulaires lors de l'incohérence des dates. Si nous ne faisons pas cela les informations données dans le formulaire serait perdues
+     * lors de la redirection.
      *
      * @return void
      */
@@ -38,12 +41,12 @@ class ControllerQuestion extends AbstractController
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             if (date_create()->format("Y-m-d H:i:s") >= $_REQUEST['dateFinProposition']) {
-                FormData::saveFormData();
+                FormData::saveFormData("createQuestion");
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
             if (!($_REQUEST['dateDebutProposition'] < $_REQUEST['dateFinProposition'] && $_REQUEST['dateFinProposition'] <= $_REQUEST['dateDebutVote'] && $_REQUEST['dateDebutVote'] < $_REQUEST['dateFinVote'])) {
-                FormData::saveFormData();
+                FormData::saveFormData("createQuestion");
                 (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
@@ -51,7 +54,7 @@ class ControllerQuestion extends AbstractController
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             $this->createParticipants($idQuestion);
-            FormData::unsetAll();
+            FormData::deleteFormData("createQuestion");
             $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
         } else {
             (new FlashMessage())->flash("createdProblem", "Vous n'avez pas accès à cette méthode", FlashMessage::FLASH_WARNING);
@@ -213,6 +216,7 @@ class ControllerQuestion extends AbstractController
      */
     public function read(): void
     {
+        FormData::unsetAll();
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
@@ -242,6 +246,7 @@ class ControllerQuestion extends AbstractController
      */
     public function readAll(): void
     {
+        FormData::unsetAll();
         $this->showQuestions((new QuestionRepository)->selectAllByIdQuestion());
     }
 
@@ -261,24 +266,13 @@ class ControllerQuestion extends AbstractController
     }
 
     /**
-     * Affiche toutes les questions par ordre de création
-     *
-     * @return void
-     */
-    public function readAllByIdQuestion(): void
-    {
-        $this->showQuestions((new QuestionRepository)->selectAllByIdQuestion());
-    }
-
-
-    /**
      * Affiche toutes les questions par ordre alphabétique
      *
      * @return void
      */
     public function readAllByAlphabeticalOrder(): void
     {
-        $this->showQuestions((new QuestionRepository)->selectAllOrdered());
+        $this->showQuestions((new QuestionRepository)->selectAllByIdQuestion());
     }
 
     /**
@@ -339,7 +333,7 @@ class ControllerQuestion extends AbstractController
         if ($this->isOrganisateurOfQuestion($_REQUEST['loginOrganisateur']) && $this->isOrganisateur()
             || $this->isAdmin()) {
             $oldQuestion = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
-            if (date_create()->format("Y-m-d H:i:s") >= $oldQuestion->getDateFinProposition() || $this->aPropositionIsInQuestion($_REQUEST["idQuestion"])) {
+            if (date_create()->format("Y-m-d H:i:s") > $oldQuestion->getDateFinProposition()) {
                 (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
                 $this->redirect("frontController.php?action=readAll");
             }
@@ -455,6 +449,7 @@ class ControllerQuestion extends AbstractController
      */
     public function readAllVotantsBySearchValue(): void
     {
+        FormData::unsetAll();
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository())->selectAllParticipantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
@@ -477,6 +472,7 @@ class ControllerQuestion extends AbstractController
 
     public function readAllAuteursBySearchValue(): void
     {
+        FormData::unsetAll();
         $question = (new QuestionRepository())->select($_REQUEST["idQuestion"]);
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
