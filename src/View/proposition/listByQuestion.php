@@ -7,7 +7,6 @@ use Themis\Model\Repository\AuteurRepository;
 ?>
 
     <div class="d-flex align-content-center justify-content-center">
-
         <h1>Liste des propositions</h1>
     </div>
 

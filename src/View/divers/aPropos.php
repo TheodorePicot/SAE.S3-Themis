@@ -17,9 +17,9 @@
                     nous a quelque chose à apprendre et à partager.
                 </p>
                 <p>
-                    Notre équipe est composée de [présentation des membres de l'équipe et de leur rôle]. Nous veillons à
+                    Notre équipe est composée de quatre développeurs passionnés en quête de nouveau challenge. Nous veillons à
                     ce
-                    que les questions et les réponses publiées sur notre site soient de qualité et impartiaux, en
+                    que les questions et les réponses publiées sur notre site soient de qualité, en
                     utilisant
                     une modération attentive et en encourageant la participation de tous les membres de notre
                     communauté.

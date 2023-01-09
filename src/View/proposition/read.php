@@ -16,11 +16,13 @@ htmlspecialchars($question->getTitreQuestion())
 
 
 <div class='container-fluid'>
-    <div class="d-flex align-content-center justify-content-center my-5" >
-        <h1 style="width: 92%"> <?= $proposition->getTitreProposition() ?>
 
+
+    <div class="d-flex align-content-center justify-content-center my-5">
+        <h1 style=""> <?= $proposition->getTitreProposition() ?>
             - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
     </div>
+
     <div class="row my-5 gy-4">
         <div class="container-fluid col-md-11">
             <div class="d-flex align-content-center justify-content-center">
@@ -34,14 +36,14 @@ htmlspecialchars($question->getTitreQuestion())
 
                 as $section) : ?>
                 <div class="my-4">
-                    <h4><p><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h4>
-                    <div class="shadowBox card card-body border-0 col-md-10">
+                    <h4><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h4>
+                    <div class="shadowBox card card-body border-0 ">
                         <?= htmlspecialchars($section->getDescriptionSection()) ?>
                     </div>
 
                     <div class="my-4">
                         <h4 class="my-3">Proposition pour la section <?= $count ?> : </h4>
-                        <div class="shadowBoxProposition card card-body border-0 col-md-10">
+                        <div class="shadowBoxProposition card card-body border-0 ">
                             <p><?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></p>
                         </div>
                     </div>
@@ -76,5 +78,7 @@ htmlspecialchars($question->getTitreQuestion())
             <?php endif ?>
         </div>
     </div>
+
+
 </div>
 
