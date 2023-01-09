@@ -8,6 +8,7 @@ class Proposition extends AbstractDataObject
     private int $idQuestion;
     private string $titreProposition;
     private string $loginAuteur;
+    private int $valeurResultat;
 
     /**
      * @param int $idProposition
@@ -72,6 +73,24 @@ class Proposition extends AbstractDataObject
     {
         return $this->loginAuteur;
     }
+
+    /**
+     * @return int
+     */
+    public function getValeurResultat(): int
+    {
+        return $this->valeurResultat;
+    }
+
+    /**
+     * @param int $valeurResultat
+     */
+    public function setValeurResultat(int $valeurResultat): void
+    {
+        $this->valeurResultat = $valeurResultat;
+    }
+
+
 
     public static function buildFromForm(array $formArray): Proposition
     {

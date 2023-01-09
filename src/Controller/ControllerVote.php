@@ -79,4 +79,25 @@ class ControllerVote extends AbstractController
                 (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion()) &&
                 date_create()->format("Y-m-d H:i:s") < $question->getDateFinVote() && date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutVote());
     }
+
+    public function scoreMedianeProposition($idQuestion){
+        $tab = (new JugementMajoritaireRepository())->getValeurFrequencePropositionsByQuestion($idQuestion);
+        $somme = 0;
+        $res = [];
+        foreach ($tab as $key => $proposition){
+            $nbVoteByProposition = (new JugementMajoritaireRepository())->getNbVote($proposition);
+            foreach ($proposition as $i => $value){
+                $somme += $value;
+                if ($somme >= $nbVoteByProposition/2){
+                    $res[$key] = $i;
+                    $somme = 0;
+                    break;
+                }
+            }
+        }
+        return $res;
+    }
+
+
+
 }

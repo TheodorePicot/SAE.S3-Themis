@@ -106,7 +106,7 @@ class JugementMajoritaireRepository extends VoteRepository
 
     public function getValeurFrequencePropositionsByQuestion(int $idQuestion): array
     {
-        $sqlQuery = "SELECT * FROM \"Propositions\" WHERE \"idQuestion\" =:idQuestion";
+        $sqlQuery = "SELECT * FROM \"Propositions\" WHERE \"idQuestion\" =:idQuestion ORDER BY \"idProposition\"";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = ["idQuestion" => $idQuestion];
         $pdoStatement->execute($values);
@@ -126,6 +126,19 @@ class JugementMajoritaireRepository extends VoteRepository
         $pdoStatement->execute($values);
         return (int) $pdoStatement->fetch();
     }
+
+    public function selectPropositionForVoteResult(array $values, int $idQuestion): array
+    {
+        $propositionTemp = (new PropositionRepository())->selectByQuestion($idQuestion);
+        $propositionOrdered = array();
+        foreach ($propositionTemp as $proposition){
+            $proposition->setValeurResultat($values[$proposition->getIdProposition()]);
+            $propositionOrdered = $proposition;
+        }
+        usort($propositionOrdered, fn($a, $b) => -1 * strcmp($a->getValeurResultat(), $b->getValeurResultat()));
+        return $propositionOrdered;
+    }
+
 
 
 
