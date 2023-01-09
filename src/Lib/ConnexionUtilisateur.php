@@ -11,6 +11,13 @@ class ConnexionUtilisateur
     private static string $isOrganisateur = "isOrganisateur";
     private static string $idAdministrator = "isAdministrator";
 
+
+    /**
+     * Permet à un utilisateur de se connecter
+     *
+     * @param string $loginUtilisateur Le login de l'utilisateur voulant se connecter
+     * @return void
+     */
     public static function connect(string $loginUtilisateur): void
     {
         $session = Session::getInstance();
@@ -19,6 +26,11 @@ class ConnexionUtilisateur
         $session->save(self::$isOrganisateur, self::isOrganisateur());
     }
 
+    /**
+     * Permet à un utilisateur de se déconnecter
+     *
+     * @return void
+     */
     public static function disconnect(): void
     {
         $session = Session::getInstance();
@@ -27,6 +39,11 @@ class ConnexionUtilisateur
         $session->delete(self::$isOrganisateur);
     }
 
+    /**
+     * Permet d'obtenir le login de l'utilisateur actuellement connecté
+     *
+     * @return string
+     */
     public static function getConnectedUserLogin(): ?string
     {
         $session = Session::getInstance();
@@ -37,17 +54,35 @@ class ConnexionUtilisateur
         }
     }
 
+
+    /**
+     * Return true si l'utilisateur courant est connecté sinon false
+     *
+     * @return bool
+     */
     public static function isConnected(): bool
     {
         $session = Session::getInstance();
         return $session->contains(self::$connectionKey);
     }
 
+    /**
+     * Return true si l'utilisateur courant qui est connecté a pour login la variable placé en paramètre sinon false
+     *
+     * @param $login Le login de l'utilisateur
+     * @return bool
+     */
     public static function isUser($login): bool
     {
         return (self::isConnected() && self::getConnectedUserLogin() == $login);
     }
 
+
+    /**
+     * Return true si l'utilisateur courant qui est connecté est un administrateur sinon false
+     *
+     * @return bool
+     */
     public static function isAdministrator(): bool
     {
         $session = Session::getInstance();
@@ -62,6 +97,12 @@ class ConnexionUtilisateur
         else return false;
     }
 
+
+    /**
+     * Return true si l'utilisateur courant qui est connecté est un organisateur sinon false
+     *
+     * @return bool
+     */
     public static function isOrganisateur(): bool
     {
         $session = Session::getInstance();

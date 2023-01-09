@@ -9,6 +9,13 @@ use Themis\Model\Repository\UtilisateurRepository;
 
 class VerificationEmail
 {
+
+    /**
+     * Permet de envoyer un mail à l’adresse renseignée avec un lien qui envoi le nonce au site à l'utilisateur plcé en paramètre
+     *
+     * @param Utilisateur $utilisateur L'utilisateur qui reçoi le mail de validation
+     * @return void
+     */
     public static function sendEmailValidation(Utilisateur $utilisateur): void
     {
         $loginURL = rawurlencode($utilisateur->getLogin());
@@ -21,6 +28,17 @@ class VerificationEmail
         (new FlashMessage())->flash("success", $corpsEmail, FlashMessage::FLASH_SUCCESS);
     }
 
+    /**
+     * Permet de faire les modifications dans la base de donnée pour valider l'émail
+     *
+     * Si le login correspond à un utilisateur présent dans la base et que le nonce passé en GET correspond au nonce
+     * de la BDD, alors le champ email contient l'email de l'utilisateur concerné et le champ nonce email à valider
+     * deviennent vide de la BDD.
+     *
+     * @param $login Le login de l'utilisateur
+     * @param $nonce Le nonce de l'utilisateur
+     * @return bool
+     */
     public static function handleEmailValidation($login, $nonce): bool
     {
         $utilisateur = (new UtilisateurRepository())->select($login);
@@ -34,6 +52,13 @@ class VerificationEmail
         return false;
     }
 
+
+    /**
+     * Return true si l'email de l'utilisateur placée en paramètre est validée sinon false
+     *
+     * @param Utilisateur $utilisateur Un utilisateur
+     * @return bool
+     */
     public static function hasValidatedEmail(Utilisateur $utilisateur) : bool
     {
         return $utilisateur->getAdresseMail() != "";
