@@ -117,4 +117,16 @@ class JugementMajoritaireRepository extends VoteRepository
         }
         return $frequenceForEachProposition;
     }
+
+    public function getNbVote(int $idProposition): int
+    {
+        $sqlQuery = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+        $values = ["idProposition" => $idProposition];
+        $pdoStatement->execute($values);
+        return (int) $pdoStatement->fetch();
+    }
+
+
+
 }
