@@ -10,6 +10,8 @@ class SectionProposition extends AbstractDataObject
     private int $idProposition;
 
     /**
+     * permet de construire une SectionProposition à partir d'un idSectionProposition, d'un texteProposition, d'un idSection et d'un idProposition
+     *
      * @param int|null $idSectionProposition
      * @param string $texteProposition
      * @param int $idSection
@@ -23,6 +25,11 @@ class SectionProposition extends AbstractDataObject
         $this->idProposition = $idProposition;
     }
 
+    /**
+     * permet de retourner toutes les colonnes de la table SectionProposition
+     *
+     * @return array
+     */
     public function tableFormat(): array
     {
         if ($this->idSectionProposition == 0) {
@@ -42,6 +49,8 @@ class SectionProposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'Id d'une SectionProposition
+     *
      * @return int
      */
     public function getIdSectionProposition(): int
@@ -50,6 +59,8 @@ class SectionProposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer le TexteProposition d'une SectionProposition
+     *
      * @return string
      */
     public function getTexteProposition(): string
@@ -58,6 +69,8 @@ class SectionProposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'IdSection d'une SectionProposition
+     *
      * @return int
      */
     public function getIdSection(): int
@@ -66,6 +79,8 @@ class SectionProposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'IdProposition d'une SectionProposition
+     *
      * @return int
      */
     public function getIdProposition(): int
@@ -73,6 +88,12 @@ class SectionProposition extends AbstractDataObject
         return $this->idProposition;
     }
 
+    /**
+     * permet de construire une SectionProposition à partir d'une array
+     *
+     * @param array $formArray
+     * @return AbstractDataObject
+     */
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
         if ($formArray['idSectionProposition']) {

@@ -4,9 +4,6 @@ namespace Themis\Model\DataObject;
 
 class JugementMajoritaire extends Vote
 {
-
-    private string $loginVotant;
-    private int $idProposition;
     private int $valeur;
 
     /**
@@ -83,9 +80,4 @@ class JugementMajoritaire extends Vote
     {
         $this->valeur = $valeur;
     }
-
-
-
-
-
 }

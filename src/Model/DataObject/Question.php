@@ -15,6 +15,9 @@ class Question extends AbstractDataObject
     private string $systemeVote;
 
     /**
+     * Permet de construire une Question à partir d'un idQuestion, d'un titreQuestion, d'une descriptionQuestion,
+     * d'une dateDebutProposition, d'une dateFinProposition, d'une dateDebutVote et d'une dateFinVote
+     *
      * @param int $idQuestion
      * @param string $titreQuestion
      * @param string $descriptionQuestion
@@ -44,6 +47,11 @@ class Question extends AbstractDataObject
         $this->systemeVote = $systemeVote;
     }
 
+    /**
+     * permet de retourner toutes les colonnes de la table Question
+     *
+     * @return array
+     */
     public function tableFormat(): array
     {
         if ($this->idQuestion == 0) {
@@ -73,6 +81,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'id d'une Question
+     *
      * @return int
      */
     public function getIdQuestion(): int
@@ -81,6 +91,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer le titre d'une Question
+     *
      * @return string
      */
     public function getTitreQuestion(): string
@@ -89,6 +101,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer la DateDebutProposition d'une Question
+     *
      * @return string
      */
     public function getDateDebutProposition(): string
@@ -97,6 +111,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer la DateFinProposition d'une Question
+     *
      * @return string
      */
     public function getDateFinProposition(): string
@@ -105,6 +121,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer la DateDebutVote d'une Question
+     *
      * @return string
      */
     public function getDateDebutVote(): string
@@ -113,6 +131,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer la DateFinVote d'une Question
+     *
      * @return string
      */
     public function getDateFinVote(): string
@@ -121,6 +141,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer la Description d'une Question
+     *
      * @return string
      */
     public function getDescriptionQuestion(): string
@@ -129,6 +151,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer le LoginOrganisateur d'une Question
+     *
      * @return string
      */
     public function getLoginOrganisateur(): string
@@ -136,6 +160,11 @@ class Question extends AbstractDataObject
         return $this->loginOrganisateur;
     }
 
+    /**
+     * permet de récupérer la description d'une Question avec une taille de maximun 120
+     *
+     * @return string
+     */
     public function getShortDescriptionQuestion(): string
     {
         $tmp = substr($this->descriptionQuestion, 0, 120);
@@ -145,6 +174,8 @@ class Question extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer la SystemeVote d'une Question
+     *
      * @return string
      */
     public function getSystemeVote(): string
@@ -152,6 +183,12 @@ class Question extends AbstractDataObject
         return $this->systemeVote;
     }
 
+    /**
+     * permet de construire une Question à partir d'une array
+     *
+     * @param array $formArray
+     * @return Question
+     */
     public static function buildFromForm(array $formArray): Question
     {
         if (isset($formArray["idQuestion"])) {

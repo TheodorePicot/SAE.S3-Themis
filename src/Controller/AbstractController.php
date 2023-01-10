@@ -46,7 +46,8 @@ abstract class AbstractController
      *
      * @return void
      */
-    protected function connectionCheck() {
+    protected function connectionCheck(): void
+    {
         if (!ConnexionUtilisateur::isConnected()) {
             (new FlashMessage())->flash("notConnected", "Vous n'êtes pas connecté", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=readAll");
@@ -60,7 +61,8 @@ abstract class AbstractController
      *
      * @return bool
      */
-    protected function isAdmin() {
+    protected function isAdmin(): bool
+    {
         return ConnexionUtilisateur::isAdministrator();
     }
 
@@ -70,7 +72,8 @@ abstract class AbstractController
      * Fait appel à la méthode statique {@link ConnexionUtilisateur::$isOrganisateur()}
      * @return bool
      */
-    protected function isOrganisateur() {
+    protected function isOrganisateur(): bool
+    {
         return ConnexionUtilisateur::isOrganisateur();
     }
 
