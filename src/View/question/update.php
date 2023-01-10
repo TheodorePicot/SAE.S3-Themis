@@ -79,7 +79,6 @@ use Themis\Lib\ConnexionUtilisateur;
                            name="dateFinVote"
                            id="dateFinVote" required/>
                 </div>
-                <h3><label for="systemeVote" class="form-label">Choix du système de vote</label></h3>
             </div>
         </div>
 

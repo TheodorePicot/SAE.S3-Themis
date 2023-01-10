@@ -15,6 +15,8 @@ class ConnexionUtilisateur
     /**
      * Permet à un utilisateur de se connecter
      *
+     *
+     *
      * @param string $loginUtilisateur Le login de l'utilisateur voulant se connecter
      * @return void
      */
@@ -69,10 +71,10 @@ class ConnexionUtilisateur
     /**
      * Return true si l'utilisateur courant qui est connecté a pour login la variable placé en paramètre sinon false
      *
-     * @param $login Le login de l'utilisateur
+     * @param $login string Le login de l'utilisateur
      * @return bool
      */
-    public static function isUser($login): bool
+    public static function isUser(string $login): bool
     {
         return (self::isConnected() && self::getConnectedUserLogin() == $login);
     }

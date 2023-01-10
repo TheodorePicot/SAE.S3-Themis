@@ -9,9 +9,10 @@ class Proposition extends AbstractDataObject
     private string $titreProposition;
     private string $loginAuteur;
     private int $valeurResultat;
+    private array $listeValeur;
 
     /**
-     * permet de construire une Proposition à partir d'un idProposition,d'un idQuestion, d'un titreProposition et d'un loginAuteur
+     * Permet de construire une Proposition
      *
      * @param int $idProposition
      * @param int $idQuestion
@@ -109,6 +110,21 @@ class Proposition extends AbstractDataObject
         $this->valeurResultat = $valeurResultat;
     }
 
+    /**
+     * @return array
+     */
+    public function getListeValeur(): array
+    {
+        return $this->listeValeur;
+    }
+
+    /**
+     * @param array $listeValeur
+     */
+    public function setListeValeur(array $listeValeur): void
+    {
+        $this->listeValeur = $listeValeur;
+    }
 
     /**
      * permet de construire une Proposition à partir d'une array

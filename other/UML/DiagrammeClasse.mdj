@@ -17766,7 +17766,8 @@
 													"_parent": {
 														"$ref": "AAAAAAGFm5cnLNNt9Ys="
 													},
-													"name": "int $idProposition"
+													"name": "int $idProposition",
+													"type": ""
 												},
 												{
 													"_type": "UMLParameter",
@@ -20425,7 +20426,8 @@
 											},
 											"name": "$connectionKey",
 											"visibility": "private",
-											"isStatic": true
+											"isStatic": true,
+											"type": ""
 										},
 										{
 											"_type": "UMLAttribute",
@@ -20435,7 +20437,8 @@
 											},
 											"name": "$isOrganisateur",
 											"visibility": "private",
-											"isStatic": true
+											"isStatic": true,
+											"type": ""
 										},
 										{
 											"_type": "UMLAttribute",
@@ -20445,7 +20448,8 @@
 											},
 											"name": "$idAdministrator",
 											"visibility": "private",
-											"isStatic": true
+											"isStatic": true,
+											"type": ""
 										}
 									],
 									"operations": [
@@ -21584,6 +21588,14 @@
 							]
 						}
 					]
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAGFnRPmT9trWVc=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Class1"
 				}
 			]
 		}

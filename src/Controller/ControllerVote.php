@@ -6,13 +6,11 @@ use Themis\Lib\ConnexionUtilisateur;
 use Themis\Lib\FlashMessage;
 use Themis\Model\DataObject\JugementMajoritaire;
 use Themis\Model\DataObject\ScrutinUninominal;
-use Themis\Model\DataObject\Vote;
 use Themis\Model\Repository\JugementMajoritaireRepository;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\ScrutinUninominalRepository;
 use Themis\Model\Repository\VotantRepository;
-use Themis\Model\Repository\VoteRepository;
 
 class ControllerVote extends AbstractController
 {
@@ -60,7 +58,6 @@ class ControllerVote extends AbstractController
                     if ((new JugementMajoritaireRepository())->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) { // Faire méthode pour JugementMajoritaire
                         (new JugementMajoritaireRepository)->update($vote);
                     } else {
-
                         (new JugementMajoritaireRepository)->create($vote);
                     }
                 }
@@ -79,15 +76,16 @@ class ControllerVote extends AbstractController
                 date_create()->format("Y-m-d H:i:s") < $question->getDateFinVote() && date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutVote());
     }
 
-    public function scoreMedianeProposition($idQuestion){
+    public function scoreMedianeProposition(int $idQuestion)
+    {
         $tab = (new JugementMajoritaireRepository())->getValeurFrequencePropositionsByQuestion($idQuestion);
         $somme = 0;
         $res = [];
-        foreach ($tab as $key => $proposition){
+        foreach ($tab as $key => $proposition) {
             $nbVoteByProposition = (new JugementMajoritaireRepository())->getNbVote($proposition);
-            foreach ($proposition as $i => $value){
+            foreach ($proposition as $i => $value) {
                 $somme += $value;
-                if ($somme >= $nbVoteByProposition/2){
+                if ($somme >= (($nbVoteByProposition % 2 == 0) ? $nbVoteByProposition : ($nbVoteByProposition + 1)) / 2) {
                     $res[$key] = $i;
                     $somme = 0;
                     break;
@@ -96,6 +94,7 @@ class ControllerVote extends AbstractController
         }
         return $res;
     }
+
 
 
 
