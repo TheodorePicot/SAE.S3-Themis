@@ -25,6 +25,9 @@ class VotantRepository extends AbstractParticipantRepository
         else return false;
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function getTableName(): string
     {
         return 'themis."estVotant"';

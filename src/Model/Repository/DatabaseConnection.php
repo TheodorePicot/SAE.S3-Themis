@@ -5,6 +5,9 @@ namespace Themis\Model\Repository;
 use PDO;
 use Themis\Config\Conf;
 
+/**
+ *
+ */
 class DatabaseConnection
 {
     private static ?DatabaseConnection $instance = null;
@@ -20,11 +23,19 @@ class DatabaseConnection
         $this->pdo->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
     }
 
+    /**
+     * @return PDO
+     */
     static function getPdo(): PDO
     {
         return static::getInstance()->pdo;
     }
 
+    /**
+     * Permet de créer une DatabaseConnection si l'attribut $instance est null et return $instance
+     *
+     * @return DatabaseConnection
+     */
     private static function getInstance(): DatabaseConnection
     {
         if (is_null(static::$instance))
