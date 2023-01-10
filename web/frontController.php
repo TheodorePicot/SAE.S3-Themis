@@ -25,7 +25,7 @@ if (class_exists($controllerClassName)) {
 
     $classMethods = get_class_methods($controllerClassName);
 
-    if (!isset($_REQUEST['action'])) $controllerClassObject->readAllByIdQuestion();
+    if (!isset($_REQUEST['action'])) $controllerClassObject->readAll();
 
     elseif (in_array($_REQUEST['action'], $classMethods)) {
         $action = $_REQUEST['action'];
