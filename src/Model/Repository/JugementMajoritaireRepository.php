@@ -80,9 +80,7 @@ class JugementMajoritaireRepository extends VoteRepository
         $pdoStatement->execute($values);
         $valeurFrequence = [0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0];
         foreach ($pdoStatement as $jugementMajoritaire) {
-            var_dump($jugementMajoritaire);
             $object = $this->build($jugementMajoritaire);
-            echo $object->getIdProposition() . "HELLo";
             switch ($object->getValeur()) {
                 case 0:
                     $valeurFrequence[0]++;
@@ -144,7 +142,6 @@ class JugementMajoritaireRepository extends VoteRepository
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = ["idProposition" => $idProposition];
         $pdoStatement->execute($values);
-        var_dump($pdoStatement->fetch());
         return (int)$pdoStatement->fetch()[0];
     }
 
@@ -155,7 +152,7 @@ class JugementMajoritaireRepository extends VoteRepository
         foreach ($propositionTemp as $proposition) {
             $proposition->setValeurResultat($values[$proposition->getIdProposition()]);
             $proposition->setListeValeur($this->getValeurFrequenceProposition($proposition->getIdProposition()));
-            $propositionOrdered = $proposition;
+            $propositionOrdered[] = $proposition;
         }
         usort($propositionOrdered, fn($a, $b) => -1 * strcmp($a->getValeurResultat(), $b->getValeurResultat()));
         return $propositionOrdered;
