@@ -88,13 +88,13 @@
                             <div class="mx-3 ">
                                 <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
 
-                                <input class="InputAddOn-field" type="checkbox" placeholder="" name="estAdmin"
+                                <input class="InputAddOn-field" type="checkbox" name="estAdmin"
                                        id="estAdmin_id">
 
                             </div>
                             <div class="mx-3 my-2">
                                 <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
-                                <input class="InputAddOn-field" type="checkbox" placeholder=""
+                                <input class="InputAddOn-field" type="checkbox"
                                        name="estOrganisateur" id="estOrganisateur">
 
                             </div>

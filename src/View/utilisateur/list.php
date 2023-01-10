@@ -7,7 +7,7 @@
 
     <!--    LISTE DES ADMINISTRATEURS-->
 
-    <div class="row offset-md-0 offset-lg-1 my-5">
+    <div class="row offset-md-0 offset-lg-2 my-5">
 
         <div class="col-md-12 col-md-4 col-lg-3 shadowBox my-4 mx-md-0 mx-lg-3 overflow-hidden">
             <h3> Administrateurs </h3>
