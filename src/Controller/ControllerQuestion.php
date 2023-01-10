@@ -47,7 +47,7 @@ class ControllerQuestion extends AbstractController
             }
             if (!($_REQUEST['dateDebutProposition'] < $_REQUEST['dateFinProposition'] && $_REQUEST['dateFinProposition'] <= $_REQUEST['dateDebutVote'] && $_REQUEST['dateDebutVote'] < $_REQUEST['dateFinVote'])) {
                 FormData::saveFormData("createQuestion");
-                (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérente", FlashMessage::FLASH_WARNING);
+                (new FlashMessage())->flash("createdProblem", "Les dates ne sont pas cohérentes", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=create");
             }
             (new QuestionRepository())->create(Question::buildFromForm($_REQUEST));

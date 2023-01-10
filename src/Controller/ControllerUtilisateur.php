@@ -156,14 +156,14 @@ class ControllerUtilisateur extends AbstractController
     {
         FormData::saveFormData("connection");
         if ((new UtilisateurRepository())->select($_REQUEST["login"]) == null) {
-            (new FlashMessage)->flash("badLogin", "Ce login n'existe pas", FlashMessage::FLASH_WARNING);
+            (new FlashMessage)->flash("badLogin", "Ce login n'existe pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=login&controller=utilisateur&invalidLogin=1");
         }
         if (!isset($_REQUEST["login"]) || !isset($_REQUEST["mdp"])) {
-            (new FlashMessage)->flash("notAllInfo", "Vous n'avez pas renseigné les informations nécessaires", FlashMessage::FLASH_WARNING);
+            (new FlashMessage)->flash("notAllInfo", "Vous n'avez pas rempli toutes les informations nécessaires", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=login&controller=utilisateur");
         } else if (!PassWord::check($_REQUEST["mdp"], (new UtilisateurRepository())->select($_REQUEST["login"])->getMdp())) {
-            (new FlashMessage)->flash("badPassword", "Mot de passe incorrect", FlashMessage::FLASH_DANGER);
+            (new FlashMessage)->flash("badPassword", "Mot de passe incorrect", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=login&controller=utilisateur&invalidPswd=1");
         } else {
             ConnexionUtilisateur::connect(($_REQUEST["login"]));

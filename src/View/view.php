@@ -129,7 +129,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
                         <a class="nav-link"
                            href="frontController.php?action=read&controller=utilisateur&login=<?= rawurlencode(ConnexionUtilisateur::getConnectedUserLogin()) ?>">
                             <?= htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin()) ?>
-                            <img id="accountImg" alt="compte" src="assets/img/account.png">
+                            <img class="accountImg" alt="compte" src="assets/img/account.png">
                         </a>
                     </li>
 
@@ -138,7 +138,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
                     <li class="nav-item active text-center">
                         <a class="nav-link"
                            href="frontController.php?action=readAll&controller=utilisateur">
-                            <img id="accountImg" alt="compte" src="assets/img/panel.png">
+                            <img class="accountImg" alt="compte" src="assets/img/panel.png">
                         </a>
                     </li>
 
