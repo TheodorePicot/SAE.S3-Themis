@@ -8,6 +8,8 @@ abstract class Vote extends AbstractDataObject
     private int $idProposition;
 
     /**
+     * permet de construire un Vote à partir d'un loginVotant et d'un idProposition
+     *
      * @param string $loginVotant
      * @param int $idProposition
      */
@@ -17,7 +19,11 @@ abstract class Vote extends AbstractDataObject
         $this->idProposition = $idProposition;
     }
 
-
+    /**
+     * permet de retourner toutes les colonnes de la table Vote
+     *
+     * @return array
+     */
     public function tableFormat(): array
     {
         return [
@@ -27,6 +33,8 @@ abstract class Vote extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer le LoginVotant d'un Vote
+     *
      * @return string
      */
     public function getLoginVotant(): string
@@ -35,6 +43,8 @@ abstract class Vote extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'IdProposition d'un Vote
+     *
      * @return int
      */
     public function getIdProposition(): int
@@ -42,5 +52,10 @@ abstract class Vote extends AbstractDataObject
         return $this->idProposition;
     }
 
+    /**
+     * permet de construire un Vote à partir d'une array
+     *
+     * @return Vote
+     */
     public abstract static function buildFromForm(array $formArray): Vote;
 }

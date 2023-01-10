@@ -11,6 +11,8 @@ class Proposition extends AbstractDataObject
     private int $valeurResultat;
 
     /**
+     * permet de construire une Proposition à partir d'un idProposition,d'un idQuestion, d'un titreProposition et d'un loginAuteur
+     *
      * @param int $idProposition
      * @param int $idQuestion
      * @param string $titreProposition
@@ -24,6 +26,11 @@ class Proposition extends AbstractDataObject
         $this->loginAuteur = $loginAuteur;
     }
 
+    /**
+     * permet de retourner toutes les colonnes de la table Proposition
+     *
+     * @return array
+     */
     public function tableFormat(): array
     {
         if ($this->idProposition == 0) {
@@ -43,6 +50,8 @@ class Proposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'idProposition d'une Proposition
+     *
      * @return int
      */
     public function getIdProposition(): int
@@ -51,6 +60,8 @@ class Proposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'idQuestion d'une Proposition
+     *
      * @return int
      */
     public function getIdQuestion(): int
@@ -59,6 +70,8 @@ class Proposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer le titreProposition d'une Proposition
+     *
      * @return string
      */
     public function getTitreProposition(): string
@@ -67,6 +80,8 @@ class Proposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer le loginAuteur d'une Proposition
+     *
      * @return string
      */
     public function getLoginAuteur(): string
@@ -75,6 +90,8 @@ class Proposition extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer la ValeurResultat d'une Proposition
+     *
      * @return int
      */
     public function getValeurResultat(): int
@@ -83,6 +100,8 @@ class Proposition extends AbstractDataObject
     }
 
     /**
+     * permet de mettre à jour la ValeurResultat d'une Proposition
+     *
      * @param int $valeurResultat
      */
     public function setValeurResultat(int $valeurResultat): void
@@ -91,7 +110,12 @@ class Proposition extends AbstractDataObject
     }
 
 
-
+    /**
+     * permet de construire une Proposition à partir d'une array
+     *
+     * @param array $formArray
+     * @return Proposition
+     */
     public static function buildFromForm(array $formArray): Proposition
     {
         if (isset($formArray["idProposition"])) {

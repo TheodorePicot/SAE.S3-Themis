@@ -10,10 +10,12 @@ class Section extends AbstractDataObject
     private ?string $descriptionSection;
 
     /**
-     * @param int $idSection
+     * permet de construire une Section à partir d'un idSection, d'un idQuestion, d'un titreSection et d'une descriptionSection
+     *
+     * @param int|null $idSection
      * @param int $idQuestion
-     * @param string $titreSection
-     * @param string $descriptionSection
+     * @param string|null $titreSection
+     * @param string|null $descriptionSection
      */
     public function __construct(?int $idSection, int $idQuestion, ?string $titreSection, ?string $descriptionSection)
     {
@@ -23,6 +25,11 @@ class Section extends AbstractDataObject
         $this->descriptionSection = $descriptionSection;
     }
 
+    /**
+     * permet de retourner toutes les colonnes de la table Section
+     *
+     * @return array
+     */
     public function tableFormat(): array
     {
 
@@ -43,6 +50,8 @@ class Section extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'IdSection d'une Section
+     *
      * @return int
      */
     public function getIdSection(): int
@@ -51,6 +60,8 @@ class Section extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'IdQuestion d'une Section
+     *
      * @return int
      */
     public function getIdQuestion(): int
@@ -59,6 +70,8 @@ class Section extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer le Titre d'une Section
+     *
      * @return string
      */
     public function getTitreSection(): string
@@ -67,6 +80,8 @@ class Section extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer la Description d'une Section
+     *
      * @return string
      */
     public function getDescriptionSection(): string
@@ -74,6 +89,12 @@ class Section extends AbstractDataObject
         return $this->descriptionSection;
     }
 
+    /**
+     * permet de construire une Section à partir d'une array
+     *
+     * @param array $formArray
+     * @return AbstractDataObject
+     */
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
         if (isset($formArray["idSection"])) {

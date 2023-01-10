@@ -42,7 +42,7 @@ class ConnexionUtilisateur
     /**
      * Permet d'obtenir le login de l'utilisateur actuellement connecté
      *
-     * @return string
+     * @return string|null
      */
     public static function getConnectedUserLogin(): ?string
     {

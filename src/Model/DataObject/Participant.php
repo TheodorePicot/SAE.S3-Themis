@@ -8,6 +8,8 @@ class Participant extends AbstractDataObject
     private int $idQuestion;
 
     /**
+     * permet de construire un Partcipant à partir d'un login et d'un idQuestion
+     *
      * @param string $login
      * @param int $idQuestion
      */
@@ -17,6 +19,11 @@ class Participant extends AbstractDataObject
         $this->idQuestion = $idQuestion;
     }
 
+    /**
+     * permet de retourner toutes les colonnes de la table Participant
+     *
+     * @return array
+     */
     public function tableFormat(): array
     {
         return [
@@ -26,6 +33,8 @@ class Participant extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer le login d'un participant
+     *
      * @return string
      */
     public function getLogin(): string
@@ -34,6 +43,8 @@ class Participant extends AbstractDataObject
     }
 
     /**
+     * permet de récupérer l'idQuestion d'un participant
+     *
      * @return int
      */
     public function getIdQuestion(): int
@@ -41,6 +52,12 @@ class Participant extends AbstractDataObject
         return $this->idQuestion;
     }
 
+    /**
+     * permet de construire un Participant à partir d'une array
+     *
+     * @param array $formArray
+     * @return AbstractDataObject
+     */
     public static function buildFromForm(array $formArray): AbstractDataObject
     {
         return new Participant($formArray['login'], $formArray['idQuestion']);
