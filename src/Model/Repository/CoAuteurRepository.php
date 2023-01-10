@@ -44,12 +44,12 @@ class CoAuteurRepository extends AbstractRepository
         $sqlQuery = "SELECT isCoAuteurInProposition(:login, :idProposition)";
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-//        echo $sqlQuery;
+
         $values = array(
             'login' => $login,
             'idProposition' => $idProposition
         );
-//        var_dump($values);
+
         try {
             $pdoStatement->execute($values);
         }catch (PDOException $e) {
