@@ -52,22 +52,6 @@ class JugementMajoritaire extends Vote
     /**
      * @return int
      */
-    public function getIdProposition(): int
-    {
-        return $this->idProposition;
-    }
-
-    /**
-     * @param int $idProposition
-     */
-    public function setIdProposition(int $idProposition): void
-    {
-        $this->idProposition = $idProposition;
-    }
-
-    /**
-     * @return int
-     */
     public function getValeur(): int
     {
         return $this->valeur;

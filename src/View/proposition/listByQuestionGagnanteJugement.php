@@ -6,6 +6,14 @@ $count = 1;
 $valGagnante = 0;
 $hasPrintedAutrePropo = false;
 
+$tab = [
+    0 => "A Rejeter",
+    1 => "Insuffisant",
+    2 => "Passable",
+    3 => "Assez Bien",
+    4 => "Bien",
+    5 => "Très Bien"
+];
 foreach ($propositions as $proposition) :
 $titrePropositionHTML = htmlspecialchars($proposition->getTitreProposition());
 $propositionInURL = rawurlencode($proposition->getIdProposition());
@@ -28,7 +36,7 @@ $hrefRead = "frontController.php?controller=proposition&action=read&idQuestion=$
     <div class="boxProposition overflow-hidden rounded-5 my-3 d-flex align-items-center">
         <a id="containerQuestion" href="<?= $hrefRead ?>">
             <div class="mx-3">
-                <h5><?= $titrePropositionHTML ?> - Mention : <?= $proposition->getValeurResultat() ?></h5>
+                <h5><?= $titrePropositionHTML ?> - Mention : <?= $tab[$proposition->getValeurResultat()] ?></h5>
             </div>
         </a>
     </div>

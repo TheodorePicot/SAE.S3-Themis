@@ -12,7 +12,8 @@ class JugementMajoritaireRepository extends VoteRepository
 
     public function build(array $objectArrayFormat): JugementMajoritaire
     {
-        return new JugementMajoritaire($objectArrayFormat["loginVotant"], $objectArrayFormat["idProposition"], $objectArrayFormat["valeur"]);    }
+        return new JugementMajoritaire($objectArrayFormat["loginVotant"], $objectArrayFormat["idProposition"], $objectArrayFormat["valeur"]);
+    }
 
     public function selectVote($loginVotant, $idProposition): ?Vote
     {
@@ -73,11 +74,11 @@ class JugementMajoritaireRepository extends VoteRepository
 
     public function getValeurFrequenceProposition(int $idProposition): array
     {
-        $sqlQuery = "SELECT valeur FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = ["idProposition" => $idProposition];
         $pdoStatement->execute($values);
-        $valeurFrequence = array();
+        $valeurFrequence = [0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0];
         foreach ($pdoStatement as $jugementMajoritaire) {
             $object = $this->build($jugementMajoritaire);
             switch ($object->getValeur()) {
@@ -129,7 +130,7 @@ class JugementMajoritaireRepository extends VoteRepository
         $pdoStatement->execute($values);
         $frequenceForEachProposition = array();
         foreach ($pdoStatement as $jugementMajoritaire) {
-            $object = $this->build($jugementMajoritaire);
+            $object = (new PropositionRepository())->build($jugementMajoritaire);
             $frequenceForEachProposition[$object->getIdProposition()] = $this->getValeurFrequenceProposition($object->getIdProposition());
         }
         return $frequenceForEachProposition;
@@ -141,17 +142,17 @@ class JugementMajoritaireRepository extends VoteRepository
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = ["idProposition" => $idProposition];
         $pdoStatement->execute($values);
-        return (int) $pdoStatement->fetch();
+        return (int)$pdoStatement->fetch()[0];
     }
 
     public function selectPropositionForVoteResult(array $values, int $idQuestion): array
     {
         $propositionTemp = (new PropositionRepository())->selectByQuestion($idQuestion);
         $propositionOrdered = array();
-        foreach ($propositionTemp as $proposition){
+        foreach ($propositionTemp as $proposition) {
             $proposition->setValeurResultat($values[$proposition->getIdProposition()]);
             $proposition->setListeValeur($this->getValeurFrequenceProposition($proposition->getIdProposition()));
-            $propositionOrdered = $proposition;
+            $propositionOrdered[] = $proposition;
         }
         usort($propositionOrdered, fn($a, $b) => -1 * strcmp($a->getValeurResultat(), $b->getValeurResultat()));
         return $propositionOrdered;
