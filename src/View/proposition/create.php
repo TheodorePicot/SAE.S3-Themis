@@ -33,7 +33,7 @@ use Themis\Lib\ConnexionUtilisateur;
                         <h3>Titre de votre proposition</h3>
                         <input type="text" class="form-control" placeholder="?" name="titreProposition"
                                id="titreProposition"
-                               max="99" maxlength="99"
+                               maxlength="99"
                                required/>
                     </div>
 
@@ -51,7 +51,7 @@ use Themis\Lib\ConnexionUtilisateur;
 
                                     <h4> Propostion Section <?= $count ?> </h4>
 
-                                <textarea class="form-control" placeholder=""
+                                <textarea class="form-control"
                                           name="descriptionSectionProposition<?= $section->getIdSection() ?>"
                                           id="descriptionSectionProposition<?= $section->getIdSection() ?>" required
                                           rows="5"
