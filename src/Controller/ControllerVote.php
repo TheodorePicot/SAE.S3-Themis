@@ -82,7 +82,7 @@ class ControllerVote extends AbstractController
         $somme = 0;
         $res = [];
         foreach ($tab as $key => $proposition) {
-            $nbVoteByProposition = (new JugementMajoritaireRepository())->getNbVote($proposition);
+            $nbVoteByProposition = (new JugementMajoritaireRepository())->getNbVote($key);
             foreach ($proposition as $i => $value) {
                 $somme += $value;
                 if ($somme >= (($nbVoteByProposition % 2 == 0) ? $nbVoteByProposition : ($nbVoteByProposition + 1)) / 2) {
