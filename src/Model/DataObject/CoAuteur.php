@@ -8,6 +8,8 @@ class CoAuteur extends AbstractDataObject
     private string $login;
 
     /**
+     * Permet de construire un CoAuteur avec un idProposition et un login
+     *
      * @param int $idProposition
      * @param string $login
      */
@@ -17,6 +19,11 @@ class CoAuteur extends AbstractDataObject
         $this->login = $login;
     }
 
+    /**
+     * Permet de retourner toutes les colonnes de la table CoAuteur
+     *
+     * @return array
+     */
     public function tableFormat(): array
     {
         return [
@@ -26,6 +33,8 @@ class CoAuteur extends AbstractDataObject
     }
 
     /**
+     * Permet de récupérer l'IdProposition d'un CoAuteur
+     *
      * @return int
      */
     public function getIdProposition(): int
@@ -34,6 +43,8 @@ class CoAuteur extends AbstractDataObject
     }
 
     /**
+     * Permet de récupérer le Login d'un CoAuteur
+     *
      * @return string
      */
     public function getLogin(): string
@@ -41,6 +52,12 @@ class CoAuteur extends AbstractDataObject
         return $this->login;
     }
 
+    /**
+     * Permet de construire un coAuteur à partir d'une array
+     *
+     * @param array $formArray
+     * @return CoAuteur
+     */
     public static function buildFromForm($formArray): CoAuteur
     {
         return new CoAuteur($formArray["idProposition"], $formArray["login"]);
