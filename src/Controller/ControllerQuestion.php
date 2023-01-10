@@ -222,9 +222,10 @@ class ControllerQuestion extends AbstractController
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
+        $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
             $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
-        else // TODO faire le if de jugement majoritaire
+        elseif (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "JugementMajoritaire")
             $propositions = (new JugementMajoritaireRepository)->selectPropositionForVoteResult((new ControllerVote())->scoreMedianeProposition($_REQUEST["idQuestion"]), $_REQUEST["idQuestion"]);
 
 
