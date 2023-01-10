@@ -25,7 +25,6 @@
         <div class="form-check">
         </div>
     <?php endforeach; ?>
-    <p>
         <input type="hidden" name="controller" value="vote">
         <input type="hidden" name="action" value="submitVote">
         <?php if (ConnexionUtilisateur::isConnected()) : ?>
@@ -33,5 +32,5 @@
         <?php endif ?>
         <input type="hidden" name="idQuestion" value="<?= $questionInURL ?>">
         <input type="submit" value="Voter"/>
-    </p>
+
 </form>

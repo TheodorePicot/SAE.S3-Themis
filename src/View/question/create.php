@@ -4,7 +4,7 @@ use Themis\Lib\ConnexionUtilisateur;
 
 ?>
 
-<form method="post" action="frontController.php?action=created" xmlns="http://www.w3.org/1999/html">
+<form method="post" action="frontController.php?action=created">
     <fieldset>
         <div class="d-flex align-content-center justify-content-center">
             <h1>Créer une Question</h1>
@@ -14,7 +14,7 @@ use Themis\Lib\ConnexionUtilisateur;
                 <div class="container col-12 my-3">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input type="text" class="form-control" placeholder="?" name="titreQuestion" id="titreQuestion"
-                           max="99" maxlength="99"
+                           maxlength="99"
                            value="<?php if (isset($_SESSION["formData"]["createQuestion"]["titreQuestion"])) echo $_SESSION["formData"]["createQuestion"]["titreQuestion"] ?>"
                            required/>
                 </div>
@@ -34,15 +34,26 @@ use Themis\Lib\ConnexionUtilisateur;
                 <div class="container col-md-6 col-lg-6 my-3">
                     <h3>Votants</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listVotantsForCreate.php" ?>
-                </div class="container col-md-6 col-lg-6 my-3">
+                </div>
 
-                <h3><label for="systemeVote" class="form-label">Choix du système de vote</label></h3>
 
                 <div class="col-auto">
-                    <select class="form-select h-100" name="systemeVote" id="autoSizingSelect" required>
-                        <option value="JugementMajoritaire" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "JugementMajoritaire") echo "selected" ?>>Jugement Majoritaire</option>
-                        <option value="ScrutinUninominal" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) &&  $_SESSION["formData"]["createQuestion"]["systemeVote"] == "ScrutinUninominal") echo "selected" ?>>Scrutin Uninominal</option>
+                    <h3><label for="systemeVote">Choix du système de vote</label></h3>
+                    <select class="form-select"
+                            name="systemeVote"
+                            id="systemeVote"
+                            required>
+                        <optgroup label="">
+                            <option value="">Système de vote</option>
+                            <option value="JugementMajoritaire" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) && $_SESSION["formData"]["createQuestion"]["systemeVote"] == "JugementMajoritaire") echo "selected" ?>>
+                                Jugement Majoritaire
+                            </option>
+                            <option value="ScrutinUninominal" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) && $_SESSION["formData"]["createQuestion"]["systemeVote"] == "ScrutinUninominal") echo "selected" ?>>
+                                Scrutin Uninominal
+                            </option>
+                        </optgroup>
                     </select>
+
                 </div>
             </div>
         </div>
@@ -56,26 +67,32 @@ use Themis\Lib\ConnexionUtilisateur;
 
                 <div class="container col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutProposition">Date de début des propositions</label></h5>
-                    <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateDebutProposition"
-                           id="dateDebutProposition" value="<?php if (isset($_SESSION["formData"]["createQuestion"]["dateDebutProposition"])) echo $_SESSION["formData"]["createQuestion"]["dateDebutProposition"] ?>" required/>
+                    <input class=form-control type="datetime-local" name="dateDebutProposition"
+                           id="dateDebutProposition"
+                           value="<?php if (isset($_SESSION["formData"]["createQuestion"]["dateDebutProposition"])) echo $_SESSION["formData"]["createQuestion"]["dateDebutProposition"] ?>"
+                           required/>
                 </div>
-                <div class="container-fluid col-md-6 col-lg-6 my-4">
 
+                <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateFinProposition">Date de fin des propositions</label></h5>
-                    <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateFinProposition"
-                           id="dateFinProposition" value="<?php if (isset($_SESSION["formData"]["createQuestion"]["dateFinProposition"])) echo $_SESSION["formData"]["createQuestion"]["dateFinProposition"] ?>" required/>
+                    <input class=form-control type="datetime-local" name="dateFinProposition"
+                           id="dateFinProposition"
+                           value="<?php if (isset($_SESSION["formData"]["createQuestion"]["dateFinProposition"])) echo $_SESSION["formData"]["createQuestion"]["dateFinProposition"] ?>"
+                           required/>
                 </div>
 
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateDebutVote">Date de début du vote</label></h5>
-                    <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateDebutVote"
-                           id="dateDebutVote" value="<?php if (isset($_SESSION["formData"]["createQuestion"]["dateDebutVote"])) echo $_SESSION["formData"]["createQuestion"]["dateDebutVote"] ?>"
+                    <input class=form-control type="datetime-local" name="dateDebutVote"
+                           id="dateDebutVote"
+                           value="<?php if (isset($_SESSION["formData"]["createQuestion"]["dateDebutVote"])) echo $_SESSION["formData"]["createQuestion"]["dateDebutVote"] ?>"
                            required/>
                 </div>
                 <div class="container-fluid col-md-6 col-lg-6 my-4">
                     <h5><label for="dateFinVote">Date de fin du vote</label></h5>
-                    <input class=form-control type="datetime-local" placeholder="JJ/MM/YYYY" name="dateFinVote"
-                           id="dateFinVote" value="<?php if (isset($_SESSION["formData"]["createQuestion"]["dateFinVote"])) echo $_SESSION["formData"]["createQuestion"]["dateFinVote"] ?>"
+                    <input class=form-control type="datetime-local" name="dateFinVote"
+                           id="dateFinVote"
+                           value="<?php if (isset($_SESSION["formData"]["createQuestion"]["dateFinVote"])) echo $_SESSION["formData"]["createQuestion"]["dateFinVote"] ?>"
                            required/>
                 </div>
 

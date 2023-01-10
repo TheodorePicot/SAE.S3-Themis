@@ -52,7 +52,7 @@
                 <div class="card-body ">
                     <h5 class="card-title"><?= $titreQuestionHTML ?></h5>
 
-                    <p class="card-text"><?= $descriptionQuestion?></p>
+                    <p class="card-text"><?= $descriptionQuestion?>
                 </div>
             </a>
         </div>

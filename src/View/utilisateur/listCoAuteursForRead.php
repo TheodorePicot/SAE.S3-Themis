@@ -1,4 +1,4 @@
 <h4>Co-Auteurs</h4>
 <?php foreach ($coAuteurs as $coAuteur): ?>
-    <p><?= htmlspecialchars($coAuteur->getLogin()) ?></p>
+    <?= htmlspecialchars($coAuteur->getLogin()) ?>
 <?php endforeach; ?>
