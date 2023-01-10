@@ -2,6 +2,9 @@
 
 namespace Themis\Lib;
 
+/**
+ *
+ */
 class FlashMessage
 {
     const FLASH = 'FLASH_MESSAGES';
@@ -10,6 +13,17 @@ class FlashMessage
     const FLASH_INFO = 'info';
     const FLASH_SUCCESS = 'success';
 
+    /**
+     * Cette méthode permet d'accéder aux méthodes internes de cette classe
+     *
+     * Par rapport aux attributs donnés cette méthode execute un code différent.
+     * Si l'utilisateur spécifie les 3 arguments
+     *
+     * @param string $name
+     * @param string $message
+     * @param string $type
+     * @return void
+     */
     function flash(string $name = '', string $message = '', string $type = ''): void
     {
         if ($name !== '' && $message !== '' && $type !== '') {
@@ -19,6 +33,12 @@ class FlashMessage
         }
     }
 
+    /**
+     * @param string $name
+     * @param string $message
+     * @param string $type
+     * @return void
+     */
     function createFlashMessage(string $name, string $message, string $type): void
     {
         if (isset($_SESSION[self::FLASH][$name])) {
@@ -27,6 +47,9 @@ class FlashMessage
         $_SESSION[self::FLASH][$name] = ['message' => $message, 'type' => $type];
     }
 
+    /**
+     * @return void
+     */
     function returnAllFlashMessages(): void
     {
         if (!isset($_SESSION[self::FLASH])) {
@@ -42,6 +65,10 @@ class FlashMessage
         }
     }
 
+    /**
+     * @param array $flashMessage
+     * @return string
+     */
     function formatFlashMessage(array $flashMessage): string
     {
         return sprintf('<div class="alert alert-%s">%s</div>',
