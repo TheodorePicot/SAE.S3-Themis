@@ -6,7 +6,7 @@ foreach ($utilisateurs
     if ($user->isAdmin()) {
         ?>
         <a href=<?=$hrefReadUser?>>
-            <p><?= htmlspecialchars($user->getLogin()) ?></p>
+        <?= htmlspecialchars($user->getLogin()) ?>
         </a>
         <?php
     }

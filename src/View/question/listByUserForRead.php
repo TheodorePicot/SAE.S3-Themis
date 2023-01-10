@@ -3,7 +3,7 @@
     $questionInURL = rawurlencode($question->getIdQuestion());
     $hrefRead = "frontController.php?action=read&idQuestion=" . $questionInURL;?>
     <a href="<?=$hrefRead?>">
-    <p><?= htmlspecialchars($question->getTitreQuestion()) ?></p>
+<?= htmlspecialchars($question->getTitreQuestion()) ?>
     </a>
 <?php endforeach; ?>
 

@@ -44,7 +44,7 @@ htmlspecialchars($question->getTitreQuestion())
                     <div class="my-4">
                         <h4 class="my-3">Proposition pour la section <?= $count ?> : </h4>
                         <div class="shadowBoxProposition card card-body border-0 ">
-                            <p><?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></p>
+                            <?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?>
                         </div>
                     </div>
 

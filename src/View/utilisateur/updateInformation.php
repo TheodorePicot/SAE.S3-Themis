@@ -74,27 +74,27 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
                 <div class="my-4">
                     <?php if (ConnexionUtilisateur::isAdministrator() && ConnexionUtilisateur::isUser($_REQUEST["login"])) : ?>
                         <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
-                        <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
+                        <input class="form-check" type="checkbox" name="estAdmin" id="estAdmin_id"
                             <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?> disabled>
-                        <input type="hidden" placeholder="" name="estAdmin" value="on">
+                        <input type="hidden" name="estAdmin" value="on">
 
                         <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
-                        <p>
-                            <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur"
+
+                            <input class="InputAddOn-field" type="checkbox" name="estOrganisateur"
                                    id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
-                            <input type="hidden" placeholder="" name="estAdmin" value="on">
-                        </p>
+                            <input type="hidden" name="estAdmin" value="on">
+
 
                     <?php elseif (ConnexionUtilisateur::isAdministrator()) : ?>
                         <h5><label class="InputAddOn-item" for="estAdmin_id">Administrateur</label></h5>
-                        <input class="form-check" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
+                        <input class="form-check" type="checkbox" name="estAdmin" id="estAdmin_id"
                             <?= ($utilisateur->isAdmin() == true) ? "checked" : "" ?>>
 
                         <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
-                        <p>
-                            <input class="InputAddOn-field" type="checkbox" placeholder="" name="estOrganisateur"
+
+                            <input class="InputAddOn-field" type="checkbox" name="estOrganisateur"
                                    id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
-                        </p>
+
                     <?php endif ?>
                 </div>
 

@@ -105,3 +105,4 @@
         <a class="btn btn-primary text-nowrap align-self-center"
            href="frontController.php?controller=utilisateur&action=create">Créer un utilisateur</a>
     </div>
+</div>

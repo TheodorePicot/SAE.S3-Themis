@@ -1,6 +1,6 @@
 <div class="col-auto" style="height: 250px">
 
-    <select class="form-select h-100" name="auteurs[]" id="autoSizingSelect" required multiple>
+    <select class="form-select h-100" name="auteurs[]" required multiple>
         <?php
         $count = 0;
         foreach ($utilisateurs

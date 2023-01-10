@@ -60,7 +60,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
                     $date = date_create($utilisateur->getDateNaissance());
                     echo htmlspecialchars($date->format("d-m-Y"));
                 } else
-                    echo "non renseignée"?><br>
+                    echo "non renseignée" ?><br>
             </div>
         </div>
     </div>
@@ -104,7 +104,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 
     </div>
 
-
+</div>
 
 
 

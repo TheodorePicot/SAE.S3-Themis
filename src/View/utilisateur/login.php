@@ -1,7 +1,7 @@
 <?php
 $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
 ?>
-<div class="container" xmlns="http://www.w3.org/1999/html">
+<div class="container">
     <div class="row my-5">
         <div class=" col-md-8 col-lg-4 container my-5">
             <form method="post" action="frontController.php">
@@ -14,15 +14,15 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
                     <div class="my-4">
                         <div class="mx-3">
 
-                            <p>
+
                                 <input class="form-control form-control-lg <?= isset($_REQUEST["invalidLogin"]) ? "is-invalid" : "" ?>" type="text" placeholder="pseudo"
                                        name="login"
                                        value="<?php if (isset($_SESSION["formData"]["connection"]["login"])) echo $_SESSION["formData"]["connection"]["login"] ?>"
                                        id="login"
                                        required/>
-                            </p>
+
                         </div>
-                        <div class="mx-3">
+                        <div class="mx-3 my-2">
                             <input class="form-control form-control-lg <?= isset($_REQUEST["invalidPswd"]) ? "is-invalid" : "" ?>" type="password" placeholder="mot de passe"
                                    name="mdp" id="mdp" minlength="8"
                                    required/>
@@ -38,7 +38,7 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
                         <p class="d-flex align-content-center justify-content-center">
                             Vous n'avez pas de compte ?&nbsp;
                             <a href="<?= $hrefCreateAccount ?>"> inscrivez-vous!</a>
-                        </p>
+
                     </div>
 
                 </fieldset>
@@ -46,3 +46,4 @@ $hrefCreateAccount = "frontController.php?controller=utilisateur&action=create";
         </div>
 
     </div>
+</div>

@@ -120,7 +120,7 @@ $date = date_create();
                         <?php if ($date->format("Y-m-d H:i:s") < $question->getDateFinProposition() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutProposition()): ?>
                             <mark>Date de début de proposition</mark>
                         <?php else : ?>
-                            <p>Date de début de proposition</p>
+                          Date de début de proposition
                         <?php endif ?>
 
                     </li>
@@ -131,7 +131,7 @@ $date = date_create();
                         <?php if ($date->format("Y-m-d H:i:s") < $question->getDateDebutVote() && $date->format("Y-m-d H:i:s") >= $question->getDateFinProposition()) : ?>
                             <mark>Date de fin de rédaction de proposition</mark>
                         <?php else : ?>
-                            <p> Date de fin de rédaction de proposition </p>
+                         Date de fin de rédaction de proposition
                         <?php endif ?>
 
                     </li>
@@ -142,7 +142,7 @@ $date = date_create();
                         <?php if ($date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote()) : ?>
                             <mark>Date de début de vote</mark>
                         <?php else : ?>
-                            <p> Date de début de vote </p>
+                           Date de début de vote
                         <?php endif ?>
                     </li>
                     <li>
@@ -152,7 +152,7 @@ $date = date_create();
                         <?php if ($date->format("Y-m-d H:i:s") > $question->getDateFinVote()) : ?>
                             <mark>Date de fin de vote</mark>
                         <?php else : ?>
-                            <p>Date de fin de vote </p>
+                            Date de fin de vote
                         <?php endif ?>
                     </li>
                 </ul>
