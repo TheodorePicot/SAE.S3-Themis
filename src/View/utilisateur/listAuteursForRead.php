@@ -4,7 +4,7 @@
 
 
     foreach ($auteurs as $auteur): ?>
-     <?= htmlspecialchars($auteur->getLogin()) ?>
+     <?= htmlspecialchars($auteur->getLogin()) ?> <br>
 
     <?php endforeach; ?>
 

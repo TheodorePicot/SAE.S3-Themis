@@ -29,7 +29,7 @@ htmlspecialchars($question->getTitreQuestion())
                 <h2>Plan de la question</h2>
             </div>
 
-            <div class="my-4">
+            <div class="my-4 mx-5">
                 <?php
                 $count = 1;
                 foreach ($sections
@@ -54,7 +54,7 @@ htmlspecialchars($question->getTitreQuestion())
             </div>
 
 
-            <button class="btn btn-dark my-4" type="button" data-bs-toggle="collapse"
+            <button class="btn btn-dark my-4 mx-5" type="button" data-bs-toggle="collapse"
                     data-bs-target="#coAuteurs" aria-expanded="false"
                     aria-controls="coAuteurs">Co-Auteurs
             </button>
@@ -67,7 +67,7 @@ htmlspecialchars($question->getTitreQuestion())
             <?php if (ConnexionUtilisateur::isConnected() &&
                 ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())
                     || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) || ConnexionUtilisateur::isAdministrator()) : ?>
-                <div class="my-2">
+                <div class="my-2 mx-5">
                     <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) &&
                         ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'

@@ -3,7 +3,7 @@
     <?php use Themis\Model\Repository\VotantRepository;
 
     foreach ($votants as $votant): ?>
-     <?= htmlspecialchars($votant->getLogin()) ?>
+     <?= htmlspecialchars($votant->getLogin()) ?> <br>
 
     <?php endforeach; ?>
 
