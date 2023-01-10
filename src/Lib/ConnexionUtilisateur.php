@@ -15,6 +15,8 @@ class ConnexionUtilisateur
     /**
      * Permet à un utilisateur de se connecter
      *
+     *
+     *
      * @param string $loginUtilisateur Le login de l'utilisateur voulant se connecter
      * @return void
      */

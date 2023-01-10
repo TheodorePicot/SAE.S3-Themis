@@ -104,6 +104,23 @@ class JugementMajoritaireRepository extends VoteRepository
         return $valeurFrequence;
     }
 
+    public function votantHasAlreadyVoted(string $loginVotant, int $idProposition): bool
+    {
+        $sqlQuery = "SELECT * FROM {$this->getTableName()} 
+                    WHERE \"idProposition\" =:idProposition
+                    AND \"loginVotant\" =:loginVotant";
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
+
+        $values = array(
+            'loginVotant' => $loginVotant,
+            'idProposition' => $idProposition
+        );
+
+        $pdoStatement->execute($values);
+
+        return $pdoStatement->rowCount() > 0;
+    }
+
     public function getValeurFrequencePropositionsByQuestion(int $idQuestion): array
     {
         $sqlQuery = "SELECT * FROM \"Propositions\" WHERE \"idQuestion\" =:idQuestion ORDER BY \"idProposition\"";
@@ -133,13 +150,11 @@ class JugementMajoritaireRepository extends VoteRepository
         $propositionOrdered = array();
         foreach ($propositionTemp as $proposition){
             $proposition->setValeurResultat($values[$proposition->getIdProposition()]);
+            $proposition->setListeValeur($this->getValeurFrequenceProposition($proposition->getIdProposition()));
             $propositionOrdered = $proposition;
         }
         usort($propositionOrdered, fn($a, $b) => -1 * strcmp($a->getValeurResultat(), $b->getValeurResultat()));
         return $propositionOrdered;
     }
-
-
-
 
 }

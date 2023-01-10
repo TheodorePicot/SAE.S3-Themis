@@ -2,6 +2,10 @@
 
 namespace Themis\Model\DataObject;
 
+/**
+ * Cette classe englobe les auteurs et votants d'une question. Comme les attributs des tables SQL des Auteurs et
+ * Votants possède les mêmes attributs, nous avons décidé de factoriser ces deux tables en une seule classe.
+ */
 class Participant extends AbstractDataObject
 {
     private string $login;

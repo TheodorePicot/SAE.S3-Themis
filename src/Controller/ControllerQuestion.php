@@ -10,6 +10,7 @@ use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\Section;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
+use Themis\Model\Repository\JugementMajoritaireRepository;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionRepository;
@@ -224,7 +225,8 @@ class ControllerQuestion extends AbstractController
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
             $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
         else // TODO faire le if de jugement majoritaire
-            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
+            $propositions = (new JugementMajoritaireRepository)->selectPropositionForVoteResult((new ControllerVote())->scoreMedianeProposition($_REQUEST["idQuestion"]), $_REQUEST["idQuestion"]);
+
 
         $this->showView("view.php", [
             "propositions" => $propositions,
