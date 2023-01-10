@@ -31,8 +31,8 @@ abstract class AbstractRepository
         $sqlQuery .= ") " . $columnValues . ")";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = $dataObject->tableFormat();
-        echo $sqlQuery;
-        var_dump($values);
+
+
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
@@ -155,11 +155,11 @@ abstract class AbstractRepository
             $count++;
         }
         $sqlQuery .= " WHERE " . '"' . $primaryKey . '"' . "=:$primaryKey";
-        echo $sqlQuery;
+
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = $dataObject->tableFormat();
-        var_dump($values);
+
         $pdoStatement->execute($values);
     }
 
