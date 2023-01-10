@@ -29,7 +29,7 @@ $date = date_create();
         <div class="container-fluid col-md-12 col-lg-8">
             <div class="shadowBox card card-body border-0 rounded-4">
                 <div class="mx-2">
-                    <?= $parser->text(htmlspecialchars($question->getDescriptionQuestion())) ?>
+                    <?= htmlspecialchars($question->getDescriptionQuestion()) ?>
                 </div>
             </div>
 

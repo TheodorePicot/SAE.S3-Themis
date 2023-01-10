@@ -90,7 +90,7 @@ class ControllerUtilisateur extends AbstractController
      *
      * @return void
      */
-    public function create()
+    public function create(): void
     {
         FormData::deleteFormData("connection");
         $this->showView("view.php", [
@@ -221,7 +221,7 @@ class ControllerUtilisateur extends AbstractController
     /**
      * @return void
      */
-    public function updatedForPassword()
+    public function updatedForPassword(): void
     {
         $utilisateurSelect = (new UtilisateurRepository)->select($_REQUEST["login"]);
 
@@ -330,7 +330,7 @@ class ControllerUtilisateur extends AbstractController
      * @param array $utilisateurs
      * @return void
      */
-    private function showUsers(array $utilisateurs)
+    private function showUsers(array $utilisateurs): void
     {
         $this->showView("view.php", [
             "utilisateurs" => $utilisateurs,
@@ -400,7 +400,4 @@ class ControllerUtilisateur extends AbstractController
             "pathBodyView" => "utilisateur/list.php"
         ]);
     }
-
-
-
 }

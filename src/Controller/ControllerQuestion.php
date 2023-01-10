@@ -95,7 +95,7 @@ class ControllerQuestion extends AbstractController
      * @param int $idQuestion
      * @return void
      */
-    private function createParticipants(int $idQuestion)
+    private function createParticipants(int $idQuestion): void
     {
         foreach ($_REQUEST["votants"] as $votant) {
             $votantObject = new Participant($votant, $idQuestion);
@@ -256,7 +256,7 @@ class ControllerQuestion extends AbstractController
      * @param array $questions Les questions que l'on souhaite afficher
      * @return void
      */
-    private function showQuestions(array $questions)
+    private function showQuestions(array $questions): void
     {
         $this->showView("view.php", [
             "questions" => $questions,
@@ -394,7 +394,7 @@ class ControllerQuestion extends AbstractController
      * @param int $idQuestion
      * @return void
      */
-    private function deleteParticipants(int $idQuestion)
+    private function deleteParticipants(int $idQuestion): void
     {
         (new VotantRepository)->delete($idQuestion);
         (new AuteurRepository)->delete($idQuestion);
@@ -435,7 +435,7 @@ class ControllerQuestion extends AbstractController
      * @see ConnexionUtilisateur::isUser()
      *
      */
-    private function isOrganisateurOfQuestion($loginOrganisateur)
+    private function isOrganisateurOfQuestion($loginOrganisateur): bool
     {
         return ConnexionUtilisateur::isUser($loginOrganisateur);
     }

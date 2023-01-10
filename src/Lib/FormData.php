@@ -4,7 +4,8 @@ namespace Themis\Lib;
 
 class FormData
 {
-    public static function saveFormData(string $actionName) {
+    public static function saveFormData(string $actionName): void
+    {
         foreach ($_POST as $item => $value) {
             $_SESSION['formData'][$actionName][$item] = $value;
             echo $item;
@@ -12,11 +13,13 @@ class FormData
         }
     }
 
-    public static function deleteFormData(string $actionName) {
+    public static function deleteFormData(string $actionName): void
+    {
         unset($_SESSION['formData'][$actionName]);
     }
 
-    public static function unsetAll() {
+    public static function unsetAll(): void
+    {
         unset($_SESSION['formData']);
     }
 }

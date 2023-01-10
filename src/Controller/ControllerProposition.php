@@ -157,18 +157,19 @@ class ControllerProposition extends AbstractController
 
     }
 
-    public function hasReadAccess(Question $question, Proposition $proposition) {
-        return ( date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutProposition() &&
+    public function hasReadAccess(Question $question, Proposition $proposition): bool
+    {
+        return (date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutProposition() &&
                 date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition() &&
                 $this->isAuteurOfProposition($proposition->getIdProposition()) ||
                 $this->isCoAuteurInProposition($proposition->getIdProposition()) ||
                 ConnexionUtilisateur::isUser($question->getLoginOrganisateur()))
             ||
-            ( date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutVote() &&
+            (date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutVote() &&
                 date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition() &&
                 $this->isAuteurInQuestion($question->getIdQuestion()) ||
                 $this->isCoAuteurInQuestion($question->getIdQuestion()) ||
-                $this->isVotantInQuestion($question->getIdQuestion()) )
+                $this->isVotantInQuestion($question->getIdQuestion()))
             ||
             date_create()->format("Y-m-d H:i:s") > $question->getDateFinProposition();
     }

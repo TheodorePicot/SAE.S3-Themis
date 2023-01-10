@@ -15,7 +15,8 @@ class Question extends AbstractDataObject
     private string $systemeVote;
 
     /**
-     * permet de construire une Question à partir d'un idQuestion, d'un titreQuestion, d'une descriptionQuestion, d'une dateDebutProposition, d'une dateFinProposition, d'une dateDebutVote et d'une dateFinVote
+     * Permet de construire une Question à partir d'un idQuestion, d'un titreQuestion, d'une descriptionQuestion,
+     * d'une dateDebutProposition, d'une dateFinProposition, d'une dateDebutVote et d'une dateFinVote
      *
      * @param int $idQuestion
      * @param string $titreQuestion
