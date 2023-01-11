@@ -152,7 +152,7 @@ class Utilisateur extends AbstractDataObject
      *
      * @return string
      */
-    public function getEmailAValider(): string
+    public function getEmailAValider(): ?string
     {
         return $this->emailAValider;
     }

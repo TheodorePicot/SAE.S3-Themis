@@ -11,7 +11,7 @@ class VerificationEmail
 {
 
     /**
-     * Permet de envoyer un mail à l’adresse renseignée avec un lien qui envoi le nonce au site à l'utilisateur plcé en paramètre
+     * Permet d'fenvoyer un mail à l’adresse renseignée avec un lien qui envoi le nonce au site à l'utilisateur plcé en paramètre
      *
      * @param Utilisateur $utilisateur L'utilisateur qui reçoi le mail de validation
      * @return void
@@ -54,13 +54,13 @@ class VerificationEmail
 
 
     /**
-     * Return true si l'email de l'utilisateur placée en paramètre est validée sinon false
+     * Return true si l'email de l'utilisateur placé en paramètre est validée sinon false
      *
      * @param Utilisateur $utilisateur Un utilisateur
      * @return bool
      */
     public static function hasValidatedEmail(Utilisateur $utilisateur) : bool
     {
-        return $utilisateur->getAdresseMail() != "";
+        return $utilisateur->getEmailAValider() == null;
     }
 }
