@@ -14,6 +14,13 @@ use Themis\Model\Repository\VotantRepository;
 
 class ControllerVote extends AbstractController
 {
+    /**
+     * Affiche la vue nous permettant de voter pour une proposition / les propositions d'une question.
+     *
+     * Affiche une vue différente par rapport au type de système de vote de la question.
+     *
+     * @return void
+     */
     public function vote(): void
     {
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
@@ -39,13 +46,23 @@ class ControllerVote extends AbstractController
         }
     }
 
+    /**
+     * Permet de voter
+     *
+     * Premièrement, cette méthode vérifie le type de vote puis, vérifie si l'utilisateur a déjà voté.
+     * Si oui alors elle effectue une mise à jour dans la base de données. Sinon, elle effectue une insertion dans la base de données.
+     *
+     * @return void
+     * @see JugementMajoritaireRepository::votantHasAlreadyVoted()
+     * @see ScrutinUninominalRepository::votantHasAlreadyVoted()
+     */
     public function submitVote(): void
     {
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
         if ($this->canVote($question)) {
             if ($question->getSystemeVote() == "ScrutinUninominal") {
-                $voteUninominal = new ScrutinUninominal($_REQUEST["loginVotant"], $_REQUEST["idPropositionVote"], $_REQUEST["idQuestion"]); // Je sais pas comme trouver l'id de la proposition cochée
-                if ((new ScrutinUninominalRepository())->votantHasAlreadyVotedScrutin($_REQUEST["loginVotant"], $_REQUEST["idQuestion"])) {
+                $voteUninominal = new ScrutinUninominal($_REQUEST["loginVotant"], $_REQUEST["idPropositionVote"], $_REQUEST["idQuestion"]);
+                if ((new ScrutinUninominalRepository())->votantHasAlreadyVoted($_REQUEST["loginVotant"], $_REQUEST["idQuestion"])) {
                     echo "dans update";
                     (new ScrutinUninominalRepository())->update($voteUninominal);
                 } else {
@@ -55,7 +72,7 @@ class ControllerVote extends AbstractController
             } else {
                 foreach ((new PropositionRepository())->selectByQuestion($_REQUEST["idQuestion"]) as $proposition) {
                     $vote = new JugementMajoritaire($_REQUEST["loginVotant"], $proposition->getIdProposition(), $_REQUEST["valueVote{$proposition->getIdProposition()}"]);
-                    if ((new JugementMajoritaireRepository())->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) { // Faire méthode pour JugementMajoritaire
+                    if ((new JugementMajoritaireRepository())->votantHasAlreadyVoted($_REQUEST["loginVotant"], $proposition->getIdProposition())) {
                         (new JugementMajoritaireRepository)->update($vote);
                     } else {
                         (new JugementMajoritaireRepository)->create($vote);
@@ -69,6 +86,12 @@ class ControllerVote extends AbstractController
         $this->redirect("frontController.php?action=readAll");
     }
 
+    /**
+     * Toutes les verifications concernant l'utilisateur pour savoir s'il peut voter.
+     *
+     * @param $question
+     * @return bool
+     */
     private function canVote($question): bool
     {
         return ConnexionUtilisateur::isConnected() && (in_array($question, (new QuestionRepository())->selectAllCurrentlyInVoting()) &&
@@ -76,6 +99,12 @@ class ControllerVote extends AbstractController
                 date_create()->format("Y-m-d H:i:s") < $question->getDateFinVote() && date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutVote());
     }
 
+    /**
+     * Renvoie le score de chaque vote pour le jugement majoritaire.
+     *
+     * @param int $idQuestion
+     * @return array
+     */
     public function scoreMedianeProposition(int $idQuestion): array
     {
         $tab = (new JugementMajoritaireRepository())->getValeurFrequencePropositionsByQuestion($idQuestion);
@@ -85,7 +114,7 @@ class ControllerVote extends AbstractController
             $nbVoteByProposition = (new JugementMajoritaireRepository())->getNbVote($key);
             foreach ($proposition as $i => $value) {
                 $somme += $value;
-                if ($somme >= (($nbVoteByProposition % 2 == 0) ? $nbVoteByProposition : ($nbVoteByProposition + 1)) / 2) {
+                if ($somme >= (($nbVoteByProposition % 2 == 0) ? $nbVoteByProposition : ($nbVoteByProposition + 1)) / 2) { // si le nombre de votes est impaire alors on ajoute 1
                     $res[$key] = $i;
                     $somme = 0;
                     break;

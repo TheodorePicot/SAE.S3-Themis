@@ -124,7 +124,7 @@ class ScrutinUninominalRepository extends VoteRepository
      * @param int $idQuestion
      * @return bool
      */
-    public function votantHasAlreadyVotedScrutin(string $loginVotant, int $idQuestion): bool
+    public function votantHasAlreadyVoted(string $loginVotant, int $idQuestion): bool
     {
         $sqlQuery = "SELECT * FROM {$this->getTableName()} 
                     WHERE \"idQuestion\" =:idQuestion
@@ -144,13 +144,13 @@ class ScrutinUninominalRepository extends VoteRepository
 
     /**
      * Permet de savoir si un utilisateur possédant le login placé en paramètre à déjà voter pour la proposition
-     * placé en paramètre
+     * placée en paramètre
      *
      * @param string $loginVotant
      * @param int $idProposition
      * @return bool
      */
-    public function votantHasAlreadyVotedForPropositionScrutin(string $loginVotant, int $idProposition): bool
+    public function votantHasAlreadyVotedForProposition(string $loginVotant, int $idProposition): bool
     {
         $sqlQuery = "SELECT * FROM {$this->getTableName()} 
                     WHERE \"loginVotant\" = :loginVotant
