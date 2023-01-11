@@ -100,7 +100,7 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
-     * Permet de lire le compte du l'utilisateur sélectionnée
+     * Permet de lire le compte de l'utilisateur sélectionnée.
      *
      * Cette méthode charge les données nécessaires puis fait appelle à {@link AbstractController::showView()}
      * pour afficher la vue {@link src/View/utilisateur/read.php}.
@@ -178,9 +178,9 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
-     * Permet de déconnecter l'utilisateur actuellement connecté
+     * Permet de déconnecter l'utilisateur actuellement connecté.
      *
-     * @see
+     * Supprime toutes les données de formulaire puis déconnecte l'utilisateur.
      *
      * @return void
      */
@@ -193,6 +193,10 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet de mettre à jour les informations de son compte. Mais pas le mot de passe.
+     *
+     * Cette méthode fait des vérifications de sécurité puis met à jour les informations de l'utilisateur.
+     *
      * @return void
      */
     public function updatedForInformation(): void
@@ -225,6 +229,10 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet uniquement de mettre à jour le mot de passe de son compte.
+     *
+     * Cette méthode fait des vérifications de sécurité puis met à jour le mot de passe de l'utilisateur.
+     *
      * @return void
      */
     public function updatedForPassword(): void
@@ -232,7 +240,7 @@ class ControllerUtilisateur extends AbstractController
         $utilisateurSelect = (new UtilisateurRepository)->select($_REQUEST["login"]);
 
         $this->connectionCheck();
-        if (!PassWord::check($_REQUEST["mdpAncien"], $utilisateurSelect->getMdp())) {
+        if (!PassWord::check($_REQUEST["mdpAncien"], $utilisateurSelect->getMdp())) { // si son mot de passe actuel n'est pas égal au mot de passe qu'il a rentré (verifier si c'est bien l'utilisateur)
             (new FlashMessage)->flash("incorrectPasswd", "Le mot de passe ancien ne correspond pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=updatePassword&controller=utilisateur&login={$_REQUEST["login"]}&invalidOld=1");
         } else if ($_REQUEST["mdp"] != $_REQUEST["mdpConfirmation"]) {
@@ -253,6 +261,8 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Affiche la vue permettant de mettre à jour ces informations
+     *
      * @return void
      */
     public function updateInformation(): void
@@ -272,6 +282,8 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Affiche la vue permettant de mettre à jour son mot de passe
+     *
      * @return void
      */
     public function updatePassword(): void
@@ -292,6 +304,10 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet de supprimer un utilisateur
+     *
+     * Fait des vérifications de sécurité et supprime si tout est bon
+     *
      * @return void
      */
     public function delete(): void
@@ -311,6 +327,10 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Méthode permettant de valider l'email d'un utilisateur
+     *
+     * Regarde si l'utilisateur donné existe bien et que le nonce de l'utilisateur est valide
+     *
      * @return void
      */
     public function validerEmail(): void

@@ -48,7 +48,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de retourner toutes les colonnes de la table Question
+     * Permet de retourner toutes les colonnes de la table Question
      *
      * @return array
      */
@@ -81,7 +81,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer l'id d'une Question
+     * Permet de récupérer l'id d'une Question
      *
      * @return int
      */
@@ -91,7 +91,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer le titre d'une Question
+     * Permet de récupérer le titre d'une Question
      *
      * @return string
      */
@@ -101,7 +101,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer la DateDebutProposition d'une Question
+     * Permet de récupérer la DateDebutProposition d'une Question
      *
      * @return string
      */
@@ -111,7 +111,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer la DateFinProposition d'une Question
+     * Permet de récupérer la DateFinProposition d'une Question
      *
      * @return string
      */
@@ -121,7 +121,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer la DateDebutVote d'une Question
+     * Permet de récupérer la DateDebutVote d'une Question
      *
      * @return string
      */
@@ -131,7 +131,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer la DateFinVote d'une Question
+     * Permet de récupérer la DateFinVote d'une Question
      *
      * @return string
      */
@@ -141,7 +141,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer la Description d'une Question
+     * Permet de récupérer la Description d'une Question
      *
      * @return string
      */
@@ -151,7 +151,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer le LoginOrganisateur d'une Question
+     * Permet de récupérer le LoginOrganisateur d'une Question
      *
      * @return string
      */
@@ -161,7 +161,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer la description d'une Question avec une taille de maximun 120
+     * Permet de récupérer la description d'une Question avec une taille de maximun 120
      *
      * @return string
      */
@@ -174,7 +174,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer la SystemeVote d'une Question
+     * Permet de récupérer la SystemeVote d'une Question
      *
      * @return string
      */
@@ -184,7 +184,7 @@ class Question extends AbstractDataObject
     }
 
     /**
-     * permet de construire une Question à partir d'une array
+     * Permet de construire une Question à partir d'une array
      *
      * @param array $formArray
      * @return Question

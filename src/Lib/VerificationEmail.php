@@ -11,7 +11,7 @@ class VerificationEmail
 {
 
     /**
-     * Permet d'fenvoyer un mail à l’adresse renseignée avec un lien qui envoi le nonce au site à l'utilisateur plcé en paramètre
+     * Permet d'envoyer un mail à l’adresse renseignée avec un lien qui envoi le nonce au site à l'utilisateur placé en paramètre
      *
      * @param Utilisateur $utilisateur L'utilisateur qui reçoi le mail de validation
      * @return void
@@ -35,11 +35,11 @@ class VerificationEmail
      * de la BDD, alors le champ email contient l'email de l'utilisateur concerné et le champ nonce email à valider
      * deviennent vide de la BDD.
      *
-     * @param $login Le login de l'utilisateur
-     * @param $nonce Le nonce de l'utilisateur
+     * @param $login string Le login de l'utilisateur
+     * @param $nonce string Le nonce de l'utilisateur
      * @return bool
      */
-    public static function handleEmailValidation($login, $nonce): bool
+    public static function handleEmailValidation(string $login, string $nonce): bool
     {
         $utilisateur = (new UtilisateurRepository())->select($login);
         if ($utilisateur->getLogin() == $login && $utilisateur->getNonce() == $nonce){
