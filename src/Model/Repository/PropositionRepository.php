@@ -71,13 +71,11 @@ class PropositionRepository extends AbstractRepository
         ];
 
         $pdoStatement->execute($values);
-        echo $pdoStatement->rowCount();
 
         $propositions = array();
         foreach ($pdoStatement as $proposition) {
             $propositions[] = $this->select($proposition[0]);
         }
-        var_dump($propositions);
         return $propositions;
     }
 
