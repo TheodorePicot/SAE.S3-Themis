@@ -193,7 +193,7 @@ abstract class AbstractRepository
      */
     public function selectAllOrderedWithLimit(): array
     {
-        $databaseTable = $this->getTableName();
+
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} ORDER BY {$this->getOrderColumn()} LIMIT 10");
 
         $dataObjects = array(); 
