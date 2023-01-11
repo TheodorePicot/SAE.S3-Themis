@@ -61,7 +61,7 @@ class FlashMessage
      * Affiche tous les messages flashs.
      *
      * Stocke les messages flashs dans une variable puis supprime tous les messages flash du tableau session.
-     * Ensuite on les affiche dans la vue {@link src/View/view.php}.
+     * Ensuite, elle les affiche dans la vue {@link src/View/view.php}.
      *
      * @see unset()
      *

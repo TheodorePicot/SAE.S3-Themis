@@ -18,7 +18,7 @@ class Utilisateur extends AbstractDataObject
     private ?string $nonce;
 
     /**
-     * permet de construire un Utilisateur à partir d'un login, d'un nom, d'un prenom, d'une adresseMail,
+     * Permet de construire un Utilisateur à partir d'un login, d'un nom, d'un prenom, d'une adresseMail,
      * d'une dateNaissance, d'un mdp, d'un estAdmin, d'un estOrganisateur, d'un emailAValider et d'un nonce
      *
      * @param string $login
@@ -56,7 +56,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de retourner toutes les colonnes de la table Utilisateur
+     * Permet de retourner toutes les colonnes de la table Utilisateur
      *
      * @return array
      */
@@ -78,7 +78,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer le login d'un Utilisateur
+     * Permet de récupérer le login d'un Utilisateur
      *
      * @return string
      */
@@ -88,7 +88,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer le nom d'un Utilisateur
+     * Permet de récupérer le nom d'un Utilisateur
      *
      * @return string
      */
@@ -98,7 +98,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer le prenom d'un Utilisateur
+     * Permet de récupérer le prenom d'un Utilisateur
      *
      * @return string
      */
@@ -108,7 +108,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer l'adresse mail d'un Utilisateur
+     * Permet de récupérer l'adresse mail d'un Utilisateur
      *
      * @return string
      */
@@ -118,7 +118,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer la dateNaissance d'un Utilisateur
+     * Permet de récupérer la dateNaissance d'un Utilisateur
      *
      * @return string
      */
@@ -128,7 +128,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer le mdp d'un Utilisateur
+     * Permet de récupérer le mdp d'un Utilisateur
      *
      * @return string
      */
@@ -138,7 +138,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer le Nonce d'un Utilisateur
+     * Permet de récupérer le Nonce d'un Utilisateur
      *
      * @return string
      */
@@ -148,17 +148,17 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de récupérer l'email a valider d'un Utilisateur
+     * Permet de récupérer l'email à valider d'un Utilisateur
      *
      * @return string
      */
-    public function getEmailAValider(): string
+    public function getEmailAValider(): ?string
     {
         return $this->emailAValider;
     }
 
     /**
-     * permet de savoir si un Utilisateur est Admin
+     * Permet de savoir si un Utilisateur est Admin
      *
      * @return bool
      */
@@ -168,7 +168,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de savoir si un Utilisateur est Organisateur
+     * Permet de savoir si un Utilisateur est Organisateur
      *
      * @return bool
      */
@@ -178,7 +178,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de mettre à jour estAdmin d'un Utilisateur
+     * Permet de mettre à jour estAdmin d'un Utilisateur
      *
      * @param bool $estAdmin
      */
@@ -188,7 +188,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de mettre à jour EstOrganisateur d'un Utilisateur
+     * Permet de mettre à jour EstOrganisateur d'un Utilisateur
      *
      * @param bool $estOrganisateur
      */
@@ -198,7 +198,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de mettre à jour MdpHache d'un Utilisateur
+     * Permet de mettre à jour MdpHache d'un Utilisateur
      *
      * @param string $mdpHache
      */
@@ -208,7 +208,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de mettre à jour EmailAValider d'un Utilisateur
+     * Permet de mettre à jour EmailAValider d'un Utilisateur
      *
      * @param string|null $emailAValider
      */
@@ -218,7 +218,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de mettre à jour AdresseMail d'un Utilisateur
+     * Permet de mettre à jour AdresseMail d'un Utilisateur
      *
      * @param string|null $adresseMail
      */
@@ -228,7 +228,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de mettre à jour Nonce d'un Utilisateur
+     * Permet de mettre à jour Nonce d'un utilisateur
      *
      * @param string|null $nonce
      */
@@ -238,7 +238,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de construire un Utilisateur à partir d'une array
+     * Permet de construire un Utilisateur à partir d'une array
      *
      * @param array $formArray
      * @return Utilisateur
@@ -269,7 +269,7 @@ class Utilisateur extends AbstractDataObject
     }
 
     /**
-     * permet de mettre à jour un Utilisateur à partir d'une array
+     * Permet de mettre à jour un Utilisateur à partir d'une array
      *
      * @param array $formArray
      * @return Utilisateur

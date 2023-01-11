@@ -518,7 +518,7 @@ class ControllerQuestion extends AbstractController
     }
 
     /**
-     * Affiche le vue a propos du site
+     * Affiche la vue à propos du site
      *
      * @return void
      */

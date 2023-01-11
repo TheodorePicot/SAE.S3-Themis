@@ -8,6 +8,7 @@ namespace Themis\Lib;
 class FormData
 {
     /**
+     * Méthode permettant de stocker les données d'un formulaire dans le tableau {@link $_SESSION}
      *
      * @param string $actionName
      * @return void
