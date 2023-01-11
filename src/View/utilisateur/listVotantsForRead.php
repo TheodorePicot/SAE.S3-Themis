@@ -7,7 +7,10 @@
 
     <?php endforeach; ?>
 
-    <?php if (count($votants) == 0 ): ?>
+
+    <?php
+    if (isset($_REQUEST['searchValue']))
+    if (count($votants) == 0 ): ?>
 
             Il n'y a pas de votants dont le pseudo contient '<?=$_REQUEST['searchValue']?>'
 
