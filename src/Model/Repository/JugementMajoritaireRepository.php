@@ -10,11 +10,17 @@ use Themis\Model\DataObject\Vote;
 class JugementMajoritaireRepository extends VoteRepository
 {
 
+    /**
+     * @inheritDoc
+     */
     public function build(array $objectArrayFormat): JugementMajoritaire
     {
         return new JugementMajoritaire($objectArrayFormat["loginVotant"], $objectArrayFormat["idProposition"], $objectArrayFormat["valeur"]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function selectVote($loginVotant, $idProposition): ?Vote
     {
         $sqlQuery = 'SELECT * FROM ' . $this->getTableName() . '
@@ -40,11 +46,21 @@ class JugementMajoritaireRepository extends VoteRepository
         return $this->build($dataObject);
     }
 
+    /**
+     * Permet d'obtenir le nom de la table
+     *
+     * @return string
+     */
     protected function getTableName(): string
     {
         return 'themis."JugementMajoritaire"';
     }
 
+    /**
+     * Permet d'obtenir un tableau avec les noms des colonnes de la table
+     *
+     * @return string[]
+     */
     protected function getColumnNames(): array
     {
         return [
@@ -54,16 +70,32 @@ class JugementMajoritaireRepository extends VoteRepository
         ];
     }
 
+    /**
+     * Permet d'obtenir d'ordoner en fonction d'une colonne
+     *
+     * @return string
+     */
     protected function getOrderColumn(): string
     {
         return "loginVotant";
     }
 
+    /**
+     * Permet d'obtenir la clé primaire de la table
+     *
+     * @return string
+     */
     protected function getPrimaryKey(): string
     {
         return 'login, idProposition';
     }
 
+    /**
+     * Permet de mettre à jour les valeurs des votes à partie d'un dataObject
+     *
+     * @param AbstractDataObject $dataObject
+     * @return void
+     */
     public function update(AbstractDataObject $dataObject): void
     {
         $sqlQuery = 'UPDATE "JugementMajoritaire" SET "valeur" =:valeur WHERE "loginVotant" =:loginVotant AND "idProposition" =:idProposition';
@@ -72,6 +104,12 @@ class JugementMajoritaireRepository extends VoteRepository
         $pdoStatement->execute($values);
     }
 
+    /**
+     * Permet d'obtenir un tableau avec la fréquence de chaque valeur pour une proposition placé en paramètre
+     *
+     * @param int $idProposition
+     * @return int[]
+     */
     public function getValeurFrequenceProposition(int $idProposition): array
     {
         $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
@@ -105,6 +143,13 @@ class JugementMajoritaireRepository extends VoteRepository
         return $valeurFrequence;
     }
 
+    /**
+     * Permet de savoir si un utilisateur à déja voté ou pas
+     *
+     * @param string $loginVotant
+     * @param int $idProposition
+     * @return bool
+     */
     public function votantHasAlreadyVoted(string $loginVotant, int $idProposition): bool
     {
         $sqlQuery = "SELECT * FROM {$this->getTableName()} 
@@ -122,6 +167,12 @@ class JugementMajoritaireRepository extends VoteRepository
         return $pdoStatement->rowCount() > 0;
     }
 
+    /**
+     *
+     *
+     * @param int $idQuestion
+     * @return array
+     */
     public function getValeurFrequencePropositionsByQuestion(int $idQuestion): array
     {
         $sqlQuery = "SELECT * FROM \"Propositions\" WHERE \"idQuestion\" =:idQuestion ORDER BY \"idProposition\"";
@@ -136,6 +187,12 @@ class JugementMajoritaireRepository extends VoteRepository
         return $frequenceForEachProposition;
     }
 
+    /**
+     * Permet de savoir combien de vote a reçu la proposition placé en paramètre
+     *
+     * @param int $idProposition
+     * @return int
+     */
     public function getNbVote(int $idProposition): int
     {
         $sqlQuery = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE \"idProposition\" =:idProposition";
@@ -145,6 +202,13 @@ class JugementMajoritaireRepository extends VoteRepository
         return (int)$pdoStatement->fetch()[0];
     }
 
+    /**
+     *
+     *
+     * @param array $values
+     * @param int $idQuestion
+     * @return array
+     */
     public function selectPropositionForVoteResult(array $values, int $idQuestion): array
     {
         $propositionTemp = (new PropositionRepository())->selectByQuestion($idQuestion);
