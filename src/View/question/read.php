@@ -178,7 +178,7 @@ $date = date_create();
                 (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion()) &&
                 $date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote())) : ?>
             <div class="d-flex align-content-center justify-content-center my-3">
-                <a class="btn btn-dark text-nowrap w-25"
+                <a class="btn btn-primary text-nowrap"
                    href="frontController.php?controller=vote&action=vote&idQuestion=<?= $question->getIdQuestion() ?>">Voter</a>
             </div>
 
