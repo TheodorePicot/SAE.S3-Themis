@@ -7,6 +7,8 @@ class JugementMajoritaire extends Vote
     private int $valeur;
 
     /**
+     * Permet de construire un objet JugementMajoritaire
+     *
      * @param string $loginVotant
      * @param int $idProposition
      */
@@ -17,6 +19,9 @@ class JugementMajoritaire extends Vote
     }
 
 
+    /**
+     * @inheritDoc
+     */
     public function tableFormat(): array
     {
         $temp = parent::tableFormat();
@@ -24,6 +29,9 @@ class JugementMajoritaire extends Vote
         return $temp;
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function buildFromForm(array $formArray): JugementMajoritaire
     {
         return new JugementMajoritaire(
