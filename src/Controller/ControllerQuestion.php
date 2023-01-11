@@ -213,6 +213,11 @@ class ControllerQuestion extends AbstractController
      * Cette méthode charge les données nécessaires puis fait appelle à {@link AbstractController::showView()}
      * pour afficher la vue {@link src/View/question/read.php}.
      *
+     * Si la période de vote est terminée la méthode appelle la vue pour afficher les propositions gagnantes.
+     *
+     * @see src/View/proposition/listByQuestionGagnanteScrutin.php
+     * @see src/View/proposition/listByQuestionGagnanteJugement.php
+     *
      * @return void
      */
     public function read(): void
@@ -446,7 +451,11 @@ class ControllerQuestion extends AbstractController
     /**
      * Renvoie la liste des votants lors d'une recherche
      *
-     * La variable {@link $votants} est modifié par rapport à la valeur
+     * La variable {@link $votants} est modifié par rapport à la valeur de recherche de l'utilisateur.
+     * Cette méthode est appelée dans la vue {@link src/View/question/read.php}.
+     * Si la période de vote est terminée la méthode appelle la vue pour afficher les propositions gagnantes.
+     * @see src/View/proposition/listByQuestionGagnanteScrutin.php
+     * @see src/View/proposition/listByQuestionGagnanteJugement.php
      *
      * @return void
      */
@@ -459,8 +468,8 @@ class ControllerQuestion extends AbstractController
         $auteurs = (new AuteurRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
             $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
-        else // TODO pour JugementMajoritaire
-            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
+        else
+            $propositions = (new JugementMajoritaireRepository)->selectPropositionForVoteResult((new ControllerVote())->scoreMedianeProposition($_REQUEST["idQuestion"]), $_REQUEST["idQuestion"]);
 
         $this->showView("view.php", [
             "propositions" => $propositions,
@@ -473,6 +482,18 @@ class ControllerQuestion extends AbstractController
         ]);
     }
 
+    /**
+     * Renvoie la liste des auteurs lors d'une recherche
+     *
+     * La variable {@link $auteurs} est modifié par rapport à la valeur de recherche de l'utilisateur.
+     * Cette méthode est appelée dans la vue {@link src/View/question/read.php}.
+     * Si la période de vote est terminée la méthode appelle la vue pour afficher les propositions gagnantes.
+     *
+     * @see src/View/proposition/listByQuestionGagnanteScrutin.php
+     * @see src/View/proposition/listByQuestionGagnanteJugement.php
+     *
+     * @return void
+     */
     public function readAllAuteursBySearchValue(): void
     {
         FormData::unsetAll();
@@ -482,8 +503,8 @@ class ControllerQuestion extends AbstractController
         $auteurs = (new AuteurRepository)->selectAllParticipantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
             $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
-        else // TODO pour JugementMajoritaire
-            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
+        else
+            $propositions = (new JugementMajoritaireRepository)->selectPropositionForVoteResult((new ControllerVote())->scoreMedianeProposition($_REQUEST["idQuestion"]), $_REQUEST["idQuestion"]);
 
         $this->showView("view.php", [
             "propositions" => $propositions,
@@ -496,6 +517,11 @@ class ControllerQuestion extends AbstractController
         ]);
     }
 
+    /**
+     * Affiche le vue a propos du site
+     *
+     * @return void
+     */
     public function readAPropos(): void
     {
         $this->showView("view.php", ["pageTitle" => "A propos",

@@ -76,7 +76,7 @@ class ControllerVote extends AbstractController
                 date_create()->format("Y-m-d H:i:s") < $question->getDateFinVote() && date_create()->format("Y-m-d H:i:s") >= $question->getDateDebutVote());
     }
 
-    public function scoreMedianeProposition(int $idQuestion)
+    public function scoreMedianeProposition(int $idQuestion): array
     {
         $tab = (new JugementMajoritaireRepository())->getValeurFrequencePropositionsByQuestion($idQuestion);
         $somme = 0;

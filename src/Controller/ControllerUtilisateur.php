@@ -63,9 +63,9 @@ class ControllerUtilisateur extends AbstractController
      */
     public function created(): void
     {
-        $user = Utilisateur::buildFromForm($_REQUEST);
+        $user = Utilisateur::buildFromFormCreate($_REQUEST);
         FormData::saveFormData("createUtilisateur");
-//        VerificationEmail::sendEmailValidation($user);
+        VerificationEmail::sendEmailValidation($user);
         if ((new UtilisateurRepository())->select($_REQUEST['login']) != null) {
             (new FlashMessage)->flash("mauvaisMdp", "Ce login existe déjà", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=create&controller=utilisateur&invalidLogin=1");
@@ -75,7 +75,7 @@ class ControllerUtilisateur extends AbstractController
 
             if ($creationCode == "") {
                 ConnexionUtilisateur::connect(($_REQUEST["login"]));
-                (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
+                (new FlashMessage)->flash("compteCree", "Votre compte a été créé, veuillez valider votre email", FlashMessage::FLASH_INFO);
                 FormData::deleteFormData("createUtilisateur");
                 $this->redirect("frontController.php?action=readAll");
             }
@@ -155,6 +155,10 @@ class ControllerUtilisateur extends AbstractController
     public function connect(): void
     {
         FormData::saveFormData("connection");
+        if (!VerificationEmail::hasValidatedEmail($_REQUEST["login"])) {
+            (new FlashMessage)->flash("invalidMail", "Veuillez valider votre email avant de vous connecter", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=login&controller=utilisateur");
+        }
         if ((new UtilisateurRepository())->select($_REQUEST["login"]) == null) {
             (new FlashMessage)->flash("badLogin", "Ce login n'existe pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=login&controller=utilisateur&invalidLogin=1");
@@ -174,7 +178,9 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet de déconnecter l'utilisateur actuellement connecté
      *
+     * @see
      *
      * @return void
      */
@@ -327,23 +333,10 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
-     * @param array $utilisateurs
+     *
+     *
      * @return void
      */
-    private function showUsers(array $utilisateurs): void
-    {
-        $this->showView("view.php", [
-            "utilisateurs" => $utilisateurs,
-            "pageTitle" => "utilisateurs",
-            "pathBodyView" => "utilisateur/list.php"
-        ]);
-    }
-
-    /**
-     * @return void
-     */
-
-
     public function readAllAdminBySearchValue(): void
     {
         if (!$this->isAdmin()) {

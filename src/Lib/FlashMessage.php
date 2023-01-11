@@ -3,7 +3,7 @@
 namespace Themis\Lib;
 
 /**
- *
+ * Classe permettant d'afficher des messages d'erreur
  */
 class FlashMessage
 {
@@ -17,7 +17,13 @@ class FlashMessage
      * Cette méthode permet d'accéder aux méthodes internes de cette classe
      *
      * Par rapport aux attributs donnés cette méthode execute un code différent.
-     * Si l'utilisateur spécifie les 3 arguments
+     * Si l'utilisateur spécifie les 3 arguments alors cette méthode crée un message flash et stocke cette information
+     * dans le tableau {@link $_SESSION}.
+     * Si l'utilisateur ne spécifie aucuns arguments cette méthode retourne tous les messages flash stockés dans le tableau {@link $_SESSION}.
+     * Elle agit comme intermédiaire et simplifie l'accès aux méthodes de cette classe.
+     *
+     * @see static::createFlashMessage()
+     * @see static::returnAllFlashMessages()
      *
      * @param string $name
      * @param string $message
@@ -34,6 +40,10 @@ class FlashMessage
     }
 
     /**
+     * Crée un message flash
+     *
+     * Stocke les données dans {@link $_SESSION}
+     *
      * @param string $name
      * @param string $message
      * @param string $type
@@ -48,6 +58,13 @@ class FlashMessage
     }
 
     /**
+     * Affiche tous les messages flashs.
+     *
+     * Stocke les messages flashs dans une variable puis supprime tous les messages flash du tableau session.
+     * Ensuite on les affiche dans la vue {@link src/View/view.php}.
+     *
+     * @see unset()
+     *
      * @return void
      */
     function returnAllFlashMessages(): void
@@ -66,6 +83,8 @@ class FlashMessage
     }
 
     /**
+     * Renvoie le flash message en format CSS
+     *
      * @param array $flashMessage
      * @return string
      */

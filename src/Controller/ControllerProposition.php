@@ -334,7 +334,7 @@ class ControllerProposition extends AbstractController
     /**
      * Permet de savoir si l'utilisateur est co-auteur de la question sélectionnée
      *
-     * @param int $idProposition La proposition dans laquelle on regarde si l'utilisateur est coAuteur
+     * @param int $idProposition La proposition dans laquelle on regarde si l'utilisateur est co-auteur
      * @return bool
      */
     private function isCoAuteurInProposition(int $idProposition): bool
@@ -343,7 +343,9 @@ class ControllerProposition extends AbstractController
     }
 
     /**
-     * @param int $idProposition La proposition dans laquelle on regarde si l'utilisateur est Auteur
+     * Permet de savoir si l'utilisateur est auteur de la question sélectionnée
+     *
+     * @param int $idProposition La proposition dans laquelle on regarde si l'utilisateur est auteur
      * @return bool
      */
     private function isAuteurOfProposition(int $idProposition): bool
@@ -351,6 +353,12 @@ class ControllerProposition extends AbstractController
         return ConnexionUtilisateur::isUser((new PropositionRepository())->select($idProposition)->getLoginAuteur());
     }
 
+    /**
+     * Permet de savoir si l'utilisateur est votant de la question sélectionnée
+     *
+     * @param int $idQuestion La question dans laquelle on regarde si l'utilisateur est votant
+     * @return bool
+     */
     private function isVotantInQuestion(int $idQuestion): bool
     {
         return (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion);

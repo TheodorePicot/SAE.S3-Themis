@@ -10,7 +10,7 @@ class PassWord
     /**
      * Permet de hacher un mot de passe
      *
-     * @param string $visiblePassword Le mot de passe visible qui va être hashé
+     * @param string $visiblePassword Le mot de passe visible qui va être haché
      * @return string
      */
     public static function hash(string $visiblePassword): string
@@ -23,7 +23,7 @@ class PassWord
      * Return true si les deux paramètres sont égaux sinon false
      *
      *
-     * @param string $hashedPassword Le mot de passe déjà hashé
+     * @param string $hashedPassword Le mot de passe déjà haché
      * @param string $visiblePassword Le mot de passe visible
      * @return bool
      */
@@ -34,9 +34,9 @@ class PassWord
     }
 
     /**
-     * Permet de générer un chaine de caractère aléatoire
+     * Permet de générer une chaine de caractère aléatoire
      *
-     * @param int $nbCaracteres Nombre de caractère toujours égale à 22
+     * @param int $nbCaracteres Nombre de caractères toujours égal à 22
      * @return string
      */
     public static function generateRandomString(int $nbCaracteres = 22): string
