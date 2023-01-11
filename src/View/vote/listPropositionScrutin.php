@@ -6,7 +6,7 @@
         <?php use Themis\Lib\ConnexionUtilisateur;
         use Themis\Model\Repository\ScrutinUninominalRepository;
 
-        $count = 0;
+        $count = 1;
 
 
         foreach ($propositions as $proposition) :
@@ -17,20 +17,19 @@
             ?>
             <div class="d-flex align-content-center justify-content-center my-2">
                 <div class="col-6 boxProposition overflow-hidden rounded-5 my-3">
-                    <div class="nestedDivQuestion overflow-hidden text-start">
-                        <div class=" mx-3 d-flex flex-row justify-content-between align-items-center">
-                            <a href="<?= $hrefRead ?>">
-                                <h3><?= $titrePropositionHTML ?></h3>
-                            </a>
-                            <div class="form-check">
-                                <input class="form-check-input" <?= (ConnexionUtilisateur::isConnected() && (new ScrutinUninominalRepository())->votantHasAlreadyVotedForPropositionScrutin(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) ? "checked" : ""; ?>
-                                       type="radio" name="idPropositionVote"
-                                       value="<?= $proposition->getIdProposition() ?>"
-                                       id="idPropositionVote<?= $count ?>">
+                    <div class=" mx-3 d-flex flex-row justify-content-between align-items-center">
+                        <a href="<?= $hrefRead ?>">
+                            <h3><?= $titrePropositionHTML ?></h3>
+                        </a>
+                        <div class="form-check">
+                            <input class="form-check-input" <?= (ConnexionUtilisateur::isConnected() && (new ScrutinUninominalRepository())->votantHasAlreadyVotedForPropositionScrutin(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) ? "checked" : ""; ?>
+                                   type="radio" name="idPropositionVote"
+                                   value="<?= $proposition->getIdProposition() ?>"
+                                   id="idPropositionVote<?= $count ?>">
 
-                                <label class="form-check-label" for="idPropositionVote<?= $count ?>">
-                                </label>
-                            </div>
+                            <label class="form-check-label" for="idPropositionVote<?= $count ?>">
+                                Choix <?= $count ?>
+                            </label>
                         </div>
                     </div>
                 </div>
