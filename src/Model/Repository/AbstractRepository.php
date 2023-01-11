@@ -50,7 +50,7 @@ abstract class AbstractRepository
     protected abstract function getTableName(): string;
 
     /**
-     * Permet d'obtenir un tableau avec tout les noms de colonne du DataObject manipulé
+     * Permet d'obtenir un tableau avec tous les noms de colonne du DataObject manipulé
      *
      * @return array
      */
@@ -185,7 +185,7 @@ abstract class AbstractRepository
     }
 
     /**
-     * Permet d'obtenir un tableau avec toute les données dans la BD de la table du DataObject manipulé en fonction de
+     * Permet d'obtenir un tableau avec toutes  les données dans la BD de la table du DataObject manipulé en fonction de
      * {@link AbstractRepository::getOrderColumn()}
      * Ce tableau est limité à 10 DataObject
      *
