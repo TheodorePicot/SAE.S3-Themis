@@ -25,7 +25,7 @@ class VerificationEmail
         $corpsEmail = "<a href=\"$lienValidationEmail\">Validation</a>";
         mail($utilisateur->getAdresseMail(), "Verification Email Themis", $corpsEmail);
         // Temporairement avant d'envoyer un vrai mail
-        (new FlashMessage())->flash("success", $corpsEmail, FlashMessage::FLASH_SUCCESS);
+//        (new FlashMessage())->flash("success", $corpsEmail, FlashMessage::FLASH_SUCCESS);
     }
 
     /**

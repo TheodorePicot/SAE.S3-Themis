@@ -155,13 +155,13 @@ class ControllerUtilisateur extends AbstractController
     public function connect(): void
     {
         FormData::saveFormData("connection");
-        if (!VerificationEmail::hasValidatedEmail($_REQUEST["login"])) {
-            (new FlashMessage)->flash("invalidMail", "Veuillez valider votre email avant de vous connecter", FlashMessage::FLASH_DANGER);
-            $this->redirect("frontController.php?action=login&controller=utilisateur");
-        }
         if ((new UtilisateurRepository())->select($_REQUEST["login"]) == null) {
             (new FlashMessage)->flash("badLogin", "Ce login n'existe pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=login&controller=utilisateur&invalidLogin=1");
+        }
+        if (!VerificationEmail::hasValidatedEmail((new UtilisateurRepository())->select($_REQUEST["login"]))) {
+            (new FlashMessage)->flash("invalidMail", "Veuillez valider votre email avant de vous connecter", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=login&controller=utilisateur");
         }
         if (!isset($_REQUEST["login"]) || !isset($_REQUEST["mdp"])) {
             (new FlashMessage)->flash("notAllInfo", "Vous n'avez pas rempli toutes les informations nécessaires", FlashMessage::FLASH_DANGER);
