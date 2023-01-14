@@ -22,7 +22,7 @@
                             <h3><?= $titrePropositionHTML ?></h3>
                         </a>
                         <div class="form-check">
-                            <input class="form-check-input" <?= (ConnexionUtilisateur::isConnected() && (new ScrutinUninominalRepository())->votantHasAlreadyVotedForProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) ? "checked" : ""; ?>
+                            <input class="form-check-input" <?= (ConnexionUtilisateur::isConnected() && (new ScrutinUninominalRepository())->votantHasAlreadyVotedForPropositionScrutin(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) ? "checked" : ""; ?>
                                    type="radio" name="idPropositionVote"
                                    value="<?= $proposition->getIdProposition() ?>"
                                    id="idPropositionVote<?= $count ?>">

@@ -142,7 +142,7 @@ class ControllerUtilisateur extends AbstractController
      * Connecte l'utilisateur par rapport aux informations du formulaire
      *
      * Cette méthode est appelée quand un utilisateur soumet les informations du formulaire dans {@link src/View/utilisateur/login.php}
-     * Elle vérifie si le login et le mot de passe transmit existent dans la base de donnée. Puis, elle vérifie que l'utilisateur transmet bien un login et
+     * Elle vérifie si le login et le mot de passe transmi existent dans la base de donnée. Puis elle vérifie que l'utilisateur transmet bien un login et
      * un mot de passe.
      * Si toutes ces vérifications sont validées, elle connecte l'utilisateur.
      * Sinon, elle renvoie un message d'erreur et redirige vers une autre vue.
@@ -329,8 +329,7 @@ class ControllerUtilisateur extends AbstractController
     /**
      * Méthode permettant de valider l'email d'un utilisateur
      *
-     * Regarde si l'utilisateur donné existe bien et que le nonce de l'utilisateur est valide.
-     * S'il passe toutes les vérifications alors il valide l'email
+     * Regarde si l'utilisateur donné existe bien et que le nonce de l'utilisateur est valide
      *
      * @return void
      */
@@ -354,11 +353,7 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
-     * Affiche les administrateurs qui correspondent à la valeur de recherche
      *
-     * Méthode propre à l'administrateur, car c'est le seul qui puisse accéder à la gestion des utilisateurs.
-     * Donc si l'utilisateur qui appelle cette méthode n'est pas administrateur alors on retourne un message d'erreur.
-     * Sinon, on affiche la vue avec les administrateurs qui correspondent à la valeur de recherche
      *
      * @return void
      */
@@ -381,15 +376,6 @@ class ControllerUtilisateur extends AbstractController
         ]);
     }
 
-    /**
-     * Affiche les organisateurs qui correspondent à la valeur de recherche
-     *
-     * Méthode propre à l'administrateur, car c'est le seul qui puisse accéder à la gestion des utilisateurs.
-     * Donc si l'utilisateur qui appelle cette méthode n'est pas administrateur alors on retourne un message d'erreur.
-     * Sinon, on affiche la vue avec les organisateurs qui correspondent à la valeur de recherche
-     *
-     * @return void
-     */
     public function readAllOrganisateurBySearchValue(): void
     {
         if (!$this->isAdmin()) {
@@ -409,15 +395,6 @@ class ControllerUtilisateur extends AbstractController
         ]);
     }
 
-    /**
-     * Affiche les utilisateurs lambda qui correspondent à la valeur de recherche
-     *
-     * Méthode propre à l'administrateur, car c'est le seul qui puisse accéder à la gestion des utilisateurs.
-     * Donc si l'utilisateur qui appelle cette méthode n'est pas administrateur alors on retourne un message d'erreur.
-     * Sinon, on affiche la vue avec les utilisateurs qui correspondent à la valeur de recherche
-     *
-     * @return void
-     */
     public function readAllUtilisateurBySearchValue(): void
     {
         if (!$this->isAdmin()) {

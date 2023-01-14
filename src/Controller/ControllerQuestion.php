@@ -427,10 +427,10 @@ class ControllerQuestion extends AbstractController
     {
         $this->connectionCheck();
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
-        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote()) {
-            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus supprimer la question", FlashMessage::FLASH_SUCCESS);
-            $this->redirect("frontController.php?action=read&idQuestion={$_REQUEST["idQuestion"]}");
-        }
+//        if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote()) {
+//            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus supprimer la question", FlashMessage::FLASH_SUCCESS);
+//            $this->redirect("frontController.php?action=read&idQuestion={$_REQUEST["idQuestion"]}");
+//        }
         if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur()) && $this->isOrganisateur()
             || $this->isAdmin()) {
             (new QuestionRepository())->delete($_REQUEST["idQuestion"]);

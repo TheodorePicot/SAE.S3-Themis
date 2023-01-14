@@ -89,8 +89,6 @@ class JugementMajoritaireRepository extends VoteRepository
     }
 
     /**
-     * Permet de mettre à jour un vote dans la base de données.
-     *
      * @param AbstractDataObject $dataObject
      * @return void
      */
@@ -103,8 +101,6 @@ class JugementMajoritaireRepository extends VoteRepository
     }
 
     /**
-     * Retourne un tableau avec le nombre de votes pour chaque mention pour une proposition.
-     *
      * @param int $idProposition
      * @return int[]
      */
@@ -142,8 +138,6 @@ class JugementMajoritaireRepository extends VoteRepository
     }
 
     /**
-     * Retourne vrai si l'utilisateur a déjà voté.
-     *
      * @param string $loginVotant
      * @param int $idProposition
      * @return bool
@@ -166,9 +160,6 @@ class JugementMajoritaireRepository extends VoteRepository
     }
 
     /**
-     * Retourne toutes les propositions d'une question. Ces propositions contiennent chacune un tableau avec le nombre de votes pour chaque mention.
-     *
-     *
      * @param int $idQuestion
      * @return array
      */
@@ -187,8 +178,6 @@ class JugementMajoritaireRepository extends VoteRepository
     }
 
     /**
-     * Retourne le nombre de votes pour une proposition.
-     *
      * @param int $idProposition
      * @return int
      */
@@ -202,10 +191,7 @@ class JugementMajoritaireRepository extends VoteRepository
     }
 
     /**
-     * Retourne toutes les propositions d'une question. Chaque proposition contient leur mention gagnante
-     * et un tableau avec le nombre de votes pour chaque mention.
-     * Les propositions sont ordonnées de gagnante à perdante.
-     * @param array $values Les mentions de chaque proposition
+     * @param array $values
      * @param int $idQuestion
      * @return array
      */
@@ -218,7 +204,7 @@ class JugementMajoritaireRepository extends VoteRepository
             $proposition->setListeValeur($this->getValeurFrequenceProposition($proposition->getIdProposition()));
             $propositionOrdered[] = $proposition;
         }
-        usort($propositionOrdered, fn($a, $b) => -1 * strcmp($a->getValeurResultat(), $b->getValeurResultat())); // Ordonner la liste par rapport à la mention de la proposition
+        usort($propositionOrdered, fn($a, $b) => -1 * strcmp($a->getValeurResultat(), $b->getValeurResultat()));
         return $propositionOrdered;
     }
 
