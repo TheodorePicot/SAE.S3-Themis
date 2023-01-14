@@ -8,28 +8,6 @@ use Themis\Model\DataObject\Question;
 class QuestionRepository extends AbstractRepository
 {
 
-//    public function create(AbstractDataObject $question): string
-//    {
-//        $sqlQuery = "INSERT INTO \"Questions\"
-//                 (\"idQuestion\", \"titreQuestion\", \"dateDebutProposition\", \"dateFinProposition\",
-//                \"dateDebutVote\", \"dateFinVote\", \"descriptionQuestion\", \"loginOrganisateur\", \"systemeVote\",
-//                tags)
-//                VALUES (:idQuestion, :titreQuestion, :dateDebutProposition, :dateFinProposition,
-//                :dateDebutVote, :dateFinVote, :descriptionQuestion, :loginOrganisateur, :systemeVote,
-//                :tags)";
-//
-//        $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-//
-//        $values = $question->tableFormat();
-//
-//        $pdoStatement->execute($values);
-//
-//        $dataObject = $pdoStatement->fetch();
-//
-//    }
-
-
-
     /**
      * Permet d'obtenir une liste de toute les questions possédant le string pplacé en paramètre dans le titre de la
      * question et/ou dans sa description
@@ -72,8 +50,7 @@ class QuestionRepository extends AbstractRepository
             $objectArrayFormat["dateDebutVote"],
             $objectArrayFormat["dateFinVote"],
             $objectArrayFormat["loginOrganisateur"],
-            $objectArrayFormat["systemeVote"],
-            $objectArrayFormat["tags"]);
+            $objectArrayFormat["systemeVote"]);
     }
 
     /**
@@ -200,8 +177,7 @@ class QuestionRepository extends AbstractRepository
             "dateDebutVote",
             "dateFinVote",
             "loginOrganisateur",
-            "systemeVote",
-            "tags"
+            "systemeVote"
         ];
     }
 
