@@ -158,7 +158,7 @@ class ControllerQuestion extends AbstractController
         (new QuestionRepository)->update($question);
 
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"], $section->getLike());
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"]);
             (new SectionRepository)->update($updatedSection);
         }
 
