@@ -37,6 +37,8 @@ use Themis\Lib\ConnexionUtilisateur;
                 </div>
 
 
+
+
                 <div class="col-auto">
                     <h3><label for="systemeVote">Choix du système de vote</label></h3>
                     <select class="form-select"
@@ -55,6 +57,29 @@ use Themis\Lib\ConnexionUtilisateur;
                     </select>
 
                 </div>
+
+                <div class="col-auto">
+                    <h3><label for="tags">Tags</label></h3>
+                    <select class="form-select h-100" name="tags[]" multiple>
+                        <option>Politique</option>
+                        <option>Animaux</option>
+                        <option>Nature</option>
+                        <option>Scientique</option>
+                        <option>Informatique</option>
+                        <option>Orange</option>
+                        <option>Google</option>
+                        <option>LG</option>
+                        <option>Microsoft</option>
+                        <option>Motorola</option>
+                        <option>Samsung</option>
+                        <option>Sony</option>
+                        <option>Autre</option>
+                    </select>
+
+                </div>
+
+
+
             </div>
         </div>
 

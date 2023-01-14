@@ -41,7 +41,7 @@ use Themis\Lib\ConnexionUtilisateur;
                         <?php
                         $count = 1;
                         foreach ($sections as $section) : ?>
-                            <h3><?= $count ?>. Section <?= $count ?> : <?= $section->getTitreSection() ?></h3>
+                            <h3><?= $count ?>. Section <?= $count ?> : <?= htmlspecialchars($section->getTitreSection()) ?></h3>
                             <div class="shadowBox card card-body border-0">
                                 <?= htmlspecialchars($section->getDescriptionSection()) ?>
                             </div>
