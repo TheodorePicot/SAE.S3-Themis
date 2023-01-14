@@ -19,13 +19,13 @@ class SectionLikeRepository
     {
         return [
             "login",
-            "idSection"
+            "idSectionProposition"
         ];
     }
 
     protected function build(array $objectArrayFormat): AbstractDataObject
     {
-        return new SectionLike($objectArrayFormat["login"], $objectArrayFormat["idSection"]);
+        return new SectionLike($objectArrayFormat["login"], $objectArrayFormat["idSectionProposition"]);
     }
 
     protected function getOrderColumn(): string
@@ -38,26 +38,26 @@ class SectionLikeRepository
         return "login";
     }
 
-    public function getNbLikeSection(int $idSection): int
+    public function getNbLikeSection(int $idSectionProposition): int
     {
-        $sqlQuery = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE \"idSection\" =:idSection";
+        $sqlQuery = "SELECT COUNT(*) FROM {$this->getTableName()} WHERE \"idSectionProposition\" =:idSectionProposition";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
-        $values = ["idSection" => $idSection];
+        $values = ["idSectionProposition" => $idSectionProposition];
         $pdoStatement->execute($values);
         return (int) $pdoStatement->fetch()[0];
     }
 
-    public function votantHasAlreadyLikedForSection(string $login, int $idSection): bool
+    public function votantHasAlreadyLikedForSection(string $login, int $idSectionProposition): bool
     {
         $sqlQuery = "SELECT * FROM {$this->getTableName()} 
                     WHERE \"login\" = :login
-                    AND \"idSection\" = :idSection";
+                    AND \"idSectionProposition\" = :idSectionProposition";
 
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = array(
             'login' => $login,
-            'idSection' => $idSection
+            'idSectionProposition' => $idSectionProposition
         );
 
         $pdoStatement->execute($values);
@@ -67,20 +67,20 @@ class SectionLikeRepository
 
     public function create(SectionLike $like): string
     {
-        $sqlQuery = "INSERT INTO {$this->getTableName()} VALUES (:login, :idSection)";
+        $sqlQuery = "INSERT INTO {$this->getTableName()} VALUES (:login, :idSectionProposition)";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = $like->tableFormat();
         $pdoStatement->execute($values);
         return "";
     }
 
-    public function delete(string $login, int $idSection): string
+    public function delete(string $login, int $idSectionProposition): string
     {
-        $sqlQuery = "DELETE  FROM {$this->getTableName()} WHERE \"login\" =:login AND \"idSection\" =:idSection";
+        $sqlQuery = "DELETE  FROM {$this->getTableName()} WHERE \"login\" =:login AND \"idSectionProposition\" =:idSectionProposition";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = array(
             'login' => $login,
-            'idSection' => $idSection
+            'idSectionProposition' => $idSectionProposition
         );
         $pdoStatement->execute($values);
         return "";

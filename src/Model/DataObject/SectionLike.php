@@ -6,16 +6,16 @@ class SectionLike extends AbstractDataObject
 {
 
     private string $login;
-    private int $idSection;
+    private int $idSectionProposition;
 
     /**
      * @param string $login
-     * @param int $idSection
+     * @param int $idSectionProposition
      */
-    public function __construct(string $login, int $idSection)
+    public function __construct(string $login, int $idSectionProposition)
     {
         $this->login = $login;
-        $this->idSection = $idSection;
+        $this->idSectionProposition = $idSectionProposition;
     }
 
     /**
@@ -29,9 +29,9 @@ class SectionLike extends AbstractDataObject
     /**
      * @return int
      */
-    public function getIdSection(): int
+    public function getIdSectionProposition(): int
     {
-        return $this->idSection;
+        return $this->idSectionProposition;
     }
 
 
@@ -39,7 +39,7 @@ class SectionLike extends AbstractDataObject
     {
             return [
                 "login" => $this->login,
-                "idSection" => $this->idSection
+                "idSectionProposition" => $this->idSectionProposition
             ];
     }
 
@@ -47,7 +47,7 @@ class SectionLike extends AbstractDataObject
     {
         return new SectionLike(
             $formArray["login"],
-            $formArray["idSection"]
+            $formArray["idSectionProposition"]
         );
     }
 }
