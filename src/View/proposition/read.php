@@ -3,6 +3,7 @@
 use Themis\Lib\ConnexionUtilisateur;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\CoAuteurRepository;
+use Themis\Model\Repository\SectionLikeRepository;
 use Themis\Model\Repository\SectionPropositionRepository;
 
 $idPropositionInURL = rawurlencode($proposition->getIdProposition());
@@ -44,8 +45,22 @@ htmlspecialchars($question->getTitreQuestion())
                     <div class="my-4">
                         <h4 class="my-3">Proposition pour la section <?= $count ?> : </h4>
                         <div class="shadowBoxProposition card card-body border-0 ">
-\                            <?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?>
+                            <?php $sectionProposition = (new SectionPropositionRepository())->selectByPropositionAndSection($idPropositionInURL, $section->getIdSection()) ?>
+\                            <?= $sectionProposition->getTexteProposition() ?>
+                            <?php $questionInURL = rawurlencode($question->getIdQuestion());
+                            $login = htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin());
+                            $idSectionPropositionInURL = $sectionProposition->getIdSectionProposition();
+                            $nbVotes = (new SectionLikeRepository())->getNbLikeSection($sectionProposition->getIdSectionProposition());?>
+
+
                         </div>
+
+                        <a class="nav-link"
+                           href="frontController.php?action=like&controller=section&idSectionProposition=<?=$idSectionPropositionInURL?>&idQuestion=<?=$questionInURL?>&login=<?=$login?>&idProposition=<?=$idPropositionInURL?>">
+                            <?=$nbVotes?>
+                            <img class="accountImg" alt="compte" src="assets/img/like.png">
+                        </a>
+
                     </div>
 
                     <?php $count++;

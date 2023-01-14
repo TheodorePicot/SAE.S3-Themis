@@ -29,6 +29,8 @@ class SectionPropositionRepository extends AbstractRepository
         return $dataObjects;
     }
 
+
+
     protected function getTableName(): string
     {
         return 'themis."SectionProposition"';

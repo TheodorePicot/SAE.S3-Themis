@@ -141,12 +141,14 @@ class ControllerProposition extends AbstractController
         if ($this->hasReadAccess($question, $proposition)) {
             $sections = (new SectionRepository())->selectAllByQuestion($question->getIdQuestion());
             $coAuteurs = (new CoAuteurRepository())->selectAllByProposition($proposition->getIdProposition());
+            $sectionsProposition = (new SectionPropositionRepository())->selectAllByProposition($_REQUEST["idProposition"]);
 
             $this->showView("view.php", [
                 "coAuteurs" => $coAuteurs,
                 "proposition" => $proposition,
                 "question" => $question,
                 "sections" => $sections,
+                "sectionsProposition" => $sectionsProposition,
                 "pageTitle" => "Info Proposition",
                 "pathBodyView" => "proposition/read.php"
             ]);
