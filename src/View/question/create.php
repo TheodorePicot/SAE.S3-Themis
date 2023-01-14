@@ -14,7 +14,7 @@ use Themis\Lib\ConnexionUtilisateur;
                 <div class="container col-12 my-3">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input type="text" class="form-control" placeholder="?" name="titreQuestion" id="titreQuestion"
-                           maxlength="99"
+                           maxlength="200"
                            value="<?php if (isset($_SESSION["formData"]["createQuestion"]["titreQuestion"])) echo $_SESSION["formData"]["createQuestion"]["titreQuestion"] ?>"
                            required/>
                 </div>

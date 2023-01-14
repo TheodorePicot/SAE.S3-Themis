@@ -260,3 +260,8 @@ mark {
         padding-right: 4px;
     }
 }
+
+.likeImg{
+    width: 35px;
+    height: 35px;
+}

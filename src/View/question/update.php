@@ -15,7 +15,7 @@ use Themis\Lib\ConnexionUtilisateur;
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input class="form-control" type="text" placeholder="?"
                            value="<?= htmlspecialchars($question->getTitreQuestion()) ?>"
-                           name="titreQuestion" id="titreQuestion" max="99" maxlength="99" required/>
+                           name="titreQuestion" id="titreQuestion" maxlength="200" required/>
 
                 </div>
 

@@ -24,7 +24,7 @@ htmlspecialchars($question->getTitreQuestion())
             - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
     </div>
 
-    <div class="row my-5 gy-4">
+    <div class="row my-5">
         <div class="container-fluid col-md-11">
             <div class="d-flex align-content-center justify-content-center">
                 <h2>Plan de la question</h2>
@@ -37,29 +37,30 @@ htmlspecialchars($question->getTitreQuestion())
 
                 as $section) : ?>
                 <div class="my-4">
-                    <h4><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h4>
+                    <h4>Titre de la section <?= $count ?></h4>
                     <div class="shadowBox card card-body border-0 ">
                         <?= htmlspecialchars($section->getDescriptionSection()) ?>
                     </div>
 
-                    <div class="my-4">
+                    <div class="my-5">
                         <h4 class="my-3">Proposition pour la section <?= $count ?> : </h4>
-                        <div class="shadowBoxProposition card card-body border-0 ">
+                        <div class="shadowBoxProposition card card-body border-0">
                             <?php $sectionProposition = (new SectionPropositionRepository())->selectByPropositionAndSection($idPropositionInURL, $section->getIdSection()) ?>
-\                            <?= $sectionProposition->getTexteProposition() ?>
+                            \ <?= $sectionProposition->getTexteProposition() ?>
                             <?php $questionInURL = rawurlencode($question->getIdQuestion());
                             $login = htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin());
                             $idSectionPropositionInURL = $sectionProposition->getIdSectionProposition();
-                            $nbVotes = (new SectionLikeRepository())->getNbLikeSection($sectionProposition->getIdSectionProposition());?>
-
-
+                            $nbVotes = (new SectionLikeRepository())->getNbLikeSection($sectionProposition->getIdSectionProposition()); ?>
                         </div>
-
-                        <a class="nav-link"
-                           href="frontController.php?action=like&controller=section&idSectionProposition=<?=$idSectionPropositionInURL?>&idQuestion=<?=$questionInURL?>&login=<?=$login?>&idProposition=<?=$idPropositionInURL?>">
-                            <?=$nbVotes?>
-                            <img class="accountImg" alt="compte" src="assets/img/like.png">
-                        </a>
+<!--                        --><?php //if (ConnexionUtilisateur::isConnected() && (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion())) : ?>
+                        <div class="my-1">
+                            <a class="nav-link"
+                               href="frontController.php?action=like&controller=section&idSectionProposition=<?= $idSectionPropositionInURL ?>&idQuestion=<?= $questionInURL ?>&login=<?= $login ?>&idProposition=<?= $idPropositionInURL ?>">
+                                <img class="likeImg" alt="compte" src="assets/img/like.png">
+                                <?= $nbVotes ?> <small class="text-muted">like</small>
+                            </a>
+                        </div>
+<!--                        --><?php //endif ?>
 
                     </div>
 
@@ -68,27 +69,31 @@ htmlspecialchars($question->getTitreQuestion())
                 </div>
             </div>
 
+            <div class="d-flex align-content-center justify-content-center">
+                <button class="btn btn-dark my-4 mx-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#coAuteurs" aria-expanded="false"
+                        aria-controls="coAuteurs">Co-Auteurs
+                </button>
+            </div>
 
-            <button class="btn btn-dark my-4 mx-5" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#coAuteurs" aria-expanded="false"
-                    aria-controls="coAuteurs">Co-Auteurs
-            </button>
-            <div class="collapse multi-collapse col-6" id="coAuteurs">
+
+            <div class="collapse multi-collapse col-6 offset-3  " id="coAuteurs">
                 <div class="card card-body">
                     <?php require_once __DIR__ . "/../utilisateur/listCoAuteursForRead.php" ?>
                 </div>
             </div>
 
+
             <?php if (ConnexionUtilisateur::isConnected() &&
                 ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion())
                     || (new CoAuteurRepository())->isCoAuteurInProposition(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdProposition())) || ConnexionUtilisateur::isAdministrator()) : ?>
-                <div class="my-2 mx-5">
+                <div class="my-2 d-flex align-content-center justify-content-center my-5">
                     <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) &&
                         ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
-                        <a class="btn btn-dark text-nowrap" href='<?= $hrefDelete ?>'
+                        <a class="btn btn-primary text-nowrap" href='<?= $hrefDelete ?>'
                            onclick="return confirm('Are you sure?');"> Supprimer</a>
                     <?php endif ?>
-                    <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
+                    <a class="btn btn-primary text-nowrap mx-3" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
                 </div>
             <?php endif ?>
         </div>
