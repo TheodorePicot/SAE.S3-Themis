@@ -8,6 +8,7 @@ use Themis\Lib\FormData;
 use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\Section;
+use Themis\Model\DataObject\Tag;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
 use Themis\Model\Repository\JugementMajoritaireRepository;
@@ -55,6 +56,8 @@ class ControllerQuestion extends AbstractController
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             $this->createParticipants($idQuestion);
+
+
             FormData::deleteFormData("createQuestion");
             $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
         } else {
@@ -108,6 +111,9 @@ class ControllerQuestion extends AbstractController
             (new AuteurRepository)->create($auteurObject);
         }
     }
+
+
+
 
     /**
      * Méthode auxiliaire que l'organisateur peut appeler durant la création ou la mise à jour de la question.
