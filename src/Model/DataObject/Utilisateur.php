@@ -167,6 +167,7 @@ class Utilisateur extends AbstractDataObject
         return $this->estAdmin;
     }
 
+
     /**
      * Permet de savoir si un Utilisateur est Organisateur
      *

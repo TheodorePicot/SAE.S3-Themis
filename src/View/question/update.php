@@ -27,6 +27,7 @@ use Themis\Lib\ConnexionUtilisateur;
                               maxlength="700"><?= htmlspecialchars($question->getDescriptionQuestion()) ?></textarea>
                 </div>
 
+
                 <div class="container col-md-6 col-lg-6 mt-3 mb-5">
                     <h3>Auteurs</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listAuteursForUpdate.php" ?>

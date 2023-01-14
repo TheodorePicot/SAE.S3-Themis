@@ -49,7 +49,7 @@ class SectionLikeRepository
 
     public function votantHasAlreadyLikedForSection(string $login, int $idSection): bool
     {
-        $sqlQuery = "SELECT * FROM {$this->getTableName()} 
+        $sqlQuery = "SELECT * FROM {$this->getTableName()}
                     WHERE \"login\" = :login
                     AND \"idSection\" = :idSection";
 

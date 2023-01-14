@@ -139,7 +139,6 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "create" && isset($_REQ
                             <img class="accountImg" alt="compte" src="assets/img/panel.png">
                         </a>
                     </li>
-
                 <?php endif ?>
                 <?php if (ConnexionUtilisateur::isConnected()) : ?>
 

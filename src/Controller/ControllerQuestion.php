@@ -348,7 +348,7 @@ class ControllerQuestion extends AbstractController
             || $this->isAdmin()) {
             $oldQuestion = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
             if (date_create()->format("Y-m-d H:i:s") > $oldQuestion->getDateFinProposition()) {
-                (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
+                (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
             if ($_REQUEST['dateDebutProposition'] < $oldQuestion->getDateDebutProposition()) {
