@@ -42,7 +42,8 @@ class SectionRepository extends AbstractRepository
             return new Section($objectArrayFormat["idSection"],
                 $objectArrayFormat["idQuestion"],
                 $objectArrayFormat["titreSection"],
-                $objectArrayFormat["descriptionSection"]);
+                $objectArrayFormat["descriptionSection"]
+            );
         }
     }
 
@@ -62,6 +63,6 @@ class SectionRepository extends AbstractRepository
 
     protected function getOrderColumn(): string
     {
-        return "idSection";
+        return "loginVotant";
     }
 }

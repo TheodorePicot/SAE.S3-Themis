@@ -155,7 +155,7 @@ class ScrutinUninominalRepository extends VoteRepository
         $sqlQuery = "SELECT * FROM {$this->getTableName()} 
                     WHERE \"loginVotant\" = :loginVotant
                     AND \"idProposition\" = :idProposition";
-//        echo $sqlQuery;
+
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = array(

@@ -131,7 +131,7 @@ class ControllerQuestion extends AbstractController
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             $this->updateInformationAuxiliary();
-            (new SectionRepository)->create(new Section((int)null, $_REQUEST["idQuestion"], "", ""));
+            (new SectionRepository)->create(new Section((int)null, $_REQUEST["idQuestion"], "", "", 0));
 
             if (isset($_REQUEST["isInCreation"]))
                 $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_REQUEST["idQuestion"]}");
@@ -158,7 +158,7 @@ class ControllerQuestion extends AbstractController
         (new QuestionRepository)->update($question);
 
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"]);
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"], $section->getLike());
             (new SectionRepository)->update($updatedSection);
         }
 

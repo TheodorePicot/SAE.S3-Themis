@@ -23,6 +23,7 @@ class Section extends AbstractDataObject
         $this->idQuestion = $idQuestion;
         $this->titreSection = $titreSection;
         $this->descriptionSection = $descriptionSection;
+
     }
 
     /**
@@ -88,6 +89,8 @@ class Section extends AbstractDataObject
     {
         return $this->descriptionSection;
     }
+
+
 
     /**
      * permet de construire une Section à partir d'une array

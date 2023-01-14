@@ -36,7 +36,7 @@ class ScrutinUninominal extends Vote
      * Permet de construire un Vote à partir d'une array
      *
      * @param array $formArray
-     * @return Vote
+     * @return ScrutinUninominal
      */
     public static function buildFromForm(array $formArray): ScrutinUninominal
     {
