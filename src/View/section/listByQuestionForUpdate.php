@@ -22,12 +22,12 @@ foreach ($sections as $section) : ?>
         <h5><label for="titreSection<?= $section->getIdSection() ?>">Titre</label></h5>
         <input class="form-control" type="text" value="<?= htmlspecialchars($section->getTitreSection()) ?>"
                name="titreSection<?= $section->getIdSection() ?>" id="titreSection<?= $section->getIdSection() ?>"
-               />
+               required/>
         <div class="my-4">
             <h5><label for="descriptionSection<?= $section->getIdSection() ?>">Description</label></h5>
             <textarea class="form-control" placeholder="" name="descriptionSection<?= $section->getIdSection() ?>"
                       id="descriptionSection<?= $section->getIdSection() ?>" rows="5"
-                      cols="40"><?= htmlspecialchars($section->getDescriptionSection()) ?></textarea>
+                      cols="40"><?= htmlspecialchars($section->getDescriptionSection()) ?> </textarea>
         </div>
     </div>
 
