@@ -22,7 +22,7 @@ class ControllerSection extends AbstractController{
         $idProposition = $proposition->getIdProposition();
         $idQuestion = $question->getIdQuestion();
         if (!(new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $idQuestion)){
-            (new FlashMessage)->flash("pasLeDroitLike", "Les like sont réservés aux votants", FlashMessage::FLASH_WARNING);
+            (new FlashMessage)->flash("pasLeDroitLike", "Les likes sont réservés aux votants", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=read&controller=proposition&idQuestion=$idQuestion&idProposition=$idProposition");
         }
         if ((new SectionLikeRepository())->votantHasAlreadyLikedForSection($_REQUEST["login"], $_REQUEST["idSectionProposition"])){
