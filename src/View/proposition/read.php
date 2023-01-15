@@ -46,7 +46,7 @@ htmlspecialchars($question->getTitreQuestion())
                         <h4 class="my-3">Proposition pour la section <?= $count ?> : </h4>
                         <div class="shadowBoxProposition card card-body border-0">
                             <?php $sectionProposition = (new SectionPropositionRepository())->selectByPropositionAndSection($idPropositionInURL, $section->getIdSection()) ?>
-                            \ <?= $sectionProposition->getTexteProposition() ?>
+                             <?= $sectionProposition->getTexteProposition() ?>
                             <?php $questionInURL = rawurlencode($question->getIdQuestion());
                             $login = htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin());
                             $idSectionPropositionInURL = $sectionProposition->getIdSectionProposition();
