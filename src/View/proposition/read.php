@@ -9,7 +9,6 @@ use Themis\Model\Repository\SectionPropositionRepository;
 $idPropositionInURL = rawurlencode($proposition->getIdProposition());
 $hrefDelete = "frontController.php?controller=proposition&action=delete&idProposition=$idPropositionInURL&idQuestion={$question->getIdQuestion()}";
 $hrefUpdate = "frontController.php?controller=proposition&action=update&idProposition=$idPropositionInURL";
-htmlspecialchars($question->getTitreQuestion())
 ?>
 
 
@@ -20,8 +19,8 @@ htmlspecialchars($question->getTitreQuestion())
 
 
     <div class="d-flex align-content-center justify-content-center my-5">
-        <h1 style=""> <?= $proposition->getTitreProposition() ?>
-            - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
+        <h1 style=""> <?= htmlspecialchars($proposition->getTitreProposition()) ?>
+            - Proposition de <?= htmlspecialchars($proposition->getLoginAuteur()) ?></h1>
     </div>
 
     <div class="row my-5">
@@ -46,7 +45,7 @@ htmlspecialchars($question->getTitreQuestion())
                         <h4 class="my-3">Proposition pour la section <?= $count ?> : </h4>
                         <div class="shadowBoxProposition card card-body border-0">
                             <?php $sectionProposition = (new SectionPropositionRepository())->selectByPropositionAndSection($idPropositionInURL, $section->getIdSection()) ?>
-                            \ <?= $sectionProposition->getTexteProposition() ?>
+                            \ <?= htmlspecialchars($sectionProposition->getTexteProposition()) ?>
                             <?php $questionInURL = rawurlencode($question->getIdQuestion());
                             $login = htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin());
                             $idSectionPropositionInURL = $sectionProposition->getIdSectionProposition();
@@ -91,14 +90,13 @@ htmlspecialchars($question->getTitreQuestion())
                     <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) &&
                         ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-primary text-nowrap" href='<?= $hrefDelete ?>'
-                           onclick="return confirm('Are you sure?');"> Supprimer</a>
+                           onclick="return confirm('êtes-vous sûr de vouloir continuer ?');"> Supprimer</a>
                     <?php endif ?>
                     <a class="btn btn-primary text-nowrap mx-3" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
                 </div>
             <?php endif ?>
         </div>
     </div>
-
 
 </div>
 

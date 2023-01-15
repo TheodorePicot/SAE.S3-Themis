@@ -10,7 +10,6 @@ $hrefUpdate = "frontController.php?action=update&idQuestion=$questionInURL";
 $hrefCreateProposition = "frontController.php?controller=proposition&action=create&idQuestion=$questionInURL";
 $hrefPropositions = "frontController.php?controller=proposition&action=readByQuestion&idQuestion=$questionInURL";
 $hrefVoter = "frontController.php?controller=vote&action=showPropositionsVote&idQuestion=$questionInURL";
-//$hrefCreateSection = "frontController.php?action=created&controller=section&idQuestion=$questionInURL";
 $hrefReadAll = "frontController.php?action=readAll";
 $lienRetourQuestion = "<a href=" . $hrefReadAll . ">Questions : </a>";
 $date = date_create();
@@ -22,7 +21,7 @@ $date = date_create();
     <!--    QUESTION + DELETE UPDATE-->
 
     <div class="d-flex align-content-center justify-content-center my-5">
-        <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?> - <?= $question->getLoginOrganisateur() ?></h1>
+        <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?> - <?= htmlspecialchars($question->getLoginOrganisateur()) ?></h1>
     </div>
 
     <div class="row my-5 my-4 gy-4 container-fluid">
@@ -100,7 +99,7 @@ $date = date_create();
             <?php if (ConnexionUtilisateur::isUser($question->getLoginOrganisateur()) || ConnexionUtilisateur::isAdministrator()) : ?>
                 <div class="my-4 d-flex align-content-center justify-content-center">
                     <a class="btn btn-primary text-nowrap mx-2" href="<?= $hrefDelete ?>"
-                       onclick="return confirm('Are you sure?');"> Supprimer</a>
+                       onclick="return confirm('êtes-vous sûr de vouloir continuer ?');"> Supprimer</a>
                     <?php if (date_create()->format("Y-m-d H:i:s") < $question->getDateDebutProposition() || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-primary text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
                     <?php endif; ?>
@@ -160,7 +159,6 @@ $date = date_create();
                 </ul>
             </div>
         </div>
-
 
         <div class="container-fluid col-md-12 col-lg-10 my-5">
 

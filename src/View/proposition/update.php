@@ -10,7 +10,6 @@ use Themis\Model\Repository\SectionPropositionRepository;
             <h1>Mise à jour proposition</h1>
         </div>
 
-
         <div class='container-fluid'>
             <div class="row mx-5 my-5 gy-4">
                 <div class="container-fluid col-md-10 col-lg-10 ">
@@ -30,7 +29,7 @@ use Themis\Model\Repository\SectionPropositionRepository;
 
                     <div class="my-4">
                         <h3><label for="titreProposition">Titre de la proposition</label></h3>
-                        <input class="form-control" placeholder="?" value="<?= $proposition->getTitreProposition() ?>"
+                        <input class="form-control" placeholder="?" value="<?= htmlspecialchars($proposition->getTitreProposition()) ?>"
                                id="titreProposition"
                                name="titreProposition" max="99" maxlength="99" required>
                     </div>
@@ -66,7 +65,7 @@ use Themis\Model\Repository\SectionPropositionRepository;
                     <input type='hidden' name='idProposition' value='<?= $proposition->getIdProposition() ?>'>
                     <input type='hidden' name='idQuestion' value='<?= $question->getIdQuestion() ?>'>
                     <input type="hidden" name="loginAuteur"
-                           value="<?= $proposition->getLoginAuteur() ?>">
+                           value="<?= htmlspecialchars($proposition->getLoginAuteur()) ?>">
                     <input class="btn btn-dark" type="submit" value="Mettre à jour"/>
 
                 </div>

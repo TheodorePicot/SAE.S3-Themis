@@ -96,7 +96,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 
                 <?php if (ConnexionUtilisateur::isUser($utilisateur->getLogin()) || ConnexionUtilisateur::isAdministrator()) : ?>
                     <a class="btn btn-primary text-nowrap mx-2 " href='<?= $hrefDelete ?>'
-                       onclick="return confirm('Are you sure?');"> Supprimer</a>
+                       onclick="return confirm('êtes-vous sûr de vouloir continuer ?');"> Supprimer</a>
 
                     <a class="btn btn-primary text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour
                         mes informations</a>

@@ -22,10 +22,8 @@ class VerificationEmail
         $nonceURL = rawurlencode($utilisateur->getNonce());
         $absoluteURL = Conf::getAbsoluteURL();
         $lienValidationEmail = "$absoluteURL?action=validerEmail&controller=utilisateur&login=$loginURL&nonce=$nonceURL";
-        $corpsEmail = "<a href=\"$lienValidationEmail\">Validation</a>";
+        $corpsEmail = "Voici le lien de vérification : $lienValidationEmail";
         mail($utilisateur->getAdresseMail(), "Verification Email Themis", $corpsEmail);
-        // Temporairement avant d'envoyer un vrai mail
-//        (new FlashMessage())->flash("success", $corpsEmail, FlashMessage::FLASH_SUCCESS);
     }
 
     /**

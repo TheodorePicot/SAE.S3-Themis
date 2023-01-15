@@ -7,7 +7,6 @@ use Themis\Model\DataObject\Question;
 
 class QuestionRepository extends AbstractRepository
 {
-
     /**
      * Permet d'obtenir une liste de toute les questions possédant le string pplacé en paramètre dans le titre de la
      * question et/ou dans sa description
@@ -50,11 +49,12 @@ class QuestionRepository extends AbstractRepository
             $objectArrayFormat["dateDebutVote"],
             $objectArrayFormat["dateFinVote"],
             $objectArrayFormat["loginOrganisateur"],
-            $objectArrayFormat["systemeVote"]);
+            $objectArrayFormat["systemeVote"],
+            json_decode($objectArrayFormat["tags"]));
     }
 
     /**
-     * Permet d'obtenir une liste de toutes les questions qui sont en cours d'écriture
+     * Permet d'obtenir une liste de toute les questions qui sont en cour d'écriture
      *
      * C'est-à-dire que la date courante est entre la date de début de d'écriture de proposition et la date de
      * fin d'écriture de proposition
@@ -177,7 +177,8 @@ class QuestionRepository extends AbstractRepository
             "dateDebutVote",
             "dateFinVote",
             "loginOrganisateur",
-            "systemeVote"
+            "systemeVote",
+            "tags"
         ];
     }
 

@@ -1,8 +1,8 @@
 <?php
 
 $utilisateurInURL = rawurlencode($utilisateur->getLogin());
-$hrefDelete = "frontController.php?action=delete&controller=utilisateur&login=" . $utilisateurInURL;
-$hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" . $utilisateurInURL;;
+$hrefDelete = "frontController.php?action=delete&controller=utilisateur&login=$utilisateurInURL";
+$hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=$utilisateurInURL";
 ?>
 
 
@@ -25,7 +25,7 @@ $hrefUpdate = "frontController.php?action=update&controller=utilisateur&login=" 
 
                 <input type='hidden' name='action' value='updatedForPassword'>
                 <input type='hidden' name='controller' value='utilisateur'>
-                <input type="hidden" name="login" value="<?= $utilisateur->getLogin() ?>">
+                <input type="hidden" name="login" value="<?= htmlspecialchars($utilisateur->getLogin()) ?>">
                 <div class="d-flex align-content-center justify-content-center">
 
                     <input class="my-4 btn btn-dark" type="submit" value="Envoyer"/>

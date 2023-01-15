@@ -13,6 +13,7 @@ class Question extends AbstractDataObject
     private string $dateFinVote;
     private string $loginOrganisateur;
     private string $systemeVote;
+    private ?array $tags;
 
     /**
      * Permet de construire une Question à partir d'un idQuestion, d'un titreQuestion, d'une descriptionQuestion,
@@ -34,7 +35,8 @@ class Question extends AbstractDataObject
                                 string $dateDebutVote,
                                 string $dateFinVote,
                                 string $loginOrganisateur,
-                                string $systemeVote)
+                                string $systemeVote,
+                                ?array $tags)
     {
         $this->idQuestion = $idQuestion;
         $this->titreQuestion = $titreQuestion;
@@ -45,6 +47,7 @@ class Question extends AbstractDataObject
         $this->dateFinVote = $dateFinVote;
         $this->loginOrganisateur = $loginOrganisateur;
         $this->systemeVote = $systemeVote;
+        $this->tags = $tags;
     }
 
     /**
@@ -63,7 +66,8 @@ class Question extends AbstractDataObject
                 "dateDebutVote" => $this->dateDebutVote,
                 "dateFinVote" => $this->dateFinVote,
                 "loginOrganisateur" => $this->loginOrganisateur,
-                "systemeVote" => $this->systemeVote
+                "systemeVote" => $this->systemeVote,
+                "tags" => $this->getTagsTableauFormat()
             ];
         } else {
             return [
@@ -75,7 +79,8 @@ class Question extends AbstractDataObject
                 "dateDebutVote" => $this->dateDebutVote,
                 "dateFinVote" => $this->dateFinVote,
                 "loginOrganisateur" => $this->loginOrganisateur,
-                "systemeVote" => $this->systemeVote
+                "systemeVote" => $this->systemeVote,
+                "tags" => $this->getTagsTableauFormat()
             ];
         }
     }
@@ -183,6 +188,30 @@ class Question extends AbstractDataObject
         return $this->systemeVote;
     }
 
+    /**
+     * @return array|null
+     */
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+    public function getTagsTableauFormat():string
+    {
+        $str = "'{";
+        $count = 0;
+        foreach ($this->tags as $tag){
+            if ($count != 0) {
+                $str .= ",";
+            }
+            $str .= "\"$tag\"";
+            $count++;
+        }
+        $str .= "}'";
+        return $str;
+    }
+
+
 
 
     /**
@@ -203,7 +232,8 @@ class Question extends AbstractDataObject
                 $formArray["dateDebutVote"],
                 $formArray["dateFinVote"],
                 $formArray["loginOrganisateur"],
-                $formArray["systemeVote"]);
+                $formArray["systemeVote"],
+                $formArray["tags"]);
         } else {
             return new Question(
                 null,
@@ -214,7 +244,8 @@ class Question extends AbstractDataObject
                 $formArray["dateDebutVote"],
                 $formArray["dateFinVote"],
                 $formArray["loginOrganisateur"],
-                $formArray["systemeVote"]);
+                $formArray["systemeVote"],
+                $formArray["tags"]);
         }
 
     }
