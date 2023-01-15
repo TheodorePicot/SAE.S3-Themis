@@ -21,7 +21,7 @@ $date = date_create();
 
     <!--    QUESTION + DELETE UPDATE-->
 
-    <div class="d-flex align-content-center justify-content-center my-5">
+    <div class="d-flex align-content-center justify-content-center my-5 mx-5">
         <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?> - <?= $question->getLoginOrganisateur() ?></h1>
     </div>
 

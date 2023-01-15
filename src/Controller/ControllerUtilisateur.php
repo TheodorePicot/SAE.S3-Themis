@@ -318,8 +318,6 @@ class ControllerUtilisateur extends AbstractController
      */
     public function delete(): void
     {
-
-
         if (ConnexionUtilisateur::isUser($_REQUEST["login"]) && !ConnexionUtilisateur::isAdministrator()) {
             if ((new UtilisateurRepository)->delete($_REQUEST['login'])) {
                 $this->connectionCheck();
