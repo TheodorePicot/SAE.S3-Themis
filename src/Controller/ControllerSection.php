@@ -35,8 +35,5 @@ class ControllerSection extends AbstractController{
             (new FlashMessage)->flash("LikeSuccess", "Votre like a bien été pris en compte", FlashMessage::FLASH_SUCCESS);
             $this->redirect("frontController.php?action=read&controller=proposition&idQuestion=$idQuestion&idProposition=$idProposition");
         }
-
-
     }
-
 }

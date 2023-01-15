@@ -54,7 +54,7 @@ class QuestionRepository extends AbstractRepository
     }
 
     /**
-     * Permet d'obtenir une liste de toute les questions qui sont en cour d'écriture
+     * Permet d'obtenir une liste de toutes les questions qui sont en cours d'écriture
      *
      * C'est-à-dire que la date courante est entre la date de début de d'écriture de proposition et la date de
      * fin d'écriture de proposition
