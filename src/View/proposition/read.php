@@ -57,7 +57,7 @@ htmlspecialchars($question->getTitreQuestion())
                             <a class="nav-link"
                                href="frontController.php?action=like&controller=section&idSectionProposition=<?= $idSectionPropositionInURL ?>&idQuestion=<?= $questionInURL ?>&login=<?= $login ?>&idProposition=<?= $idPropositionInURL ?>">
                                 <img class="likeImg" alt="compte" src="assets/img/like.png">
-                                <?= $nbVotes ?> <small class="text-muted">like</small>
+                                <?= $nbVotes ?> <small class="text-muted">like(s)</small>
                             </a>
                         </div>
 <!--                        --><?php //endif ?>
