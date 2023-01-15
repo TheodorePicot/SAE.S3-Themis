@@ -50,11 +50,20 @@ use Themis\Model\Repository\SectionPropositionRepository;
                                 <label for="descriptionSectionProposition<?= $section->getIdSection() ?>">
                                     <h4> Propostion Section <?= $count ?> </h4></label>
 
-                                <textarea class="form-control" placeholder=""
+                                <?php
+                                if ($section->getNbChar() != null) : ?>
+                                    <small class="text-muted">limite de caractère
+                                        : <?= htmlspecialchars($section->getNbChar()) ?> </small>
+                                <?php endif ?>
+
+                                <textarea class="form-control"
                                           name="descriptionSectionProposition<?= $section->getIdSection() ?>"
                                           id="descriptionSectionProposition<?= $section->getIdSection() ?>" required
                                           rows="5"
-                                          cols="40"><?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></textarea>
+                                          cols="40"
+                                      <?php if ($section->getNbChar() != null): ?>
+                                          maxlength="<?= htmlspecialchars($section->getNbChar()) ?>"
+                                      <?php endif ?>><?= (new SectionPropositionRepository)->selectByPropositionAndSection($proposition->getIdProposition(), $section->getIdSection())->getTexteProposition() ?></textarea>
                             </div>
 
                             <?php $count++;
