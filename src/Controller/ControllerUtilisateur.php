@@ -74,7 +74,7 @@ class ControllerUtilisateur extends AbstractController
         if ($_REQUEST["mdp"] == $_REQUEST["mdpConfirmation"]) {
             $creationCode = (new UtilisateurRepository)->create($user);
 
-            if ($creationCode == "" && ConnexionUtilisateur::isAdministrator()){
+            if ($creationCode == "" && ConnexionUtilisateur::isAdministrator()) {
                 (new FlashMessage)->flash("compteCree", "Le compte a bien été crée", FlashMessage::FLASH_INFO);
                 FormData::deleteFormData("createUtilisateur");
                 $this->redirect("frontController.php?action=readAll&controller=utilisateur");
@@ -179,7 +179,7 @@ class ControllerUtilisateur extends AbstractController
             ConnexionUtilisateur::connect(($_REQUEST["login"]));
             FormData::deleteFormData("loginUtilisateur");
             (new FlashMessage)->flash("connectionGood", "Connexion réussie", FlashMessage::FLASH_SUCCESS);
-            $this->redirect("frontController.php?action=read&controller=utilisateur&login={$_REQUEST["login"]}");
+            $this->redirect("frontController.php?action=readAll");
         }
     }
 
@@ -320,7 +320,7 @@ class ControllerUtilisateur extends AbstractController
     {
 
 
-        if (ConnexionUtilisateur::isUser($_REQUEST["login"])  && !ConnexionUtilisateur::isAdministrator()) {
+        if (ConnexionUtilisateur::isUser($_REQUEST["login"]) && !ConnexionUtilisateur::isAdministrator()) {
             if ((new UtilisateurRepository)->delete($_REQUEST['login'])) {
                 $this->connectionCheck();
                 ConnexionUtilisateur::disconnect();
@@ -329,12 +329,16 @@ class ControllerUtilisateur extends AbstractController
                 (new FlashMessage())->flash("deleteFailed", "La suppression a échouée", FlashMessage::FLASH_DANGER);
             }
         } else if (ConnexionUtilisateur::isAdministrator()) {
-            if ((new UtilisateurRepository)->delete($_REQUEST['login'])) {
-                $this->connectionCheck();
-                (new FlashMessage())->flash("deleted", "Le compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
+            $user = (new UtilisateurRepository())->select($_REQUEST['login']);
+            if ($user->isAdmin()) {
+                (new FlashMessage())->flash("notUser", "Vous n'avez pas les droits pour effectuer cette action", FlashMessage::FLASH_DANGER);
+            } else {
+                if ((new UtilisateurRepository)->delete($_REQUEST['login'])) {
+                    $this->connectionCheck();
+                    (new FlashMessage())->flash("deleted", "Le compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
+                }
             }
-        } else {
-            (new FlashMessage())->flash("notUser", "Vous n'avez pas les droits pour effectuer cette action", FlashMessage::FLASH_DANGER);
+
         }
         $this->redirect("frontController.php?action=readAll");
     }
