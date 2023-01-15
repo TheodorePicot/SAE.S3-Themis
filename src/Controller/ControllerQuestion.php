@@ -182,7 +182,7 @@ class ControllerQuestion extends AbstractController
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
 
         if (date_create()->format("Y-m-d H:i:s") >= $question->getDateFinProposition() || $this->aPropositionIsInQuestion($_REQUEST["idQuestion"])) {
-            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=read&idQuestion={$_REQUEST["idQuestion"]}");
         }
         if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur())
