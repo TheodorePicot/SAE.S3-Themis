@@ -71,15 +71,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
                     </div>
                 </div>
 
-                <div class="row my-4">
-                    <div class="col-md-3 col-lg-3">
-                        <h5><label class="my-2" for="dateNaissance">Avatar</label></h5>
-                    </div>
-                    <div class="col-md-9 col-lg-9">
-                        <input class="form-control" type="file" name="avatar">
 
-                    </div>
-                </div>
 
                 <div class="my-4">
                     <?php if (ConnexionUtilisateur::isAdministrator() && ConnexionUtilisateur::isUser($_REQUEST["login"])) : ?>

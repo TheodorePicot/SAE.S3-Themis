@@ -9,6 +9,7 @@ use Themis\Model\Repository\SectionPropositionRepository;
 $idPropositionInURL = rawurlencode($proposition->getIdProposition());
 $hrefDelete = "frontController.php?controller=proposition&action=delete&idProposition=$idPropositionInURL&idQuestion={$question->getIdQuestion()}";
 $hrefUpdate = "frontController.php?controller=proposition&action=update&idProposition=$idPropositionInURL";
+htmlspecialchars($question->getTitreQuestion())
 ?>
 
 
@@ -18,9 +19,9 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
 <div class='container-fluid'>
 
 
-    <div class="d-flex align-content-center justify-content-center my-5">
-        <h1 style=""> <?= htmlspecialchars($proposition->getTitreProposition()) ?>
-            - Proposition de <?= htmlspecialchars($proposition->getLoginAuteur()) ?></h1>
+    <div class="d-flex align-content-center justify-content-center my-5 mx-4">
+        <h1 style=""> <?= $proposition->getTitreProposition() ?>
+            - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
     </div>
 
     <div class="row my-5">
@@ -45,7 +46,7 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
                         <h4 class="my-3">Proposition pour la section <?= $count ?> : </h4>
                         <div class="shadowBoxProposition card card-body border-0">
                             <?php $sectionProposition = (new SectionPropositionRepository())->selectByPropositionAndSection($idPropositionInURL, $section->getIdSection()) ?>
-                            \ <?= htmlspecialchars($sectionProposition->getTexteProposition()) ?>
+                             <?= $sectionProposition->getTexteProposition() ?>
                             <?php $questionInURL = rawurlencode($question->getIdQuestion());
                             $login = htmlspecialchars(ConnexionUtilisateur::getConnectedUserLogin());
                             $idSectionPropositionInURL = $sectionProposition->getIdSectionProposition();
@@ -90,13 +91,14 @@ $hrefUpdate = "frontController.php?controller=proposition&action=update&idPropos
                     <?php if ((new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $proposition->getIdQuestion()) &&
                         ConnexionUtilisateur::isUser($proposition->getLoginAuteur()) || ConnexionUtilisateur::isAdministrator()) : ?>
                         <a class="btn btn-primary text-nowrap" href='<?= $hrefDelete ?>'
-                           onclick="return confirm('êtes-vous sûr de vouloir continuer ?');"> Supprimer</a>
+                           onclick="return confirm('Are you sure?');"> Supprimer</a>
                     <?php endif ?>
                     <a class="btn btn-primary text-nowrap mx-3" href='<?= $hrefUpdate ?>'> Mettre à jour</a>
                 </div>
             <?php endif ?>
         </div>
     </div>
+
 
 </div>
 

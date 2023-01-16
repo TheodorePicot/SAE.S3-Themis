@@ -59,8 +59,10 @@ use Themis\Lib\ConnexionUtilisateur;
 
         <!--CALENDRIER-->
 
+
         <div class="container-fluid">
             <div class="row mx-5 my-4 gy-2">
+                <small class="text-muted">Attention les dates doivent se suivre</small>
                 <h3>Calendrier</h3>
 
 

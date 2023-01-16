@@ -318,9 +318,9 @@ class ControllerUtilisateur extends AbstractController
      */
     public function delete(): void
     {
-        $this->connectionCheck();
         if (ConnexionUtilisateur::isUser($_REQUEST["login"]) && !ConnexionUtilisateur::isAdministrator()) {
             if ((new UtilisateurRepository)->delete($_REQUEST['login'])) {
+                $this->connectionCheck();
                 ConnexionUtilisateur::disconnect();
                 (new FlashMessage())->flash("deleted", "Votre compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
             } else {
@@ -336,6 +336,7 @@ class ControllerUtilisateur extends AbstractController
                     (new FlashMessage())->flash("deleted", "Le compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
                 }
             }
+
         }
         $this->redirect("frontController.php?action=readAll");
     }

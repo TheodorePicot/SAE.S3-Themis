@@ -8,6 +8,7 @@ class Section extends AbstractDataObject
     private int $idQuestion;
     private ?string $titreSection;
     private ?string $descriptionSection;
+    private ?int $nbChar;
 
     /**
      * permet de construire une Section à partir d'un idSection, d'un idQuestion, d'un titreSection et d'une descriptionSection
@@ -16,14 +17,15 @@ class Section extends AbstractDataObject
      * @param int $idQuestion
      * @param string|null $titreSection
      * @param string|null $descriptionSection
+     * @param int|null $nbChar
      */
-    public function __construct(?int $idSection, int $idQuestion, ?string $titreSection, ?string $descriptionSection)
+    public function __construct(?int $idSection, int $idQuestion, ?string $titreSection, ?string $descriptionSection, ?int $nbChar)
     {
         $this->idSection = $idSection;
         $this->idQuestion = $idQuestion;
         $this->titreSection = $titreSection;
         $this->descriptionSection = $descriptionSection;
-
+        $this->nbChar = $nbChar;
     }
 
     /**
@@ -38,14 +40,16 @@ class Section extends AbstractDataObject
             return [
                 "idQuestion" => $this->idQuestion,
                 "titreSection" => $this->titreSection,
-                "descriptionSection" => $this->descriptionSection
+                "descriptionSection" => $this->descriptionSection,
+                "nbChar" => $this->nbChar,
             ];
         } else {
             return [
                 "idSection" => $this->idSection,
                 "idQuestion" => $this->idQuestion,
                 "titreSection" => $this->titreSection,
-                "descriptionSection" => $this->descriptionSection
+                "descriptionSection" => $this->descriptionSection,
+                "nbChar" => $this->nbChar,
             ];
         }
     }
@@ -90,6 +94,10 @@ class Section extends AbstractDataObject
         return $this->descriptionSection;
     }
 
+    public function getNbChar(): ?int
+    {
+        return $this->nbChar;
+    }
 
 
     /**
@@ -105,14 +113,15 @@ class Section extends AbstractDataObject
                 $formArray["idSection"],
                 $formArray["idQuestion"],
                 $formArray["titreSection"],
-                $formArray["descriptionSection"]);
+                $formArray["descriptionSection"],
+                $formArray["nbChar"]);
         } else {
             return new Section(
                 null,
                 $formArray["idQuestion"],
                 $formArray["titreSection"],
-                $formArray["descriptionSection"]);
+                $formArray["descriptionSection"],
+                $formArray["nbChar"]);
         }
-
     }
 }

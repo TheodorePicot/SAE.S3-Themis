@@ -131,7 +131,7 @@ class ControllerQuestion extends AbstractController
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             $this->updateInformationAuxiliary();
-            (new SectionRepository)->create(new Section((int)null, $_REQUEST["idQuestion"], "", "", 0));
+            (new SectionRepository)->create(new Section((int)null, $_REQUEST["idQuestion"], "", "", null));
 
             if (isset($_REQUEST["isInCreation"]))
                 $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_REQUEST["idQuestion"]}");
@@ -158,7 +158,7 @@ class ControllerQuestion extends AbstractController
         (new QuestionRepository)->update($question);
 
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"]);
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"], $_REQUEST["nbChar{$section->getIdSection()}"]==""?null:$_REQUEST["nbChar{$section->getIdSection()}"]);
             (new SectionRepository)->update($updatedSection);
         }
 
@@ -182,7 +182,7 @@ class ControllerQuestion extends AbstractController
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
 
         if (date_create()->format("Y-m-d H:i:s") >= $question->getDateFinProposition() || $this->aPropositionIsInQuestion($_REQUEST["idQuestion"])) {
-            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=read&idQuestion={$_REQUEST["idQuestion"]}");
         }
         if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur())

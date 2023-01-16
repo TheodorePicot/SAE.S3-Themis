@@ -37,12 +37,13 @@ class SectionRepository extends AbstractRepository
             return new Section($objectArrayFormat["idSection"],
                 $objectArrayFormat["idQuestion"],
                 "",
-                "");
+                "", $objectArrayFormat["nbChar"]);
         } else {
             return new Section($objectArrayFormat["idSection"],
                 $objectArrayFormat["idQuestion"],
                 $objectArrayFormat["titreSection"],
-                $objectArrayFormat["descriptionSection"]
+                $objectArrayFormat["descriptionSection"],
+                $objectArrayFormat["nbChar"]
             );
         }
     }
@@ -57,7 +58,8 @@ class SectionRepository extends AbstractRepository
         return [
             "idQuestion",
             "titreSection",
-            "descriptionSection"
+            "descriptionSection",
+            "nbChar",
         ];
     }
 
