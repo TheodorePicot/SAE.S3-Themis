@@ -19,7 +19,7 @@ htmlspecialchars($question->getTitreQuestion())
 <div class='container-fluid'>
 
 
-    <div class="d-flex align-content-center justify-content-center my-5">
+    <div class="d-flex align-content-center justify-content-center my-5 mx-4">
         <h1 style=""> <?= $proposition->getTitreProposition() ?>
             - Proposition de <?= $proposition->getLoginAuteur() ?></h1>
     </div>

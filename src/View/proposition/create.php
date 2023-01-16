@@ -62,8 +62,7 @@ use Themis\Lib\ConnexionUtilisateur;
                                           cols="40"
                                           <?php if ($section->getNbChar() != null): ?>
                                               maxlength="<?= htmlspecialchars($section->getNbChar()) ?>"
-                                          <?php endif ?>>
-                                          </textarea>
+                                          <?php endif ?>></textarea>
                             </div>
 
 
