@@ -69,7 +69,7 @@ abstract class AbstractParticipantRepository extends AbstractRepository
         return $dataObjects;
     }
 
-    public function selectAllParticipantsBySearchValue(string $element, int $idQuestion)
+    public function selectAllParticipantsBySearchValue(string $element, int $idQuestion) : array
     {
 
         $sqlQuery = "SELECT * FROM {$this->getTableName()} WHERE " . '"idQuestion"=?' . ' AND LOWER("login") LIKE ? ';

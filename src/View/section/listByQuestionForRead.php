@@ -1,8 +1,11 @@
 <?php
+
 $count = 1;
-foreach ($sections as $section) : ?>
+foreach ($sections as $section) :?>
+
 <div class="my-4">    <h3><?= $count . ". " . htmlspecialchars($section->getTitreSection()) ?></h3>
-   <?= htmlspecialchars($section->getDescriptionSection()) ?>
+   <?= $parser->text(htmlspecialchars($section->getDescriptionSection())) ?>
+
 </div>
 
     <?php $count++;

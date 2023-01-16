@@ -30,7 +30,7 @@ if (ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpan
     $questionInURL = rawurlencode($proposition->getIdQuestion());
     $hrefRead = "frontController.php?controller=proposition&action=read&idQuestion=$questionInURL&idProposition=$propositionInURL"; ?>
     <div class="boxProposition overflow-hidden rounded-5 my-3 d-flex align-items-center">
-        <a id="containerQuestion" href="<?= $hrefRead ?>">
+        <a href="<?= $hrefRead ?>">
             <div class="mx-3">
                 <h5><?= $titrePropositionHTML ?></h5>
             </div>

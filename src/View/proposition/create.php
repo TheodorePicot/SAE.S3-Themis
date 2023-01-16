@@ -33,7 +33,6 @@ use Themis\Lib\ConnexionUtilisateur;
                         <h3>Titre de votre proposition</h3>
                         <input type="text" class="form-control" placeholder="?" name="titreProposition"
                                id="titreProposition"
-                               max="99" maxlength="99"
                                required/>
                     </div>
 
@@ -41,21 +40,30 @@ use Themis\Lib\ConnexionUtilisateur;
                         <?php
                         $count = 1;
                         foreach ($sections as $section) : ?>
-                            <h3><?= $count ?>. Section <?= $count ?> : <?= $section->getTitreSection() ?></h3>
+                            <h3><?= $count ?>. Section <?= $count ?>
+                                : <?= htmlspecialchars($section->getTitreSection()) ?></h3>
                             <div class="shadowBox card card-body border-0">
                                 <?= htmlspecialchars($section->getDescriptionSection()) ?>
                             </div>
 
                             <div class="my-4">
+                                <h4> Proposition Section <?= $count ?> </h4>
 
+                                <?php
+                                if ($section->getNbChar() != null) : ?>
+                                    <small class="text-muted">limite de caractère
+                                        : <?= htmlspecialchars($section->getNbChar()) ?> </small>
+                                <?php endif ?>
 
-                                    <h4> Propostion Section <?= $count ?> </h4>
-
-                                <textarea class="form-control" placeholder=""
+                                <textarea class="form-control"
                                           name="descriptionSectionProposition<?= $section->getIdSection() ?>"
                                           id="descriptionSectionProposition<?= $section->getIdSection() ?>" required
                                           rows="5"
-                                          cols="40"></textarea>
+                                          cols="40"
+                                          <?php if ($section->getNbChar() != null): ?>
+                                              maxlength="<?= htmlspecialchars($section->getNbChar()) ?>"
+                                          <?php endif ?>>
+                                          </textarea>
                             </div>
 
 

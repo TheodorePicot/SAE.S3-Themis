@@ -29,6 +29,8 @@ class ConnexionUtilisateur
     /**
      * Permet à un utilisateur de se déconnecter
      *
+     * En utilisant {@link $_SESSION} cette méthode supprime toutes les données stockées sur l'utilisateur actuel.
+     *
      * @return void
      */
     public static function disconnect(): void
@@ -69,10 +71,10 @@ class ConnexionUtilisateur
     /**
      * Return true si l'utilisateur courant qui est connecté a pour login la variable placé en paramètre sinon false
      *
-     * @param $login Le login de l'utilisateur
+     * @param $login string Le login de l'utilisateur
      * @return bool
      */
-    public static function isUser($login): bool
+    public static function isUser(string $login): bool
     {
         return (self::isConnected() && self::getConnectedUserLogin() == $login);
     }
@@ -80,6 +82,10 @@ class ConnexionUtilisateur
 
     /**
      * Return true si l'utilisateur courant qui est connecté est un administrateur sinon false
+     *
+     * Cette méthode utilise {@link Session} pour stocker le fait qu'il soit administrateur ou non.
+     * Cela optimise le temps d'execution car nous n'avons plus besoins de passer par la base de données à chaque fois
+     * que cette méthode est appelée, mais uniquement la première fois.
      *
      * @return bool
      */
@@ -101,12 +107,16 @@ class ConnexionUtilisateur
     /**
      * Return true si l'utilisateur courant qui est connecté est un organisateur sinon false
      *
+     * Cette méthode utilise {@link Session} pour stocker le fait qu'il soit organisateur ou non.
+     * Cela optimise le temps d'execution car nous n'avons plus besoins de passer par la base de données à chaque fois
+     * que cette méthode est appelée, mais uniquement la première fois.
+     *
      * @return bool
      */
     public static function isOrganisateur(): bool
     {
         $session = Session::getInstance();
-        if ($session->contains(self::$isOrganisateur)) return $session->read(self::$isOrganisateur);
+        if ($session->contains(self::$isOrganisateur)) return $session->read(self::$isOrganisateur); // Si valeur déjà stocker dans la session accéder au tableau $_SESSION
 
         $user = self::getConnectedUserLogin();
         if ($user == null) return false;

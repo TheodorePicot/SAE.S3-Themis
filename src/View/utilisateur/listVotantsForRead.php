@@ -3,11 +3,14 @@
     <?php use Themis\Model\Repository\VotantRepository;
 
     foreach ($votants as $votant): ?>
-     <?= htmlspecialchars($votant->getLogin()) ?>
+     <?= htmlspecialchars($votant->getLogin()) ?> <br>
 
     <?php endforeach; ?>
 
-    <?php if (count($votants) == 0 ): ?>
+
+    <?php
+    if (isset($_REQUEST['searchValue']))
+    if (count($votants) == 0 ): ?>
 
             Il n'y a pas de votants dont le pseudo contient '<?=$_REQUEST['searchValue']?>'
 

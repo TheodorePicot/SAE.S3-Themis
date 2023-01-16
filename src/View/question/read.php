@@ -21,7 +21,7 @@ $date = date_create();
 
     <!--    QUESTION + DELETE UPDATE-->
 
-    <div class="d-flex align-content-center justify-content-center my-5">
+    <div class="d-flex align-content-center justify-content-center my-5 mx-5">
         <h1> <?= htmlspecialchars($question->getTitreQuestion()) ?> - <?= $question->getLoginOrganisateur() ?></h1>
     </div>
 
@@ -34,20 +34,21 @@ $date = date_create();
             </div>
 
             <div class="d-flex align-content-center justify-content-center my-3">
-                <h2 class="my-3"> Plan de la question</h2>
+                <h2 class="my-5"> Plan de la question</h2>
             </div>
 
             <div class="my-3">
                 <?php require_once __DIR__ . "/../section/listByQuestionForRead.php" ?>
             </div>
 
-            <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
-               aria-expanded="false" aria-controls="multiCollapseExample1">Auteurs</a>
-            <button class="btn btn-dark" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#multiCollapseExample2" aria-expanded="false"
-                    aria-controls="multiCollapseExample2">Votants
-            </button>
-            <!--                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>-->
+            <div class="d-flex align-content-center justify-content-center">
+                <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
+                   aria-expanded="false" aria-controls="multiCollapseExample1">Auteurs</a>
+                <button class="btn btn-dark mx-2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#multiCollapseExample2" aria-expanded="false"
+                        aria-controls="multiCollapseExample2">Votants
+                </button>
+            </div>
 
             <div class="row my-4">
                 <div class="collapse multi-collapse col-sm-12 col-lg-6 <?= isset($_REQUEST["hasSearchedAuteurs"]) ? "show" : "" ?>"
@@ -95,12 +96,13 @@ $date = date_create();
                 </div>
             </div>
 
+
             <?php if (ConnexionUtilisateur::isUser($question->getLoginOrganisateur()) || ConnexionUtilisateur::isAdministrator()) : ?>
-                <div class="my-4">
-                    <a class="btn btn-dark text-nowrap" href="<?= $hrefDelete ?>"
+                <div class="my-4 d-flex align-content-center justify-content-center">
+                    <a class="btn btn-primary text-nowrap mx-2" href="<?= $hrefDelete ?>"
                        onclick="return confirm('Are you sure?');"> Supprimer</a>
                     <?php if (date_create()->format("Y-m-d H:i:s") < $question->getDateDebutProposition() || ConnexionUtilisateur::isAdministrator()) : ?>
-                        <a class="btn btn-dark text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
+                        <a class="btn btn-primary text-nowrap" href="<?= $hrefUpdate ?>"> Mettre à jour</a>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -120,7 +122,7 @@ $date = date_create();
                         <?php if ($date->format("Y-m-d H:i:s") < $question->getDateFinProposition() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutProposition()): ?>
                             <mark>Date de début de proposition</mark>
                         <?php else : ?>
-                          Date de début de proposition
+                            Date de début de proposition
                         <?php endif ?>
 
                     </li>
@@ -131,7 +133,7 @@ $date = date_create();
                         <?php if ($date->format("Y-m-d H:i:s") < $question->getDateDebutVote() && $date->format("Y-m-d H:i:s") >= $question->getDateFinProposition()) : ?>
                             <mark>Date de fin de rédaction de proposition</mark>
                         <?php else : ?>
-                         Date de fin de rédaction de proposition
+                            Date de fin de rédaction de proposition
                         <?php endif ?>
 
                     </li>
@@ -142,7 +144,7 @@ $date = date_create();
                         <?php if ($date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote()) : ?>
                             <mark>Date de début de vote</mark>
                         <?php else : ?>
-                           Date de début de vote
+                            Date de début de vote
                         <?php endif ?>
                     </li>
                     <li>
@@ -158,6 +160,8 @@ $date = date_create();
                 </ul>
             </div>
         </div>
+
+
         <div class="container-fluid col-md-12 col-lg-10 my-5">
 
             <?php
@@ -178,7 +182,7 @@ $date = date_create();
                 (new VotantRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $question->getIdQuestion()) &&
                 $date->format("Y-m-d H:i:s") < $question->getDateFinVote() && $date->format("Y-m-d H:i:s") >= $question->getDateDebutVote())) : ?>
             <div class="d-flex align-content-center justify-content-center my-3">
-                <a class="btn btn-dark text-nowrap w-25"
+                <a class="btn btn-primary text-nowrap"
                    href="frontController.php?controller=vote&action=vote&idQuestion=<?= $question->getIdQuestion() ?>">Voter</a>
             </div>
 

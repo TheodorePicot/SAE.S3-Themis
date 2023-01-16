@@ -47,7 +47,10 @@
         <div class="overflow-hidden col-sm-12 col-md-6 col-lg-4" style="height: 250px">
             <a class="card rounded-3 overflow-hidden shadowBox text-center" href="<?= $hrefRead ?>" style="height: 96%">
                 <div class="card-header">
+                    <img class="accountImg" alt="compte" src="assets/img/account.png">
+
                     <?= $loginOrganisateur ?>
+
                 </div>
                 <div class="card-body ">
                     <h5 class="card-title"><?= $titreQuestionHTML ?></h5>

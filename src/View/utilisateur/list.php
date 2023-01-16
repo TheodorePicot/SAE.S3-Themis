@@ -7,7 +7,7 @@
 
     <!--    LISTE DES ADMINISTRATEURS-->
 
-    <div class="row offset-md-0 offset-lg-1 my-5">
+    <div class="row offset-md-0 offset-lg-2 my-5">
 
         <div class="col-md-12 col-md-4 col-lg-3 shadowBox my-4 mx-md-0 mx-lg-3 overflow-hidden">
             <h3> Administrateurs </h3>
@@ -26,11 +26,16 @@
             <?php
             $countA = 0;
             foreach ($administrateurs as $administrateur) {
+
                 echo '<ul><li style="list-style: none"><a href="frontController.php?action=read&login=' . rawurlencode($administrateur->getLogin()) .
                     '&controller=utilisateur">' . htmlspecialchars($administrateur->getLogin()) . '</a></li></ul>';
                 $countA++;
             }
-            if ($countA == 0) echo 'Il n\'y a pas d\'administrateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
+            if (isset($_REQUEST['searchValue'])) {
+                if ($countA == 0) {
+                    echo 'Il n\'y a pas d\'administrateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
+                }
+            }
             ?>
         </div>
 
@@ -61,7 +66,10 @@
                 $countO++;
 
             }
-            if ($countO == 0) echo 'Il n\'y a pas d\'organisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
+            if (isset($_REQUEST['searchValue'])) {
+                if ($countO == 0) echo 'Il n\'y a pas d\'organisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
+            }
+
             ?>
         </div>
 
@@ -95,7 +103,10 @@
     ';
                 $countU++;
             }
-            if ($countU == 0) echo 'Il n\'y a pas d\'utilisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
+            if (isset($_REQUEST['searchValue'])) {
+                if ($countU == 0) echo 'Il n\'y a pas d\'utilisateur avec un login contenant "' . $_REQUEST['searchValue'] . '".';
+            }
+
             ?>
         </div>
     </div>

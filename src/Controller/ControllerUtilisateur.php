@@ -63,9 +63,10 @@ class ControllerUtilisateur extends AbstractController
      */
     public function created(): void
     {
-        $user = Utilisateur::buildFromForm($_REQUEST);
+
+        $user = Utilisateur::buildFromFormCreate($_REQUEST);
         FormData::saveFormData("createUtilisateur");
-//        VerificationEmail::sendEmailValidation($user);
+        VerificationEmail::sendEmailValidation($user);
         if ((new UtilisateurRepository())->select($_REQUEST['login']) != null) {
             (new FlashMessage)->flash("mauvaisMdp", "Ce login existe déjà", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=create&controller=utilisateur&invalidLogin=1");
@@ -73,9 +74,14 @@ class ControllerUtilisateur extends AbstractController
         if ($_REQUEST["mdp"] == $_REQUEST["mdpConfirmation"]) {
             $creationCode = (new UtilisateurRepository)->create($user);
 
-            if ($creationCode == "") {
+            if ($creationCode == "" && ConnexionUtilisateur::isAdministrator()) {
+                (new FlashMessage)->flash("compteCree", "Le compte a bien été crée", FlashMessage::FLASH_INFO);
+                FormData::deleteFormData("createUtilisateur");
+                $this->redirect("frontController.php?action=readAll&controller=utilisateur");
+            }
+            if ($creationCode == "" && !ConnexionUtilisateur::isAdministrator()) {
                 ConnexionUtilisateur::connect(($_REQUEST["login"]));
-                (new FlashMessage)->flash("compteCree", "Votre compte a été créé", FlashMessage::FLASH_SUCCESS);
+                (new FlashMessage)->flash("compteCree", "Votre compte a été créé, veuillez valider votre email", FlashMessage::FLASH_INFO);
                 FormData::deleteFormData("createUtilisateur");
                 $this->redirect("frontController.php?action=readAll");
             }
@@ -100,7 +106,7 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
-     * Permet de lire le compte du l'utilisateur sélectionnée
+     * Permet de lire le compte de l'utilisateur sélectionnée.
      *
      * Cette méthode charge les données nécessaires puis fait appelle à {@link AbstractController::showView()}
      * pour afficher la vue {@link src/View/utilisateur/read.php}.
@@ -159,6 +165,10 @@ class ControllerUtilisateur extends AbstractController
             (new FlashMessage)->flash("badLogin", "Ce login n'existe pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=login&controller=utilisateur&invalidLogin=1");
         }
+        if (!VerificationEmail::hasValidatedEmail((new UtilisateurRepository())->select($_REQUEST["login"]))) {
+            (new FlashMessage)->flash("invalidMail", "Veuillez valider votre email avant de vous connecter", FlashMessage::FLASH_DANGER);
+            $this->redirect("frontController.php?action=login&controller=utilisateur");
+        }
         if (!isset($_REQUEST["login"]) || !isset($_REQUEST["mdp"])) {
             (new FlashMessage)->flash("notAllInfo", "Vous n'avez pas rempli toutes les informations nécessaires", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=login&controller=utilisateur");
@@ -169,12 +179,14 @@ class ControllerUtilisateur extends AbstractController
             ConnexionUtilisateur::connect(($_REQUEST["login"]));
             FormData::deleteFormData("loginUtilisateur");
             (new FlashMessage)->flash("connectionGood", "Connexion réussie", FlashMessage::FLASH_SUCCESS);
-            $this->redirect("frontController.php?action=read&controller=utilisateur&login={$_REQUEST["login"]}");
+            $this->redirect("frontController.php?action=readAll");
         }
     }
 
     /**
+     * Permet de déconnecter l'utilisateur actuellement connecté.
      *
+     * Supprime toutes les données de formulaire puis déconnecte l'utilisateur.
      *
      * @return void
      */
@@ -187,6 +199,10 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet de mettre à jour les informations de son compte. Mais pas le mot de passe.
+     *
+     * Cette méthode fait des vérifications de sécurité puis met à jour les informations de l'utilisateur.
+     *
      * @return void
      */
     public function updatedForInformation(): void
@@ -219,6 +235,10 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet uniquement de mettre à jour le mot de passe de son compte.
+     *
+     * Cette méthode fait des vérifications de sécurité puis met à jour le mot de passe de l'utilisateur.
+     *
      * @return void
      */
     public function updatedForPassword(): void
@@ -226,7 +246,7 @@ class ControllerUtilisateur extends AbstractController
         $utilisateurSelect = (new UtilisateurRepository)->select($_REQUEST["login"]);
 
         $this->connectionCheck();
-        if (!PassWord::check($_REQUEST["mdpAncien"], $utilisateurSelect->getMdp())) {
+        if (!PassWord::check($_REQUEST["mdpAncien"], $utilisateurSelect->getMdp())) { // si son mot de passe actuel n'est pas égal au mot de passe qu'il a rentré (verifier si c'est bien l'utilisateur)
             (new FlashMessage)->flash("incorrectPasswd", "Le mot de passe ancien ne correspond pas", FlashMessage::FLASH_DANGER);
             $this->redirect("frontController.php?action=updatePassword&controller=utilisateur&login={$_REQUEST["login"]}&invalidOld=1");
         } else if ($_REQUEST["mdp"] != $_REQUEST["mdpConfirmation"]) {
@@ -247,6 +267,8 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Affiche la vue permettant de mettre à jour ces informations
+     *
      * @return void
      */
     public function updateInformation(): void
@@ -266,6 +288,8 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Affiche la vue permettant de mettre à jour son mot de passe
+     *
      * @return void
      */
     public function updatePassword(): void
@@ -286,25 +310,42 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
+     * Permet de supprimer un utilisateur
+     *
+     * Fait des vérifications de sécurité et supprime si tout est bon
+     *
      * @return void
      */
     public function delete(): void
     {
-        if (ConnexionUtilisateur::isUser($_REQUEST["login"])) {
+        if (ConnexionUtilisateur::isUser($_REQUEST["login"]) && !ConnexionUtilisateur::isAdministrator()) {
             if ((new UtilisateurRepository)->delete($_REQUEST['login'])) {
                 $this->connectionCheck();
                 ConnexionUtilisateur::disconnect();
                 (new FlashMessage())->flash("deleted", "Votre compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
             } else {
-                (new FlashMessage())->flash("deleteFailed", "erreur de suppréssion de votre compte", FlashMessage::FLASH_DANGER);
+                (new FlashMessage())->flash("deleteFailed", "La suppression a échouée", FlashMessage::FLASH_DANGER);
             }
-        } else {
-            (new FlashMessage())->flash("notUser", "Vous n'avez pas les droits pour effectuer cette action", FlashMessage::FLASH_DANGER);
+        } else if (ConnexionUtilisateur::isAdministrator()) {
+            $user = (new UtilisateurRepository())->select($_REQUEST['login']);
+            if ($user->isAdmin()) {
+                (new FlashMessage())->flash("notUser", "Vous n'avez pas les droits pour effectuer cette action", FlashMessage::FLASH_DANGER);
+            } else {
+                if ((new UtilisateurRepository)->delete($_REQUEST['login'])) {
+                    $this->connectionCheck();
+                    (new FlashMessage())->flash("deleted", "Le compte a bien été supprimé", FlashMessage::FLASH_SUCCESS);
+                }
+            }
+
         }
         $this->redirect("frontController.php?action=readAll");
     }
 
     /**
+     * Méthode permettant de valider l'email d'un utilisateur
+     *
+     * Regarde si l'utilisateur donné existe bien et que le nonce de l'utilisateur est valide
+     *
      * @return void
      */
     public function validerEmail(): void
@@ -327,23 +368,10 @@ class ControllerUtilisateur extends AbstractController
     }
 
     /**
-     * @param array $utilisateurs
+     *
+     *
      * @return void
      */
-    private function showUsers(array $utilisateurs): void
-    {
-        $this->showView("view.php", [
-            "utilisateurs" => $utilisateurs,
-            "pageTitle" => "utilisateurs",
-            "pathBodyView" => "utilisateur/list.php"
-        ]);
-    }
-
-    /**
-     * @return void
-     */
-
-
     public function readAllAdminBySearchValue(): void
     {
         if (!$this->isAdmin()) {

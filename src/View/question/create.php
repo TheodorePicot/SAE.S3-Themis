@@ -14,7 +14,7 @@ use Themis\Lib\ConnexionUtilisateur;
                 <div class="container col-12 my-3">
                     <h3><label for="titreQuestion" class="form-label">Titre</label></h3>
                     <input type="text" class="form-control" placeholder="?" name="titreQuestion" id="titreQuestion"
-                           maxlength="99"
+                           maxlength="200"
                            value="<?php if (isset($_SESSION["formData"]["createQuestion"]["titreQuestion"])) echo $_SESSION["formData"]["createQuestion"]["titreQuestion"] ?>"
                            required/>
                 </div>
@@ -26,7 +26,7 @@ use Themis\Lib\ConnexionUtilisateur;
                               maxlength="700" required rows="5"
                               cols="40"><?php if (isset($_SESSION["formData"]["createQuestion"]["descriptionQuestion"])) echo $_SESSION["formData"]["createQuestion"]["descriptionQuestion"] ?></textarea>
                 </div>
-
+                <small class="text-muted">Appuyer sur la touche shift pour une multi-selection</small>
                 <div class="container col-md-6 col-lg-6 my-3">
                     <h3>Auteurs</h3>
                     <?php require_once __DIR__ . "/../utilisateur/listAuteursForCreate.php" ?>
@@ -43,25 +43,29 @@ use Themis\Lib\ConnexionUtilisateur;
                             name="systemeVote"
                             id="systemeVote"
                             required>
-                        <optgroup label="">
-                            <option value="">Système de vote</option>
-                            <option value="JugementMajoritaire" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) && $_SESSION["formData"]["createQuestion"]["systemeVote"] == "JugementMajoritaire") echo "selected" ?>>
-                                Jugement Majoritaire
-                            </option>
-                            <option value="ScrutinUninominal" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) && $_SESSION["formData"]["createQuestion"]["systemeVote"] == "ScrutinUninominal") echo "selected" ?>>
-                                Scrutin Uninominal
-                            </option>
-                        </optgroup>
+
+                        <option value="">Système de vote</option>
+                        <option value="JugementMajoritaire" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) && $_SESSION["formData"]["createQuestion"]["systemeVote"] == "JugementMajoritaire") echo "selected" ?>>
+                            Jugement Majoritaire
+                        </option>
+                        <option value="ScrutinUninominal" <?php if (isset($_SESSION["formData"]["createQuestion"]["systemeVote"]) && $_SESSION["formData"]["createQuestion"]["systemeVote"] == "ScrutinUninominal") echo "selected" ?>>
+                            Scrutin Uninominal
+                        </option>
+
                     </select>
 
                 </div>
+
+
             </div>
         </div>
 
         <!--CALENDRIER-->
 
+
         <div class="container-fluid">
             <div class="row mx-5 my-4 gy-2">
+                <small class="text-muted">Attention les dates doivent se suivre</small>
                 <h3>Calendrier</h3>
 
 

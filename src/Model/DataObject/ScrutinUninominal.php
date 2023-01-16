@@ -8,7 +8,7 @@ class ScrutinUninominal extends Vote
 {
     private int $idQuestion;
     /**
-     * permet de construire un Vote à partir d'un loginVotant, d'un idProposition
+     * Permet de construire un Vote à partir d'un loginVotant, d'un idProposition
      *
      * @param string $loginVotant
      * @param int $idProposition
@@ -21,7 +21,7 @@ class ScrutinUninominal extends Vote
     }
 
     /**
-     * permet de retourner toutes les colonnes de la table Vote
+     * Permet de retourner toutes les colonnes de la table Vote
      *
      * @return array
      */
@@ -33,10 +33,10 @@ class ScrutinUninominal extends Vote
     }
 
     /**
-     * permet de construire un Vote à partir d'une array
+     * Permet de construire un Vote à partir d'une array
      *
      * @param array $formArray
-     * @return Vote
+     * @return ScrutinUninominal
      */
     public static function buildFromForm(array $formArray): ScrutinUninominal
     {

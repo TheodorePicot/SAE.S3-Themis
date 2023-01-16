@@ -16,13 +16,13 @@ foreach ($propositions as $proposition) :
     $valGagnante = $nbVotes;
     ?>
     <div class="d-flex align-content-center justify-content-center">
-        <h1>Proposition(s) gagnante(s)</h1>
+        <h2>Proposition(s) gagnante(s)</h2>
     </div>
 <?php elseif ($nbVotes != $valGagnante && !$hasPrintedAutrePropo) :
     $hasPrintedAutrePropo = true; ?>
 
-    <div class="d-flex align-content-center justify-content-center">
-        <h1>Les autres propositions</h1>
+    <div class="d-flex align-content-center justify-content-center my-2">
+        <h2>Les autres propositions</h2>
     </div>
 <?php endif;
     $count++ ?>

@@ -76,30 +76,32 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
             </button>
         </div>
 
+
         <div class="row my-4 mx-4">
-            <div class="collapse multi-collapse col-6 " id="multiCollapseExample1">
+            <div class="collapse multi-collapse my-3 my-lg-0 col-sm-12 col-lg-6 " id="multiCollapseExample1">
                 <div class="card card-body">
                     <?php require_once __DIR__ . "/../question/listByUserForRead.php" ?>
                 </div>
             </div>
 
-            <div class="collapse multi-collapse col-6" id="multiCollapseExample2">
+            <div class="collapse multi-collapse my-3 my-lg-0 col-sm-12 col-lg-6" id="multiCollapseExample2">
                 <div class="card card-body">
                     <?php require_once __DIR__ . "/../proposition/listByUserForRead.php" ?>
                 </div>
             </div>
         </div>
 
-        <div class=" col-lg-12 d-flex align-content-center justify-content-center my-3">
-            <div>
+        <div class="col-lg-12 d-flex align-content-center justify-content-center my-3">
+
+
                 <?php if (ConnexionUtilisateur::isUser($utilisateur->getLogin()) || ConnexionUtilisateur::isAdministrator()) : ?>
-                    <a class="btn btn-dark text-nowrap mx-2 " href='<?= $hrefDelete ?>'
+                    <a class="btn btn-primary text-nowrap mx-2 " href='<?= $hrefDelete ?>'
                        onclick="return confirm('Are you sure?');"> Supprimer</a>
-                    <a class="btn btn-dark text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour
+
+                    <a class="btn btn-primary text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour
                         mes informations</a>
                 <?php endif ?>
 
-            </div>
         </div>
 
     </div>

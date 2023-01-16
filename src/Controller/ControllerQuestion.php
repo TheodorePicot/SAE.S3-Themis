@@ -8,8 +8,10 @@ use Themis\Lib\FormData;
 use Themis\Model\DataObject\Participant;
 use Themis\Model\DataObject\Question;
 use Themis\Model\DataObject\Section;
+use Themis\Model\DataObject\Tag;
 use Themis\Model\Repository\AuteurRepository;
 use Themis\Model\Repository\DatabaseConnection;
+use Themis\Model\Repository\JugementMajoritaireRepository;
 use Themis\Model\Repository\PropositionRepository;
 use Themis\Model\Repository\QuestionRepository;
 use Themis\Model\Repository\SectionRepository;
@@ -54,6 +56,8 @@ class ControllerQuestion extends AbstractController
             $idQuestion = DatabaseConnection::getPdo()->lastInsertId();
 
             $this->createParticipants($idQuestion);
+
+
             FormData::deleteFormData("createQuestion");
             $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion=$idQuestion");
         } else {
@@ -108,6 +112,9 @@ class ControllerQuestion extends AbstractController
         }
     }
 
+
+
+
     /**
      * Méthode auxiliaire que l'organisateur peut appeler durant la création ou la mise à jour de la question.
      * Elle ajoute une section à la question dans la base de données puis redirige l'organisateur vers la creation/mise à jour
@@ -124,7 +131,7 @@ class ControllerQuestion extends AbstractController
             && $this->isOrganisateur()
             || $this->isAdmin()) {
             $this->updateInformationAuxiliary();
-            (new SectionRepository)->create(new Section((int)null, $_REQUEST["idQuestion"], "", ""));
+            (new SectionRepository)->create(new Section((int)null, $_REQUEST["idQuestion"], "", "", null));
 
             if (isset($_REQUEST["isInCreation"]))
                 $this->redirect("frontController.php?isInCreation=yes&action=update&idQuestion={$_REQUEST["idQuestion"]}");
@@ -151,7 +158,7 @@ class ControllerQuestion extends AbstractController
         (new QuestionRepository)->update($question);
 
         foreach ((new SectionRepository)->selectAllByQuestion($question->getIdQuestion()) as $section) {
-            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"]);
+            $updatedSection = new Section($section->getIdSection(), $section->getIdQuestion(), $_REQUEST["titreSection{$section->getIdSection()}"], $_REQUEST["descriptionSection{$section->getIdSection()}"], $_REQUEST["nbChar{$section->getIdSection()}"]);
             (new SectionRepository)->update($updatedSection);
         }
 
@@ -175,7 +182,7 @@ class ControllerQuestion extends AbstractController
         $question = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
 
         if (date_create()->format("Y-m-d H:i:s") >= $question->getDateFinProposition() || $this->aPropositionIsInQuestion($_REQUEST["idQuestion"])) {
-            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
+            (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_WARNING);
             $this->redirect("frontController.php?action=read&idQuestion={$_REQUEST["idQuestion"]}");
         }
         if ($this->isOrganisateurOfQuestion($question->getLoginOrganisateur())
@@ -212,6 +219,11 @@ class ControllerQuestion extends AbstractController
      * Cette méthode charge les données nécessaires puis fait appelle à {@link AbstractController::showView()}
      * pour afficher la vue {@link src/View/question/read.php}.
      *
+     * Si la période de vote est terminée la méthode appelle la vue pour afficher les propositions gagnantes.
+     *
+     * @see src/View/proposition/listByQuestionGagnanteScrutin.php
+     * @see src/View/proposition/listByQuestionGagnanteJugement.php
+     *
      * @return void
      */
     public function read(): void
@@ -221,10 +233,12 @@ class ControllerQuestion extends AbstractController
         $sections = (new SectionRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         $votants = (new VotantRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
         $auteurs = (new AuteurRepository)->selectAllOrderedByQuestionWithLimit($_REQUEST["idQuestion"]);
+        $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
             $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
-        else // TODO faire le if de jugement majoritaire
-            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
+        elseif (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "JugementMajoritaire")
+            $propositions = (new JugementMajoritaireRepository)->selectPropositionForVoteResult((new ControllerVote())->scoreMedianeProposition($_REQUEST["idQuestion"]), $_REQUEST["idQuestion"]);
+
 
         $this->showView("view.php", [
             "propositions" => $propositions,
@@ -334,7 +348,7 @@ class ControllerQuestion extends AbstractController
             || $this->isAdmin()) {
             $oldQuestion = (new QuestionRepository)->select($_REQUEST["idQuestion"]);
             if (date_create()->format("Y-m-d H:i:s") > $oldQuestion->getDateFinProposition()) {
-                (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_SUCCESS);
+                (new FlashMessage())->flash("notWhileVote", "Vous ne pouvez plus mettre à jour la question", FlashMessage::FLASH_WARNING);
                 $this->redirect("frontController.php?action=readAll");
             }
             if ($_REQUEST['dateDebutProposition'] < $oldQuestion->getDateDebutProposition()) {
@@ -443,7 +457,11 @@ class ControllerQuestion extends AbstractController
     /**
      * Renvoie la liste des votants lors d'une recherche
      *
-     * La variable {@link $votants} est modifié par rapport à la valeur
+     * La variable {@link $votants} est modifié par rapport à la valeur de recherche de l'utilisateur.
+     * Cette méthode est appelée dans la vue {@link src/View/question/read.php}.
+     * Si la période de vote est terminée la méthode appelle la vue pour afficher les propositions gagnantes.
+     * @see src/View/proposition/listByQuestionGagnanteScrutin.php
+     * @see src/View/proposition/listByQuestionGagnanteJugement.php
      *
      * @return void
      */
@@ -456,8 +474,8 @@ class ControllerQuestion extends AbstractController
         $auteurs = (new AuteurRepository)->selectAllByQuestion($_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
             $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
-        else // TODO pour JugementMajoritaire
-            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
+        else
+            $propositions = (new JugementMajoritaireRepository)->selectPropositionForVoteResult((new ControllerVote())->scoreMedianeProposition($_REQUEST["idQuestion"]), $_REQUEST["idQuestion"]);
 
         $this->showView("view.php", [
             "propositions" => $propositions,
@@ -470,6 +488,18 @@ class ControllerQuestion extends AbstractController
         ]);
     }
 
+    /**
+     * Renvoie la liste des auteurs lors d'une recherche
+     *
+     * La variable {@link $auteurs} est modifié par rapport à la valeur de recherche de l'utilisateur.
+     * Cette méthode est appelée dans la vue {@link src/View/question/read.php}.
+     * Si la période de vote est terminée la méthode appelle la vue pour afficher les propositions gagnantes.
+     *
+     * @see src/View/proposition/listByQuestionGagnanteScrutin.php
+     * @see src/View/proposition/listByQuestionGagnanteJugement.php
+     *
+     * @return void
+     */
     public function readAllAuteursBySearchValue(): void
     {
         FormData::unsetAll();
@@ -479,8 +509,8 @@ class ControllerQuestion extends AbstractController
         $auteurs = (new AuteurRepository)->selectAllParticipantsBySearchValue($_REQUEST["searchValue"], $_REQUEST["idQuestion"]);
         if (date_create()->format("Y-m-d H:i:s") > $question->getDateFinVote() && $question->getSystemeVote() == "ScrutinUninominal")
             $propositions = (new PropositionRepository)->selectAllByQuestionsOrderedByVoteValueScrutin($_REQUEST["idQuestion"]);
-        else // TODO pour JugementMajoritaire
-            $propositions = (new PropositionRepository)->selectByQuestion($_REQUEST["idQuestion"]);
+        else
+            $propositions = (new JugementMajoritaireRepository)->selectPropositionForVoteResult((new ControllerVote())->scoreMedianeProposition($_REQUEST["idQuestion"]), $_REQUEST["idQuestion"]);
 
         $this->showView("view.php", [
             "propositions" => $propositions,
@@ -493,6 +523,11 @@ class ControllerQuestion extends AbstractController
         ]);
     }
 
+    /**
+     * Affiche la vue à propos du site
+     *
+     * @return void
+     */
     public function readAPropos(): void
     {
         $this->showView("view.php", ["pageTitle" => "A propos",

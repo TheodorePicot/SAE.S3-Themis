@@ -4,7 +4,8 @@ use Themis\Lib\ConnexionUtilisateur;
 
 $utilisateurInURL = rawurlencode($utilisateur->getLogin());
 $hrefUpdateInformation = "frontController.php?action=updateInformation&controller=utilisateur&login=" . $utilisateurInURL;
-$hrefUpdatePassword = "frontController.php?action=updatePassword&controller=utilisateur&login=" . $utilisateurInURL
+$hrefUpdatePassword = "frontController.php?action=updatePassword&controller=utilisateur&login=" . $utilisateurInURL;
+
 ?>
 
 
@@ -15,7 +16,7 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
         <div class="d-flex align-content-center justify-content-center">
             <h3>Modifier mes informations</h3>
         </div>
-        <form method="post" action="frontController.php">
+        <form method="post" action="frontController.php" enctype="multipart/form-data">
 
             <div class="offset-lg-3 offset-md-3 col-md-7 col-lg-7 my-5">
 
@@ -68,8 +69,9 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
                         <input class="form-control" type="date" name="dateNaissance" id="dateNaissance"
                                value="<?= htmlspecialchars($utilisateur->getDateNaissance()) ?>">
                     </div>
-
                 </div>
+
+
 
                 <div class="my-4">
                     <?php if (ConnexionUtilisateur::isAdministrator() && ConnexionUtilisateur::isUser($_REQUEST["login"])) : ?>
@@ -80,9 +82,9 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 
                         <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
 
-                            <input class="InputAddOn-field" type="checkbox" name="estOrganisateur"
-                                   id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
-                            <input type="hidden" name="estAdmin" value="on">
+                        <input class="InputAddOn-field" type="checkbox" name="estOrganisateur"
+                               id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
+                        <input type="hidden" name="estAdmin" value="on">
 
 
                     <?php elseif (ConnexionUtilisateur::isAdministrator()) : ?>
@@ -92,8 +94,8 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 
                         <h5><label class="InputAddOn-item" for="estOrganisateur">Organisateur</label></h5>
 
-                            <input class="InputAddOn-field" type="checkbox" name="estOrganisateur"
-                                   id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
+                        <input class="InputAddOn-field" type="checkbox" name="estOrganisateur"
+                               id="estOrganisateur" <?= ($utilisateur->isOrganisateur() == true) ? "checked" : "" ?>>
 
                     <?php endif ?>
                 </div>
@@ -104,7 +106,8 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
 
                 <div class="my-3 d-flex align-content-center justify-content-center">
                     <?php if (ConnexionUtilisateur::isUser($utilisateur->getLogin())) : ?>
-                        <a class="btn btn-primary text-nowrap my-2" href='<?= $hrefUpdatePassword ?>'> Modifier le mot de
+                        <a class="btn btn-primary text-nowrap my-2" href='<?= $hrefUpdatePassword ?>'> Modifier le mot
+                            de
                             passe</a>
                     <?php endif ?>
                 </div>

@@ -11,7 +11,7 @@ class VerificationEmail
 {
 
     /**
-     * Permet de envoyer un mail à l’adresse renseignée avec un lien qui envoi le nonce au site à l'utilisateur plcé en paramètre
+     * Permet d'envoyer un mail à l’adresse renseignée avec un lien qui envoi le nonce au site à l'utilisateur placé en paramètre
      *
      * @param Utilisateur $utilisateur L'utilisateur qui reçoi le mail de validation
      * @return void
@@ -23,9 +23,9 @@ class VerificationEmail
         $absoluteURL = Conf::getAbsoluteURL();
         $lienValidationEmail = "$absoluteURL?action=validerEmail&controller=utilisateur&login=$loginURL&nonce=$nonceURL";
         $corpsEmail = "<a href=\"$lienValidationEmail\">Validation</a>";
-
+        mail($utilisateur->getAdresseMail(), "Verification Email Themis", $corpsEmail);
         // Temporairement avant d'envoyer un vrai mail
-        (new FlashMessage())->flash("success", $corpsEmail, FlashMessage::FLASH_SUCCESS);
+//        (new FlashMessage())->flash("success", $corpsEmail, FlashMessage::FLASH_SUCCESS);
     }
 
     /**
@@ -35,11 +35,11 @@ class VerificationEmail
      * de la BDD, alors le champ email contient l'email de l'utilisateur concerné et le champ nonce email à valider
      * deviennent vide de la BDD.
      *
-     * @param $login Le login de l'utilisateur
-     * @param $nonce Le nonce de l'utilisateur
+     * @param $login string Le login de l'utilisateur
+     * @param $nonce string Le nonce de l'utilisateur
      * @return bool
      */
-    public static function handleEmailValidation($login, $nonce): bool
+    public static function handleEmailValidation(string $login, string $nonce): bool
     {
         $utilisateur = (new UtilisateurRepository())->select($login);
         if ($utilisateur->getLogin() == $login && $utilisateur->getNonce() == $nonce){
@@ -54,13 +54,13 @@ class VerificationEmail
 
 
     /**
-     * Return true si l'email de l'utilisateur placée en paramètre est validée sinon false
+     * Return true si l'email de l'utilisateur placé en paramètre est validée sinon false
      *
      * @param Utilisateur $utilisateur Un utilisateur
      * @return bool
      */
     public static function hasValidatedEmail(Utilisateur $utilisateur) : bool
     {
-        return $utilisateur->getAdresseMail() != "";
+        return $utilisateur->getEmailAValider() == null;
     }
 }

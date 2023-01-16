@@ -31,8 +31,7 @@ abstract class AbstractRepository
         $sqlQuery .= ") " . $columnValues . ")";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = $dataObject->tableFormat();
-        echo $sqlQuery;
-        var_dump($values);
+
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
@@ -50,7 +49,7 @@ abstract class AbstractRepository
     protected abstract function getTableName(): string;
 
     /**
-     * Permet d'obtenir un tableau avec tout les noms de colonne du DataObject manipulé
+     * Permet d'obtenir un tableau avec tous les noms de colonne du DataObject manipulé
      *
      * @return array
      */
@@ -155,11 +154,11 @@ abstract class AbstractRepository
             $count++;
         }
         $sqlQuery .= " WHERE " . '"' . $primaryKey . '"' . "=:$primaryKey";
-        echo $sqlQuery;
+
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
 
         $values = $dataObject->tableFormat();
-        var_dump($values);
+
         $pdoStatement->execute($values);
     }
 
@@ -185,7 +184,7 @@ abstract class AbstractRepository
     }
 
     /**
-     * Permet d'obtenir un tableau avec toute les données dans la BD de la table du DataObject manipulé en fonction de
+     * Permet d'obtenir un tableau avec toutes  les données dans la BD de la table du DataObject manipulé en fonction de
      * {@link AbstractRepository::getOrderColumn()}
      * Ce tableau est limité à 10 DataObject
      *
@@ -193,7 +192,7 @@ abstract class AbstractRepository
      */
     public function selectAllOrderedWithLimit(): array
     {
-        $databaseTable = $this->getTableName();
+
         $pdoStatement = DatabaseConnection::getPdo()->query("SELECT * FROM {$this->getTableName()} ORDER BY {$this->getOrderColumn()} LIMIT 10");
 
         $dataObjects = array(); 
