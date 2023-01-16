@@ -6,14 +6,15 @@ use Themis\Model\Repository\AuteurRepository;
 
 ?>
 
-    <div class="d-flex align-content-center justify-content-center">
-        <h1>Liste des propositions</h1>
-    </div>
+
 
 <?php
 
 if (ConnexionUtilisateur::isConnected() && (new AuteurRepository())->isParticpantInQuestion(ConnexionUtilisateur::getConnectedUserLogin(), $_REQUEST["idQuestion"]) &&
     ($question->getDateDebutProposition() <= date_create()->format("Y-m-d H:i:s") && date_create()->format("Y-m-d H:i:s") < $question->getDateFinProposition())) : ?>
+    <div class="d-flex align-content-center justify-content-center">
+        <h1>Liste des propositions</h1>
+    </div>
     <div class="d-flex align-content-center justify-content-center my-3">
         <a class="btn btn-dark text-nowrap"
            href="frontController.php?controller=proposition&action=create&idQuestion=<?= rawurldecode($question->getIdQuestion()) ?>">+
