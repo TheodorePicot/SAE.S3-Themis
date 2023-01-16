@@ -7,8 +7,9 @@ use Themis\Model\DataObject\Question;
 
 class QuestionRepository extends AbstractRepository
 {
+
     /**
-     * Permet d'obtenir une liste de toute les questions possédant le string pplacé en paramètre dans le titre de la
+     * Permet d'obtenir une liste de toute les questions possédant le string placé en paramètre dans le titre de la
      * question et/ou dans sa description
      *
      * @param string $element
@@ -49,8 +50,7 @@ class QuestionRepository extends AbstractRepository
             $objectArrayFormat["dateDebutVote"],
             $objectArrayFormat["dateFinVote"],
             $objectArrayFormat["loginOrganisateur"],
-            $objectArrayFormat["systemeVote"],
-            json_decode($objectArrayFormat["tags"]));
+            $objectArrayFormat["systemeVote"]);
     }
 
     /**
@@ -178,7 +178,6 @@ class QuestionRepository extends AbstractRepository
             "dateFinVote",
             "loginOrganisateur",
             "systemeVote",
-            "tags"
         ];
     }
 

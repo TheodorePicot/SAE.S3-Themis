@@ -13,7 +13,7 @@ abstract class AbstractRepository
      * @param AbstractDataObject $dataObject
      * @return bool
      */
-    public function create(AbstractDataObject $dataObject): string // TODO Refactor this
+    public function create(AbstractDataObject $dataObject): string
     {
         $databaseTable = $this->getTableName();
         $sqlQuery = "INSERT INTO $databaseTable (";
@@ -31,10 +31,12 @@ abstract class AbstractRepository
         $sqlQuery .= ") " . $columnValues . ")";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sqlQuery);
         $values = $dataObject->tableFormat();
-
+        var_dump($values);
+        echo $sqlQuery;
         try {
             $pdoStatement->execute($values);
         } catch (PDOException $exception) {
+            $pdoStatement->debugDumpParams();
             echo $exception->getCode();
             return $exception->getCode();
         }

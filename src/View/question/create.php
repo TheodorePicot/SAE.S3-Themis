@@ -54,24 +54,6 @@ use Themis\Lib\ConnexionUtilisateur;
                     </select>
                 </div>
 
-                <div class="col-auto">
-                    <h3><label for="tags">Tags</label></h3>
-                    <select class="form-select h-100" name="tags[]" multiple>
-                        <option>Politique</option>
-                        <option>Animaux</option>
-                        <option>Nature</option>
-                        <option>Science</option>
-                        <option>Informatique</option>
-                        <option>Réseaux</option>
-                        <option></option>
-                        <option>LG</option>
-                        <option>Microsoft</option>
-                        <option>Motorola</option>
-                        <option>Samsung</option>
-                        <option>Sony</option>
-                        <option>Autre</option>
-                    </select>
-                </div>
             </div>
         </div>
 

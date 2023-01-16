@@ -66,15 +66,25 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
     </div>
 
     <div class="container-fluid">
-
+        <?php if (!ConnexionUtilisateur::isUser($utilisateur->getLogin())) : ?>
         <div class="d-flex align-content-center justify-content-center my-3">
             <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
-               aria-expanded="false" aria-controls="multiCollapseExample1">Mes questions</a>
+               aria-expanded="false" aria-controls="multiCollapseExample1">Ses questions</a>
             <button class="btn btn-dark mx-4" type="button" data-bs-toggle="collapse"
                     data-bs-target="#multiCollapseExample2" aria-expanded="false"
-                    aria-controls="multiCollapseExample2">Mes propositions
+                    aria-controls="multiCollapseExample2">Ses propositions
             </button>
         </div>
+        <?php else : ?>
+            <div class="d-flex align-content-center justify-content-center my-3">
+                <a class="btn btn-dark" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button"
+                   aria-expanded="false" aria-controls="multiCollapseExample1">Mes questions</a>
+                <button class="btn btn-dark mx-4" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#multiCollapseExample2" aria-expanded="false"
+                        aria-controls="multiCollapseExample2">Mes propositions
+                </button>
+            </div>
+        <?php endif ?>
 
 
         <div class="row my-4 mx-4">
@@ -94,12 +104,18 @@ $hrefUpdatePassword = "frontController.php?action=updatePassword&controller=util
         <div class="col-lg-12 d-flex align-content-center justify-content-center my-3">
 
 
-                <?php if (ConnexionUtilisateur::isUser($utilisateur->getLogin()) || ConnexionUtilisateur::isAdministrator()) : ?>
+                <?php if (ConnexionUtilisateur::isUser($utilisateur->getLogin())) : ?>
                     <a class="btn btn-primary text-nowrap mx-2 " href='<?= $hrefDelete ?>'
                        onclick="return confirm('êtes-vous sûr de vouloir continuer ?');"> Supprimer</a>
 
                     <a class="btn btn-primary text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour
                         mes informations</a>
+                <?php elseif (ConnexionUtilisateur::isAdministrator()) : ?>
+                    <a class="btn btn-primary text-nowrap mx-2 " href='<?= $hrefDelete ?>'
+                       onclick="return confirm('êtes-vous sûr de vouloir continuer ?');"> Supprimer</a>
+
+                    <a class="btn btn-primary text-nowrap" href='<?= $hrefUpdateInformation ?>'> Mettre à jour
+                        ses informations</a>
                 <?php endif ?>
 
         </div>

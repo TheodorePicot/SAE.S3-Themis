@@ -34,7 +34,7 @@ use Themis\Lib\ConnexionUtilisateur;
                         <input type="text" class="form-control" placeholder="?" name="titreProposition"
                                id="titreProposition"
                                maxlength="99"
-                               required/>
+                               required >
                     </div>
 
                     <div class="my-5">
